@@ -1,4 +1,4 @@
-## 3D Portfolio
+# 3D Portfolio
 Welcome to my 3D Portfolio project! This React-based web application showcases my skills and projects in a visually engaging and interactive 3D environment using the power of Three.js.
 
 # Overview

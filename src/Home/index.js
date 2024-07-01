@@ -40,7 +40,7 @@ import {
   
   const services = [
     {
-      title: "Web Developer",
+      title: "Software Engineer",
       icon: web,
     },
     {
@@ -48,7 +48,7 @@ import {
       icon: mobile,
     },
     {
-      title: "Frontend Developer",
+      title: "Full Stack Developer",
       icon: backend,
     },
     {
@@ -108,20 +108,20 @@ import {
   
   const experiences = [
     {
-      title: "React.js Developer",
-      company_name: "Freelancer",
+      title: "Frontend Developer",
+      company_name: "COSVM Labs",
       icon: starbucks,
       iconBg: "#383E56",
-      date: "March 2022 - April 2023",
+      date: "Feb 2024 - June 2024",
       points: [
-        "Developing and maintaining web applications using React.js and other related technologies.",
-        "Implemented a real-time chat feature for a social media platform using React, enhancing user interaction and satisfaction.",
+        "Developing and maintaining web applications using React.js and Integrating them.",
+        "Collaborated closely with the development team to create engaging and user-friendly interfaces that met clients' needs.",
         "Implementing responsive design and ensuring cross-browser compatibility.",
       ],
     },
     {
-      title: "React Responsive Website",
-      company_name: "Fiverr",
+      title: "Full Stack Developer",
+      company_name: "Upwork",
       icon: tesla,
       iconBg: "#E6DEDD",
       date: "Jan 2021 - Feb 2022",
@@ -147,7 +147,7 @@ import {
     },
     {
       title: "Frontend Developer",
-      company_name: "Personal Development",
+      company_name: "Fiverr",
       icon: meta,
       iconBg: "#E6DEDD",
       date: "Jan 2023 - July 2023",

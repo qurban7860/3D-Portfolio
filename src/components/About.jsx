@@ -6,7 +6,7 @@ import { styles } from "../styles";
 import { services } from "../Home";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../Animation/motion";
-import { github, phone, linkedin } from "../assets";
+
 
 const ServiceCard = ({ index, title, icon }) => (
   <Tilt className='xs:w-[250px] w-full'>
@@ -36,17 +36,27 @@ const ServiceCard = ({ index, title, icon }) => (
   </Tilt>
 );
 
-const ContactCard = ({ title, icon, link }) => (
-  <a href={link} target="_blank" rel="noopener noreferrer">
-    <div className='w-16 h-16 bg-tertiary rounded-full flex justify-center items-center m-2'>
-      <img src={icon} alt={title} className='w-8 h-8 object-contain' />
-    </div>
-  </a>
-);
-
 const About = () => {
   return (
     <>
+     <div className='absolute xs:top-[40px] top-20 w-full flex justify-center items-center'>
+        <a href='#about'>
+          <div className='w-[35px] h-[64px] rounded-3xl border-4 border-secondary flex justify-center items-start p-2'>
+            <motion.div
+              animate={{
+                y: [0, 24, 0],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                repeatType: "loop",
+              }}
+              className='w-3 h-3 rounded-full bg-secondary mb-1'
+            />
+          </div>
+        </a>
+      </div>
+
       <motion.div variants={textVariant()}>
         <p className={styles.sectionSubText}>Introduction</p>
         <h2 className={styles.sectionHeadText}>Summary.</h2>
@@ -54,9 +64,12 @@ const About = () => {
 
       <motion.p
         variants={fadeIn("", "", 0.1, 1)}
-        className='mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]'
+        className='mt-4 text-secondary text-[17px] w-full leading-[30px]'
       >
-        I develop 3D visuals, user interfaces and web applications. I'm a skilled software engineer Proficient in frontend developer technologies (web developer, UI/UX designer, javascript) and expertise in frameworks like React, Node.js, and Three.js. I'm a quick learner and collaborate closely with clients to create efficient, scalable, and user-friendly solutions that solve real-world problems. Let's work together to bring your ideas to life!
+        Software Engineer experienced in full-stack development, proficient in MERN, Java, and MySQL. Passionate about
+        programming languages, compilers, and developer tooling. Hardworking and dedicated job seeker with strong
+        organizational skills, eager to secure an entry-level Software Engineer position to apply my web development
+        skills. Ready to help the team achieve company goals. Let's work together to bring your ideas to life!
       </motion.p>
 
       <div className='mt-20 flex flex-wrap gap-10 justify-evenly'>
@@ -65,11 +78,6 @@ const About = () => {
         ))}
       </div>
 
-      <div className='flex justify-center items-center mt-20'>
-        <ContactCard title="Phone" icon={phone} link="tel:+923085651015" />
-        <ContactCard title="GitHub" icon={github} link="https://github.com/qurban7860" />
-        <ContactCard title="LinkedIn" icon={linkedin} link="https://www.linkedin.com/in/qurban-hanif-861064199" />
-      </div>
     </>
   );
 };

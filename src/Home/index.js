@@ -1,7 +1,7 @@
 import {
     mobile,
     backend,
-    creator,
+    // creator,
     web,
     javascript,
     typescript,
@@ -16,7 +16,7 @@ import {
     meta,
     starbucks,
     tesla,
-    shopify,
+    pucit,
     carrent,
     threejs,
     Project1,
@@ -44,17 +44,17 @@ import {
       icon: web,
     },
     {
-      title: "React Developer",
+      title: "Full Stack Developer",
       icon: mobile,
     },
     {
-      title: "Full Stack Developer",
+      title: "React Developer",
       icon: backend,
     },
-    {
-      title: "UI/UX Developer",
-      icon: creator,
-    },
+    // {
+    //   title: "UI/UX Developer",
+    //   icon: creator,
+    // },
   ];
   
   const technologies = [
@@ -105,57 +105,55 @@ import {
     },
   
   ];
+
+  export const educations = [
+    {
+      degree: "Bachelor of Science in Software Engineering",
+      image: pucit,
+      institute_name: "University Of The Punjab (PUCIT), Lahore Pakistan",
+      instituteUrl: "https://pucit.edu.pk/",
+      points: [
+        "Courses in web development, software engineering, operating system, computer network, OOP, DSA, database management.",
+        "Honors: Dean's List (2020-2024)",
+      ],
+    },
+  ];
   
   const experiences = [
     {
       title: "Frontend Developer",
-      company_name: "COSVM Labs",
+      company_name: "COSVM Labs (React, Tailwind)",
       icon: starbucks,
+      instituteUrl: "https://cosvm.network/en",
       iconBg: "#383E56",
       date: "Feb 2024 - June 2024",
       points: [
-        "Developing and maintaining web applications using React.js and Integrating them.",
+        "Responsible developing web pages using React, Tailwind and integrating them into the live server.",
         "Collaborated closely with the development team to create engaging and user-friendly interfaces that met clients' needs.",
-        "Implementing responsive design and ensuring cross-browser compatibility.",
       ],
     },
     {
       title: "Full Stack Developer",
-      company_name: "Upwork",
+      company_name: "Upwork (MERN, Java)",
       icon: tesla,
+      instituteUrl: "https://www.upwork.com/",
       iconBg: "#E6DEDD",
-      date: "Jan 2021 - Feb 2022",
+      date: "Jan 2023 - Feb 2024",
       points: [
         "Created a responsive and user-friendly dashboard application using React, leading to a 30% improvement in user engagement.",
-        "Developing and maintaining web applications using React.js and other related technologies.",
-        "Implementing responsive design and ensuring cross-browser compatibility.",
-        "Participating in code reviews and providing constructive feedback to other developers.",
-      ],
-    },
-    {
-      title: "Web Developer",
-      company_name: "Shopify",
-      icon: shopify,
-      iconBg: "#383E56",
-      date: "Jan 2023 - Present",
-      points: [
-        "Developed and maintained a highly scalable e-commerce platform using React, resulting in a 20% increase in online sales.",
-        "Created a responsive and user-friendly dashboard application using React, leading to a 30% improvement in user engagement.",
-        "Implemented a real-time chat feature for a social media platform using React, enhancing user interaction and satisfaction.",
         "Implementing responsive design and ensuring cross-browser compatibility.",
       ],
     },
     {
-      title: "Frontend Developer",
+      title: "React Developer",
       company_name: "Fiverr",
       icon: meta,
+      instituteUrl: "https://www.fiverr.com/",
       iconBg: "#E6DEDD",
       date: "Jan 2023 - July 2023",
       points: [
         "Developing and maintaining web applications using React.js and other related technologies.",
         "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-        "Implementing responsive design and ensuring cross-browser compatibility.",
-        "Participating in code reviews and providing constructive feedback to other developers.",
       ],
     },
   ];
@@ -165,24 +163,20 @@ import {
       testimonial:
         "I thought it was impossible to make a website as beautiful as our product, but Qurban proved me wrong.",
       name: "Sara Henry ",
-      designation: "CFO",
-      company: "Acme Co",
+      // designation: "CFO",
+      // company: "Acme Co",
       image : "https://randomuser.me/api/portraits/women/4.jpg",
     },
     {
       testimonial:
         "I've never met a web developer who truly cares about their clients' success like Qurban does.",
       name: "Chris Jordan",
-      designation: "COO",
-      company: "DEF Corp",
       image: "https://randomuser.me/api/portraits/men/5.jpg",
     },
     {
       testimonial:
         "After Qurban optimized our website, our traffic increased by 50%. We can't thank them enough!",
       name: "Lisa william",
-      designation: "CTO",
-      company: "456 Enterprises",
       image: "https://randomuser.me/api/portraits/women/6.jpg",
     },
   ];

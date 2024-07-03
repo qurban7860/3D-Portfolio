@@ -24,9 +24,9 @@ import typescript from "./tech/typescript.png";
 import threejs from "./tech/threejs.svg";
 
 import meta from "./company/fiverr.svg";
-import shopify from "./company/shopify.png";
 import starbucks from "./company/cosvm.png";
 import tesla from "./company/upwork.svg";
+import pucit from "./company/pucit.png";
 
 import carrent from "./carrent.png";
 import jobit from "./jobit.png";
@@ -60,7 +60,7 @@ export {
   typescript,
   threejs,
   meta,
-  shopify,
+  pucit,
   starbucks,
   tesla,
   Project1,

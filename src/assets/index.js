@@ -32,7 +32,7 @@ import carrent from "./carrent.png";
 import jobit from "./jobit.png";
 import tripguide from "./tripguide.png";
 import Project1 from "./Project1.png";
-import Project2 from "./Project2.png";
+import fyp from "./fyp.png";
 import Ecommerce1 from "./Ecommerce1.png";
 
 export {
@@ -64,7 +64,7 @@ export {
   starbucks,
   tesla,
   Project1,
-  Project2,
+  fyp,
   Ecommerce1,
   carrent,
   jobit,

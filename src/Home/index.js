@@ -20,7 +20,7 @@ import {
     carrent,
     threejs,
     Project1,
-    Project2,
+    fyp,
   } from "../assets";
   
   export const navLinks = [
@@ -185,7 +185,7 @@ import {
     {
       name: "Amazon Services",
       description:
-        "A product catalog with search and filtering functionality, A product detail page with reviews and recommendations, A shopping cart for adding and removing items",
+        "A product catalog with search and filtering functionality, A product detail page with reviews and recommendations, A shopping cart for adding and removing items.",
       tags: [
         {
           name: "javascript",
@@ -206,7 +206,7 @@ import {
     {
       name: "Ecommerce Website",
       description:
-        "Web-based platform that allows users to search, user-friendly and responsive interface that is easy to navigate, A product catalog with clear descriptions, A shopping cart that allows users to handle items.",
+        "Developed a user-friendly product catalog featuring an add to cart option, images and specifications for each item with API integration, enhancing the website functionality and features.",
 
       tags: [
         {
@@ -226,25 +226,25 @@ import {
       source_code_link: "https://github.com/qurban7860/EcommerceResponsiveDesign.git",
     },
     {
-      name: "Youtube Clone",
+      name: "Final Year Project-ICE AGE",
       description:
-        "Web application that enables users to search videos, A video player with playback controls, A recommendation system to suggest videos to watch, A comment section for users to discuss videos",
+        "Developed an ML model utilizing CNNs to analyze remote sensing data and estimate debris thickness across glaciers. Utilized ReactJS and NodeJS to develop a user-friendly web application interface for interacting with data.",
       tags: [
         {
-          name: "react",
+          name: "ML",
           color: "blue-text-gradient",
         },
         {
-          name: "restapi",
+          name: "MERN",
           color: "green-text-gradient",
         },
         {
-          name: "css3",
+          name: "Tailwind",
           color: "pink-text-gradient",
         },
       ],
-      image: Project2,
-      source_code_link: "https://github.com/qurban7860/YoutubeClone.git",
+      image: fyp,
+      source_code_link: "https://github.com/qurban7860/FinalYearProject.git",
     },
     
   ];

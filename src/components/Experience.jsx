@@ -92,8 +92,6 @@ const EducationCard = ({ education }) => {
   );
 };
 
-
-
 const Experience = () => {
   return (
     <>

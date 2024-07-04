@@ -188,7 +188,7 @@ import {
         "A product catalog with search and filtering functionality, A product detail page with reviews and recommendations, A shopping cart for adding and removing items.",
       tags: [
         {
-          name: "javascript",
+          name: "MERN",
           color: "blue-text-gradient",
         },
         {

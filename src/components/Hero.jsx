@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { styles } from "../styles";
-import { ComputersCanvas } from "./canvas";
+// import { ComputersCanvas } from "./canvas";
 import { github, phone, linkedin } from "../assets";
 
 const ContactCard = ({ title, icon, link }) => (
@@ -10,6 +10,17 @@ const ContactCard = ({ title, icon, link }) => (
     </div>
   </a>
 );
+
+const SkillCard = ({ skill }) => (
+  <motion.div
+    whileHover={{ scale: 1.1 }}
+    className='bg-tertiary rounded-lg p-4 shadow-md'
+  >
+    <h3 className='text-white text-[16px] font-bold text-center max-md:text-sm'>{skill}</h3>
+  </motion.div>
+);
+
+const skills = ["JavaScript", "React", "Node.js", "Java", "MySQL"];
 
 const Hero = () => {
   return (
@@ -24,11 +35,12 @@ const Hero = () => {
         <div>
           <h1 className={`${styles.heroHeadText} text-white`}>
             Hi, I'm <span className='text-[#915EFF]'>Qurban</span>
-            <span className={`${styles.subText} text-[20px] text-white-100 max-md:text-sm`}> (Software Engineer)</span>
+            <span className={`${styles.subText} text-[20px] text-white-100`}> (Software Engineer)</span>
           </h1>
-          <p className={`${styles.heroSubText} mt-0 text-white-100`}>
-            <br className='sm:block hidden' />
-          </p>
+          <p className={`${styles.heroSubText} mt-4 text-white-100`}>
+            Crafting innovative solutions and turning ideas into reality through code. Let's work together to bring your ideas to life!
+           <br className='sm:block hidden' />
+         </p>
         </div>
       </div>
 
@@ -37,8 +49,14 @@ const Hero = () => {
         <ContactCard title="Phone" icon={phone} link="tel:+923085651015" />
         <ContactCard title="LinkedIn" icon={linkedin} link="https://www.linkedin.com/in/qurban015" />
       </div>
+
+      <div className='absolute inset-x-0 bottom-4 md:bottom-28 flex flex-wrap justify-center gap-4 px-4'>
+        {skills.map((skill, index) => (
+          <SkillCard key={index} skill={skill} />
+        ))}
+      </div>
       
-      <ComputersCanvas />
+      {/* <ComputersCanvas /> */}
     </section>
   );
 };

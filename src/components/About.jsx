@@ -39,7 +39,7 @@ const ServiceCard = ({ index, title, icon }) => (
 const About = () => {
   return (
     <>
-     <div className='absolute xs:top-[40px] top-20 w-full flex justify-center items-center hidden md:flex'>
+     <div className='absolute xs:top-[8px] top-0 w-full flex justify-center items-center hidden md:flex'>
         <a href='#about'>
           <div className='w-[35px] h-[64px] rounded-3xl border-4 border-secondary flex justify-center items-start p-2'>
             <motion.div
@@ -69,7 +69,7 @@ const About = () => {
         Software Engineer experienced in full-stack development, proficient in MERN, Java, and MySQL. Passionate about
         programming languages, compilers, and developer tooling. Hardworking and dedicated job seeker with strong
         organizational skills, eager to secure an entry-level Software Engineer position to apply my web development
-        skills. Ready to help the team achieve company goals. Let's work together to bring your ideas to life!
+        skills. Ready to help the team achieve company goals.
       </motion.p>
 
       <div className='mt-20 flex flex-wrap gap-10 justify-evenly'>

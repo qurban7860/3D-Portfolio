@@ -1,24 +1,25 @@
 import {
     mobile,
     backend,
-    // creator,
+    creator,
     web,
     javascript,
     typescript,
-    html,
-    css,
+    // html,
+    // css,
     reactjs,
     tailwind,
     nodejs,
-    // mongodb,
+    mongodb,
     git,
     figma,
     meta,
     starbucks,
     tesla,
     pucit,
+    terminus,
     carrent,
-    threejs,
+    // threejs,
     Project1,
     fyp,
   } from "../assets";
@@ -44,41 +45,40 @@ import {
       icon: web,
     },
     {
-      title: "Full Stack Developer",
+      title: "MERN Developer",
       icon: mobile,
     },
     {
-      title: "React Developer",
+      title: "Next Developer",
+      icon: creator,
+    },
+    {
+      title: "React Native Developer",
       icon: backend,
     },
-    // {
-    //   title: "UI/UX Developer",
-    //   icon: creator,
-    // },
   ];
   
   const technologies = [
+    // {
+    //   name: "HTML 5",
+    //   icon: html,
+    // },
+    // {
+    //   name: "CSS 3",
+    //   icon: css,
+    // },
     {
-      name: "HTML 5",
-      icon: html,
-    },
-    {
-      name: "CSS 3",
-      icon: css,
+      name: "React JS",
+      icon: reactjs,
     },
     {
       name: "JavaScript",
       icon: javascript,
     },
     {
-      name: "React JS",
-      icon: reactjs,
-    },
-    {
       name: "TypeScript",
       icon: typescript,
     },
-    
     {
       name: "Tailwind CSS",
       icon: tailwind,
@@ -87,14 +87,14 @@ import {
       name: "Node JS",
       icon: nodejs,
     },
-    // {
-    //   name: "MongoDB",
-    //   icon: mongodb,
-    // },
     {
-      name: "Three JS",
-      icon: threejs,
+      name: "MongoDB",
+      icon: mongodb,
     },
+    // {
+    //   name: "Three JS",
+    //   icon: threejs,
+    // },
     {
       name: "git",
       icon: git,
@@ -113,13 +113,25 @@ import {
       institute_name: "University Of The Punjab (PUCIT), Lahore Pakistan",
       instituteUrl: "https://pucit.edu.pk/",
       points: [
-        "Courses in web development, software engineering, operating system, computer network, OOP, DSA, database management.",
+        "Courses in Web Development, Software Engineering, OOP, DSA, DBMS, Operating System, Computer Network.",
         "Honors: Dean's List (2020-2024)",
       ],
     },
   ];
   
   const experiences = [
+    {
+      title: "Software Engineer | MERN",
+      company_name: "Terminus Technologies",
+      icon: terminus,
+      instituteUrl: "https://terminustech.co.nz/",
+      iconBg: "#E6DEDD",
+      date: "June 2024 - Present",
+      points: [
+        "Developed an ERP system with dynamic UI features using React, Material-UI and Redux for a New Zealand-based firm.",
+        "Created and Implemented RESTful APIs with Node.js and MongoDB, ensuring smooth integration and efficient state management."
+      ],
+    },
     {
       title: "Frontend Developer",
       company_name: "COSVM Labs (React, Tailwind)",
@@ -134,11 +146,11 @@ import {
     },
     {
       title: "Full Stack Developer",
-      company_name: "Upwork (MERN, Java)",
+      company_name: "Upwork (MERN)",
       icon: tesla,
       instituteUrl: "https://www.upwork.com/",
       iconBg: "#E6DEDD",
-      date: "Jan 2023 - Feb 2024",
+      date: "Aug 2023 - Dec 2024",
       points: [
         "Created a responsive and user-friendly dashboard application using React, leading to a 30% improvement in user engagement.",
         "Implementing responsive design and ensuring cross-browser compatibility.",
@@ -150,7 +162,7 @@ import {
       icon: meta,
       instituteUrl: "https://www.fiverr.com/",
       iconBg: "#E6DEDD",
-      date: "Jan 2023 - July 2023",
+      date: "May 2023 - July 2023",
       points: [
         "Developing and maintaining web applications using React.js and other related technologies.",
         "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
@@ -170,7 +182,7 @@ import {
     {
       testimonial:
         "I've never met a web developer who truly cares about their clients' success like Qurban does.",
-      name: "Chris Jordan",
+      name: "Harsh Kumar",
       image: "https://randomuser.me/api/portraits/men/5.jpg",
     },
     {
@@ -185,18 +197,18 @@ import {
     {
       name: "Amazon Services",
       description:
-        "A product catalog with search and filtering functionality, A product detail page with reviews and recommendations, A shopping cart for adding and removing items.",
+        "Built a modern e-commerce platform featuring product search, filtering, detailed item pages, user reviews, recommendations, and a responsive cart system integrated with external APIs.",
       tags: [
         {
           name: "MERN",
           color: "blue-text-gradient",
         },
         {
-          name: "html5",
+          name: "Material-UI",
           color: "green-text-gradient",
         },
         {
-          name: "css3",
+          name: "Javascript",
           color: "pink-text-gradient",
         },
       ],
@@ -204,31 +216,31 @@ import {
       source_code_link: "https://github.com/qurban7860/AmazonClone.git",
     },
     {
-      name: "Ecommerce Website",
+      name: "AI Portfolio Builder",
       description:
-        "Developed a user-friendly product catalog featuring an add to cart option, images and specifications for each item with API integration, enhancing the website functionality and features.",
+        "Quickly create a personalized portfolio with AI-generated content, real-time preview, PDF export, and user authentication. Built with Mern, Firebase, and Material-UI for a seamless, responsive experience.",
 
       tags: [
         {
-          name: "react",
+          name: "MERN",
           color: "blue-text-gradient",
         },
         {
-          name: "javascript",
+          name: "Firebase",
           color: "green-text-gradient",
         },
         {
-          name: "tailwind",
+          name: "Material-UI",
           color: "pink-text-gradient",
         },
       ],
       image: carrent,
-      source_code_link: "https://github.com/qurban7860/EcommerceResponsiveDesign.git",
+      source_code_link: "https://github.com/qurban7860/ai-portfolio-builder.git",
     },
     {
       name: "Final Year Project-ICE AGE",
       description:
-        "Developed an ML model utilizing CNNs to analyze remote sensing data and estimate debris thickness across glaciers. Utilized ReactJS and NodeJS to develop a user-friendly web application interface for interacting with data.",
+        "Developed an ML model utilizing CNNs to analyze remote sensing data. Utilized ReactJS and NodeJS to develop a user-friendly web application.",
       tags: [
         {
           name: "ML",

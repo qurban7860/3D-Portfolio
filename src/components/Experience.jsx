@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
@@ -22,18 +23,18 @@ const ExperienceCard = ({ experience }) => {
       iconStyle={{ background: experience.iconBg }}
       icon={
         <div className='flex justify-center items-center w-full h-full'>
-      <a
-        href={experience.instituteUrl}
-        target='_blank'
-        rel='noopener noreferrer'
-        className='flex justify-center items-center w-full h-full'
-      >
-          <img
-            src={experience.icon}
-            alt={experience.company_name}
-            className='w-[60%] h-[60%] object-contain hover:bg-opacity-80 transition duration-300 ease-in-out transform hover:scale-110 cursor-pointer'
-          />
-      </a>
+          <a
+            href={experience.instituteUrl}
+            target='_blank'
+            rel='noopener noreferrer'
+            className='flex justify-center items-center w-full h-full'
+          >
+            <img
+              src={experience.icon}
+              alt={experience.company_name}
+              className='w-[60%] h-[60%] object-contain hover:bg-opacity-80 transition duration-300 ease-in-out transform hover:scale-110 cursor-pointer'
+            />
+          </a>
         </div>
       }
     >
@@ -59,6 +60,18 @@ const ExperienceCard = ({ experience }) => {
       </ul>
     </VerticalTimelineElement>
   );
+};
+
+ExperienceCard.propTypes = {
+  experience: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    company_name: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+    icon: PropTypes.string.isRequired,
+    iconBg: PropTypes.string.isRequired,
+    instituteUrl: PropTypes.string.isRequired,
+    points: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }).isRequired,
 };
 
 const EducationCard = ({ education }) => {
@@ -92,16 +105,24 @@ const EducationCard = ({ education }) => {
   );
 };
 
+EducationCard.propTypes = {
+  education: PropTypes.shape({
+    degree: PropTypes.string.isRequired,
+    institute_name: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    instituteUrl: PropTypes.string.isRequired,
+    points: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }).isRequired,
+};
+
 const Experience = () => {
   return (
     <>
-    <motion.div variants={textVariant()}>
+      <motion.div variants={textVariant()}>
         <p className={`${styles.sectionSubText} text-left`}>
           What I have done so far
         </p>
-        <h2 className={`${styles.sectionHeadText} text-left`}>
-          Education
-        </h2>
+        <h2 className={`${styles.sectionHeadText} text-left`}>Education</h2>
       </motion.div>
 
       <div className='mt-10'>
@@ -109,7 +130,7 @@ const Experience = () => {
           <EducationCard key={`education-${index}`} education={education} />
         ))}
       </div>
-      
+
       <motion.div variants={textVariant()}>
         <h2 className={`${styles.sectionHeadText} text-left`}>
           Work Experience
@@ -127,7 +148,7 @@ const Experience = () => {
         </VerticalTimeline>
       </div>
       <div className='mt-5'>
-      <h2 className={styles.sectionHeadText}>Skills</h2>
+        <h2 className={styles.sectionHeadText}>Skills</h2>
       </div>
     </>
   );

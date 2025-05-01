@@ -1,5 +1,5 @@
-import React from "react";
 import { motion } from "framer-motion";
+import PropTypes from "prop-types"; 
 import { styles } from "../styles";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../Animation/motion";
@@ -60,6 +60,15 @@ const Feedbacks = () => {
       </div>
     </div>
   );
+};
+
+FeedbackCard.propTypes = {
+  index: PropTypes.number.isRequired,
+  testimonial: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  // designation: PropTypes.string,
+  // company: PropTypes.string,
 };
 
 export default SectionWrapper(Feedbacks, "");

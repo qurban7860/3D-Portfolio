@@ -27,6 +27,7 @@ import meta from "./company/fiverr.svg";
 import starbucks from "./company/cosvm.png";
 import tesla from "./company/upwork.svg";
 import pucit from "./company/pucit.png";
+import terminus from "./company/terminus.png";
 
 import carrent from "./carrent.png";
 import jobit from "./jobit.png";
@@ -61,6 +62,7 @@ export {
   threejs,
   meta,
   pucit,
+  terminus,
   starbucks,
   tesla,
   Project1,

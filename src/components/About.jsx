@@ -1,7 +1,6 @@
-import React from "react";
 import { Tilt } from "react-tilt";
 import { motion } from "framer-motion";
-
+import PropTypes from "prop-types"; 
 import { styles } from "../styles";
 import { services } from "../Home";
 import { SectionWrapper } from "../hoc";
@@ -15,6 +14,7 @@ const ServiceCard = ({ index, title, icon }) => (
       className='w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card'
     >
       <div
+        // eslint-disable-next-line react/no-unknown-property
         options={{
           max: 45,
           scale: 1,
@@ -35,6 +35,12 @@ const ServiceCard = ({ index, title, icon }) => (
     </motion.div>
   </Tilt>
 );
+
+ServiceCard.propTypes = {
+  index: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  icon: PropTypes.string.isRequired,
+};
 
 const About = () => {
   return (
@@ -66,10 +72,10 @@ const About = () => {
         variants={fadeIn("", "", 0.1, 1)}
         className='mt-4 text-secondary text-[17px] w-full leading-[30px]'
       >
-        Software Engineer experienced in full-stack development, proficient in MERN, Java, and MySQL. Passionate about
-        programming languages, compilers, and developer tooling. Hardworking and dedicated job seeker with strong
-        organizational skills, eager to secure an entry-level Software Engineer position to apply my web development
-        skills. Ready to help the team achieve company goals.
+        Passionate and skilled MERN stack developer with a Bachelor’s degree in Software Engineering from Punjab University PUCIT. Over
+        one year of hands-on experience in designing and developing scalable, high-performance web and mobile applications. Specialized in
+        full-stack development with expertise in Mern, Next and React Native. Proficient in modern development tools and problem
+        solving techniques. Committed to delivering innovative solutions and contributing to team success
       </motion.p>
 
       <div className='mt-20 flex flex-wrap gap-10 justify-evenly'>

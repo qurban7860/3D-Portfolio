@@ -58,7 +58,7 @@ const Hero = () => {
               Software Engineer
             </span>
           </h1>
-          <p className={`${styles.heroSubText} mt-2 text-white-100`}>
+          <p className={`${styles.heroSubText} mt-2 mb-6 text-white-100`}>
             Turning your ideas into powerful web and mobile solutions with clean
             code and smooth user experiences.
           </p>

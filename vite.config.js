@@ -1,18 +1,11 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   build: {
     target: 'esnext',
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-      },
-    },
+    minify: 'esbuild', 
     rollupOptions: {
       output: {
         manualChunks: {
@@ -25,6 +18,9 @@ export default defineConfig({
     sourcemap: false,
     chunkSizeWarningLimit: 1000,
   },
+  esbuild: {
+    drop: ['console', 'debugger'],
+  },
   server: {
     port: 3000,
     open: true,
@@ -34,4 +30,3 @@ export default defineConfig({
     include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
   },
 })
-

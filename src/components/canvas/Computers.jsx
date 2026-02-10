@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState, useMemo } from "react";
 import PropTypes from "prop-types";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
@@ -8,8 +8,18 @@ import CanvasLoader from "../Loader";
 const Computers = ({ isMobile }) => {
   const computer = useGLTF("./desktop_pc/scene.gltf");
 
-  // Adjust the position based on whether it's a mobile device or not
-  const position = isMobile ? [0, -3, -2.2] : [0, -3.25, -1.5];
+  const { position, scale } = useMemo(() => {
+    if (isMobile) {
+      return {
+        position: [0, -3, -2.2],
+        scale: 0.7,
+      };
+    }
+    return {
+      position: [0, -4.5, -1.5], 
+      scale: 0.75,
+    };
+  }, [isMobile]);
 
   return (
     <mesh>
@@ -25,7 +35,7 @@ const Computers = ({ isMobile }) => {
       <pointLight intensity={1} />
       <primitive
         object={computer.scene}
-        scale={isMobile ? 0.7 : 0.75}
+        scale={scale}
         position={position}
         rotation={[-0.01, -0.2, -0.1]}
       />
@@ -33,27 +43,20 @@ const Computers = ({ isMobile }) => {
   );
 };
 
-Computers.propTypes = {
-  isMobile: PropTypes.bool.isRequired,
-};
+Computers.propTypes = { isMobile: PropTypes.bool.isRequired };
 
 const ComputersCanvas = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 500px)");
-
     setIsMobile(mediaQuery.matches);
+    setIsLoaded(true);
 
-    const handleMediaQueryChange = (event) => {
-      setIsMobile(event.matches);
-    };
-
+    const handleMediaQueryChange = (event) => setIsMobile(event.matches);
     mediaQuery.addEventListener("change", handleMediaQueryChange);
-
-    return () => {
-      mediaQuery.removeEventListener("change", handleMediaQueryChange);
-    };
+    return () => mediaQuery.removeEventListener("change", handleMediaQueryChange);
   }, []);
 
   return (
@@ -62,20 +65,29 @@ const ComputersCanvas = () => {
       shadows
       dpr={[1, 2]}
       camera={{ position: [20, 3, 5], fov: 25 }}
-      gl={{ preserveDrawingBuffer: true }}
+      gl={{ preserveDrawingBuffer: true, antialias: true }}
     >
       <Suspense fallback={<CanvasLoader />}>
         <OrbitControls
           enableZoom={false}
           maxPolarAngle={Math.PI / 2}
           minPolarAngle={Math.PI / 2}
+          autoRotate
+          autoRotateSpeed={0.5}
         />
-        <Computers isMobile={isMobile} />
+        {isLoaded && <Computers isMobile={isMobile} />}
       </Suspense>
-
       <Preload all />
     </Canvas>
   );
 };
 
 export default ComputersCanvas;
+
+
+
+
+
+
+
+

@@ -119,6 +119,7 @@ const Experience = () => {
   return (
     <>
       <motion.div variants={textVariant()}>
+        <p className="section-badge">Career Path</p>
         <p className={`${styles.sectionSubText} text-left`}>
           What I have done so far
         </p>

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { motion } from "framer-motion";
 import PropTypes from "prop-types"; 
 import { styles } from "../styles";
@@ -49,11 +50,12 @@ const Feedbacks = () => {
         className={`bg-tertiary rounded-2xl ${styles.padding} min-h-[300px]`}
       >
         <motion.div variants={textVariant()}>
+          <p className="section-badge">Testimonials</p>
           <p className={styles.sectionSubText}>What others say</p>
           <h2 className={styles.sectionHeadText}>Testimonials</h2>
         </motion.div>
       </div>
-      <div className={`-mt-20 pb-14 ${styles.paddingX} flex flex-wrap gap-7 flex justify-evenly`}>
+      <div className={`-mt-20 pb-14 ${styles.paddingX} flex flex-wrap gap-7 justify-evenly`}>
         {testimonials.map((testimonial, index) => (
           <FeedbackCard key={testimonial.name} index={index} {...testimonial} />
         ))}

@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import {
   VerticalTimeline,
@@ -148,9 +147,9 @@ const Experience = () => {
           ))}
         </VerticalTimeline>
       </div>
-      <div className='mt-5'>
+      {/* <div className='mt-5'>
         <h2 className={styles.sectionHeadText}>Skills</h2>
-      </div>
+      </div> */}
     </>
   );
 };

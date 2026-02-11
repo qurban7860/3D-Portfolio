@@ -234,7 +234,7 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #915EFF;
+  background: linear-gradient(135deg, #161130, #6C5CE7);
   border-radius: 5px;
 }
 
@@ -299,7 +299,7 @@ textarea:focus {
   right: 2rem;
   width: 50px;
   height: 50px;
-  background: linear-gradient(135deg, #915EFF, #6C5CE7);
+  background: linear-gradient(135deg, #161130, #6C5CE7);
   border-radius: 50%;
   border: none;
   cursor: pointer;

@@ -1,5 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable react-refresh/only-export-components */
 import { Tilt } from "react-tilt";
 import { motion } from "framer-motion";
 import PropTypes from "prop-types"; 
@@ -7,7 +5,6 @@ import { styles } from "../styles";
 import { services } from "../Home";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../Animation/motion";
-
 
 const ServiceCard = ({ index, title, icon }) => {
   const tiltOptions = {
@@ -22,7 +19,7 @@ const ServiceCard = ({ index, title, icon }) => {
         variants={fadeIn("right", "spring", index * 0.5, 0.75)}
         className='w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card'
       >
-        <div className='bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col hover:shadow-lg transition-shadow duration-300'>
+        <div className='bg-tertiary rounded-[20px] py-5 px-12 min-h-[280px] flex justify-evenly items-center flex-col hover:shadow-lg hover:shadow-[#915EFF]/50 transition-shadow duration-300 border border-[#915EFF]/10'>
           <img
             src={icon}
             alt={title}
@@ -50,21 +47,21 @@ const About = () => {
       <motion.div variants={textVariant()}>
         <p className="section-badge">About Me</p>
         <p className={styles.sectionSubText}>Introduction</p>
-        <h2 className={styles.sectionHeadText}>Summary</h2>
+        <h2 className={styles.sectionHeadText}>Overview</h2>
       </motion.div>
 
       <motion.p
         variants={fadeIn("", "", 0.1, 1)}
         className="mt-4 text-secondary text-[17px] w-full leading-[30px]"
       >
-        Skilled Full Stack Developer with a Bachelor’s degree in Software
-        Engineering from Punjab University (PUCIT) and over 3+ years of hands-on
-        experience building responsive, high-performance web and mobile
-        applications with clean, scalable code. Proficient in React, Next, Node,
-        Express and MongoDB, with expertise in API integration, problem-solving,
-        performance optimization and role-based UI design across diverse
-        projects. Committed to delivering innovative solutions and contributing
-        to product success.
+        I&apos;m a passionate Full Stack Developer with a Bachelor&apos;s degree in Software Engineering from Punjab University (PUCIT) and over 3+ years of professional experience building responsive, high-performance web and mobile applications. I specialize in creating scalable, user-centric solutions using modern technologies including React, Next.js, Node.js, Express, and MongoDB.
+      </motion.p>
+
+      <motion.p
+        variants={fadeIn("", "", 0.15, 1)}
+        className="mt-4 text-secondary text-[17px] w-full leading-[30px]"
+      >
+        My expertise spans across full-stack development, real-time applications, RESTful API design, performance optimization, and responsive UI/UX design. I&apos;m committed to writing clean, maintainable code and delivering innovative solutions that drive business growth and user satisfaction.
       </motion.p>
 
       <div className="mt-20 flex flex-wrap gap-10 justify-evenly">
@@ -72,8 +69,34 @@ const About = () => {
           <ServiceCard key={service.title} index={index} {...service} />
         ))}
       </div>
+
+      <motion.div
+        variants={fadeIn("up", "spring", 0.3, 0.75)}
+        className="mt-20 overflow-hidden rounded-3xl bg-[#151030] border border-white/10 relative"
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-[#915EFF]/5 to-transparent pointer-events-none" />
+        
+        <div className="relative p-8 md:p-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            {[
+              { emoji: "🚀", title: "Fast Delivery", desc: "Efficient development with rapid turnaround times." },
+              { emoji: "🎯", title: "Quality Focus", desc: "High-quality, tested, and production-ready code." },
+              { emoji: "🤝", title: "Collaboration", desc: "Excellent communication and team coordination." }
+            ].map((item, i) => (
+              <div key={i} className="group">
+                <p className="text-4xl mb-4 group-hover:scale-125 transition-transform duration-300 w-fit">{item.emoji}</p>
+                <p className="text-white font-bold text-[18px] mb-2">{item.title}</p>
+                <p className="text-secondary text-[14px] leading-relaxed italic border-l-2 border-[#915EFF]/30 pl-4">
+                  {item.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </motion.div>
     </>
   );
 };
 
-export default SectionWrapper(About, "about");
+const AboutSection = SectionWrapper(About, "about");
+export default AboutSection;

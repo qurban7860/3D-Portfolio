@@ -8,6 +8,11 @@ import Works from './Works';
 import Feedbacks from './Feedbacks';
 import Contact from './Contact';
 import BackToTop from './BackToTop';
+import Statistics from './Statistics';
+import Certifications from './Certifications';
+import Services from './Services';
+import ReadyForWork from './ReadyForWork';
+import FAQ from './FAQ';
 
 export {
   Hero,
@@ -19,6 +24,11 @@ export {
   Feedbacks,
   Contact,
   BackToTop,
+  Statistics,
+  Certifications,
+  Services,
+  ReadyForWork,
+  FAQ,
   EarthCanvas, 
   BallCanvas, 
   ComputersCanvas, 

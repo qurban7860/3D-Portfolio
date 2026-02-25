@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+Disallow: /dist/
+Disallow: /node_modules/
+Disallow: /.env
+Disallow: /.git/
+
+# Specific crawling instructions
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Sitemap
+Sitemap: https://qurbanhanif.com/sitemap.xml

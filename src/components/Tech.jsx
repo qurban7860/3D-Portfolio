@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import { motion } from "framer-motion";
 import { BallCanvas } from "./canvas";
 import { technologies } from "../Home";
@@ -24,4 +23,5 @@ const Tech = () => {
   );
 };
 
-export default SectionWrapper(Tech, "tech");
+const TechSection = SectionWrapper(Tech, "tech");
+export default TechSection;

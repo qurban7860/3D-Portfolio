@@ -3,14 +3,30 @@ import { motion } from "framer-motion";
 import { styles } from "../styles";
 import { ComputersCanvas } from "./canvas";
 
-const SkillCard = ({ skill }) => (
-  <motion.div whileHover={{ scale: 1.1 }} className="bg-tertiary rounded-lg p-4 shadow-md">
-    <h3 className="text-white text-[16px] font-bold text-center max-md:text-sm">{skill}</h3>
+const SkillCard = ({ skill, index }) => (
+  <motion.div 
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: index * 0.1 }}
+    whileHover={{ 
+      y: -5,
+      backgroundColor: "rgba(145, 94, 255, 0.2)",
+      borderColor: "#915EFF" 
+    }} 
+    className="w-[160px] h-[45px] flex-shrink-0 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl px-4 shadow-xl transition-colors duration-300 group cursor-default flex items-center"
+  >
+    <h3 className="text-white text-[14px] font-medium tracking-wide flex items-center gap-2 w-full">
+      <span className="w-1.5 h-1.5 rounded-full bg-[#915EFF] group-hover:animate-pulse flex-shrink-0" />
+      
+      <span className="truncate line-clamp-1" title={skill}>
+        {skill}
+      </span>
+    </h3>
   </motion.div>
 );
 
-SkillCard.propTypes = { skill: PropTypes.string.isRequired };
-const skills = ["MERN", "Material-UI", "Next.js", "React Native"];
+SkillCard.propTypes = { skill: PropTypes.string.isRequired, index: PropTypes.number.isRequired };
+const skills = ["TypeScript", "MERN", "Next.js", "Tailwind CSS"];
 
 const Hero = () => {
   return (

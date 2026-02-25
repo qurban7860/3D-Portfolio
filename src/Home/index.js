@@ -10,15 +10,16 @@ import {
     reactjs,
     tailwind,
     nodejs,
-    mongodb,
+    // mongodb,
     git,
     figma,
-    meta,
+    // meta,
     starbucks,
     tesla,
     pucit,
     terminus,
     carrent,
+    tmc,
     // threejs,
     Project1,
     fyp,
@@ -87,10 +88,10 @@ import {
       name: "Node JS",
       icon: nodejs,
     },
-    {
-      name: "MongoDB",
-      icon: mongodb,
-    },
+    // {
+    //   name: "MongoDB",
+    //   icon: mongodb,
+    // },
     // {
     //   name: "Three JS",
     //   icon: threejs,
@@ -121,12 +122,24 @@ import {
   
   const experiences = [
     {
+      title: "Software Engineer",
+      company_name: "TMC",
+      icon: tmc,
+      instituteUrl: "https://tmcltd.com/",
+      iconBg: "#E6DEDD",
+      date: "July 2025 - Present",
+      points: [
+        "Developing and maintaining web applications using React.js, Next.js, typescript, and other related technologies.",
+        "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
+      ],
+    },
+    {
       title: "Software Engineer | MERN",
       company_name: "Terminus Technologies",
       icon: terminus,
       instituteUrl: "https://terminustech.co.nz/",
       iconBg: "#E6DEDD",
-      date: "June 2024 - Present",
+      date: "June 2024 - July 2025",
       points: [
         "Developed an ERP system with dynamic UI features using React, Material-UI and Redux for a New Zealand-based firm.",
         "Created and Implemented RESTful APIs with Node.js and MongoDB, ensuring smooth integration and efficient state management."
@@ -154,18 +167,6 @@ import {
       points: [
         "Created a responsive and user-friendly dashboard application using React, leading to a 30% improvement in user engagement.",
         "Implementing responsive design and ensuring cross-browser compatibility.",
-      ],
-    },
-    {
-      title: "React Developer",
-      company_name: "Fiverr",
-      icon: meta,
-      instituteUrl: "https://www.fiverr.com/",
-      iconBg: "#E6DEDD",
-      date: "May 2023 - July 2023",
-      points: [
-        "Developing and maintaining web applications using React.js and other related technologies.",
-        "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
       ],
     },
   ];

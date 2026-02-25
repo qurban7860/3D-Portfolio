@@ -16,6 +16,9 @@ const ExperienceCard = ({ experience }) => {
       contentStyle={{
         background: "#1d1836",
         color: "#fff",
+        border: "1px solid rgba(145, 94, 255, 0.2)",
+        borderRadius: "0.75rem",
+        boxShadow: "0 4px 15px rgba(145, 94, 255, 0.1)"
       }}
       contentArrowStyle={{ borderRight: "7px solid  #232631" }}
       date={experience.date}
@@ -75,21 +78,25 @@ ExperienceCard.propTypes = {
 
 const EducationCard = ({ education }) => {
   return (
-    <div className='flex flex-col mb-8 rounded-3xl bg-[#1d1836] text-white p-6 relative'>
+    <motion.div
+      whileHover={{ y: -5 }}
+      className='flex flex-col mb-8 rounded-2xl bg-gradient-to-br from-tertiary to-black-200 text-white p-6 relative border border-[#915EFF]/20 hover:border-[#915EFF]/60 transition-all'
+    >
       <a
         href={education.instituteUrl}
         target='_blank'
         rel='noopener noreferrer'
         className='absolute top-6 right-6'
+        title={education.institute_name}
       >
         <img
           src={education.image}
           alt={`${education.institute_name} logo`}
-          className='w-12 h-12 object-contain hover:bg-opacity-80 transition duration-300 ease-in-out transform hover:scale-110 cursor-pointer'
+          className='w-12 h-12 object-contain hover:scale-110 transition-transform duration-300 cursor-pointer'
         />
       </a>
       <h3 className='text-[24px] font-bold'>{education.degree}</h3>
-      <p className='text-[16px] font-semibold mt-2'>{education.institute_name}</p>
+      <p className='text-[16px] font-semibold mt-2 text-[#915EFF]'>{education.institute_name}</p>
       <ul className='mt-5 list-disc pl-5 space-y-2'>
         {education.points.map((point, index) => (
           <li
@@ -100,7 +107,7 @@ const EducationCard = ({ education }) => {
           </li>
         ))}
       </ul>
-    </div>
+    </motion.div>
   );
 };
 
@@ -154,4 +161,5 @@ const Experience = () => {
   );
 };
 
-export default SectionWrapper(Experience, "work");
+const ExperienceSection = SectionWrapper(Experience, "experience");
+export default ExperienceSection;

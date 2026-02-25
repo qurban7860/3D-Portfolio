@@ -28,6 +28,7 @@ import starbucks from "./company/cosvm.png";
 import tesla from "./company/upwork.svg";
 import pucit from "./company/pucit.png";
 import terminus from "./company/terminus.png";
+import tmc from "./company/tmc.png";
 
 import carrent from "./carrent.png";
 import jobit from "./jobit.png";
@@ -63,6 +64,7 @@ export {
   meta,
   pucit,
   terminus,
+  tmc,
   starbucks,
   tesla,
   Project1,

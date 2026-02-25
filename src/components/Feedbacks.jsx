@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import { motion } from "framer-motion";
 import PropTypes from "prop-types"; 
 import { styles } from "../styles";
@@ -18,7 +17,7 @@ const FeedbackCard = ({
     variants={fadeIn("", "spring", index * 0.5, 0.75)}
     className='bg-black-200 p-10 rounded-3xl xs:w-[320px] w-full'
   >
-    <p className='text-white font-black text-[48px]'>"</p>
+    <p className='text-white font-black text-[48px]'>&quot;</p>
 
     <div className='mt-1'>
       <p className='text-white tracking-wider text-[18px]'>{testimonial}</p>
@@ -55,7 +54,7 @@ const Feedbacks = () => {
           <h2 className={styles.sectionHeadText}>Testimonials</h2>
         </motion.div>
       </div>
-      <div className={`mt-10 pb-14 ${styles.paddingX} flex flex-wrap gap-7 justify-evenly`}>
+      <div className={`mt-10 pb-14 ${styles.paddingX} grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6`}>
         {testimonials.map((testimonial, index) => (
           <FeedbackCard key={testimonial.name} index={index} {...testimonial} />
         ))}
@@ -73,4 +72,6 @@ FeedbackCard.propTypes = {
   // company: PropTypes.string,
 };
 
-export default SectionWrapper(Feedbacks, "");
+const FeedbacksSection = SectionWrapper(Feedbacks, "feedbacks");
+
+export default FeedbacksSection;

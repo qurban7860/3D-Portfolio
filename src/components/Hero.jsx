@@ -52,7 +52,7 @@ const Hero = () => {
             ))}
           </div>
 
-          <div className="mt-20 mb-10 flex justify-center items-center sm:hidden">
+          <div className="mt-10 mb-10 flex justify-center items-center sm:hidden">
             <a href="#about">
               <div className="w-[30px] h-[50px] rounded-3xl border-4 border-secondary flex justify-center items-start p-2">
                 <motion.div

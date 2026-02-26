@@ -2,8 +2,6 @@ import { useRef, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
 import emailjs from "@emailjs/browser";
-
-import { styles } from "../styles";
 import { EarthCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
 import { slideIn, fadeIn } from "../Animation/motion";
@@ -182,9 +180,13 @@ const Contact = () => {
           variants={slideIn("left", "tween", 0.2, 1)}
           className="flex-[0.75] bg-black-100 p-8 rounded-2xl border border-[#915EFF]/10"
         >
-          <p className="section-badge">Let&apos;s Connect</p>
-          <p className={styles.sectionSubText}>Get in touch</p>
-          <h3 className={styles.sectionHeadText}>Contact Me</h3>
+          <div className="flex flex-col items-start gap-3">
+            <span className="section-badge">Let&apos;s Connect</span>
+
+            <h3 className="text-white font-bold text-2xl sm:text-3xl leading-tight">
+              Contact Me
+            </h3>
+          </div>
 
           {submitStatus === "success" && (
             <motion.div
@@ -193,7 +195,8 @@ const Contact = () => {
               exit={{ opacity: 0, y: -10 }}
               className="mt-4 p-4 bg-green-500 bg-opacity-20 border border-green-500 rounded-lg text-green-400 flex items-center gap-2"
             >
-              <span>✓</span> Thank you! I&apos;ll get back to you as soon as possible.
+              <span>✓</span> Thank you! I&apos;ll get back to you as soon as
+              possible.
             </motion.div>
           )}
           {submitStatus === "error" && (
@@ -252,10 +255,13 @@ const Contact = () => {
 
       <motion.div
         variants={fadeIn("up", "spring", 0.4, 0.75)}
-        className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6"
+        className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6"
       >
         {contactMethods.map((method, index) => (
-          <motion.div key={index} variants={fadeIn("up", "spring", index * 0.1, 0.75)}>
+          <motion.div
+            key={index}
+            variants={fadeIn("up", "spring", index * 0.1, 0.75)}
+          >
             <ContactMethod {...method} />
           </motion.div>
         ))}

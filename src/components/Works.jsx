@@ -1,6 +1,5 @@
 import { Tilt } from "react-tilt";
 import { motion } from "framer-motion";
-import { styles } from "../styles";
 import PropTypes from "prop-types"; 
 import { github } from "../assets";
 import { SectionWrapper } from "../hoc";
@@ -82,26 +81,24 @@ const ProjectCard = ({
 const Works = () => {
   return (
     <>
-      <motion.div variants={textVariant()}>
-        <p className="section-badge">Portfolio</p>
-        <p className={`${styles.sectionSubText} `}>My work</p>
-        <h2 className={`${styles.sectionHeadText}`}>Projects</h2>
+      <motion.div
+        variants={textVariant()}
+        className="flex flex-col items-start gap-4"
+      >
+        <span className="section-badge">
+          Portfolio
+        </span>
+
+        <h2 className="text-white font-extrabold text-3xl sm:text-4xl leading-tight max-w-3xl">
+          Projects & Case Studies
+        </h2>
+
+        <p className="text-secondary text-base sm:text-lg leading-relaxed">
+          A collection of projects demonstrating my ability to build scalable, performant, and user-focused applications using modern technologies.
+        </p>
       </motion.div>
 
-      <div className='w-full flex'>
-        <motion.p
-          variants={fadeIn("", "", 0.1, 1)}
-          className='mt-3 text-secondary text-[17px] w-full leading-[30px]'
-        >
-          Following projects showcases my skills and experience through
-          real-world examples of my work. Each project is briefly described with
-          links to code repositories and live demos in it. It reflects my
-          ability to solve complex problems, work with different technologies,
-          and manage projects effectively.
-        </motion.p>
-      </div>
-
-      <div className='mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+      <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {projects.map((project, index) => (
           <ProjectCard key={`project-${index}`} index={index} {...project} />
         ))}

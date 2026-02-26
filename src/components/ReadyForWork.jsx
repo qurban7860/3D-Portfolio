@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
-import { styles } from "../styles";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../Animation/motion";
 
@@ -64,29 +63,30 @@ const ReadyForWork = () => {
 
   return (
     <>
-      <motion.div variants={textVariant()}>
-        <p className="section-badge">Get In Touch</p>
-        <p className={styles.sectionSubText}>Collaboration</p>
-        <h2 className={styles.sectionHeadText}>Available For New Opportunities</h2>
+      <motion.div variants={textVariant()} className="flex flex-col items-start gap-4">
+        <span className="section-badge">
+          Get In Touch
+        </span>
+
+        <h2 className="text-white font-extrabold text-3xl sm:text-4xl leading-tight max-w-3xl">
+          Available for New Opportunities
+        </h2>
+
+        <p className="text-secondary text-base sm:text-lg leading-relaxed">
+          I&apos;m actively looking for exciting opportunities to collaborate with innovative teams and tackle challenging problems. Whether you need a full-time developer, a freelance expert for a specific project, or a technical consultant, I&apos;m ready to bring value to your organization.
+        </p>
       </motion.div>
 
-      <motion.div
-        variants={fadeIn("up", "spring", 0.1, 0.75)}
-        className="mt-8 flex justify-start"
-      >
+      <motion.div variants={fadeIn("up", "spring", 0.2, 0.75)} className="mt-6">
         <AvailabilityBadge status="Open for Work" icon="🚀" />
       </motion.div>
 
-      <motion.p
-        variants={fadeIn("", "", 0.2, 1)}
-        className="mt-8 text-secondary text-[17px] w-full leading-[30px]"
-      >
-        I&apos;m actively looking for exciting opportunities to collaborate with innovative teams and tackle challenging problems. Whether you need a full-time developer, a freelance expert for a specific project, or a technical consultant, I&apos;m ready to bring value to your organization.
-      </motion.p>
-
-      <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+      <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
         {hiringPoints.map((item, index) => (
-          <motion.div key={index} variants={fadeIn("up", "spring", index * 0.1, 0.75)}>
+          <motion.div
+            key={index}
+            variants={fadeIn("up", "spring", index * 0.1, 0.75)}
+          >
             <HireCard {...item} />
           </motion.div>
         ))}
@@ -126,14 +126,18 @@ const ReadyForWork = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <p className="text-[#915EFF] text-[24px] font-bold">3+ Years</p>
-            <p className="text-secondary text-[14px]">Professional Development</p>
+            <p className="text-secondary text-[14px]">
+              Professional Development
+            </p>
           </div>
           <div>
             <p className="text-[#915EFF] text-[24px] font-bold">50+ Projects</p>
             <p className="text-secondary text-[14px]">Successfully Delivered</p>
           </div>
           <div>
-            <p className="text-[#915EFF] text-[24px] font-bold">Global Clients</p>
+            <p className="text-[#915EFF] text-[24px] font-bold">
+              Global Clients
+            </p>
             <p className="text-secondary text-[14px]">From 5+ Countries</p>
           </div>
         </div>

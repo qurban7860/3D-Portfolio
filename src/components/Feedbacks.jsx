@@ -44,19 +44,37 @@ const FeedbackCard = ({
 
 const Feedbacks = () => {
   return (
-    <div className={`mt-12 bg-black-100 rounded-[20px]`}>
-      <div
-        className={`bg-tertiary rounded-2xl ${styles.padding} min-h-[300px]`}
-      >
-        <motion.div variants={textVariant()}>
-          <p className="section-badge">Testimonials</p>
-          <p className={styles.sectionSubText}>What others say</p>
-          <h2 className={styles.sectionHeadText}>Testimonials</h2>
+    <div className="bg-black-100 rounded-3xl overflow-hidden">
+      
+      <div className={`bg-tertiary ${styles.padding} py-16`}>
+        <motion.div
+          variants={textVariant()}
+          className="flex flex-col items-start gap-4"
+        >
+          <span className="section-badge">
+            Testimonials
+          </span>
+
+          <h2 className="text-white font-extrabold text-3xl sm:text-4xl leading-tight max-w-2xl">
+            What others say
+          </h2>
+
+          <p className="text-secondary text-base sm:text-lg leading-relaxed">
+            Real feedback from collaborators and clients who’ve experienced
+            my work and dedication firsthand.
+          </p>
         </motion.div>
       </div>
-      <div className={`mt-10 pb-14 ${styles.paddingX} grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6`}>
+
+      <div
+        className={`mt-5 pb-5 ${styles.paddingX} grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8`}
+      >
         {testimonials.map((testimonial, index) => (
-          <FeedbackCard key={testimonial.name} index={index} {...testimonial} />
+          <FeedbackCard
+            key={testimonial.name}
+            index={index}
+            {...testimonial}
+          />
         ))}
       </div>
     </div>

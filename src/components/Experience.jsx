@@ -5,7 +5,6 @@ import {
 } from "react-vertical-timeline-component";
 import { motion } from "framer-motion";
 import "react-vertical-timeline-component/style.min.css";
-import { styles } from "../styles";
 import { experiences, educations } from "../Home"; 
 import { SectionWrapper } from "../hoc";
 import { textVariant } from "../Animation/motion";
@@ -124,39 +123,29 @@ EducationCard.propTypes = {
 const Experience = () => {
   return (
     <>
-      <motion.div variants={textVariant()}>
-        <p className="section-badge">Career Path</p>
-        <p className={`${styles.sectionSubText} text-left`}>
-          What I have done so far
-        </p>
-        <h2 className={`${styles.sectionHeadText} text-left`}>Education</h2>
+      <motion.div variants={textVariant()} className="flex flex-col items-start gap-2">
+        <span className="section-badge inline-block">Career Path</span>
+        <h2 className="text-white font-extrabold text-3xl sm:text-4xl leading-tight max-w-3xl">Education</h2>
       </motion.div>
 
-      <div className='mt-10'>
-        {educations.map((education, index) => (
-          <EducationCard key={`education-${index}`} education={education} />
+      <div className="mt-8">
+        {educations.map((edu, idx) => (
+          <EducationCard key={idx} education={edu} />
         ))}
       </div>
 
-      <motion.div variants={textVariant()}>
-        <h2 className={`${styles.sectionHeadText} text-left`}>
-          Work Experience
-        </h2>
+      <motion.div variants={textVariant()} className="mt-12">
+        <span className="section-badge inline-block">Professional Journey</span>
+        <h2 className="text-white font-extrabold text-3xl sm:text-4xl leading-tight max-w-3xl">Work Experience</h2>
       </motion.div>
 
-      <div className='mt-10 flex flex-col'>
+      <div className="mt-6">
         <VerticalTimeline>
-          {experiences.map((experience, index) => (
-            <ExperienceCard
-              key={`experience-${index}`}
-              experience={experience}
-            />
+          {experiences.map((exp, idx) => (
+            <ExperienceCard key={idx} experience={exp} />
           ))}
         </VerticalTimeline>
       </div>
-      {/* <div className='mt-5'>
-        <h2 className={styles.sectionHeadText}>Skills</h2>
-      </div> */}
     </>
   );
 };

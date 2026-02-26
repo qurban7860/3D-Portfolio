@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import PropTypes from "prop-types";
-import { styles } from "../styles";
 import { SectionWrapper } from "../hoc";
 import { textVariant, fadeIn } from "../Animation/motion";
 import { faqs } from "../constants/seoConfig";
@@ -61,26 +60,27 @@ FAQItem.propTypes = {
 const FAQ = () => {
   return (
     <>
-      <motion.div variants={textVariant()}>
-        <p className="section-badge">Help & Support</p>
-        <p className={styles.sectionSubText}>Common Questions</p>
-        <h2 className={styles.sectionHeadText}>FAQ</h2>
+      <motion.div
+        variants={textVariant()}
+        className="flex flex-col items-start gap-3"
+      >
+        <span className="section-badge">
+          Help & Support
+        </span>
+
+        <h2 className="text-white font-extrabold text-3xl sm:text-4xl leading-tight">
+          Frequently Asked Questions
+        </h2>
+
+        <p className="text-secondary text-base sm:text-lg">
+          Find answers to common questions about my services, processes, and
+          working arrangements.
+        </p>
       </motion.div>
 
-      <motion.p
-        variants={fadeIn("", "", 0.1, 1)}
-        className="mt-4 text-secondary text-[17px] w-full leading-[30px]"
-      >
-        Find answers to common questions about my services, processes, and working arrangements. Can&apos;t find what you need? Feel free to reach out!
-      </motion.p>
-
-      <div className="mt-16 space-y-4 w-full">
+      <div className="mt-12 space-y-4 w-full">
         {faqs.map((faq, index) => (
-          <FAQItem
-            key={faq.id}
-            {...faq}
-            index={index}
-          />
+          <FAQItem key={faq.id} {...faq} index={index} />
         ))}
       </div>
 
@@ -92,7 +92,8 @@ const FAQ = () => {
           Still have questions?
         </p>
         <p className="text-secondary text-[16px] mb-6">
-          I&apos;m always happy to discuss your project needs. Reach out anytime!
+          I&apos;m always happy to discuss your project needs. Reach out
+          anytime!
         </p>
         <a
           href="#contact"

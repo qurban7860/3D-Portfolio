@@ -1,31 +1,37 @@
-import { Suspense, useEffect, useRef } from "react";
+/* eslint-disable react/no-unknown-property */
+/* eslint-disable react/prop-types */
+import { Suspense, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
-
 import CanvasLoader from "../Loader";
 
-const Earth = () => {
+const Earth = ({ isMobile }) => {
   const earth = useGLTF("./planet/scene.gltf");
+  
+  const scale = isMobile ? 2.2 : 2.8;
 
-  useEffect(() => {
-    const positions = earth.nodes?.Earth?.geometry?.attributes?.position?.array;
-
-    if (positions) {
-      for (let i = 0; i < positions.length; i++) {
-        if (Number.isNaN(positions[i])) {
-          console.error("Position attribute contains NaN values.");
-          break;
-        }
-      }
-    }
-  }, [earth]);
-
-  // eslint-disable-next-line react/no-unknown-property
-  return <primitive object={earth.scene} scale={2.5} position-y={0} rotation-y={0} />;
+  return (
+    <primitive 
+      object={earth.scene} 
+      scale={scale} 
+      position-y={0} 
+      rotation-y={0} 
+    />
+  );
 };
 
 const EarthCanvas = () => {
-  const controls = useRef();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    setIsMobile(mediaQuery.matches);
+
+    const handleMediaQueryChange = (event) => setIsMobile(event.matches);
+    mediaQuery.addEventListener("change", handleMediaQueryChange);
+
+    return () => mediaQuery.removeEventListener("change", handleMediaQueryChange);
+  }, []);
 
   return (
     <Canvas
@@ -37,27 +43,19 @@ const EarthCanvas = () => {
         fov: 45,
         near: 0.1,
         far: 200,
-        position: [-4, 3, 6],
+        position: [-4, 3, isMobile ? 8 : 6], 
       }}
+      style={{ width: '100%', height: '100%' }}
     >
       <Suspense fallback={<CanvasLoader />}>
         <OrbitControls
-          ref={controls}
           autoRotate
           enableZoom={false}
           maxPolarAngle={Math.PI / 2}
           minPolarAngle={Math.PI / 2}
         />
-        <Earth />
-
-        <Preload
-          all
-          onLoaded={() => {
-            controls.current.startTransition(() => {
-              controls.current.enabled = true;
-            });
-          }}
-        />
+        <Earth isMobile={isMobile} />
+        <Preload all />
       </Suspense>
     </Canvas>
   );

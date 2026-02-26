@@ -8,13 +8,16 @@ import { menu, close, github, phone, linkedin } from "../assets";
 import resumePdf from "../assets/resume/Resume_Mern.pdf";
 import logo from "/logo.svg";
 
-const ContactCard = ({ title, icon, link }) => (
-  <a href={link} target="_blank" rel="noopener noreferrer" title={title} className="group">
-    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-tertiary rounded-full flex justify-center items-center hover:bg-opacity-80 transition duration-300 ease-in-out transform hover:scale-110 cursor-pointer hover:shadow-lg hover:shadow-[#915EFF]/50">
-      <img src={icon} alt={title} className="w-5 h-5 sm:w-6 sm:h-6 object-contain rounded-full" />
-    </div>
-  </a>
-);
+const ContactCard = ({ title, icon, link, url }) => {
+  const href = link ?? url;
+  return href ? (
+    <a href={href} target="_blank" rel="noopener noreferrer" title={title} className="group">
+      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-tertiary rounded-full flex justify-center items-center hover:bg-opacity-80 transition duration-300 ease-in-out transform hover:scale-110 cursor-pointer hover:shadow-lg hover:shadow-[#915EFF]/50">
+        <img src={icon} alt={title} className="w-5 h-5 sm:w-6 sm:h-6 object-contain rounded-full" />
+      </div>
+    </a>
+  ) : null;
+};
 
 const ResumeButton = ({ isMobile = false }) => {
   const [showOptions, setShowOptions] = useState(false);
@@ -66,21 +69,39 @@ const ResumeButton = ({ isMobile = false }) => {
   );
 };
 
-const NavLinkItem = ({ nav, active, onLinkClick }) => (
-  <li
-    className={`${
-      active === nav.title ? "text-white border-b-2 border-[#915EFF] pb-1" : "text-secondary"
-    } hover:text-white font-medium cursor-pointer transition-all duration-300`}
-    style={{ fontSize: "clamp(13px, 1.1vw, 18px)" }}
-    onClick={() => onLinkClick(nav.title)}
-  >
-    <a href={`#${nav.id}`}>{nav.title}</a>
-  </li>
-);
+const NavLinkItem = ({ nav, active, onLinkClick }) => {
+  const handleClick = (e) => {
+    e.preventDefault();
+    const el = document.getElementById(nav.id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    onLinkClick(nav.title);
+  };
+  return (
+    <li
+      className={`${
+        active === nav.title ? "text-white border-b-2 border-[#915EFF] pb-1" : "text-secondary"
+      } hover:text-white font-medium cursor-pointer transition-all duration-300`}
+      style={{ fontSize: "clamp(13px, 1.1vw, 18px)" }}
+    >
+      <a href={`#${nav.id}`} onClick={handleClick}>{nav.title}</a>
+    </li>
+  );
+};
 
-const MobileMenu = ({ toggle, setToggle, active, navLinks: links, onNavClick, contactLinks }) => (
+const MobileMenu = ({ toggle, setToggle, active, navLinks: links, onNavClick, contactLinks }) => {
+  const handleNavClick = (e, nav) => {
+    e.preventDefault();
+    const el = document.getElementById(nav.id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    onNavClick(nav.title);
+  };
+  return (
   <div
-    className={`${!toggle ? "hidden" : "flex"} p-6 black-gradient absolute top-0 right-0 w-[260px] h-screen z-50 flex-col shadow-2xl transition-all duration-300 border-l border-white/10`}
+    className={`${!toggle ? "hidden" : "flex"} p-6 black-gradient absolute top-0 right-0 w-[260px] min-h-screen max-h-screen overflow-y-auto z-50 flex-col shadow-2xl transition-all duration-300 border-l border-white/10`}
   >
     <div className="flex justify-end w-full">
       <img
@@ -98,9 +119,8 @@ const MobileMenu = ({ toggle, setToggle, active, navLinks: links, onNavClick, co
           className={`font-poppins font-medium cursor-pointer text-[18px] ${
             active === nav.title ? "text-[#915EFF]" : "text-secondary"
           }`}
-          onClick={() => onNavClick(nav.title)}
         >
-          <a href={`#${nav.id}`}>{nav.title}</a>
+          <a href={`#${nav.id}`} onClick={(e) => handleNavClick(e, nav)}>{nav.title}</a>
         </li>
       ))}
       <li className="pt-4 border-t border-tertiary">
@@ -114,7 +134,8 @@ const MobileMenu = ({ toggle, setToggle, active, navLinks: links, onNavClick, co
       ))}
     </div>
   </div>
-);
+  );
+};
 
 const Navbar = () => {
   const [active, setActive] = useState("");

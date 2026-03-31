@@ -22,7 +22,7 @@ const CanvasLoader = ({ isFullScreen = false }) => {
           fontSize: 14,
           color: "#F1F1F1",
           fontWeight: 800,
-          marginTop: 40,
+          marginTop: "30px",
           textShadow: "0 0 10px rgba(145, 94, 255, 0.5)",
         }}
       >

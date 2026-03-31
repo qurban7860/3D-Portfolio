@@ -43,7 +43,7 @@ const About = () => {
         variants={textVariant()}
         className="flex flex-col items-start gap-4"
       >
-        <span className="section-badge mt-12">About Me</span>
+        <span className="section-badge">About Me</span>
 
         <h2 className="text-white font-extrabold text-3xl sm:text-4xl leading-tight max-w-3xl">
           Overview
@@ -100,3 +100,15 @@ const About = () => {
 
 const AboutSection = SectionWrapper(About, "about");
 export default AboutSection;
+
+{/* <div className="absolute bottom-10 w-full flex justify-center items-center z-30">
+        <a href="#about">
+          <div className="w-[30px] h-[50px] rounded-3xl border-4 border-secondary flex justify-center items-start p-2">
+            <motion.div
+              animate={{ y: [0, 16, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, repeatType: "loop" }}
+              className="w-2 h-2 rounded-full bg-secondary mb-1"
+            />
+          </div>
+        </a>
+      </div> */}

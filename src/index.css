@@ -25,6 +25,12 @@ html, body, #root {
   display: block;
 }
 
+@media (max-width: 768px) {
+  .hash-span {
+    padding-bottom: 30px;
+  }
+}
+
 .black-gradient {
   background: #000000; 
   background: -webkit-linear-gradient(

@@ -41,7 +41,7 @@ const About = () => {
     <>
       <motion.div
         variants={textVariant()}
-        className="flex flex-col items-start gap-4"
+        className="flex flex-col items-start gap-4 md:mt-0 -mt-8"
       >
         <span className="section-badge">About Me</span>
 

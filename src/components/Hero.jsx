@@ -23,7 +23,7 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 h-[60vh] sm:h-[70vh] z-10">
+      <div className="absolute inset-x-0 bottom-0 h-[60vh] sm:h-[70vh] z-10 pointer-events-none">
         <ComputersCanvas />
       </div>
     </section>

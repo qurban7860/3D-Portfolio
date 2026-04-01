@@ -48,30 +48,36 @@ Computers.propTypes = { isMobile: PropTypes.bool.isRequired };
 
 const ComputersCanvas = () => {
   const [isMobile, setIsMobile] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 768px)");
     setIsMobile(mediaQuery.matches);
-    setIsLoaded(true);
-
     const handleMediaQueryChange = (event) => setIsMobile(event.matches);
-    mediaQuery.addEventListener("change", handleMediaQueryChange);
-    return () => mediaQuery.removeEventListener("change", handleMediaQueryChange);
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener("change", handleMediaQueryChange);
+    } else {
+      mediaQuery.addListener(handleMediaQueryChange);
+    }
+    return () => {
+      if (mediaQuery.removeEventListener) {
+        mediaQuery.removeEventListener("change", handleMediaQueryChange);
+      } else {
+        mediaQuery.removeListener(handleMediaQueryChange);
+      }
+    };
   }, []);
 
   return (
     <div className="w-full h-full">
       <Canvas
-        frameloop="demand"
+        frameloop="always"
         shadows={!isMobile}
-        dpr={isMobile ? [1, 1] : [1, 2]}
+        dpr={[1, 2]}
         camera={{ position: [20, 3, 5], fov: 25, near: 0.1, far: 100 }}
         gl={{ 
           preserveDrawingBuffer: true, 
           antialias: true,
           alpha: true,
-          powerPreference: "high-performance"
         }}
         style={{ height: '100%', width: '100%', background: 'transparent' }}
       >
@@ -85,7 +91,7 @@ const ComputersCanvas = () => {
             autoRotateSpeed={0.5}
             target={[0, 0, 0]}
           />
-          {isLoaded && <Computers isMobile={isMobile} />}
+          <Computers isMobile={isMobile} />
         </Suspense>
         <Preload all />
       </Canvas>

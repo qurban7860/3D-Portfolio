@@ -11,8 +11,8 @@ const Computers = ({ isMobile }) => {
   const { position, scale } = useMemo(() => {
     if (isMobile) {
       return {
-        position: [0, -2.8, 0],
-        scale: 0.5,
+        position: [0, -2.2, 0],
+        scale: 0.45,
       };
     }
     return {

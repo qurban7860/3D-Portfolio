@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unknown-property */
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
 import PropTypes from "prop-types"; 
 import { Canvas } from "@react-three/fiber";
-import { Decal, Float, OrbitControls, Preload, useTexture } from "@react-three/drei";
+import { Decal, Float, OrbitControls, useTexture } from "@react-three/drei";
 
 import CanvasLoader from "../Loader";
 
@@ -37,25 +37,47 @@ Ball.propTypes = {
   imgUrl: PropTypes.string.isRequired,
 };
 
-const BallCanvas = ({ icon }) => {
-  return (
-    <Canvas
-      frameloop="demand"
-      dpr={[1, 2]}
-      gl={{ preserveDrawingBuffer: true }}
-    >
-      <Suspense fallback={<CanvasLoader />}>
-        <OrbitControls enableZoom={false} />
-        <Ball imgUrl={icon} />
-      </Suspense>
+const BallCanvas = ({ icon, index = 0 }) => {
+  const [isMobile, setIsMobile] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
-      <Preload all />
-    </Canvas>
+  useEffect(() => {
+    const timer = setTimeout(() => setIsReady(true), index * 50 + 100);
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    setIsMobile(mediaQuery.matches);
+    
+    const handleMediaQueryChange = (event) => setIsMobile(event.matches);
+    mediaQuery.addEventListener("change", handleMediaQueryChange);
+    return () => {
+      clearTimeout(timer);
+      mediaQuery.removeEventListener("change", handleMediaQueryChange);
+    };
+  }, [index]);
+
+  return (
+    <div className="w-full h-full bg-transparent flex items-center justify-center">
+      {isReady && (
+        <Canvas
+          frameloop="always"
+          dpr={isMobile ? [1, 1] : [1, 2]}
+          gl={{ 
+            preserveDrawingBuffer: true,
+            antialias: !isMobile
+          }}
+        >
+          <Suspense fallback={<CanvasLoader />}>
+            <OrbitControls enableZoom={false} />
+            <Ball imgUrl={icon} />
+          </Suspense>
+        </Canvas>
+      )}
+    </div>
   );
 };
 
 BallCanvas.propTypes = {
   icon: PropTypes.string.isRequired,
+  index: PropTypes.number,
 };
 
 export default BallCanvas;

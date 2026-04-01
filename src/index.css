@@ -409,10 +409,6 @@ canvas {
 }
 
 @media (max-width: 768px) {
-  .hero-section {
-    background-attachment: scroll !important;
-  }
-  
   canvas {
     image-rendering: pixelated;
     will-change: transform;

@@ -22,40 +22,30 @@ const Earth = ({ isMobile }) => {
 
 const EarthCanvas = () => {
   const [isMobile, setIsMobile] = useState(false);
-  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsReady(true), 200);
     const mediaQuery = window.matchMedia("(max-width: 768px)");
     setIsMobile(mediaQuery.matches);
+
     const handleMediaQueryChange = (event) => setIsMobile(event.matches);
     mediaQuery.addEventListener("change", handleMediaQueryChange);
 
-    return () => {
-      clearTimeout(timer);
-      mediaQuery.removeEventListener("change", handleMediaQueryChange);
-    };
+    return () => mediaQuery.removeEventListener("change", handleMediaQueryChange);
   }, []);
 
   return (
-    <div className="w-full h-full bg-transparent">
-      {isReady && (
-        <Canvas
+    <Canvas
       shadows
-          frameloop="always"
-          dpr={isMobile ? [1, 1] : [1, 2]}
-          gl={{ 
-            preserveDrawingBuffer: true,
-            antialias: false,
-            powerPreference: "high-performance"
-          }}
+      frameloop="demand"
+      dpr={[1, 2]}
+      gl={{ preserveDrawingBuffer: true }}
       camera={{
         fov: 45,
         near: 0.1,
         far: 200,
         position: [-4, 3, isMobile ? 8 : 6], 
       }}
-          style={{ width: '100%', height: '100%', touchAction: "pan-y" }}
+      style={{ width: '100%', height: '100%' }}
     >
       <Suspense fallback={<CanvasLoader />}>
         <OrbitControls
@@ -67,12 +57,8 @@ const EarthCanvas = () => {
         <Earth isMobile={isMobile} />
         <Preload all />
       </Suspense>
-        </Canvas>
-      )}
-    </div>
+    </Canvas>
   );
 };
-
-useGLTF.preload("./planet/scene.gltf");
 
 export default EarthCanvas;

@@ -404,7 +404,8 @@ textarea:focus {
 
 canvas {
   display: block !important;
-  touch-action: none !important;
+  touch-action: pan-y !important;
+  background-color: transparent !important;
   -webkit-tap-highlight-color: transparent;
 }
 html {

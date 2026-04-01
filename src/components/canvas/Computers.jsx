@@ -48,8 +48,11 @@ Computers.propTypes = { isMobile: PropTypes.bool.isRequired };
 
 const ComputersCanvas = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
+    const timer = setTimeout(() => setIsReady(true), 100);
+
     const mediaQuery = window.matchMedia("(max-width: 768px)");
     setIsMobile(mediaQuery.matches);
     const handleMediaQueryChange = (event) => setIsMobile(event.matches);
@@ -59,6 +62,7 @@ const ComputersCanvas = () => {
       mediaQuery.addListener(handleMediaQueryChange);
     }
     return () => {
+      clearTimeout(timer);
       if (mediaQuery.removeEventListener) {
         mediaQuery.removeEventListener("change", handleMediaQueryChange);
       } else {
@@ -68,37 +72,40 @@ const ComputersCanvas = () => {
   }, []);
 
   return (
-    <div className="w-full h-full">
-      <Canvas
-        frameloop="always"
-        shadows={!isMobile}
-        dpr={[1, 2]}
-        camera={{ position: [20, 3, 5], fov: 25, near: 0.1, far: 100 }}
-        gl={{ 
-          preserveDrawingBuffer: true, 
-          antialias: true,
-          alpha: true,
-          powerPreference: "high-performance",
-        }}
-        style={{ height: '100%', width: '100%', background: 'transparent', touchAction: "pan-y",  }}
-      >
-        <Suspense fallback={<CanvasLoader />}>
-          <OrbitControls
-            enableZoom={false}
-            maxPolarAngle={Math.PI / 2}
-            minPolarAngle={Math.PI / 2}
-            enableRotate={!isMobile}
-            enablePan={false}
-            autoRotate
-            autoRotateSpeed={0.5}
-            target={[0, 0, 0]}
-          />
-          <Computers isMobile={isMobile} />
-        </Suspense>
-        <Preload all />
-      </Canvas>
+    <div className="w-full h-full bg-transparent">
+      {isReady && (
+        <Canvas
+          frameloop="always"
+          shadows={!isMobile}
+          dpr={isMobile ? [1, 1] : [1, 2]}
+          camera={{ position: [20, 3, 5], fov: 25, near: 0.1, far: 100 }}
+          gl={{ 
+            preserveDrawingBuffer: true, 
+            antialias: false,
+            powerPreference: "high-performance",
+          }}
+          style={{ height: '100%', width: '100%', touchAction: "pan-y" }}
+        >
+          <Suspense fallback={<CanvasLoader />}>
+            <OrbitControls
+              enableZoom={false}
+              maxPolarAngle={Math.PI / 2}
+              minPolarAngle={Math.PI / 2}
+              enableRotate={!isMobile}
+              enablePan={false}
+              autoRotate
+              autoRotateSpeed={0.5}
+              target={[0, 0, 0]}
+            />
+            <Computers isMobile={isMobile} />
+          </Suspense>
+          <Preload all />
+        </Canvas>
+      )}
     </div>
   );
 };
+
+useGLTF.preload("./desktop_pc/scene.gltf");
 
 export default ComputersCanvas;

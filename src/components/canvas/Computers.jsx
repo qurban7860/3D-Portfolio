@@ -78,14 +78,16 @@ const ComputersCanvas = () => {
           preserveDrawingBuffer: true, 
           antialias: true,
           alpha: true,
+          powerPreference: "high-performance",
         }}
-        style={{ height: '100%', width: '100%', background: 'transparent' }}
+        style={{ height: '100%', width: '100%', background: 'transparent', touchAction: "pan-y",  }}
       >
         <Suspense fallback={<CanvasLoader />}>
           <OrbitControls
             enableZoom={false}
             maxPolarAngle={Math.PI / 2}
             minPolarAngle={Math.PI / 2}
+            enableRotate={!isMobile}
             enablePan={false}
             autoRotate
             autoRotateSpeed={0.5}

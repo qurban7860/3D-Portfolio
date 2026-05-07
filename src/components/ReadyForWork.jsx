@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
+import { usePortfolio } from "../context/PortfolioContext";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../Animation/motion";
 
@@ -38,6 +39,12 @@ HireCard.propTypes = {
 };
 
 const ReadyForWork = () => {
+  const { data } = usePortfolio();
+  const contact = data?.settings?.contact ?? {};
+  const availabilityStatus = contact.availabilityStatus || "Open for Work";
+  const emailLink = contact.email ? `mailto:${contact.email}` : "mailto:qurbanhanif120@gmail.com";
+  const linkedinLink = contact.linkedin || "https://www.linkedin.com/in/qurban015";
+
   const hiringPoints = [
     {
       icon: "⚡",
@@ -78,7 +85,7 @@ const ReadyForWork = () => {
       </motion.div>
 
       <motion.div variants={fadeIn("up", "spring", 0.2, 0.75)} className="mt-6">
-        <AvailabilityBadge status="Open for Work" icon="🚀" />
+        <AvailabilityBadge status={availabilityStatus} icon="🚀" />
       </motion.div>
 
       <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
@@ -103,13 +110,13 @@ const ReadyForWork = () => {
           📧 Start a Conversation
         </a>
         <a
-          href="mailto:qurbanhanif120@gmail.com"
+          href={emailLink}
           className="inline-flex items-center justify-center px-8 py-4 border border-[#915EFF] text-[#915EFF] font-bold rounded-lg hover:bg-[#915EFF]/10 transition-all duration-300"
         >
           ✉️ Send Email Directly
         </a>
         <a
-          href="https://www.linkedin.com/in/qurban015"
+          href={linkedinLink}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center px-8 py-4 border border-[#56ccf2] text-[#56ccf2] font-bold rounded-lg hover:bg-[#56ccf2]/10 transition-all duration-300"

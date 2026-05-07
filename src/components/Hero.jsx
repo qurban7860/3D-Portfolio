@@ -1,7 +1,13 @@
 import { styles } from "../styles";
-import ComputersCanvas from "./canvas/Computers"; 
+import ComputersCanvas from "./canvas/Computers";
+import { usePortfolio } from "../context/PortfolioContext";
 
 const Hero = () => {
+  const { data } = usePortfolio();
+  const hero = data?.settings?.hero ?? {};
+  const headline = hero.headline || "Hi, I'm Qurban";
+  const subtitle = hero.subtitle || "Turning your ideas into powerful web and mobile solutions with clean code and smooth user experiences.";
+
   return (
     <section className="relative w-full md:min-h-[100dvh] min-h-[70vh] mx-auto bg-primary isolate">
       <div className="absolute inset-0 bg-hero-pattern bg-cover bg-no-repeat bg-center opacity-90 z-0" />
@@ -14,11 +20,10 @@ const Hero = () => {
 
         <div>
           <h1 className={`${styles.heroHeadText} text-white drop-shadow-2xl`}>
-            Hi, I&apos;m <span className="text-[#915EFF]">Qurban</span>
+            {headline}
           </h1>
           <p className={`${styles.heroSubText} mt-2 text-white-100 max-w-3xl drop-shadow-xl`}>
-            Turning your ideas into powerful web and mobile solutions with clean
-            code and smooth user experiences.
+            {subtitle}
           </p>
         </div>
       </div>

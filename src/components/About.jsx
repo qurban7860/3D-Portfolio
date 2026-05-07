@@ -1,11 +1,16 @@
 import { Tilt } from "react-tilt";
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
-import { services } from "../Home";
+import { usePortfolio } from "../context/PortfolioContext";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../Animation/motion";
 
+import { resolveAssetUrl } from "../utils/assetResolver";
+
 const ServiceCard = ({ index, title, icon }) => {
+  const resolvedIcon = resolveAssetUrl(icon);
+  const isEmoji = icon && !icon.startsWith("http") && !icon.includes(".") && !icon.includes("/");
+
   return (
     <Tilt
       options={{ max: 25, scale: 1, speed: 400 }}
@@ -16,11 +21,23 @@ const ServiceCard = ({ index, title, icon }) => {
         className="w-full p-[1px] rounded-2xl green-pink-gradient shadow-card"
       >
         <div className="bg-tertiary rounded-2xl py-5 px-10 min-h-[280px] flex flex-col justify-center items-center border border-[#915EFF]/10 hover:shadow-lg hover:shadow-[#915EFF]/50 transition-all duration-300">
-          <img
-            src={icon}
-            alt={title}
-            className="w-16 h-16 object-contain hover:scale-110 transition-transform duration-300"
-          />
+          {!isEmoji ? (
+            <img
+              src={resolvedIcon}
+              alt={title}
+              className="w-16 h-16 object-contain hover:scale-110 transition-transform duration-300"
+              onError={(e) => {
+                e.target.style.display = "none";
+                const fallback = e.target.nextSibling;
+                if (fallback) fallback.style.display = "block";
+              }}
+            />
+          ) : (
+            <p className="text-5xl mb-2 hover:scale-110 transition-transform duration-300">{icon || "💼"}</p>
+          )}
+          {/* Fallback for broken images */}
+          <p className="hidden text-5xl mb-2">💼</p>
+          
           <h3 className="text-white text-[20px] font-bold text-center mt-4">
             {title}
           </h3>
@@ -37,6 +54,13 @@ ServiceCard.propTypes = {
 };
 
 const About = () => {
+  const { data } = usePortfolio();
+  const services = data?.services ?? [];
+  const about = data?.settings?.about ?? {};
+  const overview = about.overview || "I'm a passionate Full Stack Developer with a Bachelor's degree in Software Engineering from Punjab University (PUCIT) and over 3+ years of professional experience building responsive, high-performance web and mobile applications. I specialize in creating scalable, user-centric solutions using modern technologies including React, Next.js, Node.js, Express, and MongoDB.";
+  const summary = about.summary || "My expertise spans full-stack development, real-time applications, RESTful API design, performance optimization, and responsive UI/UX design. I'm committed to writing clean, maintainable code and delivering innovative solutions that drive business growth and user satisfaction.";
+  const details = about.details || "";
+
   return (
     <>
       <motion.div
@@ -50,12 +74,17 @@ const About = () => {
         </h2>
 
         <p className="text-secondary text-base sm:text-lg leading-relaxed mt-2">
-          I&apos;m a passionate Full Stack Developer with a Bachelor&apos;s degree in Software Engineering from Punjab University (PUCIT) and over 3+ years of professional experience building responsive, high-performance web and mobile applications. I specialize in creating scalable, user-centric solutions using modern technologies including React, Next.js, Node.js, Express, and MongoDB.
+          {overview}
         </p>
 
         <p className="text-secondary text-base sm:text-lg leading-relaxed mt-4">
-          My expertise spans full-stack development, real-time applications, RESTful API design, performance optimization, and responsive UI/UX design. I&apos;m committed to writing clean, maintainable code and delivering innovative solutions that drive business growth and user satisfaction.
+          {summary}
         </p>
+        {details && (
+          <p className="text-secondary text-base sm:text-lg leading-relaxed mt-4">
+            {details}
+          </p>
+        )}
       </motion.div>
 
       <div className="mt-16 flex flex-wrap gap-10 justify-evenly">

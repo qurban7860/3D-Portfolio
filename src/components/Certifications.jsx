@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
+import { usePortfolio } from "../context/PortfolioContext";
 import { SectionWrapper } from "../hoc";
 import { textVariant, fadeIn } from "../Animation/motion";
-import { certificationsData } from "../constants/statsData";
 
 const CertificationCard = ({ index, title, issuer, date, credentialUrl, icon }) => (
   <motion.div
@@ -44,6 +44,7 @@ CertificationCard.propTypes = {
 };
 
 const Certifications = () => {
+  const { data } = usePortfolio();
   return (
     <>
       <motion.div
@@ -66,9 +67,9 @@ const Certifications = () => {
 
       {/* Grid */}
       <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
-        {certificationsData.map((cert, index) => (
+        {(data?.certifications ?? []).map((cert, index) => (
           <CertificationCard
-            key={cert.id}
+            key={cert.id || index}
             index={index}
             {...cert}
           />

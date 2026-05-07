@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { styles } from "../styles";
-import { navLinks } from "../Home";
+import { usePortfolio } from "../context/PortfolioContext";
 import { menu, close, github, phone, linkedin } from "../assets";
 import resumePdf from "../assets/resume/Resume_Mern.pdf";
 import logo from "/logo.svg";
@@ -128,25 +128,61 @@ const MobileMenu = ({ toggle, setToggle, active, navLinks: links, onNavClick, co
       </li>
     </ul>
 
-    <div className="mt-auto flex gap-4 border-t border-tertiary pt-6 pb-4">
-      {contactLinks.map((link) => (
-        <ContactCard key={link.title} {...link} />
-      ))}
+    <div className="mt-auto flex flex-col gap-4 border-t border-tertiary pt-6 pb-4">
+      <div className="flex gap-4">
+        {contactLinks.map((link) => (
+          <ContactCard key={link.title} {...link} />
+        ))}
+      </div>
+      <Link 
+        to="/admin" 
+        onClick={() => setToggle(false)}
+        className="text-[10px] text-secondary hover:text-[#915EFF] transition-colors uppercase tracking-[0.2em] font-bold mt-2"
+      >
+        🔐 Admin Access
+      </Link>
     </div>
   </div>
   );
 };
 
 const Navbar = () => {
+  const { data } = usePortfolio();
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
   const SECTION_OFFSET = 200;
 
-  const CONTACT_LINKS = [
-    { title: "GitHub", icon: github, url: "https://github.com/qurban7860" },
-    { title: "Phone", icon: phone, url: "tel:+923085651015" },
-    { title: "LinkedIn", icon: linkedin, url: "https://www.linkedin.com/in/qurban015" },
-  ];
+  const navLinks = useMemo(
+    () =>
+      data?.settings?.navLinks ?? [
+        { id: "about", title: "About" },
+        { id: "projects", title: "Work" },
+        { id: "contact", title: "Contact" },
+      ],
+    [data?.settings?.navLinks]
+  );
+
+  const contactInfo = data?.settings?.contact ?? {};
+  const CONTACT_LINKS = useMemo(
+    () => [
+      {
+        title: "GitHub",
+        icon: github,
+        url: contactInfo.github || "https://github.com/qurban7860",
+      },
+      {
+        title: "Phone",
+        icon: phone,
+        url: contactInfo.phone ? `tel:${contactInfo.phone}` : "tel:+923085651015",
+      },
+      {
+        title: "LinkedIn",
+        icon: linkedin,
+        url: contactInfo.linkedin || "https://www.linkedin.com/in/qurban015",
+      },
+    ],
+    [contactInfo.github, contactInfo.phone, contactInfo.linkedin]
+  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -162,7 +198,7 @@ const Navbar = () => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [navLinks]);
 
   return (
     <nav className={`${styles.paddingX} w-full flex items-center py-4 fixed top-0 z-50 bg-primary shadow-md border-b border-white/5 backdrop-blur-sm bg-opacity-95`}>
@@ -174,12 +210,17 @@ const Navbar = () => {
           ))}
         </div>
 
-        <Link to="/" className="flex items-center gap-2 outline-none hover:opacity-80 transition-opacity" onClick={() => { window.scrollTo(0, 0); setActive(""); }}>
-          <img src={logo} alt="logo" className="w-8 h-8 sm:w-9 sm:h-9 object-contain" />
-          <p className="text-white font-bold flex items-center" style={{ fontSize: "clamp(14px, 1.6vw, 20px)" }}>
-            Software Engineer
-          </p>
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2 outline-none hover:opacity-80 transition-opacity" onClick={() => { window.scrollTo(0, 0); setActive(""); }}>
+            <img src={logo} alt="logo" className="w-8 h-8 sm:w-9 sm:h-9 object-contain" />
+            <p className="text-white font-bold flex items-center" style={{ fontSize: "clamp(14px, 1.6vw, 20px)" }}>
+              Software Engineer
+            </p>
+          </Link>
+          <Link to="/admin" className="opacity-0 hover:opacity-100 transition-opacity p-1 ml-1" title="Admin">
+            <span className="text-[10px]">⚙️</span>
+          </Link>
+        </div>
 
         <ul 
           className="list-none hidden md:flex flex-row items-center" 

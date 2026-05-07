@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
+import { usePortfolio } from "../context/PortfolioContext";
 import { SectionWrapper } from "../hoc";
 import { textVariant, fadeIn } from "../Animation/motion";
-import { servicesOffered } from "../constants/statsData";
 
 const ServiceCard = ({ index, title, description, icon, features }) => (
   <motion.div
@@ -51,6 +51,7 @@ ServiceCard.propTypes = {
 };
 
 const Services = () => {
+  const { data } = usePortfolio();
   return (
     <>
       <motion.div
@@ -71,7 +72,7 @@ const Services = () => {
       </motion.div>
 
       <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
-        {servicesOffered.map((service, index) => (
+        {(data?.services ?? []).map((service, index) => (
           <ServiceCard
             key={service.id || index}
             index={index}

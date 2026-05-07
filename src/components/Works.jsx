@@ -2,8 +2,9 @@ import { Tilt } from "react-tilt";
 import { motion } from "framer-motion";
 import PropTypes from "prop-types"; 
 import { github } from "../assets";
+import { resolveAssetUrl } from "../utils/assetResolver";
 import { SectionWrapper } from "../hoc";
-import { projects } from "../Home";
+import { usePortfolio } from "../context/PortfolioContext";
 import { fadeIn, textVariant } from "../Animation/motion";
 
 const ProjectCard = ({
@@ -11,8 +12,8 @@ const ProjectCard = ({
   name,
   description,
   tags,
-  image,
-  source_code_link,
+  imageUrl,
+  sourceCodeLink,
 }) => {
   return (
     <motion.div variants={fadeIn("up", "spring", index * 0.5, 0.75)}>
@@ -26,7 +27,7 @@ const ProjectCard = ({
       >
         <div className='relative w-full h-[230px]'>
           <img
-            src={image}
+            src={resolveAssetUrl(imageUrl)}
             alt='project_image'
             className='w-full h-full object-cover rounded-2xl'
           />
@@ -35,7 +36,7 @@ const ProjectCard = ({
             <motion.div
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              onClick={() => window.open(source_code_link, "_blank")}
+              onClick={() => window.open(sourceCodeLink, "_blank")}
               className='black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer hover:shadow-lg hover:shadow-[#915EFF]/50 transition-all'
               title="View on GitHub"
             >
@@ -65,7 +66,7 @@ const ProjectCard = ({
         </div>
 
         <motion.a
-          href={source_code_link}
+          href={sourceCodeLink}
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ x: 5 }}
@@ -79,6 +80,7 @@ const ProjectCard = ({
 };
 
 const Works = () => {
+  const { data } = usePortfolio();
   return (
     <>
       <motion.div
@@ -99,8 +101,8 @@ const Works = () => {
       </motion.div>
 
       <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {projects.map((project, index) => (
-          <ProjectCard key={`project-${index}`} index={index} {...project} />
+        {(data?.projects ?? []).map((project, index) => (
+          <ProjectCard key={`project-${project.id ?? index}`} index={index} {...project} />
         ))}
       </div>
     </>
@@ -117,8 +119,8 @@ ProjectCard.propTypes = {
       color: PropTypes.string.isRequired,
     })
   ).isRequired,
-  image: PropTypes.string.isRequired,
-  source_code_link: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string.isRequired,
+  sourceCodeLink: PropTypes.string.isRequired,
 };
 
 const WorksSection = SectionWrapper(Works, "projects");

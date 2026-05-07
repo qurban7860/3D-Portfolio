@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { styles } from "../styles";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../Animation/motion";
-import { testimonials } from "../Home";
+import { usePortfolio } from "../context/PortfolioContext";
 
 const FeedbackCard = ({
   index,
@@ -11,7 +11,7 @@ const FeedbackCard = ({
   name,
   // designation,
   // company,
-  image,
+  imageUrl,
 }) => (
   <motion.div
     variants={fadeIn("", "spring", index * 0.5, 0.75)}
@@ -33,7 +33,7 @@ const FeedbackCard = ({
         </div>
 
         <img
-          src={image}
+          src={imageUrl}
           alt={`feedback_by-${name}`}
           className='w-10 h-10 rounded-full object-cover'
         />
@@ -43,6 +43,7 @@ const FeedbackCard = ({
 );
 
 const Feedbacks = () => {
+  const { data } = usePortfolio();
   return (
     <div className="bg-black-100 rounded-3xl overflow-hidden">
       
@@ -69,9 +70,9 @@ const Feedbacks = () => {
       <div
         className={`mt-5 pb-5 ${styles.paddingX} grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8`}
       >
-        {testimonials.map((testimonial, index) => (
+        {(data?.testimonials ?? []).map((testimonial, index) => (
           <FeedbackCard
-            key={testimonial.name}
+            key={`${testimonial.name}-${testimonial.id ?? index}`}
             index={index}
             {...testimonial}
           />
@@ -85,7 +86,7 @@ FeedbackCard.propTypes = {
   index: PropTypes.number.isRequired,
   testimonial: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string.isRequired,
   // designation: PropTypes.string,
   // company: PropTypes.string,
 };

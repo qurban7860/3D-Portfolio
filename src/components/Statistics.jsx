@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
+import { usePortfolio } from "../context/PortfolioContext";
 import { SectionWrapper } from "../hoc";
 import { textVariant, fadeIn } from "../Animation/motion";
-import { statsData } from "../constants/statsData";
 
 const StatCard = ({ index, stat, label, description }) => (
   <motion.div
@@ -25,6 +25,7 @@ StatCard.propTypes = {
 };
 
 const Statistics = () => {
+  const { data } = usePortfolio();
   return (
     <>
       <motion.div variants={textVariant()} className="flex flex-col items-start gap-4">
@@ -42,9 +43,9 @@ const Statistics = () => {
       </motion.div>
 
       <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
-        {statsData.map((item, index) => (
+        {(data?.stats ?? []).map((item, index) => (
           <StatCard
-            key={item.id}
+            key={item.id || index}
             index={index}
             stat={item.stat}
             label={item.label}

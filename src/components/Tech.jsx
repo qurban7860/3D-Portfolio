@@ -1,10 +1,12 @@
 import { motion } from "framer-motion";
 import { BallCanvas } from "./canvas";
-import { technologies } from "../Home";
+import { usePortfolio } from "../context/PortfolioContext";
 import { SectionWrapper } from "../hoc";
 import { textVariant } from "../Animation/motion";
+import { resolveAssetUrl } from "../utils/assetResolver";
 
 const Tech = () => {
+  const { data } = usePortfolio();
   return (
     <>
       <motion.div
@@ -24,12 +26,12 @@ const Tech = () => {
 
       {/* Tech Grid */}
       <div className="mt-16 flex flex-wrap justify-center gap-12">
-        {technologies.map((technology) => (
+        {(data?.technologies ?? []).map((technology) => (
           <div
             className="w-24 h-24 sm:w-28 sm:h-28 transition-transform duration-300 hover:scale-110"
             key={technology.name}
           >
-            <BallCanvas icon={technology.icon} />
+            <BallCanvas icon={resolveAssetUrl(technology.iconUrl || technology.icon)} />
           </div>
         ))}
       </div>

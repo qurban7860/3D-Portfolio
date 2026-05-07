@@ -2,6 +2,7 @@ import { useRef, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
 import emailjs from "@emailjs/browser";
+import { usePortfolio } from "../context/PortfolioContext";
 import { EarthCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
 import { slideIn, fadeIn } from "../Animation/motion";
@@ -11,7 +12,6 @@ const EMAIL_CONFIG = {
   TEMPLATE_ID: "template_6a3mcjg",
   PUBLIC_KEY: "8Eo4GHGaeD9coqIxx",
   RECIPIENT_NAME: "Qurban Hanif",
-  RECIPIENT_EMAIL: "qurbanhanif120@gmail.com",
 };
 
 const FormInput = ({ label, name, type = "text", placeholder, value, onChange, required = true, rows = null }) => (
@@ -98,6 +98,11 @@ ContactMethod.propTypes = {
 };
 
 const Contact = () => {
+  const { data } = usePortfolio();
+  const contactSettings = data?.settings?.contact ?? {};
+  const recipientEmail = contactSettings.email || "qurbanhanif120@gmail.com";
+  const recipientName = contactSettings.name || EMAIL_CONFIG.RECIPIENT_NAME;
+
   const formRef = useRef();
   const [form, setForm] = useState({
     name: "",
@@ -126,9 +131,9 @@ const Contact = () => {
         EMAIL_CONFIG.TEMPLATE_ID,
         {
           from_name: form.name,
-          to_name: EMAIL_CONFIG.RECIPIENT_NAME,
+          to_name: recipientName,
           from_email: form.email,
-          to_email: EMAIL_CONFIG.RECIPIENT_EMAIL,
+          to_email: recipientEmail,
           message: form.message,
         },
         EMAIL_CONFIG.PUBLIC_KEY
@@ -147,30 +152,30 @@ const Contact = () => {
           setTimeout(() => setSubmitStatus(null), 5000);
         }
       );
-  }, [form]);
+  }, [form, recipientEmail, recipientName]);
 
   const contactMethods = [
     {
       icon: "📧",
       title: "Email",
       description: "Send me a direct email",
-      link: "mailto:qurbanhanif120@gmail.com",
-      linkText: "qurbanhanif120@gmail.com"
+      link: `mailto:${recipientEmail}`,
+      linkText: recipientEmail,
     },
     {
       icon: "💬",
       title: "Direct Message",
       description: "Connect with me on LinkedIn",
-      link: "https://www.linkedin.com/in/qurban015",
-      linkText: "Open LinkedIn"
+      link: contactSettings.linkedin || "https://www.linkedin.com/in/qurban015",
+      linkText: "Open LinkedIn",
     },
     {
       icon: "☎️",
       title: "Phone Call",
       description: "Call me for quick discussion",
-      link: "tel:+923085651015",
-      linkText: "+92-308-5651015"
-    }
+      link: contactSettings.phone ? `tel:${contactSettings.phone}` : "tel:+923085651015",
+      linkText: contactSettings.phone || "+92-308-5651015",
+    },
   ];
 
   return (

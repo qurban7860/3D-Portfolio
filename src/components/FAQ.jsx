@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import PropTypes from "prop-types";
+import { usePortfolio } from "../context/PortfolioContext";
 import { SectionWrapper } from "../hoc";
 import { textVariant, fadeIn } from "../Animation/motion";
-import { faqs } from "../constants/seoConfig";
 
 const FAQItem = ({ question, answer, index }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,6 +58,7 @@ FAQItem.propTypes = {
 };
 
 const FAQ = () => {
+  const { data } = usePortfolio();
   return (
     <>
       <motion.div
@@ -79,8 +80,8 @@ const FAQ = () => {
       </motion.div>
 
       <div className="mt-12 space-y-4 w-full">
-        {faqs.map((faq, index) => (
-          <FAQItem key={faq.id} {...faq} index={index} />
+        {(data?.settings?.faqs ?? []).map((faq, index) => (
+          <FAQItem key={faq.id || index} {...faq} index={index} />
         ))}
       </div>
 

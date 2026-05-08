@@ -47,6 +47,11 @@ app.get("/api/health", (_req, res) => {
   res.json({ status: "ok", message: "Dynamic portfolio API is running." });
 });
 
+// Basic health check that bypasses DB for troubleshooting
+app.get("/api/basic-health", (_req, res) => {
+  res.json({ status: "ok", message: "Server is running (DB bypassed)." });
+});
+
 app.use((req, res) => {
   res.status(404).json({ message: "Resource not found" });
 });

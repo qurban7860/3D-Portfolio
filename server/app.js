@@ -27,6 +27,14 @@ app.use(express.urlencoded({ extended: false }));
 // Static uploads (handled by express locally, and by the function on Vercel)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+app.get("/api/health", (_req, res) => {
+  res.json({ status: "ok", message: "Dynamic portfolio API is running." });
+});
+
+app.get("/api/basic-health", (_req, res) => {
+  res.json({ status: "ok", message: "Server is running (DB bypassed)." });
+});
+
 app.use(async (req, res, next) => {
   try {
     await initializeDatabase();
@@ -42,15 +50,6 @@ app.use(async (req, res, next) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/content", contentRoutes);
-
-app.get("/api/health", (_req, res) => {
-  res.json({ status: "ok", message: "Dynamic portfolio API is running." });
-});
-
-// Basic health check that bypasses DB for troubleshooting
-app.get("/api/basic-health", (_req, res) => {
-  res.json({ status: "ok", message: "Server is running (DB bypassed)." });
-});
 
 app.use((req, res) => {
   res.status(404).json({ message: "Resource not found" });

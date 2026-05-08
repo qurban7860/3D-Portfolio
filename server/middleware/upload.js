@@ -6,8 +6,12 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const uploadPath = path.join(__dirname, "uploads");
 
-if (!existsSync(uploadPath)) {
-  mkdirSync(uploadPath, { recursive: true });
+try {
+  if (!existsSync(uploadPath)) {
+    mkdirSync(uploadPath, { recursive: true });
+  }
+} catch (err) {
+  console.warn("Could not create uploads directory (expected in serverless):", err.message);
 }
 
 const storage = multer.diskStorage({

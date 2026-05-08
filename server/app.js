@@ -15,7 +15,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 
 app.use(helmet({
-  crossOriginResourcePolicy: false, // Required for displaying local/uploaded images
+  crossOriginResourcePolicy: false,
+  crossOriginOpenerPolicy: false,
+  crossOriginEmbedderPolicy: false,
+  contentSecurityPolicy: false, // Disable CSP temporarily to debug 403
 }));
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());

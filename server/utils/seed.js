@@ -43,9 +43,21 @@ const defaultSettings = {
     image: "/og-image.png",
   },
   navLinks: [
-    { id: "about", title: "About" },
-    { id: "projects", title: "Work" },
-    { id: "contact", title: "Contact" },
+    { id: "about", title: "About", path: "/" },
+    { id: "portfolio", title: "Work", path: "/portfolio" },
+    { id: "experience", title: "Experience", path: "/experience" },
+    { id: "services", title: "Skills", path: "/services" },
+    { id: "contact", title: "Contact", path: "/contact" },
+  ],
+  faqs: [
+    { id: 1, question: "What is your primary tech stack?", answer: "I specialize in the MERN stack (MongoDB, Express.js, React, Node.js) and Next.js for high-performance web applications." },
+    { id: 2, question: "Are you available for freelance work?", answer: "Yes, I am open to freelance projects, full-time opportunities, and technical consulting." },
+    { id: 3, question: "Do you offer maintenance services?", answer: "Absolutely. I provide ongoing support and maintenance to ensure your applications remain secure and up-to-date." },
+  ],
+  socials: [
+    { id: 1, title: "GitHub", url: "https://github.com/qurban7860", icon: "github" },
+    { id: 2, title: "LinkedIn", url: "https://www.linkedin.com/in/qurban015", icon: "linkedin" },
+    { id: 3, title: "Twitter", url: "https://twitter.com/qurban7860", icon: "twitter" },
   ],
 };
 
@@ -292,29 +304,31 @@ export async function seedDatabase(db) {
 
   const socialsCount = await db.get("SELECT COUNT(*) as count FROM socials");
   if (socialsCount.count === 0) {
-    await db.run(
-      "INSERT INTO socials (title, url, icon, visible, orderIndex) VALUES (?, ?, ?, ?, ?)",
-      "GitHub",
-      "https://github.com/qurban7860",
-      "github",
-      1,
-      1
-    );
-    await db.run(
-      "INSERT INTO socials (title, url, icon, visible, orderIndex) VALUES (?, ?, ?, ?, ?)",
-      "LinkedIn",
-      "https://www.linkedin.com/in/qurban015",
-      "linkedin",
-      1,
-      2
-    );
-    await db.run(
-      "INSERT INTO socials (title, url, icon, visible, orderIndex) VALUES (?, ?, ?, ?, ?)",
-      "Twitter",
-      "https://twitter.com/qurban7860",
-      "twitter",
-      1,
-      3
-    );
+    for (const social of defaultSettings.socials || []) {
+      await db.run(
+        "INSERT INTO socials (title, url, icon, visible, orderIndex) VALUES (?, ?, ?, ?, ?)",
+        social.title, social.url, social.icon, 1, social.id
+      );
+    }
+  }
+
+  const statsCount = await db.get("SELECT COUNT(*) as count FROM stats");
+  if (statsCount.count === 0) {
+    for (const stat of defaultSettings.stats || []) {
+      await db.run(
+        "INSERT INTO stats (stat, label, description, visible, orderIndex) VALUES (?, ?, ?, ?, ?)",
+        stat.stat, stat.label, stat.description, 1, stat.id
+      );
+    }
+  }
+
+  const certificationsCount = await db.get("SELECT COUNT(*) as count FROM certifications");
+  if (certificationsCount.count === 0) {
+    for (const cert of defaultSettings.certifications || []) {
+      await db.run(
+        "INSERT INTO certifications (title, issuer, date, icon, visible, orderIndex) VALUES (?, ?, ?, ?, ?, ?)",
+        cert.title, cert.issuer, cert.date, cert.icon, 1, cert.id
+      );
+    }
   }
 }

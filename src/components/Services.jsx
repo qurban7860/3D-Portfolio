@@ -33,7 +33,7 @@ const ServiceCard = ({ index, title, description, icon, features }) => (
       <motion.button
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        onClick={() => window.location.href = '#contact'} 
+        onClick={() => window.location.href = '/contact'} 
         className="w-full bg-gradient-to-r from-[#915EFF] to-[#56ccf2] text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-[#915EFF]/50 mt-auto"
       >
         Get Started
@@ -94,7 +94,7 @@ const Services = () => {
         </p>
 
         <a
-          href="#contact"
+          href="/contact"
           className="inline-flex items-center justify-center px-8 py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-[#915EFF] to-[#56ccf2] hover:shadow-lg hover:shadow-[#915EFF]/40 transition-all duration-300"
         >
           Schedule a Consultation →
@@ -105,5 +105,7 @@ const Services = () => {
 };
 
 const ServicesSection = SectionWrapper(Services, "services");
+
+export { Services };
 
 export default ServicesSection;

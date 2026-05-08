@@ -1,18 +1,41 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"; 
+import { useEffect } from "react";
 import { AuthProvider } from "./context/AuthContext";
 import { PortfolioProvider } from "./context/PortfolioContext";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import HomePage from "./pages/HomePage";
+import PortfolioPage from "./pages/PortfolioPage";
+import ExperiencePage from "./pages/ExperiencePage";
+import ServicesPage from "./pages/ServicesPage";
+import ContactPage from "./pages/ContactPage";
 import LoginPage from "./pages/Admin/Login";
 import DashboardPage from "./pages/Admin/Dashboard";
 
 import { Toaster } from "react-hot-toast";
+
+const ScrollToHash = () => {
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (hash) {
+      const element = document.getElementById(hash.replace("#", ""));
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+        }, 300); // Wait for page transition
+      }
+    }
+  }, [hash]);
+
+  return null;
+};
 
 const App = () => {
   return (
     <AuthProvider>
       <PortfolioProvider>
         <BrowserRouter>
+          <ScrollToHash />
           <Toaster 
             position="top-right" 
             toastOptions={{
@@ -37,6 +60,10 @@ const App = () => {
           />
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/portfolio" element={<PortfolioPage />} />
+            <Route path="/experience" element={<ExperiencePage />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/contact" element={<ContactPage />} />
             <Route path="/admin/login" element={<LoginPage />} />
             <Route
               path="/admin"

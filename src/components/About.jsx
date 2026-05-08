@@ -9,7 +9,11 @@ import { resolveAssetUrl } from "../utils/assetResolver";
 
 const ServiceCard = ({ index, title, icon }) => {
   const resolvedIcon = resolveAssetUrl(icon);
-  const isEmoji = icon && !icon.startsWith("http") && !icon.includes(".") && !icon.includes("/");
+  const isEmoji =
+    icon &&
+    !icon.startsWith("http") &&
+    !icon.includes(".") &&
+    !icon.includes("/");
 
   return (
     <Tilt
@@ -33,11 +37,13 @@ const ServiceCard = ({ index, title, icon }) => {
               }}
             />
           ) : (
-            <p className="text-5xl mb-2 hover:scale-110 transition-transform duration-300">{icon || "💼"}</p>
+            <p className="text-5xl mb-2 hover:scale-110 transition-transform duration-300">
+              {icon || "💼"}
+            </p>
           )}
           {/* Fallback for broken images */}
           <p className="hidden text-5xl mb-2">💼</p>
-          
+
           <h3 className="text-white text-[20px] font-bold text-center mt-4">
             {title}
           </h3>
@@ -57,8 +63,12 @@ const About = () => {
   const { data } = usePortfolio();
   const services = data?.services ?? [];
   const about = data?.settings?.about ?? {};
-  const overview = about.overview || "I'm a passionate Full Stack Developer with a Bachelor's degree in Software Engineering from Punjab University (PUCIT) and over 3+ years of professional experience building responsive, high-performance web and mobile applications. I specialize in creating scalable, user-centric solutions using modern technologies including React, Next.js, Node.js, Express, and MongoDB.";
-  const summary = about.summary || "My expertise spans full-stack development, real-time applications, RESTful API design, performance optimization, and responsive UI/UX design. I'm committed to writing clean, maintainable code and delivering innovative solutions that drive business growth and user satisfaction.";
+  const overview =
+    about.overview ||
+    "I'm a passionate Full Stack Developer with a Bachelor's degree in Software Engineering from Punjab University (PUCIT) and over 3+ years of professional experience building responsive, high-performance web and mobile applications. I specialize in creating scalable, user-centric solutions using modern technologies including React, Next.js, Node.js, Express, and MongoDB.";
+  const summary =
+    about.summary ||
+    "My expertise spans full-stack development, real-time applications, RESTful API design, performance optimization, and responsive UI/UX design. I'm committed to writing clean, maintainable code and delivering innovative solutions that drive business growth and user satisfaction.";
   const details = about.details || "";
 
   return (
@@ -96,7 +106,7 @@ const About = () => {
       <motion.div
         variants={fadeIn("up", "spring", 0.3, 0.75)}
         whileHover={{ y: -5 }}
-        className="mt-10 flex flex-col rounded-2xl bg-gradient-to-br from-tertiary to-black-200 p-8 border border-[#915EFF]/20 hover:border-[#915EFF]/60 transition-all hover:shadow-lg hover:shadow-[#915EFF]/20"
+        className="mt-6 flex flex-col rounded-2xl bg-gradient-to-br from-tertiary to-black-200 p-8 border border-[#915EFF]/20 hover:border-[#915EFF]/60 transition-all hover:shadow-lg hover:shadow-[#915EFF]/20"
       >
         <h3 className="text-[24px] font-bold text-white mb-6">
           Why Work With Me
@@ -104,9 +114,21 @@ const About = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
-              { emoji: "🚀", title: "Fast Delivery", desc: "Efficient development with rapid turnaround times." },
-              { emoji: "🎯", title: "Quality Focus", desc: "High-quality, tested, and production-ready code." },
-              { emoji: "🤝", title: "Collaboration", desc: "Excellent communication and team coordination." }
+            {
+              emoji: "🚀",
+              title: "Fast Delivery",
+              desc: "Efficient development with rapid turnaround times.",
+            },
+            {
+              emoji: "🎯",
+              title: "Quality Focus",
+              desc: "High-quality, tested, and production-ready code.",
+            },
+            {
+              emoji: "🤝",
+              title: "Collaboration",
+              desc: "Excellent communication and team coordination.",
+            },
           ].map((item, i) => (
             <div
               key={i}
@@ -130,7 +152,8 @@ const About = () => {
 const AboutSection = SectionWrapper(About, "about");
 export default AboutSection;
 
-{/* <div className="absolute bottom-10 w-full flex justify-center items-center z-30">
+{
+  /* <div className="absolute bottom-10 w-full flex justify-center items-center z-30">
         <a href="#about">
           <div className="w-[30px] h-[50px] rounded-3xl border-4 border-secondary flex justify-center items-start p-2">
             <motion.div
@@ -140,4 +163,5 @@ export default AboutSection;
             />
           </div>
         </a>
-      </div> */}
+      </div> */
+}

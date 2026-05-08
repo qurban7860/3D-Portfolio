@@ -26,6 +26,10 @@ StatCard.propTypes = {
 
 const Statistics = () => {
   const { data } = usePortfolio();
+  const stats = data?.stats ?? [];
+
+  if (stats.length === 0) return null;
+
   return (
     <>
       <motion.div variants={textVariant()} className="flex flex-col items-start gap-4">

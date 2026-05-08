@@ -104,7 +104,7 @@ const ReadyForWork = () => {
         className="mt-16 flex flex-col sm:flex-row gap-6 justify-center"
       >
         <a
-          href="#contact"
+          href="/contact"
           className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-[#915EFF] to-[#56ccf2] text-white font-bold rounded-lg hover:shadow-lg hover:shadow-[#915EFF]/50 transition-all duration-300 hover:scale-105"
         >
           📧 Start a Conversation
@@ -127,7 +127,7 @@ const ReadyForWork = () => {
 
       <motion.div
         variants={fadeIn("up", "spring", 0.6, 0.75)}
-        className="mt-16 p-8 bg-black-100 rounded-xl border border-[#915EFF]/20"
+        className="mt-10 p-8 bg-black-100 rounded-xl border border-[#915EFF]/20"
       >
         <p className="text-white text-[18px] font-bold mb-3">Quick Facts:</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

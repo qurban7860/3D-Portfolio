@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { useState, useEffect, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { styles } from "../styles";
 import { usePortfolio } from "../context/PortfolioContext";
@@ -70,14 +71,7 @@ const ResumeButton = ({ isMobile = false }) => {
 };
 
 const NavLinkItem = ({ nav, active, onLinkClick }) => {
-  const handleClick = (e) => {
-    e.preventDefault();
-    const el = document.getElementById(nav.id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-    onLinkClick(nav.title);
-  };
+  
   return (
     <li
       className={`${
@@ -85,20 +79,24 @@ const NavLinkItem = ({ nav, active, onLinkClick }) => {
       } hover:text-white font-medium cursor-pointer transition-all duration-300`}
       style={{ fontSize: "clamp(13px, 1.1vw, 18px)" }}
     >
-      <a href={`#${nav.id}`} onClick={handleClick}>{nav.title}</a>
+      {nav.path ? (
+        <Link 
+          to={nav.path} 
+          onClick={() => {
+            onLinkClick(nav.title);
+            window.scrollTo(0, 0);
+          }}
+        >
+          {nav.title}
+        </Link>
+      ) : (
+        <a href={`#${nav.id}`} onClick={() => onLinkClick(nav.title)}>{nav.title}</a>
+      )}
     </li>
   );
 };
 
 const MobileMenu = ({ toggle, setToggle, active, navLinks: links, onNavClick, contactLinks }) => {
-  const handleNavClick = (e, nav) => {
-    e.preventDefault();
-    const el = document.getElementById(nav.id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-    onNavClick(nav.title);
-  };
   return (
   <div
     className={`${!toggle ? "hidden" : "flex"} p-6 black-gradient absolute top-0 right-0 w-[260px] min-h-screen max-h-screen overflow-y-auto z-50 flex-col shadow-2xl transition-all duration-300 border-l border-white/10`}
@@ -115,12 +113,24 @@ const MobileMenu = ({ toggle, setToggle, active, navLinks: links, onNavClick, co
     <ul className="list-none flex flex-col gap-6 mt-8">
       {links.map((nav) => (
         <li
-          key={nav.id}
+          key={nav.id || nav.title}
           className={`font-poppins font-medium cursor-pointer text-[18px] ${
             active === nav.title ? "text-[#915EFF]" : "text-secondary"
           }`}
         >
-          <a href={`#${nav.id}`} onClick={(e) => handleNavClick(e, nav)}>{nav.title}</a>
+          {nav.path ? (
+            <Link 
+              to={nav.path} 
+              onClick={() => {
+                onNavClick(nav.title);
+                window.scrollTo(0, 0);
+              }}
+            >
+              {nav.title}
+            </Link>
+          ) : (
+            <a href={`#${nav.id}`} onClick={() => onNavClick(nav.title)}>{nav.title}</a>
+          )}
         </li>
       ))}
       <li className="pt-4 border-t border-tertiary">
@@ -152,15 +162,13 @@ const Navbar = () => {
   const [toggle, setToggle] = useState(false);
   const SECTION_OFFSET = 200;
 
-  const navLinks = useMemo(
-    () =>
-      data?.settings?.navLinks ?? [
-        { id: "about", title: "About" },
-        { id: "projects", title: "Work" },
-        { id: "contact", title: "Contact" },
-      ],
-    [data?.settings?.navLinks]
-  );
+  const navLinks = [
+    { id: "about", title: "About", path: "/" },
+    { id: "portfolio", title: "Work", path: "/portfolio" },
+    { id: "experience", title: "Experience", path: "/experience" },
+    { id: "services", title: "Skills", path: "/services" },
+    { id: "contact", title: "Contact", path: "/contact" },
+  ];
 
   const contactInfo = data?.settings?.contact ?? {};
   const CONTACT_LINKS = useMemo(
@@ -184,8 +192,21 @@ const Navbar = () => {
     [contactInfo.github, contactInfo.phone, contactInfo.linkedin]
   );
 
+  const location = useLocation();
+
+  useEffect(() => {
+    const currentPath = location.pathname;
+    const activeNav = navLinks.find(nav => nav.path === currentPath);
+    if (activeNav) {
+      setActive(activeNav.title);
+    }
+  }, [navLinks, location]);
+
   useEffect(() => {
     const handleScroll = () => {
+      // Only handle scroll if we are on the home page
+      if (location.pathname !== "/") return;
+
       navLinks.forEach((nav) => {
         const section = document.getElementById(nav.id);
         if (section) {
@@ -198,7 +219,7 @@ const Navbar = () => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [navLinks]);
+  }, [navLinks, location]);
 
   return (
     <nav className={`${styles.paddingX} w-full flex items-center py-4 fixed top-0 z-50 bg-primary shadow-md border-b border-white/5 backdrop-blur-sm bg-opacity-95`}>
@@ -217,8 +238,12 @@ const Navbar = () => {
               Software Engineer
             </p>
           </Link>
-          <Link to="/admin" className="opacity-0 hover:opacity-100 transition-opacity p-1 ml-1" title="Admin">
-            <span className="text-[10px]">⚙️</span>
+          <Link 
+            to="/admin" 
+            className="flex items-center gap-1 opacity-20 hover:opacity-100 transition-all duration-300 p-1 ml-2 border border-white/10 rounded px-2 hover:bg-[#915EFF]/10" 
+            title="Admin Dashboard"
+          >
+            <span className="text-[10px]">🔐 Admin</span>
           </Link>
         </div>
 

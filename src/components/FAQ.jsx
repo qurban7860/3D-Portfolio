@@ -97,7 +97,7 @@ const FAQ = () => {
           anytime!
         </p>
         <a
-          href="#contact"
+          href="/contact"
           className="inline-block bg-gradient-to-r from-[#915EFF] to-[#56ccf2] text-white font-bold py-3 px-8 rounded-lg hover:shadow-lg hover:shadow-[#915EFF]/50 transition-all duration-300"
         >
           Get in Touch

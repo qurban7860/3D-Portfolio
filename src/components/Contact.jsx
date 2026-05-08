@@ -180,16 +180,15 @@ const Contact = () => {
 
   return (
     <>
-      <div className="xl:mt-12 flex xl:flex-row flex-col-reverse gap-10 overflow-hidden">
+      <div className="xl:mt-8 flex xl:flex-row flex-col-reverse gap-10 overflow-hidden">
         <motion.div
           variants={slideIn("left", "tween", 0.2, 1)}
-          className="flex-[0.75] bg-black-100 p-8 rounded-2xl border border-[#915EFF]/10"
+          className="flex-[0.75] bg-black-100/40 backdrop-blur-md p-8 rounded-2xl border border-[#915EFF]/20 shadow-2xl"
         >
-          <div className="flex flex-col items-start gap-3">
-            <span className="section-badge">Let&apos;s Connect</span>
-
-            <h3 className="text-white font-bold text-2xl sm:text-3xl leading-tight">
-              Contact Me
+          <div className="flex flex-col items-start gap-3 mb-8">
+            <span className="text-[#915EFF] text-[14px] font-bold uppercase tracking-widest">Message Me</span>
+            <h3 className="text-white font-black md:text-[45px] sm:text-[35px] text-[30px]">
+              Direct Contact
             </h3>
           </div>
 
@@ -250,9 +249,10 @@ const Contact = () => {
 
         <motion.div
           variants={slideIn("right", "tween", 0.2, 1)}
-          className="xl:flex-1 xl:h-[750px] lg:h-[600px] md:h-[550px] h-[350px] w-full"
+          className="xl:flex-1 xl:h-[700px] lg:h-[600px] md:h-[550px] h-[350px]"
         >
-          <div className="w-full h-full relative">
+          <div className="w-full h-full relative group">
+            <div className="absolute inset-0 bg-[#915EFF]/5 rounded-full filter blur-3xl opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
             <EarthCanvas />
           </div>
         </motion.div>
@@ -277,4 +277,8 @@ const Contact = () => {
 
 const ContactSection = SectionWrapper(Contact, "contact");
 
+// Named export: raw component for standalone page use (no SectionWrapper)
+export { Contact };
+
+// Default export: SectionWrapper-wrapped for homepage scroll sections
 export default ContactSection;

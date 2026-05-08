@@ -19,13 +19,19 @@ const ProjectCard = ({
     <motion.div variants={fadeIn("up", "spring", index * 0.5, 0.75)}>
       <Tilt
         options={{
-          max: 45,
-          scale: 1,
-          speed: 450,
+          max: 25,
+          scale: 1.02,
+          speed: 400,
         }}
-        className='bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full border border-[#915EFF]/20 hover:border-[#915EFF]/60 transition-all'
+        className='bg-white/5 backdrop-blur-md border border-white/10 p-5 rounded-2xl sm:w-[360px] w-full hover:border-[#915EFF]/50 transition-all duration-500 hover:shadow-2xl hover:shadow-[#915EFF]/20'
       >
         <div className='relative w-full h-[230px]'>
+          {/* Featured Badge */}
+          {index % 3 === 0 && (
+            <div className="absolute top-2 left-2 z-20 bg-gradient-to-r from-[#915EFF] to-[#56ccf2] text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg">
+              FEATURED
+            </div>
+          )}
           <img
             src={resolveAssetUrl(imageUrl)}
             alt='project_image'
@@ -124,4 +130,7 @@ ProjectCard.propTypes = {
 };
 
 const WorksSection = SectionWrapper(Works, "projects");
+
+export { Works };
+
 export default WorksSection;

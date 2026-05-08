@@ -205,6 +205,37 @@ export async function initializeDatabase() {
       if (!userCount || userCount.count === 0) {
         console.log("🌱 Seeding database...");
         await seedDatabase(database);
+      } else {
+        try {
+          const navLinksRow = await database.get("SELECT value FROM settings WHERE key = 'navLinks'");
+          if (navLinksRow) {
+            const currentNavLinks = JSON.parse(navLinksRow.value);
+            if (Array.isArray(currentNavLinks) && currentNavLinks.length > 0 && !currentNavLinks[0].path) {
+              console.log("🔄 Migrating legacy navigation links...");
+              const newNavLinks = [
+                { id: "about", title: "About", path: "/" },
+                { id: "portfolio", title: "Work", path: "/portfolio" },
+                { id: "experience", title: "Experience", path: "/experience" },
+                { id: "services", title: "Skills", path: "/services" },
+                { id: "contact", title: "Contact", path: "/contact" },
+              ];
+              await database.run("UPDATE settings SET value = ? WHERE key = 'navLinks'", JSON.stringify(newNavLinks));
+            }
+          }
+          
+          const faqRow = await database.get("SELECT value FROM settings WHERE key = 'faqs'");
+          if (!faqRow || !faqRow.value || JSON.parse(faqRow.value).length === 0) {
+            console.log("🔄 Initializing FAQ settings...");
+            const defaultFaqs = [
+              { id: 1, question: "What is your primary tech stack?", answer: "I specialize in the MERN stack (MongoDB, Express.js, React, Node.js) and Next.js for high-performance web applications." },
+              { id: 2, question: "Are you available for freelance work?", answer: "Yes, I am open to freelance projects, full-time opportunities, and technical consulting." },
+              { id: 3, question: "Do you offer maintenance services?", answer: "Absolutely. I provide ongoing support and maintenance to ensure your applications remain secure and up-to-date." },
+            ];
+            await database.run("INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)", "faqs", JSON.stringify(defaultFaqs));
+          }
+        } catch (migErr) {
+          console.warn("Migration failed (non-critical):", migErr.message);
+        }
       }
 
       return database;

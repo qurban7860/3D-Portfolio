@@ -14,11 +14,12 @@ const ExperienceCard = ({ experience }) => {
   return (
     <VerticalTimelineElement
       contentStyle={{
-        background: "#1d1836",
+        background: "rgba(255, 255, 255, 0.05)",
+        backdropFilter: "blur(10px)",
         color: "#fff",
-        border: "1px solid rgba(145, 94, 255, 0.2)",
-        borderRadius: "0.75rem",
-        boxShadow: "0 4px 15px rgba(145, 94, 255, 0.1)"
+        border: "1px solid rgba(255, 255, 255, 0.1)",
+        borderRadius: "1rem",
+        boxShadow: "0 8px 32px 0 rgba(145, 94, 255, 0.1)"
       }}
       contentArrowStyle={{ borderRight: "7px solid  #232631" }}
       date={experience.date}
@@ -79,8 +80,8 @@ ExperienceCard.propTypes = {
 const EducationCard = ({ education }) => {
   return (
     <motion.div
-      whileHover={{ y: -5 }}
-      className='flex flex-col mb-8 rounded-2xl bg-gradient-to-br from-tertiary to-black-200 text-white p-6 relative border border-[#915EFF]/20 hover:border-[#915EFF]/60 transition-all'
+      whileHover={{ y: -5, scale: 1.01 }}
+      className='flex flex-col mb-8 rounded-2xl bg-white/5 backdrop-blur-lg text-white p-6 relative border border-white/10 hover:border-[#915EFF]/60 transition-all duration-500 hover:shadow-2xl hover:shadow-[#915EFF]/20'
     >
       <a
         href={education.instituteUrl}
@@ -156,4 +157,7 @@ const Experience = () => {
 };
 
 const ExperienceSection = SectionWrapper(Experience, "experience");
+
+export { Experience };
+
 export default ExperienceSection;

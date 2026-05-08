@@ -1,4 +1,16 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || (import.meta.env.PROD ? "/api" : "http://localhost:4000/api");
+const getApiBaseUrl = () => {
+  const envUrl = import.meta.env.VITE_API_BASE_URL;
+  const isProd = import.meta.env.PROD;
+  const isBrowserLocalhost = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+
+  if (!isBrowserLocalhost && envUrl?.includes("localhost")) {
+    return "/api";
+  }
+
+  return envUrl || (isProd ? "/api" : "http://localhost:4002/api");
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 async function fetchJson(endpoint, options = {}) {
   const url = `${API_BASE_URL}${endpoint}`;

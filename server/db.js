@@ -11,42 +11,31 @@ const dbPath = path.join(dataDir, "portfolio.db");
 
 let database;
 
-// Adapter to unify sqlite3 and libsql client APIs
 class DatabaseAdapter {
-  constructor(client, type) {
+  constructor(client) {
     this.client = client;
-    this.type = type; // 'local' or 'turso'
   }
 
   async all(sql, ...params) {
-    if (this.type === "turso") {
-      const result = await this.client.execute({ sql, args: params });
-      return result.rows;
-    }
-    return this.client.all(sql, ...params);
+    const result = await this.client.execute({ sql, args: params });
+    return result.rows;
   }
 
   async get(sql, ...params) {
-    if (this.type === "turso") {
-      const result = await this.client.execute({ sql, args: params });
-      return result.rows[0];
-    }
-    return this.client.get(sql, ...params);
+    const result = await this.client.execute({ sql, args: params });
+    return result.rows[0];
   }
 
   async run(sql, ...params) {
-    if (this.type === "turso") {
-      const result = await this.client.execute({ sql, args: params });
-      return { lastID: Number(result.lastInsertRowid) };
-    }
-    return this.client.run(sql, ...params);
+    const result = await this.client.execute({ sql, args: params });
+    return { 
+      lastID: result.lastInsertRowid ? Number(result.lastInsertRowid) : undefined,
+      changes: result.rowsAffected 
+    };
   }
 
   async exec(sql) {
-    if (this.type === "turso") {
-      return this.client.executeMultiple(sql);
-    }
-    return this.client.exec(sql);
+    return this.client.executeMultiple(sql);
   }
 }
 
@@ -59,30 +48,26 @@ export async function initializeDatabase() {
     const tursoUrl = process.env.TURSO_DATABASE_URL;
     const tursoToken = process.env.TURSO_AUTH_TOKEN;
 
+    let client;
+
     if (tursoUrl && tursoUrl.startsWith("libsql://")) {
       console.log("🚀 Initializing Turso (Serverless SQLite)...");
-      const client = createClient({
+      client = createClient({
         url: tursoUrl,
         authToken: tursoToken,
       });
-      database = new DatabaseAdapter(client, "turso");
-      isTurso = true;
     } else {
-      console.log("🏠 Initializing Local SQLite...");
-      
-      const sqlite3 = (await import("sqlite3")).default;
-      const { open } = await import("sqlite");
-
+      console.log("🏠 Initializing Local Libsql (File)...");
       if (!existsSync(dataDir)) {
         mkdirSync(dataDir, { recursive: true });
       }
-
-      const localDb = await open({
-        filename: dbPath,
-        driver: sqlite3.Database,
+      
+      client = createClient({
+        url: `file:${dbPath}`,
       });
-      database = new DatabaseAdapter(localDb, "local");
     }
+
+    database = new DatabaseAdapter(client);
 
     await database.exec(`
       CREATE TABLE IF NOT EXISTS users (

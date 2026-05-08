@@ -6,6 +6,7 @@ import { usePortfolio } from "../context/PortfolioContext";
 import { EarthCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
 import { slideIn, fadeIn } from "../Animation/motion";
+import { styles } from "../styles";
 
 const EMAIL_CONFIG = {
   SERVICE_ID: "service_jki37si",
@@ -14,9 +15,19 @@ const EMAIL_CONFIG = {
   RECIPIENT_NAME: "Qurban Hanif",
 };
 
-const FormInput = ({ label, name, type = "text", placeholder, value, onChange, required = true, rows = null }) => (
-  <label className="flex flex-col">
-    <span className="text-white font-medium mb-4">{label}</span>
+/* ── Form Input ──────────────────────────────────────────────── */
+const FormInput = ({
+  label,
+  name,
+  type = "text",
+  placeholder,
+  value,
+  onChange,
+  required = true,
+  rows = null,
+}) => (
+  <label className="flex flex-col gap-2">
+    <span className="text-white/80 font-medium text-[14px] uppercase tracking-widest">{label}</span>
     {rows ? (
       <textarea
         rows={rows}
@@ -25,7 +36,8 @@ const FormInput = ({ label, name, type = "text", placeholder, value, onChange, r
         onChange={onChange}
         placeholder={placeholder}
         required={required}
-        className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border border-[#915EFF]/20 font-medium focus:ring-2 focus:ring-[#915EFF] transition-all hover:border-[#915EFF]/60"
+        className="input-glass py-4 px-5 placeholder:text-white/25 text-white rounded-xl
+                   font-medium resize-none text-[15px]"
       />
     ) : (
       <input
@@ -35,7 +47,8 @@ const FormInput = ({ label, name, type = "text", placeholder, value, onChange, r
         onChange={onChange}
         placeholder={placeholder}
         required={required}
-        className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border border-[#915EFF]/20 font-medium focus:ring-2 focus:ring-[#915EFF] transition-all hover:border-[#915EFF]/60"
+        className="input-glass py-4 px-5 placeholder:text-white/25 text-white rounded-xl
+                   font-medium text-[15px]"
       />
     )}
   </label>
@@ -52,39 +65,43 @@ FormInput.propTypes = {
   rows: PropTypes.number,
 };
 
-const SubmitButton = ({ isLoading }) => (
-  <button
-    type="submit"
-    className="bg-gradient-to-r from-[#915EFF] to-[#56ccf2] hover:shadow-lg hover:shadow-[#915EFF]/50 py-3 px-8 rounded-xl outline-none w-fit text-white font-bold transition-all duration-300 hover:scale-105 transform"
-  >
-    {isLoading ? (
-      <span className="flex items-center gap-2">
-        <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-        Sending...
-      </span>
-    ) : (
-      "📧 Send Message"
-    )}
-  </button>
-);
-
-SubmitButton.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-};
-
+/* ── Contact Method Card ─────────────────────────────────────── */
 const ContactMethod = ({ icon, title, description, link, linkText }) => (
   <motion.a
     href={link}
     target="_blank"
     rel="noopener noreferrer"
-    whileHover={{ y: -5 }}
-    className="flex items-start gap-4 p-4 bg-tertiary border border-[#915EFF]/20 rounded-lg hover:border-[#915EFF]/60 hover:shadow-lg hover:shadow-[#915EFF]/20 transition-all duration-300"
+    whileHover={{ y: -5, scale: 1.01 }}
+    className="flex items-start gap-4 p-5 rounded-xl transition-all duration-400 group"
+    style={{
+      backdropFilter: "blur(10px)",
+      WebkitBackdropFilter: "blur(10px)",
+      background: "rgba(145,94,255,0.05)",
+      border: "1px solid rgba(145,94,255,0.18)",
+    }}
+    onMouseEnter={(e) => {
+      e.currentTarget.style.border = "1px solid rgba(145,94,255,0.45)";
+      e.currentTarget.style.boxShadow = "0 6px 28px rgba(145,94,255,0.14)";
+      e.currentTarget.style.background = "rgba(145,94,255,0.09)";
+    }}
+    onMouseLeave={(e) => {
+      e.currentTarget.style.border = "1px solid rgba(145,94,255,0.18)";
+      e.currentTarget.style.boxShadow = "none";
+      e.currentTarget.style.background = "rgba(145,94,255,0.05)";
+    }}
   >
-    <div className="text-3xl flex-shrink-0">{icon}</div>
-    <div className="flex-1">
-      <h4 className="text-white font-bold text-[16px] mb-1">{title}</h4>
-      <p className="text-secondary text-[14px] mb-2">{description}</p>
-      <p className="text-[#915EFF] text-[14px] font-semibold hover:text-[#56ccf2] transition-colors">{linkText} →</p>
+    <div className="w-11 h-11 flex-shrink-0 rounded-xl flex items-center justify-center text-2xl
+                    bg-gradient-to-br from-[#915EFF]/25 to-[#56ccf2]/15
+                    border border-[#915EFF]/30 group-hover:border-[#915EFF]/60 
+                    group-hover:shadow-[0_0_16px_rgba(145,94,255,0.3)] transition-all duration-300">
+      {icon}
+    </div>
+    <div className="flex-1 min-w-0">
+      <h4 className="text-white font-bold text-[15px] mb-0.5">{title}</h4>
+      <p className="text-secondary text-[13px] mb-1">{description}</p>
+      <p className="text-gradient text-[13px] font-semibold truncate">
+        {linkText} →
+      </p>
     </div>
   </motion.a>
 );
@@ -97,6 +114,7 @@ ContactMethod.propTypes = {
   linkText: PropTypes.string.isRequired,
 };
 
+/* ── Main Contact Component ──────────────────────────────────── */
 const Contact = () => {
   const { data } = usePortfolio();
   const contactSettings = data?.settings?.contact ?? {};
@@ -104,55 +122,51 @@ const Contact = () => {
   const recipientName = contactSettings.name || EMAIL_CONFIG.RECIPIENT_NAME;
 
   const formRef = useRef();
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [loading, setLoading] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
 
   const handleChange = useCallback((e) => {
     const { name, value } = e.target;
-    setForm((prevForm) => ({
-      ...prevForm,
-      [name]: value,
-    }));
+    setForm((prev) => ({ ...prev, [name]: value }));
   }, []);
 
-  const handleSubmit = useCallback((e) => {
-    e.preventDefault();
-    setLoading(true);
-    setSubmitStatus(null);
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      setLoading(true);
+      setSubmitStatus(null);
 
-    emailjs
-      .send(
-        EMAIL_CONFIG.SERVICE_ID,
-        EMAIL_CONFIG.TEMPLATE_ID,
-        {
-          from_name: form.name,
-          to_name: recipientName,
-          from_email: form.email,
-          to_email: recipientEmail,
-          message: form.message,
-        },
-        EMAIL_CONFIG.PUBLIC_KEY
-      )
-      .then(
-        () => {
-          setLoading(false);
-          setSubmitStatus("success");
-          setForm({ name: "", email: "", message: "" });
-          setTimeout(() => setSubmitStatus(null), 5000);
-        },
-        (error) => {
-          setLoading(false);
-          setSubmitStatus("error");
-          console.error("Email submission error:", error);
-          setTimeout(() => setSubmitStatus(null), 5000);
-        }
-      );
-  }, [form, recipientEmail, recipientName]);
+      emailjs
+        .send(
+          EMAIL_CONFIG.SERVICE_ID,
+          EMAIL_CONFIG.TEMPLATE_ID,
+          {
+            from_name: form.name,
+            to_name: recipientName,
+            from_email: form.email,
+            to_email: recipientEmail,
+            message: form.message,
+          },
+          EMAIL_CONFIG.PUBLIC_KEY
+        )
+        .then(
+          () => {
+            setLoading(false);
+            setSubmitStatus("success");
+            setForm({ name: "", email: "", message: "" });
+            setTimeout(() => setSubmitStatus(null), 5000);
+          },
+          (error) => {
+            setLoading(false);
+            setSubmitStatus("error");
+            console.error("Email submission error:", error);
+            setTimeout(() => setSubmitStatus(null), 5000);
+          }
+        );
+    },
+    [form, recipientEmail, recipientName]
+  );
 
   const contactMethods = [
     {
@@ -172,7 +186,7 @@ const Contact = () => {
     {
       icon: "☎️",
       title: "Phone Call",
-      description: "Call me for quick discussion",
+      description: "Call me for a quick discussion",
       link: contactSettings.phone ? `tel:${contactSettings.phone}` : "tel:+923085651015",
       linkText: contactSettings.phone || "+92-308-5651015",
     },
@@ -181,43 +195,64 @@ const Contact = () => {
   return (
     <>
       <div className="xl:mt-8 flex xl:flex-row flex-col-reverse gap-10 overflow-hidden">
+        {/* ── Contact Form ── */}
         <motion.div
           variants={slideIn("left", "tween", 0.2, 1)}
-          className="flex-[0.75] bg-black-100/40 backdrop-blur-md p-8 rounded-2xl border border-[#915EFF]/20 shadow-2xl"
+          className="flex-[0.75] contact-glass rounded-2xl p-8 relative overflow-hidden"
         >
-          <div className="flex flex-col items-start gap-3 mb-8">
-            <span className="text-[#915EFF] text-[14px] font-bold uppercase tracking-widest">Message Me</span>
-            <h3 className="text-white font-black md:text-[45px] sm:text-[35px] text-[30px]">
+          {/* Ambient glow blob */}
+          <div className="absolute top-0 right-0 w-48 h-48 bg-[#915EFF]/10 rounded-full blur-3xl pointer-events-none" />
+
+          {/* Header */}
+          <div className="flex flex-col items-start gap-2 mb-8 relative z-10">
+            <span className="text-[#915EFF] text-[12px] font-bold uppercase tracking-[0.25em]">
+              Message Me
+            </span>
+            <h3 className="text-white font-black md:text-[42px] sm:text-[32px] text-[26px] leading-tight">
               Direct Contact
             </h3>
+            <div className="w-12 h-[3px] rounded-full bg-gradient-to-r from-[#915EFF] to-[#56ccf2]" />
           </div>
 
+          {/* Status messages */}
           {submitStatus === "success" && (
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="mt-4 p-4 bg-green-500 bg-opacity-20 border border-green-500 rounded-lg text-green-400 flex items-center gap-2"
+              className="mb-6 p-4 rounded-xl flex items-center gap-3 relative z-10"
+              style={{
+                background: "rgba(52,211,153,0.10)",
+                border: "1px solid rgba(52,211,153,0.40)",
+              }}
             >
-              <span>✓</span> Thank you! I&apos;ll get back to you as soon as
-              possible.
+              <span className="text-green-400 text-lg">✓</span>
+              <p className="text-green-400 text-[14px] font-medium">
+                Thank you! I&apos;ll get back to you as soon as possible.
+              </p>
             </motion.div>
           )}
           {submitStatus === "error" && (
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="mt-4 p-4 bg-red-500 bg-opacity-20 border border-red-500 rounded-lg text-red-400 flex items-center gap-2"
+              className="mb-6 p-4 rounded-xl flex items-center gap-3 relative z-10"
+              style={{
+                background: "rgba(239,68,68,0.10)",
+                border: "1px solid rgba(239,68,68,0.40)",
+              }}
             >
-              <span>✕</span> Something went wrong. Please try again later.
+              <span className="text-red-400 text-lg">✕</span>
+              <p className="text-red-400 text-[14px] font-medium">
+                Something went wrong. Please try again later.
+              </p>
             </motion.div>
           )}
 
+          {/* Form */}
           <form
             ref={formRef}
             onSubmit={handleSubmit}
-            className="mt-12 flex flex-col gap-8"
+            className="flex flex-col gap-6 relative z-10"
           >
             <FormInput
               label="Your Name"
@@ -243,24 +278,41 @@ const Contact = () => {
               rows={7}
             />
 
-            <SubmitButton isLoading={loading} />
+            <motion.button
+              type="submit"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+              disabled={loading}
+              className={`${styles.gradientButton} w-fit px-10 py-3 text-[15px] disabled:opacity-60 disabled:cursor-not-allowed`}
+            >
+              {loading ? (
+                <span className="flex items-center gap-2">
+                  <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  Sending...
+                </span>
+              ) : (
+                "📧 Send Message"
+              )}
+            </motion.button>
           </form>
         </motion.div>
 
+        {/* ── Earth Canvas ── */}
         <motion.div
           variants={slideIn("right", "tween", 0.2, 1)}
           className="xl:flex-1 xl:h-[700px] lg:h-[600px] md:h-[550px] h-[350px]"
         >
-          <div className="w-full h-full relative group">
-            <div className="absolute inset-0 bg-[#915EFF]/5 rounded-full filter blur-3xl opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
+          <div className="w-full h-full relative">
+            <div className="absolute inset-0 bg-[#915EFF]/5 rounded-full filter blur-3xl opacity-20" />
             <EarthCanvas />
           </div>
         </motion.div>
       </div>
 
+      {/* ── Contact Method Cards ── */}
       <motion.div
         variants={fadeIn("up", "spring", 0.4, 0.75)}
-        className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6"
+        className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-5"
       >
         {contactMethods.map((method, index) => (
           <motion.div
@@ -277,8 +329,5 @@ const Contact = () => {
 
 const ContactSection = SectionWrapper(Contact, "contact");
 
-// Named export: raw component for standalone page use (no SectionWrapper)
 export { Contact };
-
-// Default export: SectionWrapper-wrapped for homepage scroll sections
 export default ContactSection;

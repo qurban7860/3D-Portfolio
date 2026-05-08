@@ -44,26 +44,20 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const success = await onSubmit(formState);
-    
-    // Clear form if it was a new entry and submission was successful
-    if (success && !initialData) {
-      const defaults = schema.fields.reduce((acc, field) => {
-        acc[field.name] = field.defaultValue ?? (field.type === "checkbox" ? false : "");
-        return acc;
-      }, {});
-      setFormState(defaults);
-    }
+    await onSubmit(formState);
   };
 
   return (
-    <div className="rounded-[1.5rem] sm:rounded-[2rem] bg-tertiary/40 border border-white/5 p-5 sm:p-8 backdrop-blur-md">
-      <h3 className="text-white font-bold text-xl sm:text-2xl mb-6">
-        {initialData ? `Edit ${schema.label}` : `Add New ${schema.label}`}
-      </h3>
+    <div className="p-6 sm:p-8">
+      <div className="mb-8">
+        <h3 className="text-white font-extrabold text-2xl sm:text-3xl tracking-tight">
+          {initialData ? `Edit ${schema.label}` : `Add New ${schema.label}`}
+        </h3>
+        <p className="text-secondary text-sm mt-2">Fill out the details below to update your collection.</p>
+      </div>
       
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid gap-x-6 gap-y-5 grid-cols-1 md:grid-cols-2">
+        <div className="grid gap-x-6 gap-y-6 grid-cols-1 md:grid-cols-2">
           {schema.fields.map((field) => (
             <div 
               key={field.name} 
@@ -79,8 +73,8 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
                   : ""
               }`}
             >
-              <label className="block text-[10px] sm:text-xs font-bold uppercase tracking-wider text-secondary mb-2 ml-1">
-                {field.label} {field.required && <span className="text-[#915EFF]">*</span>}
+              <label className="block text-[11px] font-bold uppercase tracking-widest text-[#c4a7ff] mb-2 ml-1">
+                {field.label} {field.required && <span className="text-[#56ccf2]">*</span>}
               </label>
               
               {field.type === "textarea" ? (
@@ -91,10 +85,10 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
                   rows={field.name === "points" || field.name === "features" ? 6 : 4}
                   required={field.required}
                   placeholder={`Enter ${field.label.toLowerCase()}...`}
-                  className="w-full rounded-xl sm:rounded-2xl border border-white/10 bg-black-200/50 px-4 sm:px-5 py-3 sm:py-4 text-sm sm:text-base text-white outline-none transition-all focus:border-[#915EFF] focus:ring-4 focus:ring-[#915EFF]/10 placeholder:text-secondary/50 resize-none"
+                  className="w-full rounded-2xl bg-black-200/40 border border-white/10 px-5 py-4 text-sm text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-[#915EFF]/5 focus:ring-4 focus:ring-[#915EFF]/10 placeholder:text-white/20 resize-none custom-scrollbar"
                 />
               ) : field.type === "checkbox" ? (
-                <div className="flex items-center gap-3 rounded-xl sm:rounded-2xl border border-white/10 bg-black-200/30 px-4 sm:px-5 py-3 sm:py-3.5 h-[52px] sm:h-[60px]">
+                <div className="flex items-center gap-3 rounded-2xl bg-black-200/40 border border-white/10 px-5 h-[54px] transition-all hover:bg-white/5">
                   <div className="relative flex items-center">
                     <input
                       id={`checkbox-${field.name}`}
@@ -118,7 +112,7 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
                   onChange={handleChange}
                   required={field.required}
                   placeholder={`Enter ${field.label.toLowerCase()}...`}
-                  className="w-full rounded-xl sm:rounded-2xl border border-white/10 bg-black-200/50 px-4 sm:px-5 py-3 sm:py-4 text-sm sm:text-base text-white outline-none transition-all focus:border-[#915EFF] focus:ring-4 focus:ring-[#915EFF]/10 placeholder:text-secondary/50"
+                  className="w-full rounded-2xl bg-black-200/40 border border-white/10 px-5 py-4 text-sm text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-[#915EFF]/5 focus:ring-4 focus:ring-[#915EFF]/10 placeholder:text-white/20"
                 />
               )}
             </div>
@@ -126,14 +120,14 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
         </div>
 
         {schema.fields.some((f) => f.name.toLowerCase().includes("url") || f.name === "icon") && (
-          <div className="rounded-[1.2rem] sm:rounded-[1.5rem] border border-dashed border-white/20 bg-white/5 p-4 sm:p-6 transition-all hover:bg-white/10">
+          <div className="rounded-2xl border border-dashed border-white/20 bg-white/5 p-5 sm:p-6 transition-all hover:bg-white/10 group">
             <div className="flex items-center justify-between mb-4">
-              <h4 className="text-white font-semibold flex items-center gap-2 text-sm sm:text-base">
+              <h4 className="text-white font-semibold flex items-center gap-2 text-sm">
                 <span className="text-xl">🖼️</span> Media Upload
               </h4>
               {uploading && (
-                <div className="flex items-center gap-2 text-[#915EFF] text-[10px] font-bold uppercase tracking-widest">
-                  <div className="h-2 w-2 rounded-full bg-[#915EFF] animate-ping" />
+                <div className="flex items-center gap-2 text-[#56ccf2] text-[10px] font-bold uppercase tracking-widest">
+                  <div className="h-2 w-2 rounded-full bg-[#56ccf2] animate-ping" />
                   Uploading...
                 </div>
               )}
@@ -147,7 +141,6 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
                   const file = e.target.files?.[0];
                   if (!file) return;
                   
-                  // Find the target field (usually imageUrl, iconUrl, or icon)
                   const targetField = schema.fields.find(f => 
                     f.name === "imageUrl" || f.name === "iconUrl" || f.name === "icon"
                   )?.name || "imageUrl";
@@ -162,39 +155,37 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
               />
               <label 
                 htmlFor="admin-file-upload"
-                className="w-full sm:w-auto flex cursor-pointer items-center justify-center gap-3 rounded-xl bg-white/10 px-6 py-3 text-sm font-bold text-white transition-all hover:bg-white/20 active:scale-95 border border-white/5"
+                className="w-full sm:w-auto flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-white/10 px-6 py-3 text-sm font-bold text-white transition-all hover:bg-white/20 active:scale-95 border border-white/5 group-hover:border-white/20"
               >
                 <span className="text-lg">📁</span>
-                <span>{uploading ? "Uploading..." : "Upload Asset"}</span>
+                <span>{uploading ? "Uploading..." : "Select Asset"}</span>
               </label>
-              <p className="text-[10px] sm:text-xs text-secondary italic text-center sm:text-left">Recommended: Square Aspect Ratio, Max 2MB</p>
+              <p className="text-xs text-secondary/70 italic text-center sm:text-left">Max 2MB. Square ratio recommended for icons.</p>
             </div>
           </div>
         )}
 
-        <div className="flex flex-wrap gap-4 pt-4 border-t border-white/10">
+        <div className="flex gap-4 pt-6 border-t border-white/10 mt-8">
           <button
             type="submit"
             disabled={isSaving}
-            className="flex-1 sm:flex-none inline-flex items-center justify-center rounded-xl sm:rounded-2xl bg-gradient-to-r from-[#915EFF] to-[#56ccf2] px-6 sm:px-10 py-3 sm:py-4 text-white font-bold shadow-lg shadow-[#915EFF]/20 transition-all hover:scale-[1.02] hover:brightness-110 active:scale-95 disabled:opacity-50 text-sm sm:text-base"
+            className="flex-1 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-[#915EFF] to-[#56ccf2] px-6 py-4 text-white font-bold shadow-[0_4px_14px_rgba(145,94,255,0.3)] transition-all hover:scale-[1.02] hover:shadow-[0_6px_20px_rgba(145,94,255,0.4)] active:scale-95 disabled:opacity-60 disabled:pointer-events-none text-sm"
           >
             {isSaving ? (
               <div className="flex items-center gap-2">
                 <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                <span>Processing...</span>
+                <span>Saving...</span>
               </div>
-            ) : initialData ? "Update Record" : "Create New Entry"}
+            ) : initialData ? "Save Changes" : "Create Entry"}
           </button>
           
-          {initialData && (
-            <button
-              type="button"
-              onClick={onCancel}
-              className="flex-1 sm:flex-none inline-flex items-center justify-center rounded-xl sm:rounded-2xl border border-white/10 bg-white/5 px-6 sm:px-8 py-3 sm:py-4 text-white font-semibold transition-all hover:bg-white/10 active:scale-95 text-sm sm:text-base"
-            >
-              Cancel Edit
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={onCancel}
+            className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-transparent px-8 py-4 text-white font-bold transition-all hover:bg-white/5 active:scale-95 text-sm"
+          >
+            Cancel
+          </button>
         </div>
       </form>
     </div>

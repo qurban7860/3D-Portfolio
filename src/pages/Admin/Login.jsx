@@ -35,28 +35,39 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#050816] flex items-center justify-center p-6 selection:bg-[#915EFF]/30">
-      {/* Background blobs */}
-      <div className="fixed inset-0 z-0 overflow-hidden opacity-30">
-        <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[#915EFF] blur-[150px]" />
-        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#56ccf2] blur-[150px]" />
-      </div>
+    <div className="min-h-screen bg-primary flex items-center justify-center p-6 selection:bg-[#915EFF]/30 relative overflow-hidden">
+      {/* Premium Background Orbs */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#915EFF]/15 rounded-full blur-[120px] pointer-events-none animate-float" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#56ccf2]/10 rounded-full blur-[100px] pointer-events-none animate-float" style={{ animationDelay: '2s' }} />
 
       <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="relative z-10 w-full max-w-md"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="relative z-10 w-full max-w-[420px]"
       >
-        <div className="rounded-[2.5rem] border border-white/10 bg-black-100/60 backdrop-blur-2xl p-8 sm:p-12 shadow-2xl shadow-black/50">
-          <div className="mb-10 text-center">
-            <div className="mx-auto mb-6 h-16 w-16 rounded-2xl bg-gradient-to-tr from-[#915EFF] to-[#56ccf2] flex items-center justify-center text-white text-3xl shadow-lg shadow-[#915EFF]/20">
-              ⚙️
+        <div 
+          className="rounded-3xl p-8 sm:p-10 relative overflow-hidden"
+          style={{
+            backdropFilter: "blur(16px)",
+            WebkitBackdropFilter: "blur(16px)",
+            background: "linear-gradient(145deg, rgba(145,94,255,0.08) 0%, rgba(255,255,255,0.03) 100%)",
+            border: "1px solid rgba(145,94,255,0.25)",
+            boxShadow: "0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1)",
+          }}
+        >
+          {/* Inner ambient glow */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-32 bg-[#915EFF]/20 blur-3xl rounded-full pointer-events-none" />
+
+          <div className="mb-8 text-center relative z-10">
+            <div className="mx-auto mb-5 h-16 w-16 rounded-2xl bg-gradient-to-br from-[#915EFF] to-[#56ccf2] flex items-center justify-center text-white text-3xl shadow-[0_0_24px_rgba(145,94,255,0.4)] border border-white/20">
+              🔒
             </div>
-            <h1 className="text-3xl font-extrabold text-white tracking-tight">Admin <span className="text-gradient">Access</span></h1>
-            <p className="mt-2 text-secondary text-sm">Secure management portal</p>
+            <h1 className="text-3xl font-extrabold text-white tracking-tight">Admin <span className="text-gradient">Portal</span></h1>
+            <p className="mt-2 text-secondary text-sm">Sign in to manage your portfolio</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
             {(localError || error) && (
               <motion.div 
                 initial={{ opacity: 0, y: -10 }}
@@ -66,9 +77,9 @@ const LoginPage = () => {
               </motion.div>
             )}
             
-            <div className="space-y-4">
+            <div className="space-y-5">
               <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#915EFF] ml-1">Email Address</label>
+                <label className="text-[11px] font-bold uppercase tracking-widest text-[#c4a7ff] ml-1">Email Address</label>
                 <input
                   type="email"
                   name="email"
@@ -76,12 +87,12 @@ const LoginPage = () => {
                   onChange={handleChange}
                   required
                   placeholder="admin@portfolio.local"
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-white/10"
+                  className="w-full rounded-xl bg-black-200/50 border border-white/10 px-5 py-4 text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-[#915EFF]/5 focus:ring-4 focus:ring-[#915EFF]/10 placeholder:text-white/20 text-sm"
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#915EFF] ml-1">Password</label>
+                <label className="text-[11px] font-bold uppercase tracking-widest text-[#c4a7ff] ml-1">Password</label>
                 <input
                   type="password"
                   name="password"
@@ -89,7 +100,7 @@ const LoginPage = () => {
                   onChange={handleChange}
                   required
                   placeholder="••••••••"
-                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-white/10"
+                  className="w-full rounded-xl bg-black-200/50 border border-white/10 px-5 py-4 text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-[#915EFF]/5 focus:ring-4 focus:ring-[#915EFF]/10 placeholder:text-white/20 text-sm"
                 />
               </div>
             </div>
@@ -97,26 +108,24 @@ const LoginPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="relative group w-full overflow-hidden rounded-2xl bg-gradient-to-r from-[#915EFF] to-[#56ccf2] p-px font-bold text-white transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-60 disabled:hover:scale-100"
+              className="w-full rounded-xl bg-gradient-to-r from-[#915EFF] to-[#56ccf2] px-6 py-4 font-bold text-white shadow-[0_8px_24px_rgba(145,94,255,0.3)] transition-all hover:shadow-[0_12px_32px_rgba(145,94,255,0.4)] hover:scale-[1.02] active:scale-95 disabled:opacity-60 disabled:pointer-events-none"
             >
-              <div className="relative rounded-2xl bg-black-100/10 px-6 py-4 transition-all group-hover:bg-transparent">
-                {loading ? (
-                  <div className="flex items-center justify-center gap-2">
-                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-                    <span>Verifying...</span>
-                  </div>
-                ) : (
-                  "Authenticate"
-                )}
-              </div>
+              {loading ? (
+                <div className="flex items-center justify-center gap-2">
+                  <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                  <span>Authenticating...</span>
+                </div>
+              ) : (
+                "Secure Login"
+              )}
             </button>
             
             <button 
               type="button" 
               onClick={() => navigate("/")}
-              className="w-full text-center text-xs text-secondary hover:text-white transition-colors py-2"
+              className="w-full text-center text-xs text-secondary hover:text-[#915EFF] transition-colors py-2 font-medium"
             >
-              Back to Portfolio
+              ← Back to Portfolio
             </button>
           </form>
         </div>

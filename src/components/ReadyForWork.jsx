@@ -3,16 +3,23 @@ import PropTypes from "prop-types";
 import { usePortfolio } from "../context/PortfolioContext";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../Animation/motion";
+import { styles } from "../styles";
 
+/* ── Availability Badge ────────────────────────────────────────── */
 const AvailabilityBadge = ({ status, icon }) => (
   <motion.div
-    animate={{ scale: [1, 1.05, 1] }}
-    transition={{ duration: 2, repeat: Infinity }}
-    className="flex items-center gap-2 px-6 py-3 bg-green-500/20 border border-green-500 rounded-full w-fit"
+    animate={{ scale: [1, 1.04, 1] }}
+    transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+    className="flex items-center gap-3 px-6 py-3 rounded-full w-fit animate-glow-pulse"
+    style={{
+      background: "rgba(52,211,153,0.12)",
+      border: "1px solid rgba(52,211,153,0.50)",
+      backdropFilter: "blur(10px)",
+    }}
   >
-    <span className="text-2xl">{icon}</span>
-    <p className="text-green-400 font-bold text-[16px]">{status}</p>
-    <span className="w-3 h-3 rounded-full bg-green-400 animate-pulse"></span>
+    <span className="text-xl">{icon}</span>
+    <p className="text-green-400 font-bold text-[15px]">{status}</p>
+    <span className="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse" />
   </motion.div>
 );
 
@@ -21,14 +28,22 @@ AvailabilityBadge.propTypes = {
   icon: PropTypes.string.isRequired,
 };
 
+/* ── Hire Card ────────────────────────────────────────────────── */
 const HireCard = ({ icon, title, description }) => (
   <motion.div
-    whileHover={{ y: -5 }}
-    className="flex flex-col items-center gap-4 p-6 rounded-xl bg-tertiary border border-[#915EFF]/20 hover:border-[#915EFF]/60 transition-all"
+    whileHover={{ y: -6, scale: 1.02 }}
+    className="glass-purple rounded-xl p-6 flex flex-col items-center gap-4 text-center
+               hover:bg-[#915EFF]/12 hover:shadow-[0_8px_32px_rgba(145,94,255,0.18)]
+               transition-all duration-500 glow-purple group"
   >
-    <div className="text-5xl">{icon}</div>
-    <h3 className="text-white font-bold text-[18px] text-center">{title}</h3>
-    <p className="text-secondary text-[14px] text-center">{description}</p>
+    <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl
+                    bg-gradient-to-br from-[#915EFF]/25 to-[#56ccf2]/15
+                    border border-[#915EFF]/30 group-hover:border-[#915EFF]/60 
+                    group-hover:shadow-[0_0_20px_rgba(145,94,255,0.3)] transition-all duration-300">
+      {icon}
+    </div>
+    <h3 className="text-white font-bold text-[17px]">{title}</h3>
+    <p className="text-secondary text-[13px] leading-relaxed">{description}</p>
   </motion.div>
 );
 
@@ -38,57 +53,81 @@ HireCard.propTypes = {
   description: PropTypes.string.isRequired,
 };
 
+/* ── Quick Fact Item ───────────────────────────────────────────── */
+const QuickFact = ({ value, label }) => (
+  <div className="flex flex-col items-center gap-1 text-center">
+    <p className="stat-number text-[28px] font-extrabold">{value}</p>
+    <p className="text-secondary text-[13px]">{label}</p>
+  </div>
+);
+
+QuickFact.propTypes = {
+  value: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+};
+
+/* ── Main Component ───────────────────────────────────────────── */
 const ReadyForWork = () => {
   const { data } = usePortfolio();
   const contact = data?.settings?.contact ?? {};
   const availabilityStatus = contact.availabilityStatus || "Open for Work";
-  const emailLink = contact.email ? `mailto:${contact.email}` : "mailto:qurbanhanif120@gmail.com";
-  const linkedinLink = contact.linkedin || "https://www.linkedin.com/in/qurban015";
+  const emailLink = contact.email
+    ? `mailto:${contact.email}`
+    : "mailto:qurbanhanif120@gmail.com";
+  const linkedinLink =
+    contact.linkedin || "https://www.linkedin.com/in/qurban015";
 
   const hiringPoints = [
     {
       icon: "⚡",
       title: "Quick Response",
-      description: "Get in touch and receive response within 24 hours"
+      description: "Get in touch and receive a response within 24 hours",
     },
     {
       icon: "📅",
       title: "Flexible Timeline",
-      description: "Full-time, part-time, or project-based engagement"
+      description: "Full-time, part-time, or project-based engagement",
     },
     {
       icon: "🌍",
       title: "Remote Ready",
-      description: "Available for international projects and collaborations"
+      description: "Available for international projects and collaborations",
     },
     {
       icon: "💼",
       title: "Professional",
-      description: "Industry-standard practices and communication"
-    }
+      description: "Industry-standard practices and communication",
+    },
+  ];
+
+  const quickFacts = [
+    { value: "3+ Years", label: "Professional Development" },
+    { value: "50+ Projects", label: "Successfully Delivered" },
+    { value: "5+ Countries", label: "Global Clients" },
   ];
 
   return (
     <>
+      {/* ── Section Header ── */}
       <motion.div variants={textVariant()} className="flex flex-col items-start gap-4">
-        <span className="section-badge">
-          Get In Touch
-        </span>
-
-        <h2 className="text-white font-extrabold text-3xl sm:text-4xl leading-tight max-w-3xl">
+        <span className="section-badge">Get In Touch</span>
+        <h2 className="section-title-underline text-white font-extrabold text-3xl sm:text-4xl leading-tight max-w-3xl">
           Available for New Opportunities
         </h2>
-
-        <p className="text-secondary text-base sm:text-lg leading-relaxed">
-          I&apos;m actively looking for exciting opportunities to collaborate with innovative teams and tackle challenging problems. Whether you need a full-time developer, a freelance expert for a specific project, or a technical consultant, I&apos;m ready to bring value to your organization.
+        <p className="text-secondary text-base sm:text-lg leading-relaxed max-w-2xl">
+          I&apos;m actively looking for exciting opportunities to collaborate with innovative teams
+          and tackle challenging problems. Whether you need a full-time developer, a freelance
+          expert, or a technical consultant — I&apos;m ready to bring value to your organization.
         </p>
       </motion.div>
 
+      {/* ── Availability Badge ── */}
       <motion.div variants={fadeIn("up", "spring", 0.2, 0.75)} className="mt-6">
         <AvailabilityBadge status={availabilityStatus} icon="🚀" />
       </motion.div>
 
-      <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+      {/* ── Hire Cards Grid ── */}
+      <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 w-full">
         {hiringPoints.map((item, index) => (
           <motion.div
             key={index}
@@ -99,54 +138,46 @@ const ReadyForWork = () => {
         ))}
       </div>
 
+      {/* ── CTA Buttons ── */}
       <motion.div
         variants={fadeIn("up", "spring", 0.5, 0.75)}
-        className="mt-16 flex flex-col sm:flex-row gap-6 justify-center"
+        className="mt-12 flex flex-col sm:flex-row gap-4 flex-wrap"
       >
-        <a
-          href="/contact"
-          className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-[#915EFF] to-[#56ccf2] text-white font-bold rounded-lg hover:shadow-lg hover:shadow-[#915EFF]/50 transition-all duration-300 hover:scale-105"
-        >
+        <a href="/contact" className={`${styles.gradientButton} px-8 py-4 text-[15px]`}>
           📧 Start a Conversation
         </a>
-        <a
-          href={emailLink}
-          className="inline-flex items-center justify-center px-8 py-4 border border-[#915EFF] text-[#915EFF] font-bold rounded-lg hover:bg-[#915EFF]/10 transition-all duration-300"
-        >
+        <a href={emailLink} className={`${styles.outlineButton} px-8 py-4 text-[15px]`}>
           ✉️ Send Email Directly
         </a>
         <a
           href={linkedinLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center px-8 py-4 border border-[#56ccf2] text-[#56ccf2] font-bold rounded-lg hover:bg-[#56ccf2]/10 transition-all duration-300"
+          className={`${styles.outlineButtonCyan} px-8 py-4 text-[15px]`}
         >
           💼 Connect on LinkedIn
         </a>
       </motion.div>
 
+      {/* ── Quick Facts ── */}
       <motion.div
         variants={fadeIn("up", "spring", 0.6, 0.75)}
-        className="mt-10 p-8 bg-black-100 rounded-xl border border-[#915EFF]/20"
+        className="mt-10 p-8 rounded-2xl relative overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(135deg, rgba(145,94,255,0.10) 0%, rgba(86,204,242,0.06) 100%)",
+          border: "1px solid rgba(145,94,255,0.22)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          boxShadow: "0 4px 32px rgba(145,94,255,0.08)",
+        }}
       >
-        <p className="text-white text-[18px] font-bold mb-3">Quick Facts:</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div>
-            <p className="text-[#915EFF] text-[24px] font-bold">3+ Years</p>
-            <p className="text-secondary text-[14px]">
-              Professional Development
-            </p>
-          </div>
-          <div>
-            <p className="text-[#915EFF] text-[24px] font-bold">50+ Projects</p>
-            <p className="text-secondary text-[14px]">Successfully Delivered</p>
-          </div>
-          <div>
-            <p className="text-[#915EFF] text-[24px] font-bold">
-              Global Clients
-            </p>
-            <p className="text-secondary text-[14px]">From 5+ Countries</p>
-          </div>
+        <div className="absolute top-0 right-0 w-40 h-40 bg-[#56ccf2]/8 rounded-full blur-3xl pointer-events-none" />
+        <p className="text-white text-[17px] font-bold mb-6 text-center">Quick Facts</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+          {quickFacts.map((fact, i) => (
+            <QuickFact key={i} {...fact} />
+          ))}
         </div>
       </motion.div>
     </>
@@ -154,5 +185,4 @@ const ReadyForWork = () => {
 };
 
 const ReadyForWorkSection = SectionWrapper(ReadyForWork, "ready-for-work");
-
 export default ReadyForWorkSection;

@@ -13,7 +13,7 @@ import { adminSchema } from "../../constants/adminSchema";
 import LoadingState from "../common/LoadingState";
 import ItemForm from "./ItemForm";
 import ItemList from "./ItemList";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { toast } from "react-hot-toast";
 import ConfirmDialog from "../common/ConfirmDialog";
@@ -45,6 +45,7 @@ const ContentManager = ({ section }) => {
   const { token } = useAuth();
   const [items, setItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [isFormOpen, setIsFormOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -116,8 +117,9 @@ const ContentManager = ({ section }) => {
       }
       
       await loadItems(false);
+      setIsFormOpen(false);
       setSelectedItem(null);
-      return true; // Indicate success for form reset
+      return true;
     } catch (err) {
       console.error(err);
       toast.error(err.message || "Unable to save item.");
@@ -165,9 +167,6 @@ const ContentManager = ({ section }) => {
     try {
       await deleteAdminItem(section, id, token);
       setItems((prev) => prev.filter((item) => item.id !== id));
-      if (selectedItem?.id === id) {
-        setSelectedItem(null);
-      }
       toast.success("Item deleted successfully.", { id: loadingToast });
     } catch (err) {
       console.error(err);
@@ -184,7 +183,7 @@ const ContentManager = ({ section }) => {
   }
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col">
       <ConfirmDialog
         isOpen={confirmState.isOpen}
         title={confirmState.title}
@@ -193,58 +192,93 @@ const ContentManager = ({ section }) => {
         onCancel={() => setConfirmState(prev => ({ ...prev, isOpen: false }))}
       />
 
-      <div className="flex flex-col gap-12">
-        {/* Editor Form (Top) */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="w-full"
+      <div className="flex justify-between items-center mb-6">
+        <div>
+          <h4 className="text-white font-bold text-lg sm:text-xl flex items-center gap-2">
+            {schema.title} Registry
+          </h4>
+          <p className="text-secondary text-xs sm:text-sm mt-1">
+            Total Items: <span className="text-white font-semibold">{items.length}</span>
+          </p>
+        </div>
+        <button 
+          onClick={() => {
+            setSelectedItem(null);
+            setIsFormOpen(true);
+          }}
+          className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#915EFF] to-[#56ccf2] px-4 sm:px-5 py-2.5 text-sm font-bold text-white shadow-[0_4px_14px_rgba(145,94,255,0.3)] transition-all hover:scale-[1.02] hover:shadow-[0_6px_20px_rgba(145,94,255,0.4)] active:scale-95"
         >
-          <ItemForm
-            schema={schema}
-            initialData={selectedItem}
-            isSaving={isSaving}
-            onSubmit={handleSubmit}
-            onCancel={() => setSelectedItem(null)}
-            onUpload={handleUpload}
-            uploading={uploading}
-          />
-        </motion.div>
-
-        {/* List Registry (Bottom) */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="w-full"
-        >
-          <div className="flex justify-between items-center mb-4 px-2">
-            <h4 className="text-white/50 text-[10px] font-bold uppercase tracking-[0.2em]">Manage Records</h4>
-            {!selectedItem && (
-               <button 
-                 onClick={() => {
-                   setSelectedItem(null);
-                   window.scrollTo({ top: 0, behavior: "smooth" });
-                 }}
-                 className="text-[10px] font-bold uppercase tracking-widest text-[#915EFF] hover:text-white transition-colors"
-               >
-                 + Create New
-               </button>
-            )}
-          </div>
-          <ItemList
-            items={items}
-            sectionTitle={schema.title}
-            label={schema.label}
-            onEdit={(item) => {
-              setSelectedItem(item);
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-            onDelete={openDeleteConfirm}
-            onReorder={handleReorder}
-          />
-        </motion.div>
+          <span className="text-lg leading-none">+</span>
+          New Entry
+        </button>
       </div>
+
+      <motion.div 
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full"
+      >
+        <ItemList
+          items={items}
+          sectionTitle={schema.title}
+          label={schema.label}
+          onEdit={(item) => {
+            setSelectedItem(item);
+            setIsFormOpen(true);
+          }}
+          onDelete={openDeleteConfirm}
+          onReorder={handleReorder}
+        />
+      </motion.div>
+
+      {/* Modal Form Overlay */}
+      <AnimatePresence>
+        {isFormOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              transition={{ type: "spring", bounce: 0, duration: 0.4 }}
+              className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto custom-scrollbar rounded-3xl"
+              style={{
+                background: "linear-gradient(145deg, rgba(21,16,48,0.95) 0%, rgba(9,3,37,0.98) 100%)",
+                border: "1px solid rgba(145,94,255,0.3)",
+                boxShadow: "0 25px 50px -12px rgba(0,0,0,0.7), 0 0 30px rgba(145,94,255,0.15)",
+              }}
+            >
+              <button
+                onClick={() => {
+                  setIsFormOpen(false);
+                  setSelectedItem(null);
+                }}
+                className="absolute top-5 right-5 z-10 w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-colors"
+              >
+                ✕
+              </button>
+              <div className="p-1">
+                <ItemForm
+                  schema={schema}
+                  initialData={selectedItem}
+                  isSaving={isSaving}
+                  onSubmit={handleSubmit}
+                  onCancel={() => {
+                    setIsFormOpen(false);
+                    setSelectedItem(null);
+                  }}
+                  onUpload={handleUpload}
+                  uploading={uploading}
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

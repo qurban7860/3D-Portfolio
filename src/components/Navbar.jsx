@@ -222,7 +222,7 @@ const Navbar = () => {
   }, [navLinks, location]);
 
   return (
-    <nav className={`${styles.paddingX} w-full flex items-center py-4 fixed top-0 z-50 bg-primary shadow-md border-b border-white/5 backdrop-blur-sm bg-opacity-95`}>
+    <nav className={`${styles.paddingX} w-full flex items-center py-4 fixed top-0 z-50 nav-glass`}>
       <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
         
         <div className="hidden lg:flex gap-3 items-center">

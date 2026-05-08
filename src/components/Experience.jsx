@@ -8,62 +8,63 @@ import { motion } from "framer-motion";
 import "react-vertical-timeline-component/style.min.css";
 import { usePortfolio } from "../context/PortfolioContext";
 import { SectionWrapper } from "../hoc";
-import { textVariant } from "../Animation/motion";
+import { textVariant, fadeIn } from "../Animation/motion";
 
-const ExperienceCard = ({ experience }) => {
-  return (
-    <VerticalTimelineElement
-      contentStyle={{
-        background: "rgba(255, 255, 255, 0.05)",
-        backdropFilter: "blur(10px)",
-        color: "#fff",
-        border: "1px solid rgba(255, 255, 255, 0.1)",
-        borderRadius: "1rem",
-        boxShadow: "0 8px 32px 0 rgba(145, 94, 255, 0.1)"
-      }}
-      contentArrowStyle={{ borderRight: "7px solid  #232631" }}
-      date={experience.date}
-      iconStyle={{ background: experience.iconBg }}
-      icon={
-        <div className='flex justify-center items-center w-full h-full'>
-          <a
-            href={experience.instituteUrl}
-            target='_blank'
-            rel='noopener noreferrer'
-            className='flex justify-center items-center w-full h-full'
-          >
-            <img
-              src={resolveAssetUrl(experience.iconUrl)}
-              alt={experience.companyName}
-              className='w-[60%] h-[60%] object-contain hover:bg-opacity-80 transition duration-300 ease-in-out transform hover:scale-110 cursor-pointer'
-            />
-          </a>
-        </div>
-      }
-    >
-      <div>
-        <h3 className='text-white text-[24px] font-bold'>{experience.title}</h3>
-        <p
-          className='text-secondary text-[16px] font-semibold'
-          style={{ margin: 0 }}
+/* ── Experience Card ───────────────────────────────────────────── */
+const ExperienceCard = ({ experience }) => (
+  <VerticalTimelineElement
+    contentStyle={{
+      background: "rgba(145,94,255,0.06)",
+      backdropFilter: "blur(14px)",
+      WebkitBackdropFilter: "blur(14px)",
+      color: "#fff",
+      border: "1px solid rgba(145,94,255,0.22)",
+      borderRadius: "1rem",
+      boxShadow: "0 8px 32px rgba(145,94,255,0.10), inset 0 1px 0 rgba(255,255,255,0.05)",
+    }}
+    contentArrowStyle={{ borderRight: "7px solid rgba(145,94,255,0.35)" }}
+    date={experience.date}
+    iconStyle={{
+      background: experience.iconBg,
+      boxShadow: "0 0 0 4px rgba(145,94,255,0.30), 0 4px 16px rgba(145,94,255,0.25)",
+    }}
+    icon={
+      <div className="flex justify-center items-center w-full h-full">
+        <a
+          href={experience.instituteUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex justify-center items-center w-full h-full"
         >
-          {experience.companyName}
-        </p>
+          <img
+            src={resolveAssetUrl(experience.iconUrl)}
+            alt={experience.companyName}
+            className="w-[60%] h-[60%] object-contain hover:scale-110 transition-transform duration-300"
+          />
+        </a>
       </div>
+    }
+  >
+    <div>
+      <h3 className="text-white text-[22px] font-bold">{experience.title}</h3>
+      <p className="text-[#915EFF] text-[15px] font-semibold mt-1" style={{ margin: 0 }}>
+        {experience.companyName}
+      </p>
+    </div>
 
-      <ul className='mt-5 list-disc ml-5 space-y-2'>
-        {experience.points.map((point, index) => (
-          <li
-            key={`experience-point-${index}`}
-            className='text-white-100 text-[14px] pl-1 tracking-wider'
-          >
-            {point}
-          </li>
-        ))}
-      </ul>
-    </VerticalTimelineElement>
-  );
-};
+    <ul className="mt-5 space-y-2">
+      {experience.points.map((point, index) => (
+        <li
+          key={`exp-point-${index}`}
+          className="text-white/75 text-[14px] pl-1 tracking-wide leading-relaxed flex items-start gap-2"
+        >
+          <span className="text-gradient mt-[3px] text-[12px] font-bold flex-shrink-0">▸</span>
+          {point}
+        </li>
+      ))}
+    </ul>
+  </VerticalTimelineElement>
+);
 
 ExperienceCard.propTypes = {
   experience: PropTypes.shape({
@@ -77,40 +78,70 @@ ExperienceCard.propTypes = {
   }).isRequired,
 };
 
-const EducationCard = ({ education }) => {
-  return (
-    <motion.div
-      whileHover={{ y: -5, scale: 1.01 }}
-      className='flex flex-col mb-8 rounded-2xl bg-white/5 backdrop-blur-lg text-white p-6 relative border border-white/10 hover:border-[#915EFF]/60 transition-all duration-500 hover:shadow-2xl hover:shadow-[#915EFF]/20'
+/* ── Education Card ────────────────────────────────────────────── */
+const EducationCard = ({ education }) => (
+  <motion.div
+    variants={fadeIn("up", "spring", 0.1, 0.75)}
+    whileHover={{ y: -6, scale: 1.01 }}
+    className="flex flex-col mb-6 rounded-2xl relative transition-all duration-500
+               hover:shadow-[0_12px_40px_rgba(145,94,255,0.18)]"
+    style={{
+      backdropFilter: "blur(14px)",
+      WebkitBackdropFilter: "blur(14px)",
+      background:
+        "linear-gradient(145deg, rgba(145,94,255,0.08) 0%, rgba(255,255,255,0.04) 100%)",
+      border: "1px solid rgba(145,94,255,0.22)",
+    }}
+  >
+    {/* Glow blob */}
+    <div className="absolute top-0 right-0 w-32 h-32 bg-[#915EFF]/10 rounded-full blur-2xl pointer-events-none" />
+
+    {/* Institute logo */}
+    <a
+      href={education.instituteUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="absolute top-5 right-5 z-10"
+      title={education.instituteName}
     >
-      <a
-        href={education.instituteUrl}
-        target='_blank'
-        rel='noopener noreferrer'
-        className='absolute top-6 right-6'
-        title={education.instituteName}
-      >
-        <img
-          src={resolveAssetUrl(education.imageUrl)}
-          alt={`${education.instituteName} logo`}
-          className='w-12 h-12 object-contain hover:scale-110 transition-transform duration-300 cursor-pointer'
-        />
-      </a>
-      <h3 className='text-[24px] font-bold'>{education.degree}</h3>
-      <p className='text-[16px] font-semibold mt-2 text-[#915EFF]'>{education.instituteName}</p>
-      <ul className='mt-5 list-disc pl-5 space-y-2'>
+      <img
+        src={resolveAssetUrl(education.imageUrl)}
+        alt={`${education.instituteName} logo`}
+        className="w-12 h-12 object-contain hover:scale-110 transition-transform duration-300
+                   ring-2 ring-[#915EFF]/30 rounded-xl"
+      />
+    </a>
+
+    <div className="p-7 relative z-10">
+      {/* Degree badge */}
+      <span className="inline-block text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-4"
+            style={{
+              background: "rgba(145,94,255,0.14)",
+              border: "1px solid rgba(145,94,255,0.35)",
+              color: "#c4a7ff",
+            }}>
+        🎓 Education
+      </span>
+
+      <h3 className="text-white text-[22px] font-bold leading-snug pr-16">{education.degree}</h3>
+      <p className="text-[#915EFF] text-[15px] font-semibold mt-1 mb-4">
+        {education.instituteName}
+      </p>
+
+      <ul className="space-y-2">
         {education.points.map((point, index) => (
           <li
-            key={`education-point-${index}`}
-            className='text-white-100 text-[14px] pl-2 tracking-wider'
+            key={`edu-point-${index}`}
+            className="text-white/75 text-[14px] tracking-wide leading-relaxed flex items-start gap-2"
           >
+            <span className="text-gradient mt-[3px] text-[12px] font-bold flex-shrink-0">▸</span>
             {point}
           </li>
         ))}
       </ul>
-    </motion.div>
-  );
-};
+    </div>
+  </motion.div>
+);
 
 EducationCard.propTypes = {
   education: PropTypes.shape({
@@ -122,6 +153,7 @@ EducationCard.propTypes = {
   }).isRequired,
 };
 
+/* ── Experience Section ────────────────────────────────────────── */
 const Experience = () => {
   const { data } = usePortfolio();
   const experiences = data?.experiences ?? [];
@@ -129,9 +161,12 @@ const Experience = () => {
 
   return (
     <>
+      {/* Education */}
       <motion.div variants={textVariant()} className="flex flex-col items-start gap-2">
         <span className="section-badge inline-block">Career Path</span>
-        <h2 className="text-white font-extrabold text-3xl sm:text-4xl leading-tight max-w-3xl">Education</h2>
+        <h2 className="section-title-underline text-white font-extrabold text-3xl sm:text-4xl leading-tight max-w-3xl">
+          Education
+        </h2>
       </motion.div>
 
       <div className="mt-8">
@@ -140,12 +175,15 @@ const Experience = () => {
         ))}
       </div>
 
-      <motion.div variants={textVariant()} className="mt-12">
+      {/* Experience */}
+      <motion.div variants={textVariant()} className="mt-14">
         <span className="section-badge inline-block">Professional Journey</span>
-        <h2 className="text-white font-extrabold text-3xl sm:text-4xl leading-tight max-w-3xl">Work Experience</h2>
+        <h2 className="section-title-underline text-white font-extrabold text-3xl sm:text-4xl leading-tight max-w-3xl mt-2">
+          Work Experience
+        </h2>
       </motion.div>
 
-      <div className="mt-6">
+      <div className="mt-8">
         <VerticalTimeline>
           {experiences.map((exp, idx) => (
             <ExperienceCard key={idx} experience={exp} />
@@ -159,5 +197,4 @@ const Experience = () => {
 const ExperienceSection = SectionWrapper(Experience, "experience");
 
 export { Experience };
-
 export default ExperienceSection;

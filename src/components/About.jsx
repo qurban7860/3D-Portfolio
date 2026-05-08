@@ -4,16 +4,13 @@ import PropTypes from "prop-types";
 import { usePortfolio } from "../context/PortfolioContext";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../Animation/motion";
-
 import { resolveAssetUrl } from "../utils/assetResolver";
 
+/* ── Service Card ─────────────────────────────────────────────── */
 const ServiceCard = ({ index, title, icon }) => {
   const resolvedIcon = resolveAssetUrl(icon);
   const isEmoji =
-    icon &&
-    !icon.startsWith("http") &&
-    !icon.includes(".") &&
-    !icon.includes("/");
+    icon && !icon.startsWith("http") && !icon.includes(".") && !icon.includes("/");
 
   return (
     <Tilt
@@ -59,6 +56,32 @@ ServiceCard.propTypes = {
   icon: PropTypes.string.isRequired,
 };
 
+/* ── Why Work With Me Feature Card ────────────────────────────── */
+const WhyCard = ({ emoji, title, desc, delay }) => (
+  <motion.div
+    variants={fadeIn("up", "spring", delay, 0.6)}
+    whileHover={{ y: -6, scale: 1.02 }}
+    className="glass-purple rounded-xl p-5 flex flex-col gap-3 hover:bg-[#915EFF]/10 transition-all duration-500 glow-purple group"
+  >
+    {/* Icon badge */}
+    <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl
+                    bg-gradient-to-br from-[#915EFF]/30 to-[#56ccf2]/20
+                    border border-[#915EFF]/30 group-hover:border-[#915EFF]/60 transition-colors duration-300">
+      {emoji}
+    </div>
+    <h4 className="text-white font-bold text-[17px]">{title}</h4>
+    <p className="text-secondary text-[14px] leading-relaxed">{desc}</p>
+  </motion.div>
+);
+
+WhyCard.propTypes = {
+  emoji: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  desc: PropTypes.string.isRequired,
+  delay: PropTypes.number.isRequired,
+};
+
+/* ── About Section ────────────────────────────────────────────── */
 const About = () => {
   const { data } = usePortfolio();
   const services = data?.services ?? [];
@@ -71,78 +94,80 @@ const About = () => {
     "My expertise spans full-stack development, real-time applications, RESTful API design, performance optimization, and responsive UI/UX design. I'm committed to writing clean, maintainable code and delivering innovative solutions that drive business growth and user satisfaction.";
   const details = about.details || "";
 
+  const whyPoints = [
+    {
+      emoji: "🚀",
+      title: "Fast Delivery",
+      desc: "Efficient development with rapid turnaround times — shipping production-ready features without cutting corners.",
+    },
+    {
+      emoji: "🎯",
+      title: "Quality Focus",
+      desc: "High-quality, tested, and production-ready code that scales gracefully as your business grows.",
+    },
+    {
+      emoji: "🤝",
+      title: "Collaboration",
+      desc: "Excellent communication and team coordination — I treat your project as if it were my own.",
+    },
+  ];
+
   return (
     <>
+      {/* ── Section Header ── */}
       <motion.div
         variants={textVariant()}
         className="flex flex-col items-start gap-4 md:mt-0 -mt-8"
       >
         <span className="section-badge">About Me</span>
-
-        <h2 className="text-white font-extrabold text-3xl sm:text-4xl leading-tight max-w-3xl">
+        <h2 className="section-title-underline text-white font-extrabold text-3xl sm:text-4xl leading-tight max-w-3xl">
           Overview
         </h2>
-
-        <p className="text-secondary text-base sm:text-lg leading-relaxed mt-2">
-          {overview}
-        </p>
-
-        <p className="text-secondary text-base sm:text-lg leading-relaxed mt-4">
-          {summary}
-        </p>
+        <p className="text-secondary text-base sm:text-lg leading-relaxed mt-2">{overview}</p>
+        <p className="text-secondary text-base sm:text-lg leading-relaxed mt-2">{summary}</p>
         {details && (
-          <p className="text-secondary text-base sm:text-lg leading-relaxed mt-4">
-            {details}
-          </p>
+          <p className="text-secondary text-base sm:text-lg leading-relaxed mt-2">{details}</p>
         )}
       </motion.div>
 
+      {/* ── Service Cards ── */}
       <div className="mt-16 flex flex-wrap gap-10 justify-evenly">
         {services.map((service, index) => (
           <ServiceCard key={service.title} index={index} {...service} />
         ))}
       </div>
 
+      {/* ── Why Work With Me ── */}
       <motion.div
-        variants={fadeIn("up", "spring", 0.3, 0.75)}
-        whileHover={{ y: -5 }}
-        className="mt-6 flex flex-col rounded-2xl bg-gradient-to-br from-tertiary to-black-200 p-8 border border-[#915EFF]/20 hover:border-[#915EFF]/60 transition-all hover:shadow-lg hover:shadow-[#915EFF]/20"
+        variants={fadeIn("up", "spring", 0.2, 0.75)}
+        className="mt-10 rounded-2xl overflow-hidden relative"
+        style={{
+          background: "linear-gradient(135deg, rgba(145,94,255,0.08) 0%, rgba(86,204,242,0.05) 50%, rgba(5,8,22,0.6) 100%)",
+          border: "1px solid rgba(145,94,255,0.25)",
+          backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
+          boxShadow: "0 8px 48px rgba(145,94,255,0.10), inset 0 1px 0 rgba(255,255,255,0.06)",
+        }}
       >
-        <h3 className="text-[24px] font-bold text-white mb-6">
-          Why Work With Me
-        </h3>
+        {/* Decorative glow blobs */}
+        <div className="absolute top-0 right-0 w-48 h-48 bg-[#915EFF]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-36 h-36 bg-[#56ccf2]/8 rounded-full blur-2xl pointer-events-none" />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            {
-              emoji: "🚀",
-              title: "Fast Delivery",
-              desc: "Efficient development with rapid turnaround times.",
-            },
-            {
-              emoji: "🎯",
-              title: "Quality Focus",
-              desc: "High-quality, tested, and production-ready code.",
-            },
-            {
-              emoji: "🤝",
-              title: "Collaboration",
-              desc: "Excellent communication and team coordination.",
-            },
-          ].map((item, i) => (
-            <div
-              key={i}
-              className="flex flex-col p-4 rounded-lg bg-[#151030] border border-[#915EFF]/10 hover:border-[#915EFF]/30 transition-all"
-            >
-              <p className="text-4xl mb-4">{item.emoji}</p>
-              <h4 className="text-white font-bold text-[18px] mb-2">
-                {item.title}
-              </h4>
-              <p className="text-secondary text-[14px] leading-relaxed italic">
-                {item.desc}
-              </p>
+        <div className="relative z-10 p-8">
+          {/* Header */}
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#915EFF] to-[#56ccf2] flex items-center justify-center text-sm">
+              ⭐
             </div>
-          ))}
+            <h3 className="text-[22px] font-bold text-white">Why Work With Me</h3>
+          </div>
+
+          {/* Cards grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {whyPoints.map((item, i) => (
+              <WhyCard key={i} {...item} delay={i * 0.15} />
+            ))}
+          </div>
         </div>
       </motion.div>
     </>
@@ -151,17 +176,3 @@ const About = () => {
 
 const AboutSection = SectionWrapper(About, "about");
 export default AboutSection;
-
-{
-  /* <div className="absolute bottom-10 w-full flex justify-center items-center z-30">
-        <a href="#about">
-          <div className="w-[30px] h-[50px] rounded-3xl border-4 border-secondary flex justify-center items-start p-2">
-            <motion.div
-              animate={{ y: [0, 16, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, repeatType: "loop" }}
-              className="w-2 h-2 rounded-full bg-secondary mb-1"
-            />
-          </div>
-        </a>
-      </div> */
-}

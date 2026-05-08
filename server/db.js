@@ -1,6 +1,4 @@
 /* eslint-disable no-undef */
-import sqlite3 from "sqlite3";
-import { open } from "sqlite";
 import { mkdirSync, existsSync } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -71,6 +69,10 @@ export async function initializeDatabase() {
       isTurso = true;
     } else {
       console.log("🏠 Initializing Local SQLite...");
+      
+      const sqlite3 = (await import("sqlite3")).default;
+      const { open } = await import("sqlite");
+
       if (!existsSync(dataDir)) {
         mkdirSync(dataDir, { recursive: true });
       }

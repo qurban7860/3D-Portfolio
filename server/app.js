@@ -27,8 +27,18 @@ app.use(express.urlencoded({ extended: false }));
 // Static uploads (handled by express locally, and by the function on Vercel)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// Initialize Database
-await initializeDatabase();
+app.use(async (req, res, next) => {
+  try {
+    await initializeDatabase();
+    next();
+  } catch (err) {
+    console.error("Database initialization error:", err);
+    res.status(503).json({ 
+      message: "Database connection failed. Please check your environment variables and Turso configuration.",
+      error: process.env.NODE_ENV === "development" ? err.message : undefined
+    });
+  }
+});
 
 app.use("/api/auth", authRoutes);
 app.use("/api/content", contentRoutes);

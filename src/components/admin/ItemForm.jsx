@@ -170,7 +170,7 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
           <button
             type="submit"
             disabled={isSaving}
-            className={`${styles.gradientButton} flex-1 px-6 py-4 text-sm`}
+            className={`${styles.glassButtonPremium} flex-1 px-6 py-4 text-sm`}
           >
             {isSaving ? (
               <div className="flex items-center gap-2">

@@ -284,7 +284,7 @@ const Contact = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               disabled={loading}
-              className={`${styles.gradientButton} w-fit px-10 py-3 text-[15px] disabled:opacity-60 disabled:cursor-not-allowed`}
+              className={`${styles.glassButtonPremium} w-fit px-10 py-3 text-[15px] disabled:opacity-60 disabled:cursor-not-allowed`}
             >
               {loading ? (
                 <span className="flex items-center gap-2">

@@ -5,6 +5,7 @@ import ContentManager from "../../components/admin/ContentManager";
 import { adminSchema } from "../../constants/adminSchema";
 import { motion, AnimatePresence } from "framer-motion";
 import { styles } from "../../styles";
+import { StarsCanvas } from "../../components";
 
 const DashboardPage = () => {
   const navigate = useNavigate();
@@ -18,8 +19,9 @@ const DashboardPage = () => {
     <div className="min-h-screen bg-primary pb-16 selection:bg-[#915EFF]/30 overflow-x-hidden">
       {/* Dynamic Background Pattern */}
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#915EFF]/10 blur-[150px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[#56ccf2]/10 blur-[150px]" />
+        <StarsCanvas />
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#915EFF]/5 blur-[150px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[#56ccf2]/5 blur-[150px]" />
       </div>
 
       <div className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-col gap-6 sm:gap-8 px-4 sm:px-6 pt-6 sm:pt-10">
@@ -68,7 +70,7 @@ const DashboardPage = () => {
               <button
                 type="button"
                 onClick={() => logout()}
-                className={`${styles.gradientButton} px-6 py-2.5 text-sm`}
+                className={`${styles.glassButtonPremium} px-6 py-2.5 text-sm`}
               >
                 Sign Out
               </button>

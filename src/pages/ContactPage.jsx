@@ -15,6 +15,11 @@ const ContactPage = () => {
     <div className="relative z-0 bg-primary w-full min-h-screen overflow-x-hidden">
       <DynamicSEO title="Contact | Let's Collaborate" />
       <Navbar />
+      
+      {/* Stars Background */}
+      <div className='fixed inset-0 z-0'>
+        <StarsCanvas />
+      </div>
 
       {/* Premium Page Header */}
       <div className="pt-32 pb-10 px-6 max-w-7xl mx-auto text-center relative">
@@ -61,7 +66,8 @@ const ContactPage = () => {
             <RawContact />
           </motion.section>
         )}
-        <StarsCanvas />
+          </motion.section>
+        )}
       </div>
 
       <BackToTop scrollThreshold={300} />

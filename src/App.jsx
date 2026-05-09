@@ -10,6 +10,7 @@ import ServicesPage from "./pages/ServicesPage";
 import ContactPage from "./pages/ContactPage";
 import LoginPage from "./pages/Admin/Login";
 import DashboardPage from "./pages/Admin/Dashboard";
+import AboutPage from "./pages/AboutPage";
 
 import { Toaster } from "react-hot-toast";
 
@@ -60,6 +61,7 @@ const App = () => {
           />
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
             <Route path="/portfolio" element={<PortfolioPage />} />
             <Route path="/experience" element={<ExperiencePage />} />
             <Route path="/services" element={<ServicesPage />} />

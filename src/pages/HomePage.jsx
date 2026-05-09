@@ -1,4 +1,4 @@
-import { About, BackToTop, Hero, Navbar, StarsCanvas, Statistics, ReadyForWork } from "../components";
+import { About, BackToTop, Hero, Navbar, StarsCanvas, Statistics, ReadyForWork, WhyWorkWithMe } from "../components";
 import { usePortfolio } from "../context/PortfolioContext";
 import ErrorMessage from "../components/common/ErrorMessage";
 import LoadingState from "../components/common/LoadingState";
@@ -12,6 +12,11 @@ const HomePage = () => {
       <DynamicSEO />
       <Navbar />
       
+      {/* Stars Background covering the whole page */}
+      <div className='fixed inset-0 z-[-1]'>
+        <StarsCanvas />
+      </div>
+
       <div className='bg-transparent w-full relative'>
         <Hero />
       </div>
@@ -28,13 +33,11 @@ const HomePage = () => {
         </div>
       ) : (
         <>
-          <About />
+          <About isSummary={true} />
+          <WhyWorkWithMe />
           <Statistics />
           <ReadyForWork />
           
-          <div className='relative z-0'>
-            <StarsCanvas />
-          </div>
           <BackToTop scrollThreshold={300} />
         </>
       )}

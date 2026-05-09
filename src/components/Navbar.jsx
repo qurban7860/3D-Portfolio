@@ -163,7 +163,7 @@ const Navbar = () => {
   const SECTION_OFFSET = 200;
 
   const navLinks = [
-    { id: "about", title: "About", path: "/" },
+    { id: "about", title: "About", path: "/about" },
     { id: "portfolio", title: "Work", path: "/portfolio" },
     { id: "experience", title: "Experience", path: "/experience" },
     { id: "services", title: "Skills", path: "/services" },

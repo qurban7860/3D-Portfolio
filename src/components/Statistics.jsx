@@ -38,11 +38,9 @@ StatCard.propTypes = {
 };
 
 /* ── Statistics Section ───────────────────────────────────────── */
-const Statistics = () => {
+const StatisticsContent = () => {
   const { data } = usePortfolio();
   const stats = data?.stats ?? [];
-
-  if (stats.length === 0) return null;
 
   return (
     <>
@@ -72,5 +70,15 @@ const Statistics = () => {
   );
 };
 
-const StatisticsSection = SectionWrapper(Statistics, "statistics");
-export default StatisticsSection;
+const WrappedStatistics = SectionWrapper(StatisticsContent, "statistics", { noTopPadding: true });
+
+const Statistics = () => {
+  const { data } = usePortfolio();
+  const stats = data?.stats ?? [];
+
+  if (!stats || stats.length === 0) return null;
+
+  return <WrappedStatistics />;
+};
+
+export default Statistics;

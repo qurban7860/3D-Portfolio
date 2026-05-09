@@ -13,6 +13,7 @@ import Certifications from './Certifications';
 import Services from './Services';
 import ReadyForWork from './ReadyForWork';
 import FAQ from './FAQ';
+import WhyWorkWithMe from './WhyWorkWithMe';
 
 export {
   Hero,
@@ -29,6 +30,7 @@ export {
   Services,
   ReadyForWork,
   FAQ,
+  WhyWorkWithMe,
   EarthCanvas, 
   BallCanvas, 
   ComputersCanvas, 

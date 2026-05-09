@@ -206,7 +206,7 @@ const ContentManager = ({ section }) => {
             setSelectedItem(null);
             setIsFormOpen(true);
           }}
-          className={`${styles.gradientButton} px-4 sm:px-5 py-2.5 text-sm`}
+          className={`${styles.glassButtonPremium} px-4 sm:px-5 py-2.5 text-sm`}
         >
           <span className="text-lg leading-none">+</span>
           New Entry

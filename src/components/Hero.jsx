@@ -66,7 +66,7 @@ const Hero = () => {
           >
             <button
               onClick={() => navigate("/portfolio")}
-              className={`${styles.gradientButton} px-7 py-3 text-[15px]`}
+              className={`${styles.glassButtonPremium} px-7 py-3 text-[15px]`}
             >
               🚀 Explore My Work
             </button>

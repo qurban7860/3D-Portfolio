@@ -142,7 +142,7 @@ const ReadyForWork = () => {
         variants={fadeIn("up", "spring", 0.5, 0.75)}
         className="mt-12 flex flex-col sm:flex-row gap-4 flex-wrap"
       >
-        <a href="/contact" className={`${styles.gradientButton} px-8 py-4 text-[15px]`}>
+        <a href="/contact" className={`${styles.glassButtonPremium} px-8 py-4 text-[15px]`}>
           📧 Start a Conversation
         </a>
         <a href={emailLink} className={`${styles.outlineButton} px-8 py-4 text-[15px]`}>
@@ -176,5 +176,5 @@ const ReadyForWork = () => {
   );
 };
 
-const ReadyForWorkSection = SectionWrapper(ReadyForWork, "ready-for-work");
+const ReadyForWorkSection = SectionWrapper(ReadyForWork, "ready-for-work", { noTopPadding: true });
 export default ReadyForWorkSection;

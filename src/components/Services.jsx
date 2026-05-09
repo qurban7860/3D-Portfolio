@@ -103,7 +103,7 @@ const Services = () => {
         </p>
         <a
           href="/contact"
-          className={`${styles.gradientButton} px-8 py-3 text-[15px] relative z-10`}
+          className={`${styles.glassButtonPremium} px-8 py-3 text-[15px] relative z-10`}
         >
           Schedule a Consultation →
         </a>

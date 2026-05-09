@@ -108,7 +108,7 @@ const FAQ = () => {
           <p className="text-secondary text-[15px] mb-7 max-w-md mx-auto">
             I&apos;m always happy to discuss your project needs. Reach out anytime!
           </p>
-          <a href="/contact" className={`${styles.gradientButton} px-8 py-3 text-[15px]`}>
+          <a href="/contact" className={`${styles.glassButtonPremium} px-8 py-3 text-[15px]`}>
             Get in Touch
           </a>
         </div>

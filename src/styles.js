@@ -29,8 +29,8 @@ const styles = {
   glassButtonCyan:
     "inline-flex items-center justify-center gap-2 backdrop-blur-md bg-[#56ccf2]/10 border border-[#56ccf2]/30 text-white font-bold rounded-xl hover:bg-[#56ccf2]/20 hover:border-[#56ccf2]/60 hover:shadow-[0_8px_32px_rgba(86,204,242,0.25)] hover:scale-105 active:scale-95 transition-all duration-300",
 
-  gradientButton:
-    "inline-flex items-center justify-center gap-2 backdrop-blur-md bg-[#915EFF]/15 border border-[#915EFF]/40 text-white font-bold rounded-xl hover:bg-[#915EFF]/25 hover:border-[#915EFF]/80 hover:shadow-[0_0_24px_rgba(145,94,255,0.4)] hover:scale-105 active:scale-95 transition-all duration-300 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]",
+  glassButtonPremium:
+    "inline-flex items-center justify-center gap-2 backdrop-blur-xl bg-white/5 border border-white/10 text-white font-bold rounded-xl hover:bg-[#915EFF]/20 hover:border-[#915EFF]/40 hover:shadow-[0_0_24px_rgba(145,94,255,0.3)] hover:scale-105 active:scale-95 transition-all duration-300 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] relative overflow-hidden group",
 
   outlineButton:
     "inline-flex items-center justify-center gap-2 border border-white/20 text-white font-bold rounded-xl backdrop-blur-sm bg-white/5 hover:bg-white/10 hover:border-white/40 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:scale-105 active:scale-95 transition-all duration-300",

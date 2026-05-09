@@ -14,6 +14,9 @@ import Services from './Services';
 import ReadyForWork from './ReadyForWork';
 import FAQ from './FAQ';
 import WhyWorkWithMe from './WhyWorkWithMe';
+import FeaturedProjects from './FeaturedProjects';
+import HomeIntro from './HomeIntro';
+import Showcase from './Showcase';
 
 export {
   Hero,
@@ -31,6 +34,9 @@ export {
   ReadyForWork,
   FAQ,
   WhyWorkWithMe,
+  FeaturedProjects,
+  HomeIntro,
+  Showcase,
   EarthCanvas, 
   BallCanvas, 
   ComputersCanvas, 

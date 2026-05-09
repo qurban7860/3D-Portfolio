@@ -66,8 +66,6 @@ const ContactPage = () => {
             <RawContact />
           </motion.section>
         )}
-          </motion.section>
-        )}
       </div>
 
       <BackToTop scrollThreshold={300} />

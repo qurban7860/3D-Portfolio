@@ -1,4 +1,4 @@
-import { About, BackToTop, Hero, Navbar, StarsCanvas, Statistics, ReadyForWork, WhyWorkWithMe } from "../components";
+import { HomeIntro, Showcase, BackToTop, Hero, Navbar, StarsCanvas, Statistics, ReadyForWork } from "../components";
 import { usePortfolio } from "../context/PortfolioContext";
 import ErrorMessage from "../components/common/ErrorMessage";
 import LoadingState from "../components/common/LoadingState";
@@ -33,8 +33,8 @@ const HomePage = () => {
         </div>
       ) : (
         <>
-          <About isSummary={true} />
-          <WhyWorkWithMe />
+          <HomeIntro />
+          <Showcase />
           <Statistics />
           <ReadyForWork />
           

@@ -8,12 +8,12 @@ import { usePortfolio } from "../context/PortfolioContext";
 import { fadeIn, textVariant } from "../Animation/motion";
 
 /* ── Project Card ─────────────────────────────────────────────── */
-const ProjectCard = ({ index, name, description, tags, imageUrl, sourceCodeLink }) => {
+export const ProjectCard = ({ index, name, description, tags, imageUrl, sourceCodeLink }) => {
   return (
     <motion.div variants={fadeIn("up", "spring", index * 0.45, 0.75)}>
       <Tilt
         options={{ max: 18, scale: 1.02, speed: 450 }}
-        className="rounded-2xl w-full sm:w-[360px] transition-all duration-500
+        className="rounded-2xl w-full sm:w-[320px] transition-all duration-500
                    hover:shadow-[0_16px_56px_rgba(145,94,255,0.22)]"
         style={{
           backdropFilter: "blur(12px)",
@@ -23,7 +23,7 @@ const ProjectCard = ({ index, name, description, tags, imageUrl, sourceCodeLink 
         }}
       >
         {/* Image area */}
-        <div className="relative w-full h-[220px] overflow-hidden rounded-t-2xl">
+        <div className="relative w-full h-[180px] overflow-hidden rounded-t-2xl">
           {/* Featured badge */}
           {index % 3 === 0 && (
             <div className="absolute top-3 left-3 z-20 text-[#c4a7ff] text-[9px] font-bold

@@ -1,5 +1,5 @@
 import { About } from "../components/About";
-import { WhyWorkWithMe, StarsCanvas, BackToTop, Navbar } from "../components";
+import { WhyWorkWithMe, StarsCanvas, BackToTop, Navbar, Services } from "../components";
 import { usePortfolio } from "../context/PortfolioContext";
 import LoadingState from "../components/common/LoadingState";
 import ErrorMessage from "../components/common/ErrorMessage";
@@ -52,8 +52,9 @@ const AboutPage = () => {
             <LoadingState message="Loading about information..." />
           </div>
         ) : (
-          <div className="flex flex-col">
-            <About />
+          <div className="flex flex-col gap-10">
+            <About hideHeader={true} />
+            <Services />
             <WhyWorkWithMe />
           </div>
         )}

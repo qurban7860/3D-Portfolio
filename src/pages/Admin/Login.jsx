@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import ErrorMessage from "../../components/common/ErrorMessage";
 import { motion } from "framer-motion";
+import { styles } from "../../styles";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -108,7 +109,7 @@ const LoginPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-xl bg-gradient-to-r from-[#915EFF] to-[#56ccf2] px-6 py-4 font-bold text-white shadow-[0_8px_24px_rgba(145,94,255,0.3)] transition-all hover:shadow-[0_12px_32px_rgba(145,94,255,0.4)] hover:scale-[1.02] active:scale-95 disabled:opacity-60 disabled:pointer-events-none"
+              className={`${styles.gradientButton} w-full py-4`}
             >
               {loading ? (
                 <div className="flex items-center justify-center gap-2">

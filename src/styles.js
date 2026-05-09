@@ -20,20 +20,29 @@ const styles = {
   transition: "transition-all duration-300 ease-in-out",
   hoverScale: "hover:scale-110 transform",
 
+  glassButton:
+    "inline-flex items-center justify-center gap-2 backdrop-blur-md bg-white/10 border border-white/20 text-white font-bold rounded-xl hover:bg-white/20 hover:border-white/40 hover:shadow-[0_8px_32px_rgba(255,255,255,0.1)] hover:scale-105 active:scale-95 transition-all duration-300",
+
+  glassButtonPurple:
+    "inline-flex items-center justify-center gap-2 backdrop-blur-md bg-[#915EFF]/10 border border-[#915EFF]/30 text-white font-bold rounded-xl hover:bg-[#915EFF]/20 hover:border-[#915EFF]/60 hover:shadow-[0_8px_32px_rgba(145,94,255,0.25)] hover:scale-105 active:scale-95 transition-all duration-300",
+
+  glassButtonCyan:
+    "inline-flex items-center justify-center gap-2 backdrop-blur-md bg-[#56ccf2]/10 border border-[#56ccf2]/30 text-white font-bold rounded-xl hover:bg-[#56ccf2]/20 hover:border-[#56ccf2]/60 hover:shadow-[0_8px_32px_rgba(86,204,242,0.25)] hover:scale-105 active:scale-95 transition-all duration-300",
+
   gradientButton:
-    "inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#915EFF] to-[#56ccf2] text-white font-bold rounded-xl hover:shadow-[0_0_24px_rgba(145,94,255,0.5)] hover:scale-105 active:scale-95 transition-all duration-300",
+    "inline-flex items-center justify-center gap-2 backdrop-blur-md bg-[#915EFF]/15 border border-[#915EFF]/40 text-white font-bold rounded-xl hover:bg-[#915EFF]/25 hover:border-[#915EFF]/80 hover:shadow-[0_0_24px_rgba(145,94,255,0.4)] hover:scale-105 active:scale-95 transition-all duration-300 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]",
 
   outlineButton:
-    "inline-flex items-center justify-center gap-2 border border-[#915EFF]/60 text-[#915EFF] font-bold rounded-xl backdrop-blur-sm bg-[#915EFF]/5 hover:bg-[#915EFF]/20 hover:border-[#915EFF] hover:shadow-[0_0_20px_rgba(145,94,255,0.3)] hover:scale-105 active:scale-95 transition-all duration-300",
+    "inline-flex items-center justify-center gap-2 border border-white/20 text-white font-bold rounded-xl backdrop-blur-sm bg-white/5 hover:bg-white/10 hover:border-white/40 hover:shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:scale-105 active:scale-95 transition-all duration-300",
 
   outlineButtonCyan:
-    "inline-flex items-center justify-center gap-2 border border-[#56ccf2]/60 text-[#56ccf2] font-bold rounded-xl backdrop-blur-sm bg-[#56ccf2]/5 hover:bg-[#56ccf2]/20 hover:border-[#56ccf2] hover:shadow-[0_0_20px_rgba(86,204,242,0.3)] hover:scale-105 active:scale-95 transition-all duration-300",
+    "inline-flex items-center justify-center gap-2 border border-[#56ccf2]/40 text-[#56ccf2] font-bold rounded-xl backdrop-blur-sm bg-[#56ccf2]/5 hover:bg-[#56ccf2]/15 hover:border-[#56ccf2] hover:shadow-[0_0_20px_rgba(86,204,242,0.2)] hover:scale-105 active:scale-95 transition-all duration-300",
 
   ghostButton:
-    "inline-flex items-center justify-center gap-2 text-white/70 font-semibold border border-white/10 rounded-xl hover:border-white/30 backdrop-blur-sm hover:bg-white/5 hover:text-white transition-all duration-300",
+    "inline-flex items-center justify-center gap-2 text-white/60 font-semibold border border-white/5 rounded-xl hover:border-white/20 backdrop-blur-sm hover:bg-white/5 hover:text-white transition-all duration-300",
 
   ctaButton:
-    "inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-[#915EFF] to-[#56ccf2] text-white font-bold rounded-xl hover:shadow-[0_0_24px_rgba(145,94,255,0.5)] hover:scale-105 active:scale-95 transition-all duration-300",
+    "inline-flex items-center gap-2 px-8 py-3 backdrop-blur-md bg-[#915EFF]/20 border border-[#915EFF]/50 text-white font-bold rounded-xl hover:bg-[#915EFF]/30 hover:border-[#915EFF] hover:shadow-[0_0_32px_rgba(145,94,255,0.4)] hover:scale-105 active:scale-95 transition-all duration-300 shadow-[inset_0_1px_1px_rgba(255,255,255,0.3)]",
 
   /* ── Glassmorphism Cards ───────────────────────────────────── */
   glassCard:

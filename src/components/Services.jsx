@@ -14,20 +14,15 @@ const ServiceCard = ({ index, title, description, icon, features }) => (
   >
     <div
       className="rounded-2xl p-8 flex flex-col h-full transition-all duration-500
-                  hover:shadow-[0_12px_48px_rgba(145,94,255,0.18)]"
-      style={{
-        backdropFilter: "blur(14px)",
-        WebkitBackdropFilter: "blur(14px)",
-        background:
-          "linear-gradient(145deg, rgba(145,94,255,0.08) 0%, rgba(255,255,255,0.04) 60%, rgba(86,204,242,0.04) 100%)",
-        border: "1px solid rgba(145,94,255,0.22)",
-      }}
+                  bg-white/[0.03] backdrop-blur-xl border border-white/10
+                  hover:bg-white/[0.06] hover:border-[#915EFF]/40
+                  hover:shadow-[0_12px_48px_rgba(145,94,255,0.15)] group"
     >
       {/* Icon */}
       <div
         className="w-14 h-14 rounded-xl flex items-center justify-center text-3xl mb-5
-                    bg-gradient-to-br from-[#915EFF]/25 to-[#56ccf2]/15
-                    border border-[#915EFF]/30"
+                    bg-white/5 border border-white/10 group-hover:border-[#915EFF]/50 
+                    group-hover:shadow-[0_0_16px_rgba(145,94,255,0.25)] transition-all duration-300"
       >
         {icon}
       </div>
@@ -96,14 +91,7 @@ const Services = () => {
       {/* Bottom CTA */}
       <motion.div
         variants={fadeIn("up", "spring", 0.4, 0.75)}
-        className="mt-10 p-10 rounded-2xl text-center relative overflow-hidden"
-        style={{
-          backdropFilter: "blur(14px)",
-          WebkitBackdropFilter: "blur(14px)",
-          background:
-            "linear-gradient(135deg, rgba(145,94,255,0.08) 0%, rgba(86,204,242,0.05) 100%)",
-          border: "1px solid rgba(145,94,255,0.20)",
-        }}
+        className="mt-10 p-10 rounded-2xl text-center relative overflow-hidden backdrop-blur-2xl bg-white/[0.04] border border-white/10 shadow-2xl"
       >
         <div className="absolute top-0 right-0 w-48 h-48 bg-[#915EFF]/10 rounded-full blur-3xl pointer-events-none" />
         <p className="text-white text-lg font-semibold mb-3 relative z-10">

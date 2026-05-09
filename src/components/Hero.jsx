@@ -29,8 +29,8 @@ const Hero = () => {
       >
         {/* Accent bar */}
         <div className="flex flex-col justify-center items-center mt-5">
-          <div className="w-5 h-5 rounded-full bg-[#915EFF] shadow-[0_0_16px_rgba(145,94,255,0.8)]" />
-          <div className="w-1 sm:h-80 h-40 violet-gradient" />
+          <div className="w-5 h-5 rounded-full bg-[#915EFF] shadow-[0_0_20px_rgba(145,94,255,0.8)]" />
+          <div className="w-1 sm:h-80 h-40 bg-gradient-to-b from-[#915EFF] to-transparent rounded-full opacity-40" />
         </div>
 
         <div className="flex flex-col gap-6">

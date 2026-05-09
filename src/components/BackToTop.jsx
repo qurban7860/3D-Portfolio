@@ -28,19 +28,10 @@ const BackToTop = ({ scrollThreshold = 300 }) => {
           aria-label="Back to top"
           title="Back to top"
           className="fixed bottom-6 right-6 z-[999] w-12 h-12 rounded-full flex items-center
-                     justify-center cursor-pointer transition-shadow duration-300"
-          style={{
-            background: "linear-gradient(135deg, #915EFF, #56ccf2)",
-            boxShadow: "0 4px 24px rgba(145,94,255,0.45), 0 2px 8px rgba(0,0,0,0.3)",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.boxShadow =
-              "0 8px 32px rgba(145,94,255,0.65), 0 2px 12px rgba(0,0,0,0.4)";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.boxShadow =
-              "0 4px 24px rgba(145,94,255,0.45), 0 2px 8px rgba(0,0,0,0.3)";
-          }}
+                     justify-center cursor-pointer transition-all duration-300
+                     bg-[#915EFF]/20 backdrop-blur-md border border-[#915EFF]/40
+                     hover:bg-[#915EFF]/30 hover:border-[#915EFF]/80
+                     hover:shadow-[0_0_24px_rgba(145,94,255,0.4)] shadow-[inset_0_1px_1px_rgba(255,255,255,0.3)]"
         >
           <svg
             width="18"

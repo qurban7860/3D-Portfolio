@@ -97,14 +97,7 @@ const FAQ = () => {
       {/* Still have questions CTA */}
       <motion.div
         variants={fadeIn("up", "spring", 0.5, 0.75)}
-        className="mt-14 p-8 rounded-2xl text-center relative overflow-hidden"
-        style={{
-          backdropFilter: "blur(14px)",
-          WebkitBackdropFilter: "blur(14px)",
-          background:
-            "linear-gradient(135deg, rgba(145,94,255,0.10) 0%, rgba(86,204,242,0.06) 100%)",
-          border: "1px solid rgba(145,94,255,0.25)",
-        }}
+        className="mt-14 p-8 rounded-2xl text-center relative overflow-hidden backdrop-blur-2xl bg-white/[0.04] border border-white/10 shadow-2xl"
       >
         <div className="absolute top-0 right-0 w-40 h-40 bg-[#915EFF]/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#56ccf2]/8 rounded-full blur-2xl pointer-events-none" />

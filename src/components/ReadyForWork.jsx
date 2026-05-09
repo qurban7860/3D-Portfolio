@@ -37,9 +37,8 @@ const HireCard = ({ icon, title, description }) => (
                transition-all duration-500 glow-purple group"
   >
     <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl
-                    bg-gradient-to-br from-[#915EFF]/25 to-[#56ccf2]/15
-                    border border-[#915EFF]/30 group-hover:border-[#915EFF]/60 
-                    group-hover:shadow-[0_0_20px_rgba(145,94,255,0.3)] transition-all duration-300">
+                    bg-white/5 border border-white/10 group-hover:border-[#915EFF]/50 
+                    group-hover:shadow-[0_0_20px_rgba(145,94,255,0.25)] transition-all duration-300 backdrop-blur-sm">
       {icon}
     </div>
     <h3 className="text-white font-bold text-[17px]">{title}</h3>
@@ -162,17 +161,10 @@ const ReadyForWork = () => {
       {/* ── Quick Facts ── */}
       <motion.div
         variants={fadeIn("up", "spring", 0.6, 0.75)}
-        className="mt-10 p-8 rounded-2xl relative overflow-hidden"
-        style={{
-          background:
-            "linear-gradient(135deg, rgba(145,94,255,0.10) 0%, rgba(86,204,242,0.06) 100%)",
-          border: "1px solid rgba(145,94,255,0.22)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
-          boxShadow: "0 4px 32px rgba(145,94,255,0.08)",
-        }}
+        className="mt-10 p-8 rounded-2xl relative overflow-hidden backdrop-blur-xl bg-white/[0.04] border border-white/10 shadow-2xl"
       >
-        <div className="absolute top-0 right-0 w-40 h-40 bg-[#56ccf2]/8 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[#56ccf2]/10 rounded-full blur-[80px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#915EFF]/10 rounded-full blur-[80px] pointer-events-none" />
         <p className="text-white text-[17px] font-bold mb-6 text-center">Quick Facts</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
           {quickFacts.map((fact, i) => (

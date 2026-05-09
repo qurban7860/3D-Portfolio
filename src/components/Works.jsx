@@ -26,11 +26,11 @@ const ProjectCard = ({ index, name, description, tags, imageUrl, sourceCodeLink 
         <div className="relative w-full h-[220px] overflow-hidden rounded-t-2xl">
           {/* Featured badge */}
           {index % 3 === 0 && (
-            <div className="absolute top-3 left-3 z-20 text-white text-[10px] font-bold
-                            px-3 py-1 rounded-full tracking-wider
-                            bg-gradient-to-r from-[#915EFF] to-[#56ccf2]
-                            shadow-[0_4px_12px_rgba(145,94,255,0.4)]">
-              ✦ FEATURED
+            <div className="absolute top-3 left-3 z-20 text-[#c4a7ff] text-[9px] font-bold
+                            px-3 py-1 rounded-full tracking-[0.2em]
+                            bg-white/10 backdrop-blur-md border border-white/20
+                            shadow-[0_4px_12px_rgba(145,94,255,0.25)] uppercase">
+              ✦ Featured
             </div>
           )}
 
@@ -50,14 +50,11 @@ const ProjectCard = ({ index, name, description, tags, imageUrl, sourceCodeLink 
               whileTap={{ scale: 0.92 }}
               onClick={() => window.open(sourceCodeLink, "_blank")}
               title="View on GitHub"
-              className="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer
+              className="w-10 h-10 rounded-xl flex items-center justify-center cursor-pointer
                          transition-all duration-300
-                         hover:shadow-[0_4px_16px_rgba(145,94,255,0.5)]"
-              style={{
-                background: "rgba(5,8,22,0.85)",
-                border: "1px solid rgba(145,94,255,0.40)",
-                backdropFilter: "blur(6px)",
-              }}
+                         bg-black/40 backdrop-blur-md border border-white/10
+                         hover:bg-[#915EFF]/20 hover:border-[#915EFF]/50
+                         hover:shadow-[0_0_16px_rgba(145,94,255,0.3)]"
             >
               <img src={github} alt="GitHub" className="w-5 h-5 object-contain" />
             </motion.button>

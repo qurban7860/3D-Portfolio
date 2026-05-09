@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import ContentManager from "../../components/admin/ContentManager";
 import { adminSchema } from "../../constants/adminSchema";
 import { motion, AnimatePresence } from "framer-motion";
+import { styles } from "../../styles";
 
 const DashboardPage = () => {
   const navigate = useNavigate();
@@ -67,7 +68,7 @@ const DashboardPage = () => {
               <button
                 type="button"
                 onClick={() => logout()}
-                className="rounded-xl bg-gradient-to-r from-[#915EFF] to-[#56ccf2] px-6 py-2.5 text-sm font-bold text-white shadow-[0_0_20px_rgba(145,94,255,0.3)] transition-all duration-300 hover:scale-[1.03] active:scale-95"
+                className={`${styles.gradientButton} px-6 py-2.5 text-sm`}
               >
                 Sign Out
               </button>

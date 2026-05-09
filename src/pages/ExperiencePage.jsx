@@ -26,17 +26,15 @@ const ExperiencePage = () => {
           className="relative z-10 flex flex-col items-center gap-3"
         >
           <span
-            className="text-[11px] font-bold uppercase tracking-[0.35em] px-4 py-1.5 rounded-full"
-            style={{
-              background: "rgba(0,206,168,0.10)",
-              border: "1px solid rgba(0,206,168,0.35)",
-              color: "#7ef0de",
-            }}
+            className="text-[11px] font-bold uppercase tracking-[0.35em] px-4 py-1.5 rounded-full backdrop-blur-md bg-white/5 border border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]"
+            style={{ color: "#7ef0de" }}
           >
             Professional
           </span>
           <h1 className={`${styles.sectionHeadText} mt-1`}>Work Experience</h1>
-          <div className="w-16 h-[3px] rounded-full bg-gradient-to-r from-[#00cea8] to-[#56ccf2]" />
+          <div className="w-16 h-[4px] rounded-full bg-white/10 relative overflow-hidden">
+             <div className="absolute inset-0 bg-[#00cea8] animate-shimmer" style={{ backgroundSize: '200% auto' }} />
+          </div>
         </motion.div>
       </div>
 

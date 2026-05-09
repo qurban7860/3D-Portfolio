@@ -91,15 +91,14 @@ const ContactMethod = ({ icon, title, description, link, linkText }) => (
     }}
   >
     <div className="w-11 h-11 flex-shrink-0 rounded-xl flex items-center justify-center text-2xl
-                    bg-gradient-to-br from-[#915EFF]/25 to-[#56ccf2]/15
-                    border border-[#915EFF]/30 group-hover:border-[#915EFF]/60 
-                    group-hover:shadow-[0_0_16px_rgba(145,94,255,0.3)] transition-all duration-300">
+                    bg-white/5 border border-white/10 group-hover:border-[#915EFF]/40 
+                    group-hover:shadow-[0_0_16px_rgba(145,94,255,0.2)] transition-all duration-300 backdrop-blur-sm">
       {icon}
     </div>
     <div className="flex-1 min-w-0">
-      <h4 className="text-white font-bold text-[15px] mb-0.5">{title}</h4>
+      <h4 className="text-white font-bold text-[15px] mb-0.5 group-hover:text-[#915EFF] transition-colors">{title}</h4>
       <p className="text-secondary text-[13px] mb-1">{description}</p>
-      <p className="text-gradient text-[13px] font-semibold truncate">
+      <p className="text-[#56ccf2] text-[13px] font-semibold truncate group-hover:underline">
         {linkText} →
       </p>
     </div>
@@ -211,7 +210,9 @@ const Contact = () => {
             <h3 className="text-white font-black md:text-[42px] sm:text-[32px] text-[26px] leading-tight">
               Direct Contact
             </h3>
-            <div className="w-12 h-[3px] rounded-full bg-gradient-to-r from-[#915EFF] to-[#56ccf2]" />
+            <div className="w-16 h-[4px] rounded-full bg-white/10 relative overflow-hidden">
+               <div className="absolute inset-0 bg-[#915EFF] animate-shimmer" style={{ backgroundSize: '200% auto' }} />
+            </div>
           </div>
 
           {/* Status messages */}

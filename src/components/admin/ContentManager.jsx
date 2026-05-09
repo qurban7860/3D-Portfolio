@@ -14,7 +14,7 @@ import LoadingState from "../common/LoadingState";
 import ItemForm from "./ItemForm";
 import ItemList from "./ItemList";
 import { motion, AnimatePresence } from "framer-motion";
-
+import { styles } from "../../styles";
 import { toast } from "react-hot-toast";
 import ConfirmDialog from "../common/ConfirmDialog";
 
@@ -206,7 +206,7 @@ const ContentManager = ({ section }) => {
             setSelectedItem(null);
             setIsFormOpen(true);
           }}
-          className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#915EFF] to-[#56ccf2] px-4 sm:px-5 py-2.5 text-sm font-bold text-white shadow-[0_4px_14px_rgba(145,94,255,0.3)] transition-all hover:scale-[1.02] hover:shadow-[0_6px_20px_rgba(145,94,255,0.4)] active:scale-95"
+          className={`${styles.gradientButton} px-4 sm:px-5 py-2.5 text-sm`}
         >
           <span className="text-lg leading-none">+</span>
           New Entry

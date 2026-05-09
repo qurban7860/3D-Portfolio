@@ -10,15 +10,7 @@ const FeedbackCard = ({ index, testimonial, name, imageUrl }) => (
   <motion.div
     variants={fadeIn("up", "spring", index * 0.4, 0.75)}
     whileHover={{ y: -6 }}
-    className="xs:w-[320px] w-full rounded-2xl p-7 flex flex-col gap-4 transition-all duration-500
-               hover:shadow-[0_12px_40px_rgba(145,94,255,0.16)]"
-    style={{
-      backdropFilter: "blur(12px)",
-      WebkitBackdropFilter: "blur(12px)",
-      background:
-        "linear-gradient(145deg, rgba(145,94,255,0.07) 0%, rgba(255,255,255,0.04) 100%)",
-      border: "1px solid rgba(145,94,255,0.20)",
-    }}
+    className={`${styles.glassCard} xs:w-[320px] w-full p-7 flex flex-col gap-4 transition-all duration-500`}
   >
     {/* Quote mark */}
     <div className="text-[52px] leading-none font-black text-gradient select-none -mb-2">
@@ -31,7 +23,9 @@ const FeedbackCard = ({ index, testimonial, name, imageUrl }) => (
     </p>
 
     {/* Divider */}
-    <div className="h-px bg-gradient-to-r from-[#915EFF]/40 to-transparent" />
+    <div className="h-px bg-white/10 relative overflow-hidden">
+       <div className="absolute inset-0 bg-[#915EFF] animate-shimmer" style={{ backgroundSize: '200% auto' }} />
+    </div>
 
     {/* Author */}
     <div className="flex items-center gap-3">

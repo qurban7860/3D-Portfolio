@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { styles } from "../../styles";
 
 const formatFormValue = (field, value) => {
   if (field.name === "tags") {
@@ -169,7 +170,7 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
           <button
             type="submit"
             disabled={isSaving}
-            className="flex-1 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-[#915EFF] to-[#56ccf2] px-6 py-4 text-white font-bold shadow-[0_4px_14px_rgba(145,94,255,0.3)] transition-all hover:scale-[1.02] hover:shadow-[0_6px_20px_rgba(145,94,255,0.4)] active:scale-95 disabled:opacity-60 disabled:pointer-events-none text-sm"
+            className={`${styles.gradientButton} flex-1 px-6 py-4 text-sm`}
           >
             {isSaving ? (
               <div className="flex items-center gap-2">

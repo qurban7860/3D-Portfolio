@@ -19,9 +19,9 @@ const ServiceCard = ({ index, title, icon }) => {
     >
       <motion.div
         variants={fadeIn("right", "spring", index * 0.3, 0.75)}
-        className="w-full p-[1px] rounded-2xl green-pink-gradient shadow-card"
+        className="w-full p-[1.5px] rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md shadow-card hover:border-[#915EFF]/40 transition-colors duration-300"
       >
-        <div className="bg-tertiary rounded-2xl py-5 px-10 min-h-[280px] flex flex-col justify-center items-center border border-[#915EFF]/10 hover:shadow-lg hover:shadow-[#915EFF]/50 transition-all duration-300">
+        <div className="bg-tertiary/40 backdrop-blur-xl rounded-2xl py-5 px-10 min-h-[280px] flex flex-col justify-center items-center border border-white/5 hover:bg-[#915EFF]/5 hover:shadow-[0_8px_32px_rgba(145,94,255,0.15)] transition-all duration-300">
           {!isEmoji ? (
             <img
               src={resolvedIcon}
@@ -65,8 +65,8 @@ const WhyCard = ({ emoji, title, desc, delay }) => (
   >
     {/* Icon badge */}
     <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl
-                    bg-gradient-to-br from-[#915EFF]/30 to-[#56ccf2]/20
-                    border border-[#915EFF]/30 group-hover:border-[#915EFF]/60 transition-colors duration-300">
+                    bg-white/5 border border-white/10 group-hover:border-[#915EFF]/50 
+                    group-hover:shadow-[0_0_16px_rgba(145,94,255,0.25)] transition-all duration-300 backdrop-blur-sm">
       {emoji}
     </div>
     <h4 className="text-white font-bold text-[17px]">{title}</h4>
@@ -140,14 +140,7 @@ const About = () => {
       {/* ── Why Work With Me ── */}
       <motion.div
         variants={fadeIn("up", "spring", 0.2, 0.75)}
-        className="mt-10 rounded-2xl overflow-hidden relative"
-        style={{
-          background: "linear-gradient(135deg, rgba(145,94,255,0.08) 0%, rgba(86,204,242,0.05) 50%, rgba(5,8,22,0.6) 100%)",
-          border: "1px solid rgba(145,94,255,0.25)",
-          backdropFilter: "blur(16px)",
-          WebkitBackdropFilter: "blur(16px)",
-          boxShadow: "0 8px 48px rgba(145,94,255,0.10), inset 0 1px 0 rgba(255,255,255,0.06)",
-        }}
+        className="mt-10 rounded-2xl overflow-hidden relative backdrop-blur-2xl bg-white/[0.04] border border-white/10 shadow-2xl"
       >
         {/* Decorative glow blobs */}
         <div className="absolute top-0 right-0 w-48 h-48 bg-[#915EFF]/10 rounded-full blur-3xl pointer-events-none" />
@@ -156,7 +149,7 @@ const About = () => {
         <div className="relative z-10 p-8">
           {/* Header */}
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#915EFF] to-[#56ccf2] flex items-center justify-center text-sm">
+            <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-sm shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]">
               ⭐
             </div>
             <h3 className="text-[22px] font-bold text-white">Why Work With Me</h3>

@@ -13,8 +13,8 @@ const ContactCard = ({ title, icon, link, url }) => {
   const href = link ?? url;
   return href ? (
     <a href={href} target="_blank" rel="noopener noreferrer" title={title} className="group">
-      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-tertiary rounded-full flex justify-center items-center hover:bg-opacity-80 transition duration-300 ease-in-out transform hover:scale-110 cursor-pointer hover:shadow-lg hover:shadow-[#915EFF]/50">
-        <img src={icon} alt={title} className="w-5 h-5 sm:w-6 sm:h-6 object-contain rounded-full" />
+      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/5 backdrop-blur-md border border-white/10 rounded-full flex justify-center items-center transition-all duration-300 ease-in-out transform group-hover:scale-110 group-hover:bg-[#915EFF]/10 group-hover:border-[#915EFF]/40 group-hover:shadow-[0_0_20px_rgba(145,94,255,0.3)]">
+        <img src={icon} alt={title} className="w-5 h-5 sm:w-6 sm:h-6 object-contain rounded-full opacity-70 group-hover:opacity-100 transition-opacity" />
       </div>
     </a>
   ) : null;
@@ -33,20 +33,20 @@ const ResumeButton = ({ isMobile = false }) => {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => isMobile ? setShowOptions(!showOptions) : window.open(resumePdf, "_blank")}
-        className={`flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#915EFF] to-[#56ccf2] text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-[#915EFF]/50 transition-all duration-300 text-[13px] ${isMobile ? 'w-full justify-center' : ''}`}
+        className={`flex items-center gap-2 px-4 py-2 backdrop-blur-md bg-[#915EFF]/15 border border-[#915EFF]/40 text-white font-semibold rounded-lg hover:bg-[#915EFF]/25 hover:border-[#915EFF]/80 hover:shadow-[0_0_20px_rgba(145,94,255,0.3)] transition-all duration-300 text-[13px] ${isMobile ? 'w-full justify-center' : ''}`}
       >
-        <span>📄</span>
+        <span className="text-[14px]">📄</span>
         <span>Resume</span>
-        <span className={`text-[10px] transition-transform ${showOptions ? 'rotate-180' : ''}`}>▼</span>
+        <span className={`text-[10px] opacity-60 transition-transform duration-300 ${showOptions ? 'rotate-180' : ''}`}>▼</span>
       </motion.button>
 
       <AnimatePresence>
         {showOptions && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className={`${isMobile ? 'relative mt-2 w-full' : 'absolute top-full right-0 mt-2 w-40'} bg-tertiary border border-white/10 rounded-lg overflow-hidden shadow-xl z-[60]`}
+            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            className={`${isMobile ? 'relative mt-2 w-full' : 'absolute top-full right-0 mt-2 w-40'} glass-dark rounded-xl overflow-hidden shadow-2xl z-[60] border border-white/10`}
           >
             <a 
               href={resumePdf} 
@@ -147,7 +147,7 @@ const MobileMenu = ({ toggle, setToggle, active, navLinks: links, onNavClick, co
       <Link 
         to="/admin" 
         onClick={() => setToggle(false)}
-        className="text-[10px] text-secondary hover:text-[#915EFF] transition-colors uppercase tracking-[0.2em] font-bold mt-2"
+        className="flex items-center justify-center gap-2 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-[11px] text-secondary hover:text-white hover:bg-white/10 hover:border-[#915EFF]/40 transition-all duration-300 uppercase tracking-[0.2em] font-bold mt-4"
       >
         🔐 Admin Access
       </Link>

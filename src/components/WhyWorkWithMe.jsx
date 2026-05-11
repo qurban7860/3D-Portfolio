@@ -9,7 +9,7 @@ const WhyCard = ({ emoji, title, desc, delay }) => (
   <motion.div
     variants={fadeIn("up", "spring", delay, 0.6)}
     whileHover={{ y: -10, scale: 1.02 }}
-    className="premium-glass-card p-8 flex flex-col gap-6 group"
+    className="premium-glass-card glass-reflection inner-glow p-8 flex flex-col gap-6 group"
   >
     {/* Icon badge */}
     <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl
@@ -17,7 +17,7 @@ const WhyCard = ({ emoji, title, desc, delay }) => (
                     group-hover:shadow-[0_0_25px_rgba(145,94,255,0.3)] transition-all duration-500 backdrop-blur-sm">
       {emoji}
     </div>
-    <h4 className="text-white font-black text-xl">{title}</h4>
+    <h4 className="text-white font-black text-xl group-hover:text-[#915EFF] transition-colors">{title}</h4>
     <p className="text-secondary text-base leading-relaxed opacity-80">{desc}</p>
   </motion.div>
 );

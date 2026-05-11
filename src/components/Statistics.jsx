@@ -9,7 +9,7 @@ const StatCard = ({ index, stat, label, description }) => (
   <motion.div
     variants={fadeIn("up", "spring", index * 0.15, 0.75)}
     whileHover={{ y: -8, scale: 1.02 }}
-    className="flex flex-col items-center p-8 premium-glass-card text-center group"
+    className="flex flex-col items-center p-8 premium-glass-card glass-reflection inner-glow text-center group"
   >
     {/* Ambient glow */}
     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-32 bg-[#915EFF]/10 rounded-full blur-3xl pointer-events-none group-hover:bg-[#915EFF]/20 transition-colors" />

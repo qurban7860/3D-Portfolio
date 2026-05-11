@@ -32,7 +32,7 @@ AvailabilityBadge.propTypes = {
 const HireCard = ({ icon, title, description }) => (
   <motion.div
     whileHover={{ y: -6, scale: 1.02 }}
-    className="premium-glass-card p-8 flex flex-col items-center gap-6 text-center group"
+    className="premium-glass-card glass-reflection inner-glow p-8 flex flex-col items-center gap-6 text-center group"
   >
     <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl
                     bg-white/5 border border-white/10 group-hover:border-[#915EFF]/50 

@@ -24,10 +24,10 @@ const Hero = () => {
       <div className="absolute bottom-[10%] right-[-5%] w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-[#56ccf2]/5 rounded-full blur-[80px] sm:blur-[100px] animate-pulse z-0" />
 
       {/* ── Main Content Container ── */}
-      <div className={`relative z-20 max-w-7xl mx-auto ${styles.paddingX} h-full flex flex-col lg:flex-row items-center justify-center gap-5 lg:gap-16 pt-24 lg:pt-20 pb-10 lg:pb-0`}>
+      <div className={`relative z-40 max-w-7xl mx-auto ${styles.paddingX} h-full min-h-[600px] lg:min-h-0 flex flex-col lg:flex-row items-center justify-center gap-5 lg:gap-16 pt-32 lg:pt-20 pb-10 lg:pb-0 pointer-events-none`}>
         
         {/* Left Section: Branding & CTA */}
-        <div className="flex-1 lg:flex-[1.8] flex flex-col gap-6 w-full text-center lg:text-left items-center lg:items-start mt-10 lg:mt-0 order-2 lg:order-1">
+        <div className="flex-1 lg:flex-[1.8] flex flex-col gap-6 w-full text-center lg:text-left items-center lg:items-start mt-10 lg:mt-0 order-2 lg:order-1 relative z-50 pointer-events-auto">
           {/* Status Badge */}
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
@@ -104,7 +104,7 @@ const Hero = () => {
         </div>
 
         {/* Right Section: 3D Visualization */}
-        <div className="w-full h-[30vh] sm:h-[40vh] lg:h-[75vh] relative z-10 order-1 lg:order-2 lg:mt-0 flex items-center justify-center">
+        <div className="w-full h-[30vh] sm:h-[40vh] lg:h-[75vh] relative z-10 order-1 lg:order-2 lg:mt-0 flex items-center justify-center pointer-events-auto">
           <div className="absolute inset-0 z-0 pointer-events-none">
              <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-[#915EFF]/20 rounded-full blur-[60px] animate-pulse" />
              <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-[#56ccf2]/10 rounded-full blur-[80px] animate-float" />

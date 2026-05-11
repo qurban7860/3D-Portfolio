@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { HiOutlineLockClosed, HiOutlineUser, HiOutlineEye, HiOutlineEyeOff, HiOutlineShieldCheck } from "react-icons/hi";
 import { useAuth } from "../../context/AuthContext";
-import ErrorMessage from "../../components/common/ErrorMessage";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { styles } from "../../styles";
 import { StarsCanvas } from "../../components";
 import { Tilt } from "react-tilt";
@@ -35,15 +34,18 @@ const LoginPage = () => {
       await login(credentials);
       navigate("/admin", { replace: true });
     } catch (err) {
-      setLocalError(err.message || "Invalid email or password.");
+      setLocalError(err.message || "Invalid credentials. Authorization denied.");
     }
   };
 
   return (
-    <div className="min-h-screen bg-primary flex items-center justify-center p-6 selection:bg-[#915EFF]/30 relative overflow-hidden">
-      {/* Stars Background */}
+    <div className="min-h-screen bg-[#050816] flex items-center justify-center p-6 selection:bg-[#915EFF]/30 relative overflow-hidden">
+      {/* ── Immersive Background ── */}
       <div className="fixed inset-0 z-0">
         <StarsCanvas />
+        <div className="light-beam light-beam-1" />
+        <div className="light-beam light-beam-2" />
+        <div className="light-beam light-beam-3" />
       </div>
 
       {/* Premium Background Orbs */}
@@ -51,64 +53,59 @@ const LoginPage = () => {
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#56ccf2]/5 rounded-full blur-[100px] pointer-events-none" />
 
       <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-10 w-full max-w-[420px]"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="relative z-10 w-full max-w-[440px]"
       >
-        <Tilt options={{ max: 15, scale: 1.02, speed: 400 }}>
+        <Tilt options={{ max: 10, scale: 1.01, speed: 400 }}>
           <div 
-            className="rounded-3xl p-8 sm:p-10 relative overflow-hidden"
-            style={{
-              backdropFilter: "blur(20px)",
-              WebkitBackdropFilter: "blur(20px)",
-              background: "rgba(255,255,255,0.03)",
-              border: "1px solid rgba(255,255,255,0.1)",
-              boxShadow: "0 20px 50px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.1)",
-            }}
+            className="rounded-[2.5rem] p-10 sm:p-12 relative overflow-hidden premium-glass-card shadow-2xl group"
           >
             {/* Inner ambient glow */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-32 bg-[#915EFF]/20 blur-3xl rounded-full pointer-events-none" />
 
-            <div className="mb-8 text-center relative z-10">
-              <div className="mx-auto mb-5 h-16 w-16 rounded-2xl bg-gradient-to-br from-[#915EFF] to-[#56ccf2] flex items-center justify-center text-white text-3xl shadow-[0_0_24px_rgba(145,94,255,0.4)] border border-white/20">
+            <div className="mb-10 text-center relative z-10">
+              <div className="mx-auto mb-6 h-20 w-20 rounded-[2rem] bg-gradient-to-br from-[#915EFF] to-[#56ccf2] flex items-center justify-center text-white text-4xl shadow-[0_0_30px_rgba(145,94,255,0.4)] border border-white/20 group-hover:rotate-[10deg] transition-transform duration-700">
                 <HiOutlineShieldCheck />
               </div>
-              <h1 className="text-3xl font-extrabold text-white tracking-tight">Admin <span className="text-gradient">Portal</span></h1>
-              <p className="mt-2 text-secondary text-sm">Sign in to manage your portfolio</p>
+              <h1 className="text-4xl font-black text-white tracking-tight leading-none">Admin <span className="text-gradient">Gate</span></h1>
+              <p className="mt-4 text-secondary text-[13px] font-black uppercase tracking-[0.2em] opacity-60">Authorization Required</p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+            <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
               {(localError || error) && (
                 <motion.div 
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                 >
-                  <ErrorMessage message={localError || error} />
+                  <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold text-center">
+                    {localError || error}
+                  </div>
                 </motion.div>
               )}
               
-              <div className="space-y-5">
-                <div className="space-y-2">
-                  <label className="text-[11px] font-bold uppercase tracking-widest text-[#c4a7ff] ml-1">Email Address</label>
-                  <div className="relative group">
-                    <HiOutlineUser className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-[#915EFF] transition-colors" />
+              <div className="space-y-6">
+                <div className="space-y-3">
+                  <label className="text-[10px] font-black uppercase tracking-[0.4em] text-[#c4a7ff] ml-1 opacity-80">Access ID</label>
+                  <div className="relative group/input">
+                    <HiOutlineUser className="absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within/input:text-[#915EFF] transition-colors" />
                     <input
                       type="email"
                       name="email"
                       value={credentials.email}
                       onChange={handleChange}
                       required
-                      placeholder="admin@portfolio.local"
-                      className="w-full rounded-xl bg-black/40 border border-white/10 pl-11 pr-5 py-4 text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-[#915EFF]/5 focus:ring-4 focus:ring-[#915EFF]/10 placeholder:text-white/20 text-sm"
+                      placeholder="Enter ID..."
+                      className="w-full rounded-2xl bg-white/[0.03] border border-white/10 pl-14 pr-6 py-5 text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-[#915EFF]/5 focus:ring-1 focus:ring-[#915EFF]/30 placeholder:text-white/10 text-sm font-medium"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-[11px] font-bold uppercase tracking-widest text-[#c4a7ff] ml-1">Password</label>
-                  <div className="relative group">
-                    <HiOutlineLockClosed className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-[#915EFF] transition-colors" />
+                <div className="space-y-3">
+                  <label className="text-[10px] font-black uppercase tracking-[0.4em] text-[#c4a7ff] ml-1 opacity-80">Security Token</label>
+                  <div className="relative group/input">
+                    <HiOutlineLockClosed className="absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within/input:text-[#915EFF] transition-colors" />
                     <input
                       type={showPassword ? "text" : "password"}
                       name="password"
@@ -116,14 +113,14 @@ const LoginPage = () => {
                       onChange={handleChange}
                       required
                       placeholder="••••••••"
-                      className="w-full rounded-xl bg-black/40 border border-white/10 pl-11 pr-12 py-4 text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-[#915EFF]/5 focus:ring-4 focus:ring-[#915EFF]/10 placeholder:text-white/20 text-sm"
+                      className="w-full rounded-2xl bg-white/[0.03] border border-white/10 pl-14 pr-14 py-5 text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-[#915EFF]/5 focus:ring-1 focus:ring-[#915EFF]/30 placeholder:text-white/10 text-sm font-medium"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white transition-colors"
+                      className="absolute right-5 top-1/2 -translate-y-1/2 text-white/20 hover:text-white transition-colors"
                     >
-                      {showPassword ? <HiOutlineEyeOff size={18} /> : <HiOutlineEye size={18} />}
+                      {showPassword ? <HiOutlineEyeOff size={20} /> : <HiOutlineEye size={20} />}
                     </button>
                   </div>
                 </div>
@@ -132,24 +129,24 @@ const LoginPage = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`${styles.glassButtonPremium} w-full py-4`}
+                className={`${styles.glassButtonPremium} w-full py-5 text-[14px] font-black uppercase tracking-[0.2em] shadow-2xl active:scale-[0.98] transition-transform`}
               >
                 {loading ? (
-                  <div className="flex items-center justify-center gap-2">
-                    <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-                    <span>Authenticating...</span>
+                  <div className="flex items-center justify-center gap-3">
+                    <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/20 border-t-white" />
+                    <span>Syncing...</span>
                   </div>
                 ) : (
-                  "Secure Login"
+                  "Initiate Access"
                 )}
               </button>
               
               <button 
                 type="button" 
                 onClick={() => navigate("/")}
-                className="w-full text-center text-xs text-secondary hover:text-[#915EFF] transition-colors py-2 font-medium"
+                className="w-full text-center text-[10px] font-black uppercase tracking-[0.3em] text-secondary/40 hover:text-[#915EFF] transition-all py-2"
               >
-                ← Back to Portfolio
+                ← Return to Terminal
               </button>
             </form>
           </div>

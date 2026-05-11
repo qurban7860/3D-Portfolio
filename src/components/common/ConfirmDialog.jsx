@@ -12,36 +12,46 @@ const ConfirmDialog = ({ isOpen, title, message, onConfirm, onCancel, type = "da
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onCancel}
-          className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+          className="absolute inset-0 bg-black/85 backdrop-blur-md"
         />
         
         <motion.div
-          initial={{ opacity: 0, scale: 0.9, y: 20 }}
+          initial={{ opacity: 0, scale: 0.9, y: 30 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.9, y: 20 }}
-          className="relative w-full max-w-md overflow-hidden rounded-[2rem] border border-white/10 bg-black-100 p-8 shadow-2xl"
+          exit={{ opacity: 0, scale: 0.9, y: 30 }}
+          transition={{ type: "spring", bounce: 0, duration: 0.5 }}
+          className="relative w-full max-w-md overflow-hidden rounded-[3rem] border border-white/10 premium-glass-card p-10 shadow-[0_25px_80px_rgba(0,0,0,0.8)]"
         >
-          <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-red-500/10 text-red-500 border border-red-500/20">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          {/* Decorative glow */}
+          <div className={`absolute top-0 right-0 w-32 h-32 blur-3xl rounded-full pointer-events-none ${
+            type === "danger" ? "bg-red-500/10" : "bg-[#915EFF]/10"
+          }`} />
+
+          <div className={`mb-8 flex h-16 w-16 items-center justify-center rounded-[1.5rem] border backdrop-blur-xl shadow-xl transition-transform duration-500 hover:rotate-[15deg] ${
+            type === "danger" 
+              ? "bg-red-500/10 text-red-500 border-red-500/20" 
+              : "bg-[#915EFF]/10 text-[#915EFF] border-[#915EFF]/20"
+          }`}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-9 w-9" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
           </div>
           
-          <h3 className="mb-2 text-xl font-bold text-white">{title || "Are you sure?"}</h3>
-          <p className="mb-8 text-secondary text-sm leading-relaxed">
-            {message || "This action cannot be undone. Please confirm to proceed."}
+          <h3 className="mb-3 text-2xl font-black text-white tracking-tight leading-tight">{title || "Secure Request"}</h3>
+          <p className="mb-10 text-secondary text-[14px] font-medium leading-relaxed opacity-60">
+            {message || "Authorize this system modification to proceed with the requested operation."}
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-3">
+          <div className="flex flex-col sm:flex-row gap-4 relative z-10">
             <button
               onClick={onCancel}
-              className="flex-1 rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-bold text-white transition-all hover:bg-white/10 active:scale-95"
+              className="flex-1 rounded-[1.25rem] border border-white/10 bg-white/5 px-8 py-4 text-[13px] font-black uppercase tracking-widest text-white transition-all hover:bg-white/10 active:scale-95 shadow-xl"
             >
-              Cancel
+              Abort
             </button>
             <button
               onClick={onConfirm}
-              className={`flex-1 rounded-xl px-6 py-3 text-sm font-bold text-white shadow-lg transition-all active:scale-95 ${
+              className={`flex-1 rounded-[1.25rem] px-8 py-4 text-[13px] font-black uppercase tracking-widest text-white shadow-2xl transition-all active:scale-95 ${
                 type === "danger" 
                   ? "bg-red-500 shadow-red-500/20 hover:bg-red-600" 
                   : "bg-[#915EFF] shadow-[#915EFF]/20 hover:bg-[#804dee]"

@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { useState } from "react"; 
 import { resolveAssetUrl } from "../utils/assetResolver";
 import {
   VerticalTimeline,
@@ -11,6 +12,48 @@ import { SectionWrapper } from "../hoc";
 import { textVariant, fadeIn } from "../Animation/motion";
 
 /* ── Experience Card ───────────────────────────────────────────── */
+const ExperienceIcon = ({ experience }) => {
+  const [error, setError] = useState(false);
+  const firstLetter = experience.companyName?.charAt(0).toUpperCase() || "?";
+
+  return (
+    <div className="flex justify-center items-center w-full h-full relative group">
+      <a
+        href={experience.instituteUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex justify-center items-center w-full h-full"
+      >
+        {!error ? (
+          <img
+            src={resolveAssetUrl(experience.iconUrl)}
+            alt={experience.companyName}
+            onError={() => setError(true)}
+            className="w-[60%] h-[60%] object-contain hover:scale-110 transition-transform duration-300"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-white/5 backdrop-blur-md rounded-full border border-white/10 group-hover:border-[#915EFF]/50 transition-all">
+            <span className="text-white font-black text-xl tracking-tighter drop-shadow-[0_0_8px_rgba(145,94,255,0.8)]">
+              {firstLetter}
+            </span>
+          </div>
+        )}
+      </a>
+      
+      {/* Decorative pulse ring */}
+      <div className="absolute inset-0 rounded-full bg-[#915EFF]/20 animate-ping opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+    </div>
+  );
+};
+
+ExperienceIcon.propTypes = {
+  experience: PropTypes.shape({
+    companyName: PropTypes.string,
+    iconUrl: PropTypes.string,
+    instituteUrl: PropTypes.string,
+  }).isRequired,
+};
+
 const ExperienceCard = ({ experience }) => (
   <VerticalTimelineElement
     contentStyle={{
@@ -19,31 +62,17 @@ const ExperienceCard = ({ experience }) => (
       WebkitBackdropFilter: "blur(14px)",
       color: "#fff",
       border: "1px solid rgba(145,94,255,0.22)",
-      borderRadius: "1rem",
+      borderRadius: "1.5rem",
       boxShadow: "0 8px 32px rgba(145,94,255,0.10), inset 0 1px 0 rgba(255,255,255,0.05)",
+      padding: "2rem",
     }}
     contentArrowStyle={{ borderRight: "7px solid rgba(145,94,255,0.35)" }}
-    date={experience.date}
+    date={<span className="text-[#c4a7ff] font-bold tracking-widest text-sm uppercase">{experience.date}</span>}
     iconStyle={{
       background: experience.iconBg,
-      boxShadow: "0 0 0 4px rgba(145,94,255,0.30), 0 4px 16px rgba(145,94,255,0.25)",
+      boxShadow: "0 0 0 4px rgba(145,94,255,0.30), 0 10px 24px rgba(145,94,255,0.4)",
     }}
-    icon={
-      <div className="flex justify-center items-center w-full h-full">
-        <a
-          href={experience.instituteUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex justify-center items-center w-full h-full"
-        >
-          <img
-            src={resolveAssetUrl(experience.iconUrl)}
-            alt={experience.companyName}
-            className="w-[60%] h-[60%] object-contain hover:scale-110 transition-transform duration-300"
-          />
-        </a>
-      </div>
-    }
+    icon={<ExperienceIcon experience={experience} />}
   >
     <div>
       <h3 className="text-white text-[22px] font-bold">{experience.title}</h3>
@@ -176,9 +205,9 @@ const Experience = () => {
       </div>
 
       {/* Experience */}
-      <motion.div variants={textVariant()} className="mt-14">
+      <motion.div variants={textVariant()} className="flex flex-col items-start gap-2 mt-14">
         <span className="section-badge inline-block">Professional Journey</span>
-        <h2 className="section-title-underline text-white font-extrabold text-3xl sm:text-4xl leading-tight max-w-3xl mt-2">
+        <h2 className="section-title-underline text-white font-extrabold text-3xl sm:text-4xl leading-tight max-w-3xl">
           Work Experience
         </h2>
       </motion.div>

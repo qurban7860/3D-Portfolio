@@ -824,3 +824,20 @@ html {
     radial-gradient(at 100% 100%, rgba(0, 206, 168, 0.05) 0px, transparent 50%),
     radial-gradient(at 0% 100%, rgba(241, 39, 17, 0.05) 0px, transparent 50%);
 }
+
+/* ── Vertical Timeline Overrides ── */
+.vertical-timeline::before {
+  background: linear-gradient(to bottom, #915EFF 0%, #56ccf2 50%, #915EFF 100%) !important;
+  width: 3px !important;
+  opacity: 0.3 !important;
+}
+
+.vertical-timeline-element-icon {
+  box-shadow: 0 0 0 4px rgba(145, 94, 255, 0.3), 0 10px 24px rgba(145, 94, 255, 0.4) !important;
+}
+
+@media only screen and (max-width: 1169px) {
+  .vertical-timeline--two-columns .vertical-timeline-element-icon {
+    left: 2px !important;
+  }
+}

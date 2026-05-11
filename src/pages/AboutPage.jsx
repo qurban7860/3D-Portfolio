@@ -1,5 +1,5 @@
 import { About } from "../components/About";
-import { WhyWorkWithMe, StarsCanvas, BackToTop, Navbar, Services } from "../components";
+import { WhyWorkWithMe, StarsCanvas, BackToTop, Navbar } from "../components";
 import { usePortfolio } from "../context/PortfolioContext";
 import LoadingState from "../components/common/LoadingState";
 import ErrorMessage from "../components/common/ErrorMessage";

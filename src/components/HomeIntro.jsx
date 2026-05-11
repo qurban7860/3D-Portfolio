@@ -55,7 +55,7 @@ const HomeIntro = () => {
           variants={fadeIn("right", "spring", 0.2, 0.8)}
           className="flex-1"
         >
-          <span className="section-badge mb-4">Core Overview</span>
+          <span className="section-badge my-8">Core Overview</span>
           <h2 className={styles.sectionHeadText}>
             Engineering <span className="text-gradient">Professional Solutions</span>
           </h2>

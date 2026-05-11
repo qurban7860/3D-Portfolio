@@ -12,10 +12,10 @@ import logo from "/logo.svg";
 
 /* ── Contact Link (Socials) ─────────────────────────────────── */
 const SocialIcon = ({ title, url, icon: Icon }) => (
-  <a 
-    href={url} 
-    target="_blank" 
-    rel="noopener noreferrer" 
+  <a
+    href={url}
+    target="_blank"
+    rel="noopener noreferrer"
     title={title}
     className="relative group p-2 rounded-xl hover:bg-white/5 transition-all duration-300"
   >
@@ -29,19 +29,27 @@ const ResumeButton = ({ isMobile = false }) => {
   const [showOptions, setShowOptions] = useState(false);
 
   return (
-    <div 
-      className="relative" 
-      onMouseEnter={() => !isMobile && setShowOptions(true)} 
+    <div
+      className="relative w-full lg:w-auto"
+      onMouseEnter={() => !isMobile && setShowOptions(true)}
       onMouseLeave={() => !isMobile && setShowOptions(false)}
     >
       <motion.button
         whileHover={{ y: -2 }}
         whileTap={{ scale: 0.95 }}
-        onClick={() => isMobile ? setShowOptions(!showOptions) : window.open(resumePdf, "_blank")}
-        className={`flex items-center gap-2 px-5 py-2 glass-badge-hero border border-white/10 text-white font-bold rounded-full hover:border-[#915EFF]/50 hover:shadow-[0_0_20px_rgba(145,94,255,0.2)] transition-all duration-300 text-[12px] uppercase tracking-wider ${isMobile ? 'w-full justify-center' : ''}`}
+        onClick={() =>
+          isMobile
+            ? setShowOptions(!showOptions)
+            : window.open(resumePdf, "_blank")
+        }
+        className={`flex items-center gap-2 px-5 py-2 glass-badge-hero border border-white/10 text-white font-bold rounded-full hover:border-[#915EFF]/50 hover:shadow-[0_0_20px_rgba(145,94,255,0.2)] transition-all duration-300 text-[12px] uppercase tracking-wider ${isMobile ? "w-full justify-center" : ""}`}
       >
         <span>Resume</span>
-        <span className={`text-[10px] opacity-40 transition-transform duration-300 ${showOptions ? 'rotate-180' : ''}`}>▼</span>
+        <span
+          className={`text-[10px] opacity-40 transition-transform duration-300 ${showOptions ? "rotate-180" : ""}`}
+        >
+          ▼
+        </span>
       </motion.button>
 
       <AnimatePresence>
@@ -50,12 +58,21 @@ const ResumeButton = ({ isMobile = false }) => {
             initial={{ opacity: 0, y: 10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            className={`${isMobile ? 'relative mt-2 w-full' : 'absolute top-full right-0 mt-3 w-40'} glass-dark rounded-2xl overflow-hidden shadow-2xl z-[60] border border-white/10 p-1`}
+            className={`${isMobile ? "relative mt-2 w-full" : "absolute top-full right-0 mt-3 w-40"} bg-[#100d25] rounded-2xl overflow-hidden shadow-2xl z-[60] border border-white/10 p-1`}
           >
-            <a href={resumePdf} target="_blank" rel="noopener noreferrer" className="flex items-center px-4 py-2.5 text-white hover:bg-white/5 rounded-xl transition-colors text-[13px]">
+            <a
+              href={resumePdf}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center px-4 py-2.5 text-white hover:bg-white/5 rounded-xl transition-colors text-[13px]"
+            >
               👁️ View PDF
             </a>
-            <a href={resumePdf} download="Resume_Mern.pdf" className="flex items-center px-4 py-2.5 text-white hover:bg-white/5 rounded-xl transition-colors text-[13px]">
+            <a
+              href={resumePdf}
+              download="Resume_Mern.pdf"
+              className="flex items-center px-4 py-2.5 text-white hover:bg-white/5 rounded-xl transition-colors text-[13px]"
+            >
               ⬇️ Download
             </a>
           </motion.div>
@@ -68,65 +85,118 @@ const ResumeButton = ({ isMobile = false }) => {
 /* ── Individual Nav Link ───────────────────────────────────── */
 const NavLinkItem = ({ nav, active, onLinkClick }) => (
   <li className="relative group">
-    <Link 
-      to={nav.path || `#${nav.id}`} 
+    <Link
+      to={nav.path}
       onClick={() => onLinkClick(nav.title)}
       className={`${active === nav.title ? "text-white" : "text-secondary"} font-bold text-[13px] uppercase tracking-[0.1em] hover:text-white transition-colors duration-300`}
     >
       {nav.title}
     </Link>
-    <div className={`absolute -bottom-1 left-0 h-[2px] bg-[#915EFF] transition-all duration-500 ${active === nav.title ? "w-full" : "w-0 group-hover:w-1/2"}`} />
+    <div
+      className={`absolute -bottom-1 left-0 h-[2px] bg-[#915EFF] transition-all duration-500 ${active === nav.title ? "w-full" : "w-0 group-hover:w-1/2"}`}
+    />
   </li>
 );
 
 /* ── Mobile Navigation Menu ───────────────────────────────── */
-const MobileMenu = ({ toggle, setToggle, active, navLinks, onNavClick, socialLinks }) => (
-  <AnimatePresence>
-    {toggle && (
-      <motion.div
-        initial={{ opacity: 0, x: 100 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: 100 }}
-        className="fixed inset-0 z-50 lg:hidden"
-      >
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setToggle(false)} />
-        <div className="absolute top-0 right-0 w-[280px] h-full glass-dark border-l border-white/10 flex flex-col p-8 pt-20">
-           <button onClick={() => setToggle(false)} className="absolute top-8 right-8 text-white/40 hover:text-white transition-transform duration-300">
-             <HiX size={28} />
-           </button>
-           
-           <ul className="flex flex-col gap-8">
-              {navLinks.map((nav) => (
-                <li key={nav.title} className="text-xl font-black">
-                  <Link 
-                    to={nav.path} 
+const MobileMenu = ({
+  toggle,
+  setToggle,
+  active,
+  navLinks,
+  onNavClick,
+  socialLinks,
+}) => {
+  useEffect(() => {
+    if (toggle) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [toggle]);
+
+  return (
+    <AnimatePresence>
+      {toggle && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[1000000] lg:hidden"
+        >
+          {/* Opaque Black Backdrop - Absolutely solid to hide page content */}
+          <div
+            className="absolute inset-0 bg-[#050816] z-0"
+            style={{ opacity: 0.98 }}
+            onClick={() => setToggle(false)}
+          />
+
+          {/* SOLID Sidebar Panel */}
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "tween", duration: 0.3 }}
+            className="absolute top-0 right-0 w-[75%] max-w-[280px] h-full flex flex-col p-8 border-l border-white/10 shadow-[0_0_100px_rgba(0,0,0,1)] pt-24 z-10"
+            style={{ backgroundColor: "#050816", opacity: 1 }}
+          >
+            <button
+              onClick={() => setToggle(false)}
+              className="absolute top-6 right-6 w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all"
+            >
+              <HiX size={24} />
+            </button>
+
+            <ul className="flex flex-col gap-6">
+              {navLinks.map((nav, index) => (
+                <motion.li
+                  key={nav.title}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 + index * 0.05 }}
+                >
+                  <Link
+                    to={nav.path}
                     onClick={() => onNavClick(nav.title)}
-                    className={active === nav.title ? "text-[#915EFF]" : "text-white"}
+                    className={`${active === nav.title ? "text-[#915EFF]" : "text-white"} text-[13px] font-black uppercase tracking-[0.3em] hover:text-[#915EFF] transition-colors`}
                   >
                     {nav.title}
                   </Link>
-                </li>
+                </motion.li>
               ))}
-              <li className="pt-4 border-t border-white/5">
+              <motion.li
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4 }}
+                className="pt-6 border-t border-white/10"
+              >
                 <ResumeButton isMobile={true} />
-              </li>
-           </ul>
+              </motion.li>
+            </ul>
 
-           <div className="mt-auto flex flex-col gap-6">
+            <div className="mt-auto flex flex-col gap-8 pb-6">
               <div className="flex gap-4">
-                 {socialLinks.map((link) => (
-                   <SocialIcon key={link.title} {...link} />
-                 ))}
+                {socialLinks.map((link) => (
+                  <SocialIcon key={link.title} {...link} />
+                ))}
               </div>
-              <Link to="/admin" onClick={() => setToggle(false)} className="text-[11px] uppercase tracking-widest text-white/30 hover:text-[#915EFF] transition-colors">
-                🔐 System Access
+              <Link
+                to="/admin"
+                onClick={() => setToggle(false)}
+                className="text-[10px] uppercase tracking-[0.3em] text-white/30 hover:text-[#915EFF] transition-colors font-bold"
+              >
+                🔐 SYSTEM ACCESS
               </Link>
-           </div>
-        </div>
-      </motion.div>
-    )}
-  </AnimatePresence>
-);
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
 
 const Navbar = () => {
   const { data } = usePortfolio();
@@ -143,76 +213,105 @@ const Navbar = () => {
   ];
 
   const contactInfo = data?.settings?.contact ?? {};
-  const SOCIAL_LINKS = useMemo(() => [
-    { title: "GitHub", icon: FaGithub, url: contactInfo.github || "https://github.com/qurban7860" },
-    { title: "LinkedIn", icon: FaLinkedinIn, url: contactInfo.linkedin || "https://www.linkedin.com/in/qurban015" },
-  ], [contactInfo]);
+  const SOCIAL_LINKS = useMemo(
+    () => [
+      {
+        title: "GitHub",
+        icon: FaGithub,
+        url: contactInfo.github || "https://github.com/qurban7860",
+      },
+      {
+        title: "LinkedIn",
+        icon: FaLinkedinIn,
+        url: contactInfo.linkedin || "https://www.linkedin.com/in/qurban015",
+      },
+    ],
+    [contactInfo],
+  );
 
   useEffect(() => {
-    const activeNav = navLinks.find(nav => nav.path === location.pathname);
-    if (activeNav) setActive(activeNav.title);
+    const activeNav = navLinks.find((nav) => nav.path === location.pathname);
+    if (activeNav) {
+      setActive(activeNav.title);
+    } else if (location.pathname === "/") {
+      setActive("");
+    }
   }, [location.pathname]);
 
   return (
-    <nav className="w-full h-16 fixed top-0 z-[100] transition-all duration-500 nav-glass">
-      {/* Bottom accent line */}
-      <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-      
-      <div className={`${styles.paddingX} h-full max-w-7xl mx-auto flex justify-between items-center`}>
-        
-        {/* ── Branding ── */}
-        <Link 
-          to="/" 
-          className="flex items-center gap-3 group"
-          onClick={() => { window.scrollTo(0, 0); setActive(""); }}
+    <>
+      <nav className="w-full h-16 fixed top-0 z-[1000] transition-all duration-500 nav-glass">
+        <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
+        <div
+          className={`${styles.paddingX} h-full max-w-7xl mx-auto flex justify-between items-center`}
         >
-          <div className="w-10 h-10 rounded-xl glass-badge-hero flex items-center justify-center border-white/10 group-hover:border-[#915EFF]/50 transition-all duration-500">
-            <img src={logo} alt="logo" className="w-6 h-6 object-contain" />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-white font-black text-[15px] tracking-tight leading-none">QURBAN</span>
-            <span className="text-secondary text-[10px] font-bold tracking-[0.2em] uppercase mt-1">Engineer</span>
-          </div>
-        </Link>
-
-        {/* ── Desktop Navigation ── */}
-        <div className="hidden lg:flex items-center gap-12">
-          <ul className="flex items-center gap-8">
-            {navLinks.map((nav) => (
-              <NavLinkItem key={nav.title} nav={nav} active={active} onLinkClick={(t) => setActive(t)} />
-            ))}
-          </ul>
-
-          <div className="flex items-center gap-6 border-l border-white/10 pl-8 h-8">
-            <div className="flex gap-2">
-              {SOCIAL_LINKS.map((link) => (
-                <SocialIcon key={link.title} {...link} />
-              ))}
-            </div>
-            <ResumeButton />
-          </div>
-        </div>
-
-        {/* ── Mobile Trigger ── */}
-        <div className="lg:hidden flex items-center">
-          <button 
-            onClick={() => setToggle(true)}
-            className="w-10 h-10 rounded-xl glass-badge-hero flex items-center justify-center border-white/10 text-white/70 hover:text-white transition-colors"
+          <Link
+            to="/"
+            className="flex items-center gap-3 group"
+            onClick={() => {
+              window.scrollTo(0, 0);
+              setActive("");
+            }}
           >
-            <HiMenuAlt3 size={24} />
-          </button>
-        </div>
+            <div className="w-9 h-9 rounded-xl glass-badge-hero flex items-center justify-center border-white/10 group-hover:border-[#915EFF]/50 transition-all duration-500">
+              <img src={logo} alt="logo" className="w-5 h-5 object-contain" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-white font-black text-[14px] tracking-tight leading-none">
+                QURBAN
+              </span>
+              <span className="text-secondary text-[9px] font-bold tracking-[0.2em] uppercase mt-1">
+                Engineer
+              </span>
+            </div>
+          </Link>
 
-        <MobileMenu
-          toggle={toggle}
-          setToggle={setToggle}
-          active={active}
-          navLinks={navLinks}
-          onNavClick={(t) => { setActive(t); setToggle(false); }}
-          socialLinks={SOCIAL_LINKS}
-        />
-      </div>
-    </nav>
+          <div className="hidden lg:flex items-center gap-12">
+            <ul className="flex items-center gap-8">
+              {navLinks.map((nav) => (
+                <NavLinkItem
+                  key={nav.title}
+                  nav={nav}
+                  active={active}
+                  onLinkClick={(t) => setActive(t)}
+                />
+              ))}
+            </ul>
+            <div className="flex items-center gap-6 border-l border-white/10 pl-8 h-8">
+              <div className="flex gap-2">
+                {SOCIAL_LINKS.map((link) => (
+                  <SocialIcon key={link.title} {...link} />
+                ))}
+              </div>
+              <ResumeButton />
+            </div>
+          </div>
+
+          <div className="lg:hidden flex items-center">
+            <button
+              onClick={() => setToggle(true)}
+              className="w-10 h-10 rounded-xl glass-badge-hero flex items-center justify-center border-white/10 text-white/70 hover:text-white transition-colors"
+              aria-label="Open Menu"
+            >
+              <HiMenuAlt3 size={24} />
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <MobileMenu
+        toggle={toggle}
+        setToggle={setToggle}
+        active={active}
+        navLinks={navLinks}
+        onNavClick={(t) => {
+          setActive(t);
+          setToggle(false);
+        }}
+        socialLinks={SOCIAL_LINKS}
+      />
+    </>
   );
 };
 

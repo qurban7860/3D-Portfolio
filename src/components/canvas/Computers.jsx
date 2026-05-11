@@ -11,13 +11,13 @@ const Computers = ({ isMobile }) => {
   const { position, scale } = useMemo(() => {
     if (isMobile) {
       return {
-        position: [0, -1.5, 0],
-        scale: 0.5,
+        position: [0, -1.2, 0],
+        scale: 0.65,
       };
     }
     return {
-      position: [0, -3.2, -1.5], 
-      scale: 0.7,
+      position: [0, -2.8, -1.2], 
+      scale: 0.65,
     };
   }, [isMobile]);
 
@@ -33,7 +33,6 @@ const Computers = ({ isMobile }) => {
         castShadow={!isMobile}
         shadow-mapSize={isMobile ? 1024 : 2048}
       />
-      <pointLight intensity={isMobile ? 0.5 : 0.8} position={[10, 10, 10]} />
       <primitive
         object={computer.scene}
         scale={scale}

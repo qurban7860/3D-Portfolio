@@ -1,5 +1,5 @@
 import { Works as RawWorks } from "../components/Works";
-import { StarsCanvas, BackToTop, Navbar } from "../components";
+import { StarsCanvas, BackToTop, Navbar, Footer } from "../components";
 import { usePortfolio } from "../context/PortfolioContext";
 import LoadingState from "../components/common/LoadingState";
 import ErrorMessage from "../components/common/ErrorMessage";
@@ -67,6 +67,7 @@ const PortfolioPage = () => {
       </div>
 
       <BackToTop scrollThreshold={300} />
+      <Footer />
     </div>
   );
 };

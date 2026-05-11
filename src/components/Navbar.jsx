@@ -136,49 +136,54 @@ const MobileMenu = ({
 
           {/* SOLID Sidebar Panel */}
           <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "tween", duration: 0.3 }}
-            className="absolute top-0 right-0 w-[75%] max-w-[280px] h-full flex flex-col p-8 border-l border-white/10 shadow-[0_0_100px_rgba(0,0,0,1)] pt-24 z-10"
-            style={{ backgroundColor: "#050816", opacity: 1 }}
+            initial={{ x: "100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: "100%", opacity: 0 }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="absolute top-0 right-0 w-[80%] max-w-[320px] h-full flex flex-col p-10 border-l border-white/10 shadow-[0_0_100px_rgba(0,0,0,1)] pt-28 z-10 overflow-hidden"
+            style={{ backgroundColor: "rgba(5, 8, 22, 0.95)", backdropFilter: "blur(40px)" }}
           >
+            {/* Ambient glow in sidebar */}
+            <div className="absolute -top-20 -right-20 w-48 h-48 bg-[#915EFF]/20 rounded-full blur-[80px]" />
+            <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-[#56ccf2]/10 rounded-full blur-[80px]" />
+
             <button
               onClick={() => setToggle(false)}
-              className="absolute top-6 right-6 w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all"
+              className="absolute top-8 right-8 w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-all shadow-xl"
             >
-              <HiX size={24} />
+              <HiX size={26} />
             </button>
 
-            <ul className="flex flex-col gap-6">
+            <ul className="flex flex-col gap-8 relative z-10">
               {navLinks.map((nav, index) => (
                 <motion.li
                   key={nav.title}
-                  initial={{ opacity: 0, x: 20 }}
+                  initial={{ opacity: 0, x: 30 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.1 + index * 0.05 }}
+                  transition={{ delay: 0.15 + index * 0.08, type: "spring" }}
                 >
                   <Link
                     to={nav.path}
                     onClick={() => onNavClick(nav.title)}
-                    className={`${active === nav.title ? "text-[#915EFF]" : "text-white"} text-[13px] font-black uppercase tracking-[0.3em] hover:text-[#915EFF] transition-colors`}
+                    className={`${active === nav.title ? "text-gradient" : "text-white/60"} text-[20px] font-black uppercase tracking-[0.2em] hover:text-white transition-all flex items-center gap-4 group`}
                   >
+                    <span className={`w-2 h-2 rounded-full bg-[#915EFF] transition-all duration-300 ${active === nav.title ? "scale-100 opacity-100" : "scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-50"}`} />
                     {nav.title}
                   </Link>
                 </motion.li>
               ))}
               <motion.li
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4 }}
-                className="pt-6 border-t border-white/10"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="pt-10 border-t border-white/10"
               >
                 <ResumeButton isMobile={true} />
               </motion.li>
             </ul>
 
-            <div className="mt-auto flex flex-col gap-8 pb-6">
-              <div className="flex gap-4">
+            <div className="mt-auto flex flex-col gap-10 pb-8 relative z-10">
+              <div className="flex gap-5 justify-center sm:justify-start">
                 {socialLinks.map((link) => (
                   <SocialIcon key={link.title} {...link} />
                 ))}
@@ -186,9 +191,9 @@ const MobileMenu = ({
               <Link
                 to="/admin"
                 onClick={() => setToggle(false)}
-                className="text-[10px] uppercase tracking-[0.3em] text-white/30 hover:text-[#915EFF] transition-colors font-bold"
+                className="text-[10px] uppercase tracking-[0.4em] text-white/20 hover:text-[#915EFF] transition-all font-black text-center sm:text-left"
               >
-                🔐 SYSTEM ACCESS
+                🔐 CORE SYSTEM ACCESS
               </Link>
             </div>
           </motion.div>
@@ -202,6 +207,7 @@ const Navbar = () => {
   const { data } = usePortfolio();
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
   const navLinks = [
@@ -230,6 +236,14 @@ const Navbar = () => {
   );
 
   useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
     const activeNav = navLinks.find((nav) => nav.path === location.pathname);
     if (activeNav) {
       setActive(activeNav.title);
@@ -240,28 +254,32 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="w-full h-16 fixed top-0 z-[1000] transition-all duration-500 nav-glass">
-        <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      <nav 
+        className={`w-full h-20 fixed top-0 z-[1000] transition-all duration-500 flex items-center
+                    ${isScrolled ? "nav-glass py-2" : "bg-transparent py-4"}`}
+      >
+        <div className={`absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-opacity duration-500 ${isScrolled ? "opacity-100" : "opacity-0"}`} />
 
         <div
-          className={`${styles.paddingX} h-full max-w-7xl mx-auto flex justify-between items-center`}
+          className={`${styles.paddingX} h-full max-w-7xl mx-auto flex justify-between items-center w-full`}
         >
           <Link
             to="/"
-            className="flex items-center gap-3 group"
+            className="flex items-center gap-4 group"
             onClick={() => {
               window.scrollTo(0, 0);
               setActive("");
             }}
           >
-            <div className="w-9 h-9 rounded-xl glass-badge-hero flex items-center justify-center border-white/10 group-hover:border-[#915EFF]/50 transition-all duration-500">
-              <img src={logo} alt="logo" className="w-5 h-5 object-contain" />
+            <div className="w-11 h-11 rounded-2xl glass-badge-hero flex items-center justify-center border-white/10 group-hover:border-[#915EFF]/50 group-hover:rotate-[10deg] transition-all duration-500 shadow-xl overflow-hidden relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#915EFF]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <img src={logo} alt="logo" className="w-6 h-6 object-contain relative z-10 group-hover:scale-110 transition-transform" />
             </div>
             <div className="flex flex-col">
-              <span className="text-white font-black text-[14px] tracking-tight leading-none">
+              <span className="text-white font-black text-[16px] tracking-tight leading-none group-hover:text-gradient transition-all duration-300">
                 QURBAN
               </span>
-              <span className="text-secondary text-[9px] font-bold tracking-[0.2em] uppercase mt-1">
+              <span className="text-secondary text-[10px] font-bold tracking-[0.3em] uppercase mt-1.5 opacity-60">
                 Engineer
               </span>
             </div>

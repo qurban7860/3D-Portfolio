@@ -57,41 +57,48 @@ ExperienceIcon.propTypes = {
 const ExperienceCard = ({ experience }) => (
   <VerticalTimelineElement
     contentStyle={{
-      background: "rgba(145,94,255,0.06)",
-      backdropFilter: "blur(14px)",
-      WebkitBackdropFilter: "blur(14px)",
+      background: "rgba(255, 255, 255, 0.03)",
+      backdropFilter: "blur(24px)",
+      WebkitBackdropFilter: "blur(24px)",
       color: "#fff",
-      border: "1px solid rgba(145,94,255,0.22)",
-      borderRadius: "1.5rem",
-      boxShadow: "0 8px 32px rgba(145,94,255,0.10), inset 0 1px 0 rgba(255,255,255,0.05)",
-      padding: "2rem",
+      border: "1px solid rgba(255, 255, 255, 0.1)",
+      borderRadius: "2.5rem",
+      boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05)",
+      padding: "2.5rem",
     }}
-    contentArrowStyle={{ borderRight: "7px solid rgba(145,94,255,0.35)" }}
-    date={<span className="text-[#c4a7ff] font-bold tracking-widest text-sm uppercase">{experience.date}</span>}
+    contentArrowStyle={{ borderRight: "10px solid rgba(145, 94, 255, 0.3)" }}
+    date={
+      <span className="text-[#c4a7ff] font-black tracking-[0.2em] text-[11px] uppercase bg-[#915EFF]/10 px-4 py-1.5 rounded-full border border-[#915EFF]/20">
+        {experience.date}
+      </span>
+    }
     iconStyle={{
-      background: experience.iconBg,
-      boxShadow: "0 0 0 4px rgba(145,94,255,0.30), 0 10px 24px rgba(145,94,255,0.4)",
+      background: experience.iconBg || "#161130",
+      boxShadow: "0 0 0 4px rgba(145,94,255,0.2), 0 15px 35px rgba(145,94,255,0.4)",
     }}
     icon={<ExperienceIcon experience={experience} />}
   >
-    <div>
-      <h3 className="text-white text-[22px] font-bold">{experience.title}</h3>
-      <p className="text-[#915EFF] text-[15px] font-semibold mt-1" style={{ margin: 0 }}>
+    <div className="relative z-10">
+      <h3 className="text-white text-[24px] font-black tracking-tight leading-tight">{experience.title}</h3>
+      <p className="text-gradient font-bold text-[16px] mt-1" style={{ margin: 0 }}>
         {experience.companyName}
       </p>
     </div>
 
-    <ul className="mt-5 space-y-2">
+    <ul className="mt-6 space-y-3 relative z-10">
       {experience.points.map((point, index) => (
         <li
           key={`exp-point-${index}`}
-          className="text-white/75 text-[14px] pl-1 tracking-wide leading-relaxed flex items-start gap-2"
+          className="text-white/70 text-[14px] pl-1 tracking-wide leading-relaxed flex items-start gap-3 group"
         >
-          <span className="text-gradient mt-[3px] text-[12px] font-bold flex-shrink-0">▸</span>
-          {point}
+          <span className="text-[#915EFF] mt-[4px] text-[10px] font-bold flex-shrink-0 group-hover:scale-125 transition-transform">✦</span>
+          <span className="group-hover:text-white transition-colors">{point}</span>
         </li>
       ))}
     </ul>
+    
+    {/* Decorative corner accent */}
+    <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-[#915EFF]/5 rounded-full blur-2xl pointer-events-none" />
   </VerticalTimelineElement>
 );
 
@@ -111,60 +118,58 @@ ExperienceCard.propTypes = {
 const EducationCard = ({ education }) => (
   <motion.div
     variants={fadeIn("up", "spring", 0.1, 0.75)}
-    whileHover={{ y: -6, scale: 1.01 }}
-    className="flex flex-col mb-6 rounded-2xl relative transition-all duration-500
-               hover:shadow-[0_12px_40px_rgba(145,94,255,0.18)]"
-    style={{
-      backdropFilter: "blur(14px)",
-      WebkitBackdropFilter: "blur(14px)",
-      background:
-        "linear-gradient(145deg, rgba(145,94,255,0.08) 0%, rgba(255,255,255,0.04) 100%)",
-      border: "1px solid rgba(145,94,255,0.22)",
-    }}
+    whileHover={{ y: -8, scale: 1.005 }}
+    className="flex flex-col mb-8 rounded-[2.5rem] relative transition-all duration-700
+               premium-glass-card group overflow-hidden"
   >
-    {/* Glow blob */}
-    <div className="absolute top-0 right-0 w-32 h-32 bg-[#915EFF]/10 rounded-full blur-2xl pointer-events-none" />
-
+    {/* Animated background gradient */}
+    <div className="absolute inset-0 bg-gradient-to-br from-[#915EFF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+    
     {/* Institute logo */}
     <a
       href={education.instituteUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="absolute top-5 right-5 z-10"
+      className="absolute top-7 right-7 z-20"
       title={education.instituteName}
     >
-      <img
-        src={resolveAssetUrl(education.imageUrl)}
-        alt={`${education.instituteName} logo`}
-        className="w-12 h-12 object-contain hover:scale-110 transition-transform duration-300
-                   ring-2 ring-[#915EFF]/30 rounded-xl"
-      />
+      <div className="relative">
+        <div className="absolute inset-0 bg-[#915EFF]/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+        <img
+          src={resolveAssetUrl(education.imageUrl)}
+          alt={`${education.instituteName} logo`}
+          className="w-14 h-14 object-contain hover:rotate-6 transition-transform duration-500
+                     ring-1 ring-white/10 rounded-2xl bg-black/20 backdrop-blur-sm p-2"
+        />
+      </div>
     </a>
 
-    <div className="p-7 relative z-10">
+    <div className="p-8 relative z-10">
       {/* Degree badge */}
-      <span className="inline-block text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-4"
-            style={{
-              background: "rgba(145,94,255,0.14)",
-              border: "1px solid rgba(145,94,255,0.35)",
-              color: "#c4a7ff",
-            }}>
-        🎓 Education
-      </span>
+      <div className="flex items-center gap-2 mb-5">
+        <span className="inline-block text-[10px] font-black uppercase tracking-[0.25em] px-4 py-1.5 rounded-full shadow-lg"
+              style={{
+                background: "rgba(145,94,255,0.1)",
+                border: "1px solid rgba(145,94,255,0.25)",
+                color: "#c4a7ff",
+              }}>
+          🎓 Academic Background
+        </span>
+      </div>
 
-      <h3 className="text-white text-[22px] font-bold leading-snug pr-16">{education.degree}</h3>
-      <p className="text-[#915EFF] text-[15px] font-semibold mt-1 mb-4">
+      <h3 className="text-white text-[26px] font-black leading-tight tracking-tight pr-20 group-hover:text-gradient transition-all duration-500">{education.degree}</h3>
+      <p className="text-secondary font-bold text-[16px] mt-2 mb-6 opacity-80">
         {education.instituteName}
       </p>
 
-      <ul className="space-y-2">
+      <ul className="space-y-3">
         {education.points.map((point, index) => (
           <li
             key={`edu-point-${index}`}
-            className="text-white/75 text-[14px] tracking-wide leading-relaxed flex items-start gap-2"
+            className="text-white/70 text-[15px] tracking-wide leading-relaxed flex items-start gap-3 group/item"
           >
-            <span className="text-gradient mt-[3px] text-[12px] font-bold flex-shrink-0">▸</span>
-            {point}
+            <span className="text-[#56ccf2] mt-[5px] text-[10px] font-bold flex-shrink-0 group-hover/item:scale-125 transition-transform">✦</span>
+            <span className="group-hover/item:text-white transition-colors">{point}</span>
           </li>
         ))}
       </ul>

@@ -8,45 +8,44 @@ import { styles } from "../styles";
 /* ── Service Card ─────────────────────────────────────────────── */
 const ServiceCard = ({ index, title, description, icon, features }) => (
   <motion.div
-    variants={fadeIn("up", "spring", index * 0.15, 0.75)}
+    variants={fadeIn("up", "spring", index * 0.1, 0.75)}
     className="w-full"
   >
     <div
-      className="rounded-3xl p-8 flex flex-col h-full transition-all duration-500
-                  bg-white/[0.02] backdrop-blur-2xl border border-white/5
-                  hover:bg-white/[0.05] hover:border-[#915EFF]/30
-                  hover:shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5),0_0_20px_rgba(145,94,255,0.1)] group relative overflow-hidden"
+      className="rounded-[2.5rem] p-10 flex flex-col h-full transition-all duration-700
+                  premium-glass-card group relative overflow-hidden"
     >
       {/* Decorative Gradient Glow */}
-      <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#915EFF]/5 rounded-full blur-3xl group-hover:bg-[#915EFF]/10 transition-colors duration-500" />
+      <div className="absolute -top-20 -right-20 w-48 h-48 bg-[#915EFF]/5 rounded-full blur-[80px] group-hover:bg-[#915EFF]/15 transition-all duration-700" />
 
       {/* Icon Frame */}
       <div
-        className="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl mb-6
+        className="w-20 h-20 rounded-3xl flex items-center justify-center text-4xl mb-8
                     bg-white/5 border border-white/10 group-hover:border-[#915EFF]/40 
-                    group-hover:scale-110 transition-all duration-500 shadow-xl"
+                    group-hover:scale-110 transition-all duration-500 shadow-2xl relative overflow-hidden"
       >
-        <span className="group-hover:drop-shadow-[0_0_8px_rgba(145,94,255,0.5)] transition-all">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#915EFF]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+        <span className="relative z-10 group-hover:drop-shadow-[0_0_12px_rgba(145,94,255,0.6)] transition-all">
           {icon}
         </span>
       </div>
 
-      <h3 className="text-white font-bold text-2xl mb-4 group-hover:text-[#915EFF] transition-colors duration-300">
+      <h3 className="text-white font-black text-[24px] mb-4 tracking-tight group-hover:text-gradient transition-all duration-300 leading-tight">
         {title}
       </h3>
-      <p className="text-secondary text-[15px] mb-6 leading-relaxed opacity-80 group-hover:opacity-100 transition-opacity">
+      <p className="text-secondary text-[15px] mb-8 leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity">
         {description}
       </p>
 
-      {/* Features list with premium icons */}
-      <div className="mb-8 flex-grow">
-        <p className="text-white/40 text-[11px] font-bold uppercase tracking-[0.2em] mb-4">
-          Core Expertise
+      {/* Features list with premium markers */}
+      <div className="mb-10 flex-grow">
+        <p className="text-white/30 text-[10px] font-black uppercase tracking-[0.3em] mb-5">
+          Key Capabilities
         </p>
-        <ul className="space-y-3">
+        <ul className="space-y-4">
           {features.map((feature, idx) => (
             <li key={idx} className="text-secondary text-[14px] flex items-center gap-3 group/item">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#915EFF]/40 group-hover/item:bg-[#915EFF] transition-colors" />
+              <div className="w-1.5 h-1.5 rounded-full bg-[#915EFF]/30 group-hover/item:bg-[#915EFF] group-hover/item:scale-125 transition-all" />
               <span className="group-hover/item:text-white transition-colors">{feature}</span>
             </li>
           ))}
@@ -58,12 +57,12 @@ const ServiceCard = ({ index, title, description, icon, features }) => (
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         onClick={() => (window.location.href = "/contact")}
-        className="mt-auto py-3.5 px-6 rounded-xl border border-white/10 bg-white/5 text-white font-bold text-[14px]
-                   hover:bg-[#915EFF] hover:border-[#915EFF] hover:shadow-[0_0_20px_rgba(145,94,255,0.4)]
-                   transition-all duration-300 flex items-center justify-center gap-2 group-hover:translate-y-[-2px]"
+        className="mt-auto py-4 px-8 rounded-2xl border border-white/10 bg-white/5 text-white font-black text-[13px] uppercase tracking-widest
+                   hover:bg-[#915EFF] hover:border-[#915EFF] hover:shadow-[0_15px_30px_rgba(145,94,255,0.4)]
+                   transition-all duration-500 flex items-center justify-center gap-3 group-hover:translate-y-[-2px] shadow-inner"
       >
-        Plan Your Project
-        <span className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all">→</span>
+        Initiate Project
+        <span className="group-hover:translate-x-1.5 transition-transform">→</span>
       </motion.button>
     </div>
   </motion.div>

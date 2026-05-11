@@ -1,4 +1,6 @@
 import { useRef, useState, useCallback } from "react";
+import { FaWhatsapp, FaLinkedin } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
 import emailjs from "@emailjs/browser";
@@ -169,25 +171,25 @@ const Contact = () => {
 
   const contactMethods = [
     {
-      icon: "📧",
+      icon: <MdEmail />,
       title: "Email",
       description: "Send me a direct email",
       link: `mailto:${recipientEmail}`,
       linkText: recipientEmail,
     },
     {
-      icon: "💬",
+      icon: <FaLinkedin />,
       title: "Direct Message",
       description: "Connect with me on LinkedIn",
       link: contactSettings.linkedin || "https://www.linkedin.com/in/qurban015",
       linkText: "Open LinkedIn",
     },
     {
-      icon: "☎️",
-      title: "Phone Call",
-      description: "Call me for a quick discussion",
-      link: contactSettings.phone ? `tel:${contactSettings.phone}` : "tel:+923085651015",
-      linkText: contactSettings.phone || "+92-308-5651015",
+      icon: <FaWhatsapp />,
+      title: "Direct WhatsApp",
+      description: "Connect with me on WhatsApp",
+      link: contactSettings.whatsapp ? `https://wa.me/${contactSettings.whatsapp}` : "https://wa.me/+923085651015",
+      linkText: contactSettings.whatsapp || "+92-308-5651015",
     },
   ];
 

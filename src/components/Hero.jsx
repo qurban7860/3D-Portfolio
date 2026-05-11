@@ -78,10 +78,13 @@ const Hero = () => {
               View Work
             </button>
             <button
-              onClick={() => navigate("/contact")}
-              className={`${styles.outlineButton} px-6 sm:px-8 py-3 sm:py-3.5 text-[13px] sm:text-[14px] shadow-xl whitespace-nowrap`}
+              onClick={() => {
+                const resumeUrl = data?.settings?.hero?.resumeUrl || "/resume.pdf";
+                window.open(resumeUrl, "_blank");
+              }}
+              className={`${styles.outlineButtonCyan} px-6 sm:px-8 py-3 sm:py-3.5 text-[13px] sm:text-[14px] shadow-xl whitespace-nowrap group`}
             >
-              Contact
+              <span className="group-hover:scale-110 transition-transform">📄</span> Download CV
             </button>
             
             {/* Quick Socials - Hidden on very small screens to keep layout clean */}
@@ -101,7 +104,11 @@ const Hero = () => {
         </div>
 
         {/* Right Section: 3D Visualization */}
-        <div className="w-full h-[30vh] sm:h-[40vh] lg:h-[75vh] relative z-10 order-1 lg:order-2 lg:mt-0 flex items-center justify-center animate-float">
+        <div className="w-full h-[30vh] sm:h-[40vh] lg:h-[75vh] relative z-10 order-1 lg:order-2 lg:mt-0 flex items-center justify-center">
+          <div className="absolute inset-0 z-0 pointer-events-none">
+             <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-[#915EFF]/20 rounded-full blur-[60px] animate-pulse" />
+             <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-[#56ccf2]/10 rounded-full blur-[80px] animate-float" />
+          </div>
           <ComputersCanvas />
           {/* Subtle Decorative Elements */}
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-[#915EFF]/30 to-transparent" />

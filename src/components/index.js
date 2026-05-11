@@ -17,6 +17,7 @@ import WhyWorkWithMe from './WhyWorkWithMe';
 import FeaturedProjects from './FeaturedProjects';
 import HomeIntro from './HomeIntro';
 import Showcase from './Showcase';
+import Footer from './Footer';
 
 export {
   Hero,
@@ -37,6 +38,7 @@ export {
   FeaturedProjects,
   HomeIntro,
   Showcase,
+  Footer,
   EarthCanvas, 
   BallCanvas, 
   ComputersCanvas, 

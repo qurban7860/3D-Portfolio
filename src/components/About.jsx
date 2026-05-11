@@ -49,6 +49,22 @@ const About = ({ isSummary = false, hideHeader = false }) => {
             variants={fadeIn("up", "spring", 0.2, 0.75)}
             className="mt-16 w-full"
           >
+            {/* ── Premium Statistics Grid ── */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-16">
+              {[
+                { label: "Years Experience", value: "3+", color: "text-[#915EFF]" },
+                { label: "Projects Completed", value: "50+", color: "text-[#56ccf2]" },
+                { label: "Happy Clients", value: "30+", color: "text-[#00cea8]" },
+                { label: "Commits", value: "1.2k+", color: "text-[#bf61ff]" },
+              ].map((stat, i) => (
+                <div key={i} className="premium-glass p-6 rounded-3xl text-center group hover:scale-105 transition-all duration-500">
+                  <h4 className={`${stat.color} text-3xl sm:text-4xl font-black mb-1 drop-shadow-sm`}>{stat.value}</h4>
+                  <p className="text-white/40 text-[10px] sm:text-[11px] font-bold uppercase tracking-widest">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* ── Core Values ── */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-10">
               {[
                 {
@@ -69,12 +85,12 @@ const About = ({ isSummary = false, hideHeader = false }) => {
               ].map((val, i) => (
                 <div 
                   key={i} 
-                  className="p-8 rounded-3xl bg-white/[0.02] border border-white/5 backdrop-blur-xl 
-                             hover:bg-white/[0.05] hover:border-[#915EFF]/30 transition-all duration-300 group"
+                  className="p-10 rounded-[2.5rem] premium-glass-card group relative overflow-hidden"
                 >
-                  <div className="text-3xl mb-4 group-hover:scale-110 transition-transform">{val.icon}</div>
-                  <h4 className="text-white font-bold text-lg mb-2">{val.title}</h4>
-                  <p className="text-secondary text-sm leading-relaxed opacity-80">{val.desc}</p>
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#915EFF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  <div className="text-4xl mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">{val.icon}</div>
+                  <h4 className="text-white font-black text-[20px] mb-3 tracking-tight group-hover:text-[#915EFF] transition-colors">{val.title}</h4>
+                  <p className="text-secondary text-[14px] leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity">{val.desc}</p>
                 </div>
               ))}
             </div>

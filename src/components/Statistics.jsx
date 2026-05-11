@@ -9,10 +9,18 @@ import { styles } from "../styles";
 const StatCard = ({ index, stat, label }) => (
   <motion.div
     variants={fadeIn("up", "spring", index * 0.1, 0.5)}
-    className="flex-1 flex flex-col items-center p-6 premium-glass-card glass-reflection inner-glow text-center group"
+    whileHover={{ y: -8, scale: 1.02 }}
+    className="flex-1 flex flex-col items-center p-8 premium-glass-card glass-reflection group overflow-hidden relative"
   >
-    <h3 className="stat-number text-3xl font-black mb-1 drop-shadow-lg">{stat}</h3>
-    <p className="text-white font-bold text-[12px] opacity-80 uppercase tracking-wider">{label}</p>
+    <div className="absolute inset-0 bg-gradient-to-br from-[#915EFF]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+    <h3 className="stat-number text-4xl sm:text-5xl font-black mb-2 drop-shadow-[0_0_15px_rgba(145,94,255,0.4)] transition-all group-hover:scale-110">
+      {stat}
+    </h3>
+    <p className="text-secondary font-black text-[11px] sm:text-[12px] uppercase tracking-[0.25em] opacity-60 group-hover:opacity-100 transition-opacity">
+      {label}
+    </p>
+    {/* Subtle underline decoration */}
+    <div className="w-10 h-1 rounded-full bg-white/10 mt-4 group-hover:w-16 group-hover:bg-[#915EFF] transition-all duration-500" />
   </motion.div>
 );
 

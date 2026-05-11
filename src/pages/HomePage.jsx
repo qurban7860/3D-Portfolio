@@ -8,7 +8,8 @@ import {
   Statistics, 
   ReadyForWork, 
   WhyWorkWithMe, 
-  FAQ 
+  FAQ,
+  Footer
 } from "../components";
 import { usePortfolio } from "../context/PortfolioContext";
 import ErrorMessage from "../components/common/ErrorMessage";
@@ -60,6 +61,7 @@ const HomePage = () => {
             <ReadyForWork />
             
             <BackToTop scrollThreshold={300} />
+            <Footer />
           </div>
         )}
       </div>

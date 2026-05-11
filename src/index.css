@@ -780,6 +780,34 @@ html {
   pointer-events: none;
 }
 
+.shimmer-border {
+  position: relative;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.shimmer-border::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(
+    90deg,
+    rgba(145, 94, 255, 0) 0%,
+    rgba(145, 94, 255, 0.3) 50%,
+    rgba(145, 94, 255, 0) 100%
+  );
+  background-size: 200% auto;
+  border-radius: inherit;
+  z-index: -1;
+  animation: shimmer 4s linear infinite;
+}
+
+.glass-badge-hero {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
 .bg-mesh {
   background-image: 
     radial-gradient(at 0% 0%, rgba(145, 94, 255, 0.15) 0px, transparent 50%),

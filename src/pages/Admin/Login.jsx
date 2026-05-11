@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { HiOutlineLockClosed, HiOutlineUser, HiOutlineEye, HiOutlineEyeOff, HiOutlineShieldCheck } from "react-icons/hi";
 import { useAuth } from "../../context/AuthContext";
 import ErrorMessage from "../../components/common/ErrorMessage";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { styles } from "../../styles";
 import { StarsCanvas } from "../../components";
 import { Tilt } from "react-tilt";
@@ -12,6 +13,7 @@ const LoginPage = () => {
   const { login, error, loading, isAuthenticated } = useAuth();
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [localError, setLocalError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   // Redirect if already logged in
   useEffect(() => {
@@ -45,8 +47,8 @@ const LoginPage = () => {
       </div>
 
       {/* Premium Background Orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#915EFF]/10 rounded-full blur-[120px] pointer-events-none animate-float" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#56ccf2]/5 rounded-full blur-[100px] pointer-events-none animate-float" style={{ animationDelay: '2s' }} />
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#915EFF]/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#56ccf2]/5 rounded-full blur-[100px] pointer-events-none" />
 
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
@@ -70,7 +72,7 @@ const LoginPage = () => {
 
             <div className="mb-8 text-center relative z-10">
               <div className="mx-auto mb-5 h-16 w-16 rounded-2xl bg-gradient-to-br from-[#915EFF] to-[#56ccf2] flex items-center justify-center text-white text-3xl shadow-[0_0_24px_rgba(145,94,255,0.4)] border border-white/20">
-                🔒
+                <HiOutlineShieldCheck />
               </div>
               <h1 className="text-3xl font-extrabold text-white tracking-tight">Admin <span className="text-gradient">Portal</span></h1>
               <p className="mt-2 text-secondary text-sm">Sign in to manage your portfolio</p>
@@ -89,28 +91,41 @@ const LoginPage = () => {
               <div className="space-y-5">
                 <div className="space-y-2">
                   <label className="text-[11px] font-bold uppercase tracking-widest text-[#c4a7ff] ml-1">Email Address</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={credentials.email}
-                    onChange={handleChange}
-                    required
-                    placeholder="admin@portfolio.local"
-                    className="w-full rounded-xl bg-black/40 border border-white/10 px-5 py-4 text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-[#915EFF]/5 focus:ring-4 focus:ring-[#915EFF]/10 placeholder:text-white/20 text-sm"
-                  />
+                  <div className="relative group">
+                    <HiOutlineUser className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-[#915EFF] transition-colors" />
+                    <input
+                      type="email"
+                      name="email"
+                      value={credentials.email}
+                      onChange={handleChange}
+                      required
+                      placeholder="admin@portfolio.local"
+                      className="w-full rounded-xl bg-black/40 border border-white/10 pl-11 pr-5 py-4 text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-[#915EFF]/5 focus:ring-4 focus:ring-[#915EFF]/10 placeholder:text-white/20 text-sm"
+                    />
+                  </div>
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-[11px] font-bold uppercase tracking-widest text-[#c4a7ff] ml-1">Password</label>
-                  <input
-                    type="password"
-                    name="password"
-                    value={credentials.password}
-                    onChange={handleChange}
-                    required
-                    placeholder="••••••••"
-                    className="w-full rounded-xl bg-black/40 border border-white/10 px-5 py-4 text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-[#915EFF]/5 focus:ring-4 focus:ring-[#915EFF]/10 placeholder:text-white/20 text-sm"
-                  />
+                  <div className="relative group">
+                    <HiOutlineLockClosed className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-[#915EFF] transition-colors" />
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      value={credentials.password}
+                      onChange={handleChange}
+                      required
+                      placeholder="••••••••"
+                      className="w-full rounded-xl bg-black/40 border border-white/10 pl-11 pr-12 py-4 text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-[#915EFF]/5 focus:ring-4 focus:ring-[#915EFF]/10 placeholder:text-white/20 text-sm"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white transition-colors"
+                    >
+                      {showPassword ? <HiOutlineEyeOff size={18} /> : <HiOutlineEye size={18} />}
+                    </button>
+                  </div>
                 </div>
               </div>
 

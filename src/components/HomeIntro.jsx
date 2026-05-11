@@ -1,19 +1,20 @@
 /* eslint-disable react/prop-types */
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { HiOutlineCubeTransparent, HiOutlineLightningBolt, HiOutlineShieldCheck } from "react-icons/hi";
 import { usePortfolio } from "../context/PortfolioContext";
 import { SectionWrapper } from "../hoc";
 import { fadeIn } from "../Animation/motion";
 import { styles } from "../styles";
 
-const FeatureCard = ({ emoji, title, desc, index }) => (
+const FeatureCard = ({ icon: Icon, title, desc, index }) => (
   <motion.div
     variants={fadeIn("up", "spring", index * 0.1, 0.5)}
     whileHover={{ y: -5, scale: 1.01 }}
     className="premium-glass-card glass-reflection inner-glow p-6 h-full flex flex-col gap-4 group cursor-default border-white/5 hover:border-[#915EFF]/30 transition-all duration-500"
   >
     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-white/10 to-transparent flex items-center justify-center text-xl shadow-xl border border-white/10 group-hover:border-[#915EFF]/50 transition-all duration-500 inner-glow">
-      {emoji}
+      <Icon className="text-[#915EFF] group-hover:scale-110 transition-transform" />
     </div>
     <div>
       <h3 className="text-white text-base font-black mb-1 group-hover:text-[#915EFF] transition-colors tracking-tight">{title}</h3>
@@ -31,17 +32,17 @@ const HomeIntro = () => {
 
   const features = [
     {
-      emoji: "🏗️",
+      icon: HiOutlineCubeTransparent,
       title: "System Architect",
       desc: "Designing scalable, cloud-native ecosystems with modular architecture."
     },
     {
-      emoji: "⚡",
+      icon: HiOutlineLightningBolt,
       title: "Performance",
       desc: "Optimizing critical paths for sub-second latency and speed."
     },
     {
-      emoji: "💎",
+      icon: HiOutlineShieldCheck,
       title: "Quality",
       desc: "Delivering enterprise-grade, maintainable codebases and standards."
     }
@@ -88,7 +89,7 @@ const HomeIntro = () => {
               <div className="absolute inset-0 bg-[#915EFF]/10 rounded-full blur-[80px] animate-slow-ping" />
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
                  <div className="w-24 h-24 rounded-2xl bg-white/[0.02] backdrop-blur-3xl border border-white/10 flex items-center justify-center text-4xl shadow-2xl rotate-12 group-hover:rotate-0 transition-transform duration-700">
-                   💻
+                    <HiOutlineCubeTransparent className="text-[#915EFF] drop-shadow-[0_0_15px_rgba(145,94,255,0.5)]" />
                  </div>
               </div>
            </div>

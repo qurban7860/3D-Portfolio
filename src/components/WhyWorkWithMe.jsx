@@ -1,11 +1,12 @@
+/* eslint-disable react/prop-types */
 import { motion } from "framer-motion";
-import PropTypes from "prop-types";
+import { HiOutlineTruck, HiOutlineBadgeCheck, HiOutlineUserGroup } from "react-icons/hi";
 import { fadeIn, textVariant } from "../Animation/motion";
 import { SectionWrapper } from "../hoc";
 import { styles } from "../styles";
 
 /* ── Why Card ────────────────────────────────────────────────── */
-const WhyCard = ({ emoji, title, desc, delay }) => (
+const WhyCard = ({ icon: Icon, title, desc, delay }) => (
   <motion.div
     variants={fadeIn("up", "spring", delay, 0.4)}
     whileHover={{ y: -5, scale: 1.01 }}
@@ -14,7 +15,7 @@ const WhyCard = ({ emoji, title, desc, delay }) => (
     <div className="w-12 h-12 rounded-xl flex items-center justify-center text-xl
                     bg-white/5 border border-white/10 group-hover:border-[#915EFF]/50 
                     transition-all duration-500 backdrop-blur-sm shrink-0">
-      {emoji}
+      <Icon className="text-[#915EFF] group-hover:scale-110 transition-transform" />
     </div>
     <div>
       <h4 className="text-white font-black text-base group-hover:text-[#915EFF] transition-colors">{title}</h4>
@@ -23,18 +24,11 @@ const WhyCard = ({ emoji, title, desc, delay }) => (
   </motion.div>
 );
 
-WhyCard.propTypes = {
-  emoji: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  desc: PropTypes.string.isRequired,
-  delay: PropTypes.number.isRequired,
-};
-
 const WhyWorkWithMe = () => {
   const whyPoints = [
-    { emoji: "🚀", title: "Fast Delivery", desc: "Efficient development with rapid turnaround." },
-    { emoji: "🎯", title: "Quality Focus", desc: "High-quality, tested, and production-ready code." },
-    { emoji: "🤝", title: "Collaboration", desc: "Excellent communication and team coordination." },
+    { icon: HiOutlineTruck, title: "Fast Delivery", desc: "Efficient development with rapid turnaround." },
+    { icon: HiOutlineBadgeCheck, title: "Quality Focus", desc: "High-quality, tested, and production-ready code." },
+    { icon: HiOutlineUserGroup, title: "Collaboration", desc: "Excellent communication and team coordination." },
   ];
 
   return (

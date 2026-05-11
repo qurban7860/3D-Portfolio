@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { motion, AnimatePresence } from "framer-motion";
+import { HiOutlineArrowUp } from "react-icons/hi";
 
 const BackToTop = ({ scrollThreshold = 300 }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -33,18 +34,7 @@ const BackToTop = ({ scrollThreshold = 300 }) => {
                      hover:bg-[#915EFF]/30 hover:border-[#915EFF]/80
                      hover:shadow-[0_0_24px_rgba(145,94,255,0.4)] shadow-[inset_0_1px_1px_rgba(255,255,255,0.3)]"
         >
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="white"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M12 19V5M5 12l7-7 7 7" />
-          </svg>
+          <HiOutlineArrowUp className="text-white text-xl" />
         </motion.button>
       )}
     </AnimatePresence>

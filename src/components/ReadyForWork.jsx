@@ -1,16 +1,17 @@
 /* eslint-disable react/prop-types */
 import { motion } from "framer-motion";
+import { HiOutlineLightningBolt, HiOutlineCalendar, HiOutlineGlobe, HiOutlineBriefcase } from "react-icons/hi";
 import { usePortfolio } from "../context/PortfolioContext";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../Animation/motion";
 import { styles } from "../styles";
 
-const HiringPoint = ({ icon, title, index }) => (
+const HiringPoint = ({ icon: Icon, title, index }) => (
   <motion.div
     variants={fadeIn("right", "spring", index * 0.1, 0.5)}
     className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 hover:border-[#915EFF]/30 transition-all group"
   >
-    <span className="text-xl group-hover:scale-110 transition-transform">{icon}</span>
+    <Icon className="text-xl text-[#915EFF] group-hover:scale-110 transition-transform" />
     <h4 className="text-white text-[12px] font-bold leading-tight">{title}</h4>
   </motion.div>
 );
@@ -28,10 +29,10 @@ const ReadyForWork = () => {
   const availabilityStatus = contact.availabilityStatus || "Open for Work";
 
   const hiringPoints = [
-    { icon: "⚡", title: "24h Response" },
-    { icon: "📅", title: "Flexible" },
-    { icon: "🌍", title: "Remote Ready" },
-    { icon: "💼", title: "Professional" },
+    { icon: HiOutlineLightningBolt, title: "24h Response" },
+    { icon: HiOutlineCalendar, title: "Flexible" },
+    { icon: HiOutlineGlobe, title: "Remote Ready" },
+    { icon: HiOutlineBriefcase, title: "Professional" },
   ];
 
   const quickFacts = [

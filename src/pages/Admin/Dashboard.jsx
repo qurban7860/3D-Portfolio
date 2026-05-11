@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { HiOutlineExternalLink, HiOutlineLogout, HiOutlineChevronRight } from "react-icons/hi";
 import { useAuth } from "../../context/AuthContext";
 import ContentManager from "../../components/admin/ContentManager";
 import { adminSchema } from "../../constants/adminSchema";
@@ -62,16 +63,14 @@ const DashboardPage = () => {
                 className="group flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-white/10 hover:border-white/20 hover:shadow-[0_0_15px_rgba(255,255,255,0.05)]"
               >
                 <span>Live Site</span>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-secondary group-hover:text-white transition-colors" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
-                  <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
-                </svg>
+                <HiOutlineExternalLink className="text-secondary group-hover:text-white transition-colors" />
               </button>
               <button
                 type="button"
                 onClick={() => logout()}
-                className={`${styles.glassButtonPremium} px-6 py-2.5 text-sm`}
+                className={`${styles.glassButtonPremium} px-6 py-2.5 text-sm flex items-center gap-2`}
               >
+                <HiOutlineLogout />
                 Sign Out
               </button>
             </div>
@@ -112,7 +111,7 @@ const DashboardPage = () => {
                     <span className="relative z-10 w-full flex justify-between items-center">
                       {adminSchema[key].title}
                       {activeSection === key && (
-                        <span className="text-[#56ccf2] text-lg leading-none">→</span>
+                        <HiOutlineChevronRight className="text-[#56ccf2] text-lg transition-transform group-hover:translate-x-1" />
                       )}
                     </span>
                   </motion.button>

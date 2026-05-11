@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { HiOutlinePlus, HiOutlineX } from "react-icons/hi";
 import { useAuth } from "../../context/AuthContext";
 import {
   createAdminItem,
@@ -152,7 +153,7 @@ const ContentManager = ({ section }) => {
     const itemName = item.name || item.title || item.degree || "this item";
     
     setConfirmState({
-      isOpen: true,
+      isOpen: false,
       id,
       title: `Delete ${schema.label}?`,
       message: `Are you sure you want to permanently remove "${itemName}"? This action cannot be undone.`
@@ -206,9 +207,9 @@ const ContentManager = ({ section }) => {
             setSelectedItem(null);
             setIsFormOpen(true);
           }}
-          className={`${styles.glassButtonPremium} px-4 sm:px-5 py-2.5 text-sm`}
+          className={`${styles.glassButtonPremium} px-4 sm:px-5 py-2.5 text-sm flex items-center gap-2`}
         >
-          <span className="text-lg leading-none">+</span>
+          <HiOutlinePlus className="text-lg" />
           New Entry
         </button>
       </div>
@@ -259,7 +260,7 @@ const ContentManager = ({ section }) => {
                 }}
                 className="absolute top-5 right-5 z-10 w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-colors"
               >
-                ✕
+                <HiOutlineX />
               </button>
               <div className="p-1">
                 <ItemForm

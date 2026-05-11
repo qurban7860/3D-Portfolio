@@ -3,23 +3,28 @@
 import { useState, useEffect, useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { FaGithub, FaLinkedinIn } from "react-icons/fa";
+import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { styles } from "../styles";
 import { usePortfolio } from "../context/PortfolioContext";
-import { menu, close, github, phone, linkedin } from "../assets";
 import resumePdf from "../assets/resume/Resume_Mern.pdf";
 import logo from "/logo.svg";
 
-const ContactCard = ({ title, icon, link, url }) => {
-  const href = link ?? url;
-  return href ? (
-    <a href={href} target="_blank" rel="noopener noreferrer" title={title} className="group">
-      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/5 backdrop-blur-md border border-white/10 rounded-full flex justify-center items-center transition-all duration-300 ease-in-out transform group-hover:scale-110 group-hover:bg-[#915EFF]/10 group-hover:border-[#915EFF]/40 group-hover:shadow-[0_0_20px_rgba(145,94,255,0.3)]">
-        <img src={icon} alt={title} className="w-5 h-5 sm:w-6 sm:h-6 object-contain rounded-full opacity-70 group-hover:opacity-100 transition-opacity" />
-      </div>
-    </a>
-  ) : null;
-};
+/* ── Contact Link (Socials) ─────────────────────────────────── */
+const SocialIcon = ({ title, url, icon: Icon }) => (
+  <a 
+    href={url} 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    title={title}
+    className="relative group p-2 rounded-xl hover:bg-white/5 transition-all duration-300"
+  >
+    <Icon className="w-5 h-5 text-white/50 group-hover:text-white group-hover:scale-110 transition-all duration-300" />
+    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-[#915EFF] group-hover:w-1/2 transition-all duration-300" />
+  </a>
+);
 
+/* ── Resume Action Button ───────────────────────────────────── */
 const ResumeButton = ({ isMobile = false }) => {
   const [showOptions, setShowOptions] = useState(false);
 
@@ -30,37 +35,27 @@ const ResumeButton = ({ isMobile = false }) => {
       onMouseLeave={() => !isMobile && setShowOptions(false)}
     >
       <motion.button
-        whileHover={{ scale: 1.05 }}
+        whileHover={{ y: -2 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => isMobile ? setShowOptions(!showOptions) : window.open(resumePdf, "_blank")}
-        className={`flex items-center gap-2 px-4 py-2 backdrop-blur-md bg-[#915EFF]/15 border border-[#915EFF]/40 text-white font-semibold rounded-lg hover:bg-[#915EFF]/25 hover:border-[#915EFF]/80 hover:shadow-[0_0_20px_rgba(145,94,255,0.3)] transition-all duration-300 text-[13px] ${isMobile ? 'w-full justify-center' : ''}`}
+        className={`flex items-center gap-2 px-5 py-2 glass-badge-hero border border-white/10 text-white font-bold rounded-full hover:border-[#915EFF]/50 hover:shadow-[0_0_20px_rgba(145,94,255,0.2)] transition-all duration-300 text-[12px] uppercase tracking-wider ${isMobile ? 'w-full justify-center' : ''}`}
       >
-        <span className="text-[14px]">📄</span>
         <span>Resume</span>
-        <span className={`text-[10px] opacity-60 transition-transform duration-300 ${showOptions ? 'rotate-180' : ''}`}>▼</span>
+        <span className={`text-[10px] opacity-40 transition-transform duration-300 ${showOptions ? 'rotate-180' : ''}`}>▼</span>
       </motion.button>
 
       <AnimatePresence>
         {showOptions && (
           <motion.div
-            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            initial={{ opacity: 0, y: 10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.95 }}
-            className={`${isMobile ? 'relative mt-2 w-full' : 'absolute top-full right-0 mt-2 w-40'} glass-dark rounded-xl overflow-hidden shadow-2xl z-[60] border border-white/10`}
+            exit={{ opacity: 0, y: 10, scale: 0.95 }}
+            className={`${isMobile ? 'relative mt-2 w-full' : 'absolute top-full right-0 mt-3 w-40'} glass-dark rounded-2xl overflow-hidden shadow-2xl z-[60] border border-white/10 p-1`}
           >
-            <a 
-              href={resumePdf} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-3 px-4 py-3 text-white hover:bg-[#915EFF]/20 transition-colors text-[13px]"
-            >
+            <a href={resumePdf} target="_blank" rel="noopener noreferrer" className="flex items-center px-4 py-2.5 text-white hover:bg-white/5 rounded-xl transition-colors text-[13px]">
               👁️ View PDF
             </a>
-            <a 
-              href={resumePdf} 
-              download="Resume_Mern.pdf"
-              className="flex items-center gap-3 px-4 py-3 text-white hover:bg-[#915EFF]/20 transition-colors text-[13px] border-t border-white/5"
-            >
+            <a href={resumePdf} download="Resume_Mern.pdf" className="flex items-center px-4 py-2.5 text-white hover:bg-white/5 rounded-xl transition-colors text-[13px]">
               ⬇️ Download
             </a>
           </motion.div>
@@ -70,97 +65,74 @@ const ResumeButton = ({ isMobile = false }) => {
   );
 };
 
-const NavLinkItem = ({ nav, active, onLinkClick }) => {
-  
-  return (
-    <li
-      className={`${
-        active === nav.title ? "text-white border-b-2 border-[#915EFF] pb-1" : "text-secondary"
-      } hover:text-white font-medium cursor-pointer transition-all duration-300`}
-      style={{ fontSize: "clamp(13px, 1.1vw, 18px)" }}
+/* ── Individual Nav Link ───────────────────────────────────── */
+const NavLinkItem = ({ nav, active, onLinkClick }) => (
+  <li className="relative group">
+    <Link 
+      to={nav.path || `#${nav.id}`} 
+      onClick={() => onLinkClick(nav.title)}
+      className={`${active === nav.title ? "text-white" : "text-secondary"} font-bold text-[13px] uppercase tracking-[0.1em] hover:text-white transition-colors duration-300`}
     >
-      {nav.path ? (
-        <Link 
-          to={nav.path} 
-          onClick={() => {
-            onLinkClick(nav.title);
-            window.scrollTo(0, 0);
-          }}
-        >
-          {nav.title}
-        </Link>
-      ) : (
-        <a href={`#${nav.id}`} onClick={() => onLinkClick(nav.title)}>{nav.title}</a>
-      )}
-    </li>
-  );
-};
+      {nav.title}
+    </Link>
+    <div className={`absolute -bottom-1 left-0 h-[2px] bg-[#915EFF] transition-all duration-500 ${active === nav.title ? "w-full" : "w-0 group-hover:w-1/2"}`} />
+  </li>
+);
 
-const MobileMenu = ({ toggle, setToggle, active, navLinks: links, onNavClick, contactLinks }) => {
-  return (
-  <div
-    className={`${!toggle ? "hidden" : "flex"} p-6 black-gradient absolute top-0 right-0 w-[260px] min-h-screen max-h-screen overflow-y-auto z-50 flex-col shadow-2xl transition-all duration-300 border-l border-white/10`}
-  >
-    <div className="flex justify-end w-full">
-      <img
-        src={close}
-        alt="close"
-        className="w-5 h-5 object-contain cursor-pointer hover:scale-110 transition-transform"
-        onClick={() => setToggle(false)}
-      />
-    </div>
-
-    <ul className="list-none flex flex-col gap-6 mt-8">
-      {links.map((nav) => (
-        <li
-          key={nav.id || nav.title}
-          className={`font-poppins font-medium cursor-pointer text-[18px] ${
-            active === nav.title ? "text-[#915EFF]" : "text-secondary"
-          }`}
-        >
-          {nav.path ? (
-            <Link 
-              to={nav.path} 
-              onClick={() => {
-                onNavClick(nav.title);
-                window.scrollTo(0, 0);
-              }}
-            >
-              {nav.title}
-            </Link>
-          ) : (
-            <a href={`#${nav.id}`} onClick={() => onNavClick(nav.title)}>{nav.title}</a>
-          )}
-        </li>
-      ))}
-      <li className="pt-4 border-t border-tertiary">
-        <ResumeButton isMobile={true} />
-      </li>
-    </ul>
-
-    <div className="mt-auto flex flex-col gap-4 border-t border-tertiary pt-6 pb-4">
-      <div className="flex gap-4">
-        {contactLinks.map((link) => (
-          <ContactCard key={link.title} {...link} />
-        ))}
-      </div>
-      <Link 
-        to="/admin" 
-        onClick={() => setToggle(false)}
-        className="flex items-center justify-center gap-2 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-[11px] text-secondary hover:text-white hover:bg-white/10 hover:border-[#915EFF]/40 transition-all duration-300 uppercase tracking-[0.2em] font-bold mt-4"
+/* ── Mobile Navigation Menu ───────────────────────────────── */
+const MobileMenu = ({ toggle, setToggle, active, navLinks, onNavClick, socialLinks }) => (
+  <AnimatePresence>
+    {toggle && (
+      <motion.div
+        initial={{ opacity: 0, x: 100 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: 100 }}
+        className="fixed inset-0 z-50 lg:hidden"
       >
-        🔐 Admin Access
-      </Link>
-    </div>
-  </div>
-  );
-};
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setToggle(false)} />
+        <div className="absolute top-0 right-0 w-[280px] h-full glass-dark border-l border-white/10 flex flex-col p-8 pt-20">
+           <button onClick={() => setToggle(false)} className="absolute top-8 right-8 text-white/40 hover:text-white transition-transform duration-300">
+             <HiX size={28} />
+           </button>
+           
+           <ul className="flex flex-col gap-8">
+              {navLinks.map((nav) => (
+                <li key={nav.title} className="text-xl font-black">
+                  <Link 
+                    to={nav.path} 
+                    onClick={() => onNavClick(nav.title)}
+                    className={active === nav.title ? "text-[#915EFF]" : "text-white"}
+                  >
+                    {nav.title}
+                  </Link>
+                </li>
+              ))}
+              <li className="pt-4 border-t border-white/5">
+                <ResumeButton isMobile={true} />
+              </li>
+           </ul>
+
+           <div className="mt-auto flex flex-col gap-6">
+              <div className="flex gap-4">
+                 {socialLinks.map((link) => (
+                   <SocialIcon key={link.title} {...link} />
+                 ))}
+              </div>
+              <Link to="/admin" onClick={() => setToggle(false)} className="text-[11px] uppercase tracking-widest text-white/30 hover:text-[#915EFF] transition-colors">
+                🔐 System Access
+              </Link>
+           </div>
+        </div>
+      </motion.div>
+    )}
+  </AnimatePresence>
+);
 
 const Navbar = () => {
   const { data } = usePortfolio();
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
-  const SECTION_OFFSET = 200;
+  const location = useLocation();
 
   const navLinks = [
     { id: "about", title: "About", path: "/about" },
@@ -171,109 +143,64 @@ const Navbar = () => {
   ];
 
   const contactInfo = data?.settings?.contact ?? {};
-  const CONTACT_LINKS = useMemo(
-    () => [
-      {
-        title: "GitHub",
-        icon: github,
-        url: contactInfo.github || "https://github.com/qurban7860",
-      },
-      {
-        title: "Phone",
-        icon: phone,
-        url: contactInfo.phone ? `tel:${contactInfo.phone}` : "tel:+923085651015",
-      },
-      {
-        title: "LinkedIn",
-        icon: linkedin,
-        url: contactInfo.linkedin || "https://www.linkedin.com/in/qurban015",
-      },
-    ],
-    [contactInfo.github, contactInfo.phone, contactInfo.linkedin]
-  );
-
-  const location = useLocation();
+  const SOCIAL_LINKS = useMemo(() => [
+    { title: "GitHub", icon: FaGithub, url: contactInfo.github || "https://github.com/qurban7860" },
+    { title: "LinkedIn", icon: FaLinkedinIn, url: contactInfo.linkedin || "https://www.linkedin.com/in/qurban015" },
+  ], [contactInfo]);
 
   useEffect(() => {
-    const currentPath = location.pathname;
-    const activeNav = navLinks.find(nav => nav.path === currentPath);
-    if (activeNav) {
-      setActive(activeNav.title);
-    }
-  }, [navLinks, location]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Only handle scroll if we are on the home page
-      if (location.pathname !== "/") return;
-
-      navLinks.forEach((nav) => {
-        const section = document.getElementById(nav.id);
-        if (section) {
-          const sectionTop = section.offsetTop - SECTION_OFFSET;
-          if (window.scrollY >= sectionTop && window.scrollY < sectionTop + section.offsetHeight) {
-            setActive(nav.title);
-          }
-        }
-      });
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [navLinks, location]);
+    const activeNav = navLinks.find(nav => nav.path === location.pathname);
+    if (activeNav) setActive(activeNav.title);
+  }, [location.pathname]);
 
   return (
-    <nav className={`${styles.paddingX} w-full flex items-center py-4 fixed top-0 z-50 nav-glass relative`}>
-      {/* Premium thin gradient line at bottom */}
-      <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#915EFF]/50 to-transparent opacity-50" />
+    <nav className="w-full h-16 fixed top-0 z-[100] transition-all duration-500 nav-glass">
+      {/* Bottom accent line */}
+      <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       
-      <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
+      <div className={`${styles.paddingX} h-full max-w-7xl mx-auto flex justify-between items-center`}>
         
-        <div className="hidden lg:flex gap-3 items-center">
-          {CONTACT_LINKS.map((link) => (
-            <ContactCard key={link.title} {...link} />
-          ))}
-        </div>
-
-        <div className="flex items-center gap-2">
-          <Link to="/" className="flex items-center gap-2 outline-none hover:opacity-80 transition-opacity" onClick={() => { window.scrollTo(0, 0); setActive(""); }}>
-            <img src={logo} alt="logo" className="w-8 h-8 sm:w-9 sm:h-9 object-contain" />
-            <p className="text-white font-bold flex items-center" style={{ fontSize: "clamp(14px, 1.6vw, 20px)" }}>
-              Software Engineer
-            </p>
-          </Link>
-          <Link 
-            to="/admin" 
-            className="flex items-center gap-1 opacity-20 hover:opacity-100 transition-all duration-300 p-1 ml-2 border border-white/10 rounded px-2 hover:bg-[#915EFF]/10" 
-            title="Admin Dashboard"
-          >
-            <span className="text-[10px]">🔐 Admin</span>
-          </Link>
-        </div>
-
-        <ul 
-          className="list-none hidden md:flex flex-row items-center" 
-          style={{ gap: "clamp(10px, 2.5vw, 40px)" }}
+        {/* ── Branding ── */}
+        <Link 
+          to="/" 
+          className="flex items-center gap-3 group"
+          onClick={() => { window.scrollTo(0, 0); setActive(""); }}
         >
-          {navLinks.map((nav) => (
-            <NavLinkItem 
-                key={nav.id} 
-                nav={nav} 
-                active={active} 
-                onLinkClick={(t) => { setActive(t); setToggle(false); }} 
-            />
-          ))}
-          <li className="ml-2">
-            <ResumeButton />
-          </li>
-        </ul>
+          <div className="w-10 h-10 rounded-xl glass-badge-hero flex items-center justify-center border-white/10 group-hover:border-[#915EFF]/50 transition-all duration-500">
+            <img src={logo} alt="logo" className="w-6 h-6 object-contain" />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-white font-black text-[15px] tracking-tight leading-none">QURBAN</span>
+            <span className="text-secondary text-[10px] font-bold tracking-[0.2em] uppercase mt-1">Engineer</span>
+          </div>
+        </Link>
 
-        <div className="md:hidden flex items-center">
-          <img
-            src={toggle ? close : menu}
-            alt="menu"
-            className="w-6 h-6 object-contain cursor-pointer hover:scale-110 transition-transform"
-            onClick={() => setToggle(!toggle)}
-          />
+        {/* ── Desktop Navigation ── */}
+        <div className="hidden lg:flex items-center gap-12">
+          <ul className="flex items-center gap-8">
+            {navLinks.map((nav) => (
+              <NavLinkItem key={nav.title} nav={nav} active={active} onLinkClick={(t) => setActive(t)} />
+            ))}
+          </ul>
+
+          <div className="flex items-center gap-6 border-l border-white/10 pl-8 h-8">
+            <div className="flex gap-2">
+              {SOCIAL_LINKS.map((link) => (
+                <SocialIcon key={link.title} {...link} />
+              ))}
+            </div>
+            <ResumeButton />
+          </div>
+        </div>
+
+        {/* ── Mobile Trigger ── */}
+        <div className="lg:hidden flex items-center">
+          <button 
+            onClick={() => setToggle(true)}
+            className="w-10 h-10 rounded-xl glass-badge-hero flex items-center justify-center border-white/10 text-white/70 hover:text-white transition-colors"
+          >
+            <HiMenuAlt3 size={24} />
+          </button>
         </div>
 
         <MobileMenu
@@ -282,7 +209,7 @@ const Navbar = () => {
           active={active}
           navLinks={navLinks}
           onNavClick={(t) => { setActive(t); setToggle(false); }}
-          contactLinks={CONTACT_LINKS}
+          socialLinks={SOCIAL_LINKS}
         />
       </div>
     </nav>

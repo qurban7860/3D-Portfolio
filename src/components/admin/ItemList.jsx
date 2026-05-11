@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
 import { Reorder } from "framer-motion";
+import { HiOutlinePencilAlt, HiOutlineTrash, HiOutlineDocumentText, HiOutlineFolderOpen } from "react-icons/hi";
+import { MdDragIndicator } from "react-icons/md";
 
 const getItemSummary = (item) => {
   return item.name || item.title || item.degree || `Item ${item.id}`;
@@ -9,12 +11,14 @@ const getSubtitle = (item) => {
   return item.description || item.companyName || item.instituteName || item.url || "No description provided.";
 };
 
-const ItemList = ({ items, onEdit, onDelete, onReorder, sectionTitle, label }) => {
+const ItemList = ({ items, onEdit, onDelete, onReorder, label }) => {
   return (
     <div className="flex flex-col gap-4">
       {items.length === 0 ? (
         <div className="rounded-3xl border border-dashed border-white/10 bg-black-200/20 p-8 sm:p-12 text-center">
-          <div className="text-3xl sm:text-4xl mb-4 opacity-50 animate-float">📂</div>
+          <div className="flex justify-center mb-4 opacity-50 animate-float text-4xl">
+             <HiOutlineFolderOpen />
+          </div>
           <p className="text-secondary font-medium text-sm sm:text-base">Your {label.toLowerCase()} collection is empty.</p>
           <p className="text-[11px] text-secondary/60 mt-1">Start by creating your first entry using the new entry button.</p>
         </div>
@@ -35,10 +39,8 @@ const ItemList = ({ items, onEdit, onDelete, onReorder, sectionTitle, label }) =
             >
               <div className="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
                 <div className="flex items-center gap-4 overflow-hidden">
-                  <div className="flex flex-col items-center justify-center gap-[3px] opacity-20 group-hover:opacity-100 transition-opacity shrink-0">
-                    <div className="h-1 w-1 rounded-full bg-[#c4a7ff]" />
-                    <div className="h-1 w-1 rounded-full bg-[#c4a7ff]" />
-                    <div className="h-1 w-1 rounded-full bg-[#c4a7ff]" />
+                  <div className="opacity-20 group-hover:opacity-100 transition-opacity shrink-0">
+                    <MdDragIndicator className="text-xl text-[#c4a7ff]" />
                   </div>
                   
                   {item.imageUrl || item.iconUrl || item.icon ? (
@@ -51,8 +53,8 @@ const ItemList = ({ items, onEdit, onDelete, onReorder, sectionTitle, label }) =
                       />
                     </div>
                   ) : (
-                    <div className="h-12 w-12 shrink-0 rounded-xl bg-gradient-to-br from-white/10 to-transparent border border-white/10 flex items-center justify-center text-xl group-hover:border-[#915EFF]/30 transition-colors">
-                      📄
+                    <div className="h-12 w-12 shrink-0 rounded-xl bg-gradient-to-br from-white/10 to-transparent border border-white/10 flex items-center justify-center text-2xl group-hover:border-[#915EFF]/30 transition-colors">
+                      <HiOutlineDocumentText />
                     </div>
                   )}
                   
@@ -82,9 +84,7 @@ const ItemList = ({ items, onEdit, onDelete, onReorder, sectionTitle, label }) =
                     className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 text-white transition-all hover:bg-[#915EFF]/20 hover:text-[#915EFF] hover:border-[#915EFF]/40 border border-transparent"
                     title="Edit Item"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                      <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                    </svg>
+                    <HiOutlinePencilAlt size={18} />
                   </button>
                   
                   <button
@@ -93,9 +93,7 @@ const ItemList = ({ items, onEdit, onDelete, onReorder, sectionTitle, label }) =
                     className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 text-white transition-all hover:bg-red-500/20 hover:text-red-400 hover:border-red-500/40 border border-transparent"
                     title="Delete Item"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
-                    </svg>
+                    <HiOutlineTrash size={18} />
                   </button>
                 </div>
               </div>

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { styles } from "../styles";
 import ComputersCanvas from "./canvas/Computers";
 import { usePortfolio } from "../context/PortfolioContext";
@@ -8,95 +9,122 @@ const Hero = () => {
   const { data } = usePortfolio();
   const navigate = useNavigate();
   const hero = data?.settings?.hero ?? {};
+  const contact = data?.settings?.contact ?? {};
   const headline = hero.headline || "Hi, I'm Qurban";
-  const subtitle =
-    hero.subtitle ||
-    "Turning your ideas into powerful web and mobile solutions with clean code and smooth user experiences.";
+  const subtitle = hero.subtitle || "Building high-performance web applications with precision.";
 
   return (
-    <section className="relative h-[calc(100vh-4rem)]">
-      {/* Background & Overlays */}
-      <div className="absolute inset-0 bg-hero-pattern bg-cover bg-no-repeat bg-center opacity-40 z-0 mix-blend-overlay" />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/50 to-primary z-10" />
+    <section className="relative w-full h-[calc(100vh-4rem)] mx-auto overflow-hidden">
+      {/* ── Advanced Background Layers ── */}
+      <div className="absolute inset-0 bg-[#050816] z-0" />
+      <div className="absolute inset-0 bg-hero-pattern bg-cover bg-no-repeat bg-center opacity-20 z-0 mix-blend-overlay" />
+      <div className="absolute inset-0 bg-dot-pattern opacity-10 z-0" />
+      
+      {/* Immersive Mesh Gradients */}
+      <div className="absolute top-[-10%] left-[-5%] w-[600px] h-[600px] bg-[#915EFF]/10 rounded-full blur-[120px] animate-slow-ping z-0" />
+      <div className="absolute bottom-[10%] right-[-5%] w-[500px] h-[500px] bg-[#56ccf2]/5 rounded-full blur-[100px] animate-pulse z-0" />
 
-      {/* Ambient Animated Glows */}
-      <div className="glow-orb top-[10%] left-[10%] w-[400px] h-[400px] bg-[#915EFF]/15 animate-slow-ping" />
-      <div className="glow-orb bottom-[20%] right-[10%] w-[350px] h-[350px] bg-[#56ccf2]/10 animate-pulse" />
+      {/* ── Main Content Container ── */}
+      <div className={`relative z-20 max-w-7xl mx-auto ${styles.paddingX} h-full flex flex-col lg:flex-row items-center justify-center gap-10 pt-4`}>
+        
+        {/* Left Section: Branding & CTA */}
+        <div className="flex-1 flex flex-col gap-6 w-full">
+          {/* Status Badge */}
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center gap-3 px-4 py-1.5 rounded-full glass-badge-hero w-fit"
+          >
+            <span className="flex h-2 w-2 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+            </span>
+            <span className="text-white/60 text-[11px] font-black uppercase tracking-[0.2em]">Available for projects</span>
+          </motion.div>
 
-      <div className={`relative z-20 max-w-7xl mx-auto ${styles.paddingX} h-full flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-12 pt-20`}>
-        {/* Left Content */}
-        <div className="flex flex-row items-start gap-6 flex-1 w-full mt-10 lg:mt-0">
-          <div className="flex flex-col justify-center items-center mt-5">
-            <div className="w-5 h-5 rounded-full bg-[#915EFF] shadow-[0_0_25px_rgba(145,94,255,0.9)]" />
-            <div className="w-1 sm:h-80 h-40 bg-gradient-to-b from-[#915EFF] via-[#915EFF]/50 to-transparent rounded-full" />
-          </div>
-
-          <div className="flex flex-col gap-8 w-full">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
+          <div className="flex flex-col gap-5">
+            <motion.h1 
+              initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
+              className="text-white font-black lg:text-[68px] sm:text-[52px] text-[38px] leading-[1.1] tracking-tighter"
             >
-              <h1 className={`${styles.heroHeadText} text-white`}>
-                {headline.split(" ").map((word, i) => (
-                  <span
-                    key={i}
-                    className={word === "Qurban" ? "text-gradient-shimmer inline-block" : ""}
-                  >
-                    {word}{" "}
-                  </span>
-                ))}
-              </h1>
-              
-              <div className="mt-6 relative max-w-xl group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-[#915EFF]/20 to-[#56ccf2]/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition duration-1000" />
-                <p className="relative z-10 text-secondary font-medium lg:text-[20px] sm:text-[18px] text-[15px] leading-relaxed p-6 rounded-3xl premium-glass border border-white/10 shadow-2xl">
-                   {subtitle}
-                </p>
-              </div>
-            </motion.div>
+              {headline.split(" ").map((word, i) => (
+                <span key={i} className={word === "Qurban" ? "text-gradient-shimmer" : ""}>
+                  {word}{" "}
+                </span>
+              ))}
+            </motion.h1>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.8 }}
-              className="flex flex-row flex-nowrap gap-4 z-30"
+            <motion.p 
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-secondary font-medium lg:text-[18px] text-[15px] max-w-xl leading-relaxed opacity-80"
             >
-              <button
-                onClick={() => navigate("/portfolio")}
-                className={`${styles.glassButtonPremium} px-6 py-3 text-[14px] whitespace-nowrap shadow-xl`}
-              >
-                🚀 Portfolio
-              </button>
-              <button
-                onClick={() => navigate("/contact")}
-                className={`${styles.outlineButton} px-6 py-3 text-[14px] whitespace-nowrap shadow-lg`}
-              >
-                🤝 Contact
-              </button>
-            </motion.div>
+              {subtitle}
+            </motion.p>
           </div>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="flex flex-row items-center gap-5 mt-4"
+          >
+            <button
+              onClick={() => navigate("/portfolio")}
+              className={`${styles.glassButtonPremium} px-8 py-3.5 text-[14px] shadow-2xl shadow-purple-500/20`}
+            >
+              View Work
+            </button>
+            <button
+              onClick={() => navigate("/contact")}
+              className={`${styles.outlineButton} px-8 py-3.5 text-[14px] shadow-xl`}
+            >
+              Contact
+            </button>
+            
+            {/* Quick Socials */}
+            <div className="flex items-center gap-4 ml-4 border-l border-white/10 pl-6 h-10">
+               {contact.linkedin && (
+                 <a href={contact.linkedin} target="_blank" rel="noreferrer" className="text-white/40 hover:text-[#915EFF] transition-colors">
+                   <FaLinkedinIn size={20} />
+                 </a>
+               )}
+               {contact.github && (
+                 <a href={contact.github} target="_blank" rel="noreferrer" className="text-white/40 hover:text-white transition-colors">
+                   <FaGithub size={20} />
+                 </a>
+               )}
+            </div>
+          </motion.div>
         </div>
 
-        {/* Right 3D Content */}
-        <div className="w-full lg:flex-[1.2] h-[40vh] sm:h-[50vh] lg:h-[85vh] relative z-10 flex items-center justify-center">
-           <ComputersCanvas />
-           
-           {/* Mobile Scroll Hint */}
-           <div className="absolute bottom-10 w-full flex justify-center items-center lg:hidden">
-              <div className="w-[35px] h-[64px] rounded-3xl border-4 border-secondary flex justify-center items-start p-2 opacity-30">
-                <motion.div
-                  animate={{ y: [0, 24, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity, repeatType: "loop" }}
-                  className="w-3 h-3 rounded-full bg-secondary mb-1"
-                />
-              </div>
-           </div>
+        {/* Right Section: 3D Visualization */}
+        <div className="flex-1 w-full h-[50vh] lg:h-[80vh] relative z-10">
+          <ComputersCanvas />
+          
+          {/* Subtle Decorative Elements */}
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-[#915EFF]/30 to-transparent" />
         </div>
       </div>
+
+      {/* ── Scroll Indicator (Desktop only) ── */}
+      <div className="absolute bottom-5 w-full hidden lg:flex justify-center items-center">
+        <a href="#about">
+          <div className="w-[28px] h-[48px] rounded-3xl border-2 border-white/10 flex justify-center items-start p-1.5 backdrop-blur-sm">
+            <motion.div
+              animate={{ y: [0, 16, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, repeatType: "loop" }}
+              className="w-1.5 h-1.5 rounded-full bg-[#915EFF]"
+            />
+          </div>
+        </a>
+      </div>
       
-      {/* Bottom Gradient Fade - Reduced for tighter transition */}
-      <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-primary to-transparent z-10" />
+      {/* Global Transition Gradient */}
+      <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-primary to-transparent z-10" />
     </section>
   );
 };

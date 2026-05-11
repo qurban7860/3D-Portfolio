@@ -2,6 +2,7 @@ export const adminSchema = {
   projects: {
     title: "Projects",
     label: "Project",
+    icon: "🚀",
     fields: [
       { name: "name", label: "Project Name", type: "text", required: true },
       { name: "description", label: "Description", type: "textarea", required: true },
@@ -15,6 +16,7 @@ export const adminSchema = {
   experiences: {
     title: "Experience",
     label: "Experience",
+    icon: "💼",
     fields: [
       { name: "title", label: "Role / Title", type: "text", required: true },
       { name: "companyName", label: "Company Name", type: "text", required: true },
@@ -29,6 +31,7 @@ export const adminSchema = {
   educations: {
     title: "Education",
     label: "Education Entry",
+    icon: "🎓",
     fields: [
       { name: "degree", label: "Degree", type: "text", required: true },
       { name: "instituteName", label: "Institute Name", type: "text", required: true },
@@ -41,6 +44,7 @@ export const adminSchema = {
   technologies: {
     title: "Technologies",
     label: "Technology",
+    icon: "⚡",
     fields: [
       { name: "name", label: "Technology Name", type: "text", required: true },
       { name: "iconUrl", label: "Icon URL", type: "text", required: true },
@@ -50,6 +54,7 @@ export const adminSchema = {
   services: {
     title: "Services",
     label: "Service",
+    icon: "🛠️",
     fields: [
       { name: "title", label: "Service Title", type: "text", required: true },
       { name: "description", label: "Description", type: "textarea", required: true },
@@ -61,6 +66,7 @@ export const adminSchema = {
   testimonials: {
     title: "Testimonials",
     label: "Testimonial",
+    icon: "💬",
     fields: [
       { name: "testimonial", label: "Testimonial Text", type: "textarea", required: true },
       { name: "name", label: "Name", type: "text", required: true },
@@ -71,6 +77,7 @@ export const adminSchema = {
   socials: {
     title: "Social Links",
     label: "Social Link",
+    icon: "🌐",
     fields: [
       { name: "title", label: "Name", type: "text", required: true },
       { name: "url", label: "URL", type: "text", required: true },
@@ -81,6 +88,7 @@ export const adminSchema = {
   certifications: {
     title: "Certifications",
     label: "Certification",
+    icon: "📜",
     fields: [
       { name: "title", label: "Certification Title", type: "text", required: true },
       { name: "issuer", label: "Issuer / Organization", type: "text", required: true },
@@ -92,6 +100,7 @@ export const adminSchema = {
   stats: {
     title: "Quick Stats",
     label: "Stat Card",
+    icon: "📊",
     fields: [
       { name: "stat", label: "Statistic (e.g. 50+)", type: "text", required: true },
       { name: "label", label: "Label (e.g. Projects)", type: "text", required: true },

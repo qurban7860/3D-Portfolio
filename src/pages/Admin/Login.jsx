@@ -60,17 +60,18 @@ const LoginPage = () => {
       >
         <Tilt options={{ max: 10, scale: 1.01, speed: 400 }}>
           <div 
-            className="rounded-[2.5rem] p-10 sm:p-12 relative overflow-hidden premium-glass-card shadow-2xl group"
+            className={`${styles.glassCard} p-10 sm:p-12 relative overflow-hidden group`}
           >
             {/* Inner ambient glow */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-32 bg-[#915EFF]/20 blur-3xl rounded-full pointer-events-none" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-32 bg-[#915EFF]/15 blur-3xl rounded-full pointer-events-none" />
 
             <div className="mb-10 text-center relative z-10">
-              <div className="mx-auto mb-6 h-20 w-20 rounded-[2rem] bg-gradient-to-br from-[#915EFF] to-[#56ccf2] flex items-center justify-center text-white text-4xl shadow-[0_0_30px_rgba(145,94,255,0.4)] border border-white/20 group-hover:rotate-[10deg] transition-transform duration-700">
-                <HiOutlineShieldCheck />
+              <div className="mx-auto mb-6 h-20 w-20 rounded-[2rem] bg-white/5 border border-white/10 flex items-center justify-center text-white text-4xl shadow-xl group-hover:border-[#915EFF]/40 transition-all duration-700 relative overflow-hidden">
+                <div className="absolute inset-0 bg-[#915EFF]/5 group-hover:bg-[#915EFF]/10 transition-colors" />
+                <HiOutlineShieldCheck className="relative z-10" />
               </div>
-              <h1 className="text-4xl font-black text-white tracking-tight leading-none">Admin <span className="text-gradient">Gate</span></h1>
-              <p className="mt-4 text-secondary text-[13px] font-black uppercase tracking-[0.2em] opacity-60">Authorization Required</p>
+              <h1 className="text-3xl font-bold text-white tracking-tight">Admin Gate</h1>
+              <p className="mt-3 text-secondary text-[14px] font-medium opacity-60">Authorize to access core system</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
@@ -79,7 +80,7 @@ const LoginPage = () => {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                 >
-                  <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold text-center">
+                  <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 text-[13px] font-medium text-center">
                     {localError || error}
                   </div>
                 </motion.div>
@@ -87,7 +88,7 @@ const LoginPage = () => {
               
               <div className="space-y-6">
                 <div className="space-y-3">
-                  <label className="text-[10px] font-black uppercase tracking-[0.4em] text-[#c4a7ff] ml-1 opacity-80">Access ID</label>
+                  <label className="text-[13px] font-semibold text-secondary ml-1 opacity-80">Access ID</label>
                   <div className="relative group/input">
                     <HiOutlineUser className="absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within/input:text-[#915EFF] transition-colors" />
                     <input
@@ -96,14 +97,14 @@ const LoginPage = () => {
                       value={credentials.email}
                       onChange={handleChange}
                       required
-                      placeholder="Enter ID..."
-                      className="w-full rounded-2xl bg-white/[0.03] border border-white/10 pl-14 pr-6 py-5 text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-[#915EFF]/5 focus:ring-1 focus:ring-[#915EFF]/30 placeholder:text-white/10 text-sm font-medium"
+                      placeholder="admin@terminal.local"
+                      className="w-full rounded-2xl bg-white/5 border border-white/10 pl-14 pr-6 py-5 text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-white/[0.08] text-[15px] font-medium placeholder:text-white/10"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-3">
-                  <label className="text-[10px] font-black uppercase tracking-[0.4em] text-[#c4a7ff] ml-1 opacity-80">Security Token</label>
+                  <label className="text-[13px] font-semibold text-secondary ml-1 opacity-80">Security Token</label>
                   <div className="relative group/input">
                     <HiOutlineLockClosed className="absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within/input:text-[#915EFF] transition-colors" />
                     <input
@@ -113,7 +114,7 @@ const LoginPage = () => {
                       onChange={handleChange}
                       required
                       placeholder="••••••••"
-                      className="w-full rounded-2xl bg-white/[0.03] border border-white/10 pl-14 pr-14 py-5 text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-[#915EFF]/5 focus:ring-1 focus:ring-[#915EFF]/30 placeholder:text-white/10 text-sm font-medium"
+                      className="w-full rounded-2xl bg-white/5 border border-white/10 pl-14 pr-14 py-5 text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-white/[0.08] text-[15px] font-medium placeholder:text-white/10"
                     />
                     <button
                       type="button"
@@ -129,7 +130,7 @@ const LoginPage = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`${styles.glassButtonPremium} w-full py-5 text-[14px] font-black uppercase tracking-[0.2em] shadow-2xl active:scale-[0.98] transition-transform`}
+                className={`${styles.glassButtonPremium} w-full py-5 text-[15px] font-bold active:scale-[0.98]`}
               >
                 {loading ? (
                   <div className="flex items-center justify-center gap-3">
@@ -144,9 +145,9 @@ const LoginPage = () => {
               <button 
                 type="button" 
                 onClick={() => navigate("/")}
-                className="w-full text-center text-[10px] font-black uppercase tracking-[0.3em] text-secondary/40 hover:text-[#915EFF] transition-all py-2"
+                className="w-full text-center text-[12px] font-semibold text-secondary hover:text-white transition-all py-2 opacity-40 hover:opacity-100"
               >
-                ← Return to Terminal
+                ← Return to Portfolio
               </button>
             </form>
           </div>

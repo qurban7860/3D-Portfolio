@@ -99,6 +99,7 @@ const NavLinkItem = ({ nav, active, onLinkClick }) => (
 );
 
 /* ── Mobile Navigation Menu ───────────────────────────────── */
+/* ── Mobile Navigation Menu ───────────────────────────────── */
 const MobileMenu = ({
   toggle,
   setToggle,
@@ -127,74 +128,95 @@ const MobileMenu = ({
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-[1000000] lg:hidden"
         >
-          {/* Opaque Black Backdrop - Absolutely solid to hide page content */}
+          {/* Opaque Black Backdrop */}
           <div
-            className="absolute inset-0 bg-[#050816] z-0"
-            style={{ opacity: 0.98 }}
+            className="absolute inset-0 bg-[#050816]/95 backdrop-blur-md z-0"
             onClick={() => setToggle(false)}
           />
 
-          {/* SOLID Sidebar Panel */}
+          {/* Premium Sidebar Panel */}
           <motion.div
             initial={{ x: "100%", opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: "100%", opacity: 0 }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="absolute top-0 right-0 w-[80%] max-w-[320px] h-full flex flex-col p-10 border-l border-white/10 shadow-[0_0_100px_rgba(0,0,0,1)] pt-28 z-10 overflow-hidden"
-            style={{ backgroundColor: "rgba(5, 8, 22, 0.95)", backdropFilter: "blur(40px)" }}
+            transition={{ type: "spring", damping: 35, stiffness: 350 }}
+            className="absolute top-0 right-0 w-[88%] max-w-[360px] h-full flex flex-col border-l border-white/5 shadow-2xl z-10 bg-[#050816]/90 backdrop-blur-[80px] overflow-hidden"
           >
-            {/* Ambient glow in sidebar */}
-            <div className="absolute -top-20 -right-20 w-48 h-48 bg-[#915EFF]/20 rounded-full blur-[80px]" />
-            <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-[#56ccf2]/10 rounded-full blur-[80px]" />
+            {/* Ambient Background Glows */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#915EFF]/10 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#56ccf2]/5 rounded-full blur-[120px] pointer-events-none" />
 
-            <button
-              onClick={() => setToggle(false)}
-              className="absolute top-8 right-8 w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-all shadow-xl"
-            >
-              <HiX size={26} />
-            </button>
-
-            <ul className="flex flex-col gap-8 relative z-10">
-              {navLinks.map((nav, index) => (
-                <motion.li
-                  key={nav.title}
-                  initial={{ opacity: 0, x: 30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.15 + index * 0.08, type: "spring" }}
-                >
-                  <Link
-                    to={nav.path}
-                    onClick={() => onNavClick(nav.title)}
-                    className={`${active === nav.title ? "text-gradient" : "text-white/60"} text-[20px] font-black uppercase tracking-[0.2em] hover:text-white transition-all flex items-center gap-4 group`}
-                  >
-                    <span className={`w-2 h-2 rounded-full bg-[#915EFF] transition-all duration-300 ${active === nav.title ? "scale-100 opacity-100" : "scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-50"}`} />
-                    {nav.title}
-                  </Link>
-                </motion.li>
-              ))}
-              <motion.li
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="pt-10 border-t border-white/10"
-              >
-                <ResumeButton isMobile={true} />
-              </motion.li>
-            </ul>
-
-            <div className="mt-auto flex flex-col gap-10 pb-8 relative z-10">
-              <div className="flex gap-5 justify-center sm:justify-start">
-                {socialLinks.map((link) => (
-                  <SocialIcon key={link.title} {...link} />
-                ))}
+            {/* Header / Close Button */}
+            <div className="p-8 flex items-center justify-between border-b border-white/5 bg-white/[0.01] backdrop-blur-xl">
+              <div className="flex flex-col">
+                <span className="text-[#915EFF] text-[11px] font-bold uppercase tracking-[0.3em] opacity-60">Directory</span>
+                <span className="text-white text-[15px] font-bold tracking-tight mt-1">Menu</span>
               </div>
-              <Link
-                to="/admin"
+              <button
                 onClick={() => setToggle(false)}
-                className="text-[10px] uppercase tracking-[0.4em] text-white/20 hover:text-[#915EFF] transition-all font-black text-center sm:text-left"
+                className="w-11 h-11 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/70 transition-all active:scale-90 hover:text-white"
               >
-                🔐 CORE SYSTEM ACCESS
-              </Link>
+                <HiX size={22} />
+              </button>
+            </div>
+
+            {/* Scrollable Content */}
+            <div className="flex-1 overflow-y-auto custom-scrollbar p-6 pt-8 space-y-10 relative z-10">
+              <nav>
+                <ul className="flex flex-col gap-2">
+                  {navLinks.map((nav, index) => (
+                    <motion.li
+                      key={nav.title}
+                      initial={{ opacity: 0, x: 10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1 + index * 0.05 }}
+                    >
+                      <Link
+                        to={nav.path}
+                        onClick={() => onNavClick(nav.title)}
+                        className={`group flex items-center justify-between py-4 px-6 rounded-2xl transition-all duration-300 ${
+                          active === nav.title 
+                            ? "bg-white/[0.07] border border-white/10" 
+                            : "hover:bg-white/[0.03] border border-transparent"
+                        }`}
+                      >
+                        <span className={`text-[16px] font-medium transition-all ${active === nav.title ? "text-white" : "text-white/40 group-hover:text-white"}`}>
+                          {nav.title}
+                        </span>
+                        <div className={`h-1 w-1 rounded-full bg-[#915EFF] transition-all duration-500 ${active === nav.title ? "scale-100 opacity-100 shadow-[0_0_8px_rgba(145,94,255,0.8)]" : "scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-30"}`} />
+                      </Link>
+                    </motion.li>
+                  ))}
+                </ul>
+              </nav>
+
+              <div className="space-y-8">
+                <div className="px-4">
+                  <span className="text-white/20 text-[10px] font-bold uppercase tracking-[0.3em] block mb-5">Actions</span>
+                  <div className="space-y-4">
+                    <ResumeButton isMobile={true} />
+                    <Link
+                      to="/admin"
+                      onClick={() => setToggle(false)}
+                      className={`${styles.glassButtonPremium} w-full py-4 text-[11px] font-bold uppercase tracking-[0.2em] flex items-center justify-center gap-3`}
+                    >
+                      🔐 Secure Access
+                    </Link>
+                  </div>
+                </div>
+
+                <div className="pt-10 border-t border-white/5 px-4">
+                  <span className="text-white/20 text-[10px] font-bold uppercase tracking-[0.3em] block mb-5">Social Nodes</span>
+                  <div className="flex gap-4 mb-8">
+                    {socialLinks.map((link) => (
+                      <SocialIcon key={link.title} {...link} />
+                    ))}
+                  </div>
+                  <p className="text-[9px] font-bold text-white/5 uppercase tracking-[0.4em]">
+                    Copyright &copy; 2026 Qurban
+                  </p>
+                </div>
+              </div>
             </div>
           </motion.div>
         </motion.div>
@@ -256,9 +278,10 @@ const Navbar = () => {
     <>
       <nav 
         className={`w-full h-20 fixed top-0 z-[1000] transition-all duration-500 flex items-center
-                    ${isScrolled ? "nav-glass py-2" : "bg-transparent py-4"}`}
+                    ${isScrolled ? "bg-black/40 backdrop-blur-xl py-2 shadow-[0_10px_30px_rgba(0,0,0,0.3)]" : "bg-transparent py-4"}`}
       >
-        <div className={`absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-opacity duration-500 ${isScrolled ? "opacity-100" : "opacity-0"}`} />
+        {/* Clean, Non-Glowing Divider Line */}
+        <div className={`absolute bottom-0 left-0 w-full h-[1px] bg-white/[0.08] transition-opacity duration-500 ${isScrolled ? "opacity-100" : "opacity-0"}`} />
 
         <div
           className={`${styles.paddingX} h-full max-w-7xl mx-auto flex justify-between items-center w-full`}
@@ -271,16 +294,16 @@ const Navbar = () => {
               setActive("");
             }}
           >
-            <div className="w-11 h-11 rounded-2xl glass-badge-hero flex items-center justify-center border-white/10 group-hover:border-[#915EFF]/50 group-hover:rotate-[10deg] transition-all duration-500 shadow-xl overflow-hidden relative">
+            <div className="w-11 h-11 rounded-2xl glass-badge-hero flex items-center justify-center border-white/10 group-hover:border-[#915EFF]/50 group-hover:rotate-[10deg] transition-all duration-500 shadow-xl overflow-hidden relative active:scale-95">
               <div className="absolute inset-0 bg-gradient-to-br from-[#915EFF]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               <img src={logo} alt="logo" className="w-6 h-6 object-contain relative z-10 group-hover:scale-110 transition-transform" />
             </div>
             <div className="flex flex-col">
-              <span className="text-white font-black text-[16px] tracking-tight leading-none group-hover:text-gradient transition-all duration-300">
+              <span className="text-white font-black text-[16px] tracking-tight leading-none group-hover:text-gradient transition-all duration-300 uppercase">
                 QURBAN
               </span>
               <span className="text-secondary text-[10px] font-bold tracking-[0.3em] uppercase mt-1.5 opacity-60">
-                Engineer
+                Architect
               </span>
             </div>
           </Link>
@@ -309,7 +332,7 @@ const Navbar = () => {
           <div className="lg:hidden flex items-center">
             <button
               onClick={() => setToggle(true)}
-              className="w-10 h-10 rounded-xl glass-badge-hero flex items-center justify-center border-white/10 text-white/70 hover:text-white transition-colors"
+              className="w-10 h-10 rounded-xl glass-badge-hero flex items-center justify-center border-white/10 text-white/70 hover:text-white transition-all active:scale-90"
               aria-label="Open Menu"
             >
               <HiMenuAlt3 size={24} />

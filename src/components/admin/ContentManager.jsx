@@ -153,7 +153,7 @@ const ContentManager = ({ section }) => {
     const itemName = item.name || item.title || item.degree || "this item";
     
     setConfirmState({
-      isOpen: false,
+      isOpen: true,
       id,
       title: `Delete ${schema.label}?`,
       message: `Are you sure you want to permanently remove "${itemName}"? This action cannot be undone.`
@@ -193,13 +193,13 @@ const ContentManager = ({ section }) => {
         onCancel={() => setConfirmState(prev => ({ ...prev, isOpen: false }))}
       />
 
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-8">
         <div>
-          <h4 className="text-white font-bold text-lg sm:text-xl flex items-center gap-2">
-            {schema.title} Registry
+          <h4 className="text-white font-bold text-xl sm:text-2xl flex items-center gap-2">
+            {schema.title} Content
           </h4>
-          <p className="text-secondary text-xs sm:text-sm mt-1">
-            Total Items: <span className="text-white font-semibold">{items.length}</span>
+          <p className="text-secondary text-[13px] mt-2 font-medium opacity-60">
+            Total Records: <span className="text-white font-semibold">{items.length}</span>
           </p>
         </div>
         <button 
@@ -207,7 +207,7 @@ const ContentManager = ({ section }) => {
             setSelectedItem(null);
             setIsFormOpen(true);
           }}
-          className={`${styles.glassButtonPremium} px-4 sm:px-5 py-2.5 text-sm flex items-center gap-2`}
+          className={`${styles.glassButtonPremium} px-4 sm:px-5 py-2.5 text-sm flex items-center gap-2 whitespace-nowrap shrink-0`}
         >
           <HiOutlinePlus className="text-lg" />
           New Entry
@@ -241,18 +241,13 @@ const ContentManager = ({ section }) => {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm"
           >
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.95, opacity: 0, y: 20 }}
-              transition={{ type: "spring", bounce: 0, duration: 0.4 }}
-              className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto custom-scrollbar rounded-3xl"
-              style={{
-                background: "linear-gradient(145deg, rgba(21,16,48,0.95) 0%, rgba(9,3,37,0.98) 100%)",
-                border: "1px solid rgba(145,94,255,0.3)",
-                boxShadow: "0 25px 50px -12px rgba(0,0,0,0.7), 0 0 30px rgba(145,94,255,0.15)",
-              }}
-            >
+          <motion.div
+            initial={{ scale: 0.95, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.95, opacity: 0, y: 20 }}
+            transition={{ type: "spring", bounce: 0, duration: 0.4 }}
+            className={`relative w-full max-w-3xl max-h-[90vh] overflow-y-auto custom-scrollbar ${styles.glassCardStrong} bg-[#050816]/95`}
+          >
               <button
                 onClick={() => {
                   setIsFormOpen(false);

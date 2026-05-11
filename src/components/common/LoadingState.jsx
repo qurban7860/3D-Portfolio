@@ -9,7 +9,7 @@ const LoadingState = ({ message = "Syncing..." }) => (
         <div className="absolute inset-0 rounded-full border-[3px] border-t-[#915EFF] border-r-transparent border-b-transparent border-l-transparent animate-spin" />
         <div className="h-2 w-2 rounded-full bg-[#56ccf2] animate-pulse shadow-[0_0_15px_rgba(86,204,242,0.8)]" />
       </div>
-      <p className="text-[#c4a7ff] text-[12px] font-black uppercase tracking-[0.4em] opacity-80">{message}</p>
+      <p className="text-white font-bold text-[14px] tracking-widest uppercase">{message}</p>
     </div>
   </div>
 );

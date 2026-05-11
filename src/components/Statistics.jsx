@@ -9,24 +9,16 @@ const StatCard = ({ index, stat, label, description }) => (
   <motion.div
     variants={fadeIn("up", "spring", index * 0.15, 0.75)}
     whileHover={{ y: -8, scale: 1.02 }}
-    className="flex flex-col items-center p-7 rounded-2xl text-center relative overflow-hidden
-               transition-all duration-500 glow-purple"
-    style={{
-      backdropFilter: "blur(14px)",
-      WebkitBackdropFilter: "blur(14px)",
-      background:
-        "linear-gradient(145deg, rgba(145,94,255,0.10) 0%, rgba(255,255,255,0.04) 60%, rgba(86,204,242,0.06) 100%)",
-      border: "1px solid rgba(145,94,255,0.22)",
-    }}
+    className="flex flex-col items-center p-8 premium-glass-card text-center group"
   >
     {/* Ambient glow */}
-    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-24 bg-[#915EFF]/15 rounded-full blur-2xl pointer-events-none" />
+    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-32 bg-[#915EFF]/10 rounded-full blur-3xl pointer-events-none group-hover:bg-[#915EFF]/20 transition-colors" />
 
-    <h3 className="stat-number text-4xl sm:text-5xl font-extrabold mb-2 relative z-10">
+    <h3 className="stat-number text-4xl sm:text-5xl font-black mb-4 relative z-10 drop-shadow-lg">
       {stat}
     </h3>
-    <p className="text-white font-semibold text-base mb-1 relative z-10">{label}</p>
-    <p className="text-secondary text-sm leading-relaxed relative z-10">{description}</p>
+    <p className="text-white font-bold text-lg mb-2 relative z-10">{label}</p>
+    <p className="text-secondary text-sm leading-relaxed relative z-10 opacity-80">{description}</p>
   </motion.div>
 );
 

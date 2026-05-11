@@ -32,17 +32,15 @@ AvailabilityBadge.propTypes = {
 const HireCard = ({ icon, title, description }) => (
   <motion.div
     whileHover={{ y: -6, scale: 1.02 }}
-    className="glass-purple rounded-xl p-6 flex flex-col items-center gap-4 text-center
-               hover:bg-[#915EFF]/12 hover:shadow-[0_8px_32px_rgba(145,94,255,0.18)]
-               transition-all duration-500 glow-purple group"
+    className="premium-glass-card p-8 flex flex-col items-center gap-6 text-center group"
   >
-    <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl
+    <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl
                     bg-white/5 border border-white/10 group-hover:border-[#915EFF]/50 
-                    group-hover:shadow-[0_0_20px_rgba(145,94,255,0.25)] transition-all duration-300 backdrop-blur-sm">
+                    group-hover:shadow-[0_0_25px_rgba(145,94,255,0.3)] transition-all duration-500 backdrop-blur-sm">
       {icon}
     </div>
-    <h3 className="text-white font-bold text-[17px]">{title}</h3>
-    <p className="text-secondary text-[13px] leading-relaxed">{description}</p>
+    <h3 className="text-white font-black text-lg">{title}</h3>
+    <p className="text-secondary text-sm leading-relaxed opacity-80">{description}</p>
   </motion.div>
 );
 
@@ -161,12 +159,13 @@ const ReadyForWork = () => {
       {/* ── Quick Facts ── */}
       <motion.div
         variants={fadeIn("up", "spring", 0.6, 0.75)}
-        className="mt-10 p-8 rounded-2xl relative overflow-hidden backdrop-blur-xl bg-white/[0.04] border border-white/10 shadow-2xl"
+        className="mt-10 p-10 premium-glass-card relative overflow-hidden"
       >
-        <div className="absolute top-0 right-0 w-64 h-64 bg-[#56ccf2]/10 rounded-full blur-[80px] pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#915EFF]/10 rounded-full blur-[80px] pointer-events-none" />
-        <p className="text-white text-[17px] font-bold mb-6 text-center">Quick Facts</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+        <div className="glow-orb -top-20 -right-20 w-80 h-80 bg-[#56ccf2]/10 animate-pulse" />
+        <div className="glow-orb -bottom-20 -left-20 w-80 h-80 bg-[#915EFF]/10 animate-slow-ping" />
+        
+        <p className="text-white text-xl font-black mb-10 text-center tracking-tight">Professional Snapshot</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 relative z-10">
           {quickFacts.map((fact, i) => (
             <QuickFact key={i} {...fact} />
           ))}

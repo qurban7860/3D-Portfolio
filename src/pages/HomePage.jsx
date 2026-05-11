@@ -1,4 +1,15 @@
-import { HomeIntro, Showcase, BackToTop, Hero, Navbar, StarsCanvas, Statistics, ReadyForWork } from "../components";
+import { 
+  HomeIntro, 
+  Showcase, 
+  BackToTop, 
+  Hero, 
+  Navbar, 
+  StarsCanvas, 
+  Statistics, 
+  ReadyForWork, 
+  WhyWorkWithMe, 
+  FAQ 
+} from "../components";
 import { usePortfolio } from "../context/PortfolioContext";
 import ErrorMessage from "../components/common/ErrorMessage";
 import LoadingState from "../components/common/LoadingState";
@@ -21,30 +32,32 @@ const HomePage = () => {
         <Hero />
       </div>
 
-      {error && (
-        <div className='mx-auto mt-10 max-w-7xl px-6'>
-          <ErrorMessage message={error} />
-        </div>
-      )}
+      <div className="max-w-7xl mx-auto">
+        {error && (
+          <div className='mt-20 px-6'>
+            <ErrorMessage message={error} />
+          </div>
+        )}
 
-      {isLoading ? (
-        <div className='mx-auto mt-10 max-w-7xl px-6'>
-          <LoadingState message='Fetching portfolio content...' />
-        </div>
-      ) : (
-        <>
-          <HomeIntro />
-          <Showcase />
-          <Statistics />
-          <ReadyForWork />
-          
-          <BackToTop scrollThreshold={300} />
-        </>
-      )}
+        {isLoading ? (
+          <div className='mt-20 px-6'>
+            <LoadingState message='Fetching portfolio content...' />
+          </div>
+        ) : (
+          <div className="flex flex-col gap-40 pb-32">
+            <HomeIntro />
+            <Showcase />
+            <WhyWorkWithMe />
+            <Statistics />
+            <FAQ />
+            <ReadyForWork />
+            
+            <BackToTop scrollThreshold={300} />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
 
 export default HomePage;
-
-

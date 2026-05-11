@@ -222,7 +222,10 @@ const Navbar = () => {
   }, [navLinks, location]);
 
   return (
-    <nav className={`${styles.paddingX} w-full flex items-center py-4 fixed top-0 z-50 nav-glass`}>
+    <nav className={`${styles.paddingX} w-full flex items-center py-4 fixed top-0 z-50 nav-glass relative`}>
+      {/* Premium thin gradient line at bottom */}
+      <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#915EFF]/50 to-transparent opacity-50" />
+      
       <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
         
         <div className="hidden lg:flex gap-3 items-center">

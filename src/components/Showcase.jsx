@@ -18,130 +18,144 @@ const Showcase = () => {
   return (
     <div className="flex flex-col gap-20">
       {/* ── Section Header ── */}
-      <motion.div variants={textVariant()} className="flex flex-col items-start gap-4">
-        <span className="section-badge">Current Focus</span>
-        <h2 className="section-title-underline text-white font-extrabold text-3xl sm:text-4xl leading-tight max-w-3xl">
-          Latest Excellence &amp; Professional Path
+      <motion.div variants={textVariant()} className="flex flex-col items-center text-center gap-4">
+        <span className="section-badge">Featured Portfolio</span>
+        <h2 className={styles.sectionHeadText}>
+          Latest <span className="text-gradient">Innovations</span>
         </h2>
-        <p className="text-secondary text-base sm:text-lg leading-relaxed max-w-2xl">
-          A snapshot of my most recent professional milestones, flagship project, and core 
-          technical foundation. High-impact results delivered with precision.
+        <p className="text-secondary text-lg sm:text-xl leading-relaxed max-w-3xl mt-4">
+          A curated selection of my most recent work and professional milestones, 
+          demonstrating technical precision and creative problem-solving.
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-        {/* ── Latest Flagship Project (Left - 7 cols) ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        {/* ── Latest Flagship Project (Featured Card) ── */}
         {latestProject && (
           <motion.div
-            variants={fadeIn("right", "spring", 0.2, 1)}
-            className="lg:col-span-7 flex flex-col group"
+            variants={fadeIn("up", "spring", 0.2, 1)}
+            className="lg:col-span-8 group"
           >
-            <div className="relative h-full rounded-3xl overflow-hidden backdrop-blur-xl bg-white/[0.03] border border-white/10 shadow-2xl transition-all duration-500 hover:border-[#915EFF]/40">
-              {/* Image with overlay */}
-              <div className="relative h-[250px] sm:h-[320px] w-full overflow-hidden">
+            <div className="premium-glass-card h-full flex flex-col">
+              <div className="relative aspect-video lg:aspect-auto lg:h-[400px] overflow-hidden">
                  <img 
                    src={resolveAssetUrl(latestProject.imageUrl)} 
                    alt={latestProject.name}
                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
                  />
-                 <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-[#050816]/40 to-transparent opacity-80" />
+                 <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-[#050816]/20 to-transparent" />
                  
-                 <div className="absolute top-6 left-6">
-                    <span className="px-4 py-1.5 rounded-full bg-[#915EFF]/20 border border-[#915EFF]/50 backdrop-blur-md text-[#c4a7ff] text-[10px] font-bold uppercase tracking-widest shadow-lg">
-                      ✦ Latest Project
-                    </span>
+                 <div className="absolute top-8 left-8">
+                    <div className="px-6 py-2 rounded-full bg-[#915EFF]/20 border border-[#915EFF]/40 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-[0.2em]">
+                      ✦ Featured Project
+                    </div>
                  </div>
               </div>
 
-              {/* Content */}
-              <div className="p-8 -mt-20 relative z-10">
-                <h3 className="text-white text-3xl font-extrabold mb-3 group-hover:text-gradient transition-all duration-300">
-                  {latestProject.name}
-                </h3>
-                <p className="text-secondary text-base leading-relaxed mb-6 line-clamp-3">
-                  {latestProject.description}
-                </p>
-                
-                <div className="flex flex-wrap gap-4 items-center">
-                  <Link
-                    to="/portfolio"
-                    className={`${styles.glassButtonPremium} px-6 py-2.5 text-[13px]`}
-                    onClick={() => window.scrollTo(0, 0)}
-                  >
-                    View Project Details
-                  </Link>
-                  <a 
-                    href={latestProject.sourceCodeLink} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-white/60 hover:text-white text-[13px] font-bold transition-colors"
-                  >
-                    Source Code →
-                  </a>
+              <div className="p-8 lg:p-12 flex flex-col flex-1 -mt-20 relative z-10">
+                <div className="flex flex-col gap-6">
+                  <div className="flex flex-wrap gap-3">
+                     {latestProject.tags?.map((tag) => (
+                       <span key={tag.name} className={`text-[12px] font-bold ${tag.color || 'text-white'}`}>
+                         #{tag.name}
+                       </span>
+                     ))}
+                  </div>
+                  
+                  <h3 className="text-white text-3xl sm:text-4xl font-black group-hover:text-gradient transition-all duration-500">
+                    {latestProject.name}
+                  </h3>
+                  
+                  <p className="text-secondary text-lg leading-relaxed line-clamp-3 lg:line-clamp-none max-w-2xl">
+                    {latestProject.description}
+                  </p>
+                  
+                  <div className="flex flex-wrap gap-6 items-center mt-6">
+                    <Link
+                      to="/portfolio"
+                      className={`${styles.glassButtonPremium} px-10 py-4 text-[15px] shadow-2xl`}
+                      onClick={() => window.scrollTo(0, 0)}
+                    >
+                      Case Study Details
+                    </Link>
+                    <a 
+                      href={latestProject.sourceCodeLink} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-[#915EFF] hover:text-white font-bold text-[15px] transition-all flex items-center gap-2 group/link border-b border-[#915EFF]/20 hover:border-[#915EFF] pb-1"
+                    >
+                      Source Code <span className="group-hover/link:translate-x-1 transition-transform">→</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
           </motion.div>
         )}
 
-        {/* ── Latest Experience & Tech (Right - 5 cols) ── */}
-        <motion.div
-          variants={fadeIn("left", "spring", 0.4, 1)}
-          className="lg:col-span-5 flex flex-col gap-10"
-        >
-          {/* Recent Role */}
+        {/* ── Experience & Tech (Sidebar) ── */}
+        <div className="lg:col-span-4 flex flex-col gap-8">
+          {/* Recent Role Card */}
           {latestExperience && (
-            <div className="p-8 rounded-3xl backdrop-blur-xl bg-white/[0.03] border border-white/10 shadow-2xl relative overflow-hidden group hover:border-[#915EFF]/30 transition-all duration-500">
-               <div className="absolute top-0 right-0 w-32 h-32 bg-[#915EFF]/5 rounded-full blur-3xl pointer-events-none group-hover:bg-[#915EFF]/10 transition-all" />
-               
-               <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#c4a7ff] block mb-4">
-                 Recent Work
+            <motion.div
+              variants={fadeIn("left", "spring", 0.4, 1)}
+              className="p-8 premium-glass-card group/exp"
+            >
+               <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#915EFF] block mb-8">
+                 Current Trajectory
                </span>
-               <div className="flex items-start gap-4 mb-6">
-                  <div className="w-14 h-14 rounded-2xl bg-[#915EFF]/20 flex items-center justify-center border border-[#915EFF]/30 p-2">
+               
+               <div className="flex items-center gap-6 mb-8">
+                  <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 p-3 shadow-inner group-hover/exp:border-[#915EFF]/50 transition-colors">
                      <img src={resolveAssetUrl(latestExperience.iconUrl)} alt={latestExperience.companyName} className="w-full h-full object-contain" />
                   </div>
                   <div>
-                    <h4 className="text-white text-xl font-bold">{latestExperience.title}</h4>
-                    <p className="text-secondary font-medium">{latestExperience.companyName}</p>
+                    <h4 className="text-white text-xl font-black leading-tight">{latestExperience.title}</h4>
+                    <p className="text-secondary text-sm font-medium mt-1">{latestExperience.companyName}</p>
                   </div>
                </div>
-               <p className="text-secondary text-sm leading-relaxed mb-6 italic">
+
+               <p className="text-secondary text-base leading-relaxed mb-8 italic border-l-2 border-[#915EFF]/30 pl-6 bg-white/[0.02] p-4 rounded-r-xl">
                   &quot;{latestExperience.points[0]}&quot;
                </p>
+
                <Link
                  to="/experience"
-                 className="text-[#915EFF] font-bold text-[13px] hover:underline"
+                 className="inline-flex items-center gap-3 text-white font-bold text-[14px] hover:text-[#915EFF] transition-all group/btn"
                  onClick={() => window.scrollTo(0, 0)}
                >
-                 View Career Path →
+                 View Career Timeline <span className="text-[#915EFF] group-hover/btn:translate-x-2 transition-transform">→</span>
                </Link>
-            </div>
+            </motion.div>
           )}
 
-          {/* Core Tech Stack */}
-          <div className="p-8 rounded-3xl backdrop-blur-xl bg-white/[0.03] border border-white/10 shadow-2xl relative overflow-hidden">
-             <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#56ccf2] block mb-6">
-               Core specialized Stack
-             </span>
-             <div className="grid grid-cols-4 gap-4">
-                {topTechnologies.map((tech) => (
-                  <div key={tech.name} className="w-16 h-16 sm:w-20 sm:h-20" title={tech.name}>
-                     <BallCanvas icon={resolveAssetUrl(tech.iconUrl || tech.icon)} />
-                  </div>
-                ))}
+          {/* Tech Mini-Stack Card */}
+          <motion.div
+            variants={fadeIn("left", "spring", 0.6, 1)}
+            className="p-8 premium-glass-card flex-1 flex flex-col justify-between"
+          >
+             <div>
+               <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#56ccf2] block mb-8">
+                 Core Expertise
+               </span>
+               <div className="grid grid-cols-4 gap-4 mb-8">
+                  {topTechnologies.map((tech) => (
+                    <div key={tech.name} className="aspect-square relative group/tech" title={tech.name}>
+                       <BallCanvas icon={resolveAssetUrl(tech.iconUrl || tech.icon)} />
+                    </div>
+                  ))}
+               </div>
              </div>
-             <div className="mt-8">
-                <Link
-                  to="/services"
-                  className={`${styles.outlineButtonCyan} px-6 py-2.5 text-[12px] w-full`}
-                  onClick={() => window.scrollTo(0, 0)}
-                >
-                  Explore Full Tech Stack
-                </Link>
-             </div>
-          </div>
-        </motion.div>
+             
+             <Link
+               to="/services"
+               className={`${styles.outlineButtonCyan} w-full py-4 text-[14px] font-bold`}
+               onClick={() => window.scrollTo(0, 0)}
+             >
+               View All Capabilities
+             </Link>
+          </motion.div>
+        </div>
       </div>
     </div>
   );

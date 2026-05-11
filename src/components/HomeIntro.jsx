@@ -13,72 +13,97 @@ const HomeIntro = () => {
     "I'm a passionate Software Engineer specializing in building high-performance web applications.";
 
   return (
-    <>
+    <div className="flex flex-col gap-16">
       <motion.div
         variants={textVariant()}
         className="flex flex-col items-start gap-4"
       >
-        <span className="section-badge">Welcome</span>
-        <h2 className="section-title-underline text-white font-extrabold text-3xl sm:text-4xl leading-tight max-w-3xl">
-          Crafting Digital Excellence
+        <span className="section-badge">Architecture & Philosophy</span>
+        <h2 className={styles.sectionHeadText}>
+          Engineering <span className="text-gradient">Digital Excellence</span>
         </h2>
       </motion.div>
 
-      <div className="mt-6 flex flex-col md:flex-row gap-8 items-center justify-between">
+      <div className="flex flex-col lg:flex-row gap-12 items-stretch justify-between">
         <motion.div
           variants={fadeIn("right", "spring", 0.2, 1)}
-          className="flex-1"
+          className="flex-[1.4]"
         >
-          <p className="text-secondary text-base sm:text-lg leading-relaxed max-w-4xl">
-            {overview.replace(/^I'm a passionate/i, "Skilled")}
-          </p>
-          <div className="mt-8 flex gap-4">
-            <Link
-              to="/about"
-              className={`${styles.glassButtonPremium} px-8 py-3 text-[14px]`}
-              onClick={() => window.scrollTo(0, 0)}
-            >
-              The Full Story →
-            </Link>
+          <div className="premium-glass-card p-10 lg:p-12 h-full flex flex-col justify-between">
+            <div>
+              <p className="text-white text-xl sm:text-2xl leading-relaxed font-medium mb-8">
+                <span className="text-[#915EFF] font-bold">Bridging</span> the gap between complex logic and <span className="text-[#56ccf2] font-bold">seamless user experiences</span>.
+              </p>
+              <p className="text-secondary text-lg leading-relaxed opacity-90">
+                {overview.replace(/^I'm a passionate/i, "As a dedicated Software Engineer, I specialize in")} My approach combines robust architectural patterns with cutting-edge technologies to deliver solutions that are not just functional, but truly impactful.
+              </p>
+            </div>
+            
+            <div className="mt-12 flex flex-wrap gap-6">
+              <Link
+                to="/about"
+                className={`${styles.glassButtonPremium} px-10 py-4 text-[15px] group shadow-xl`}
+                onClick={() => window.scrollTo(0, 0)}
+              >
+                The Full Story <span className="group-hover:translate-x-1 transition-transform ml-2">→</span>
+              </Link>
+              <Link
+                to="/services"
+                className="px-8 py-4 text-[15px] font-bold text-white/70 hover:text-white transition-all border-b-2 border-white/5 hover:border-[#915EFF]/50"
+                onClick={() => window.scrollTo(0, 0)}
+              >
+                View Capabilities
+              </Link>
+            </div>
           </div>
         </motion.div>
 
         <motion.div
           variants={fadeIn("left", "spring", 0.4, 1)}
-          className="flex-1 flex justify-center md:justify-end"
+          className="flex-1 w-full flex flex-col gap-6"
         >
-          <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-[#915EFF] to-[#56ccf2] rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-            <div className="relative bg-black-100 ring-1 ring-white/10 rounded-2xl p-6 sm:p-8 backdrop-blur-xl">
-              <div className="flex flex-col gap-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[#915EFF]/20 flex items-center justify-center text-xl">
+          <div className="group relative h-full">
+             <div className="premium-glass-card p-8 h-full border-[#915EFF]/20 hover:border-[#915EFF]/40 transition-all flex flex-col gap-6">
+                <div className="flex items-center gap-6">
+                  <div className="w-16 h-16 rounded-2xl bg-[#915EFF]/10 flex items-center justify-center text-3xl shadow-[inset_0_0_20px_rgba(145,94,255,0.2)] group-hover:scale-110 transition-transform">
                     💡
                   </div>
                   <div>
-                    <p className="text-white font-bold">Solution Architect</p>
-                    <p className="text-secondary text-xs">
-                      Designing scalable systems
+                    <p className="text-white text-xl font-bold">Solution Architect</p>
+                    <p className="text-secondary text-sm mt-1 opacity-80">
+                      Designing scalable, enterprise-grade systems with modularity in mind.
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-[#56ccf2]/20 flex items-center justify-center text-xl">
+
+                <div className="flex items-center gap-6">
+                  <div className="w-16 h-16 rounded-2xl bg-[#56ccf2]/10 flex items-center justify-center text-3xl shadow-[inset_0_0_20px_rgba(86,204,242,0.25)] group-hover:scale-110 transition-transform">
                     🚀
                   </div>
                   <div>
-                    <p className="text-white font-bold">Performance Expert</p>
-                    <p className="text-secondary text-xs">
-                      Optimizing for speed & SEO
+                    <p className="text-white text-xl font-bold">Performance Expert</p>
+                    <p className="text-secondary text-sm mt-1 opacity-80">
+                      Optimizing critical paths for peak speed and exceptional UX.
                     </p>
                   </div>
                 </div>
-              </div>
-            </div>
+
+                <div className="flex items-center gap-6">
+                  <div className="w-16 h-16 rounded-2xl bg-[#00cea8]/10 flex items-center justify-center text-3xl shadow-[inset_0_0_20px_rgba(0,206,168,0.2)] group-hover:scale-110 transition-transform">
+                    🛡️
+                  </div>
+                  <div>
+                    <p className="text-white text-xl font-bold">Quality Obsessed</p>
+                    <p className="text-secondary text-sm mt-1 opacity-80">
+                      Writing clean, maintainable code backed by industry standards.
+                    </p>
+                  </div>
+                </div>
+             </div>
           </div>
         </motion.div>
       </div>
-    </>
+    </div>
   );
 };
 

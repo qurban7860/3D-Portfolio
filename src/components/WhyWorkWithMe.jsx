@@ -1,23 +1,24 @@
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
-import { fadeIn } from "../Animation/motion";
+import { fadeIn, textVariant } from "../Animation/motion";
 import { SectionWrapper } from "../hoc";
+import { styles } from "../styles";
 
 /* ── Why Card ────────────────────────────────────────────────── */
 const WhyCard = ({ emoji, title, desc, delay }) => (
   <motion.div
     variants={fadeIn("up", "spring", delay, 0.6)}
-    whileHover={{ y: -6, scale: 1.02 }}
-    className="glass-purple rounded-xl p-5 flex flex-col gap-3 hover:bg-[#915EFF]/10 transition-all duration-500 glow-purple group"
+    whileHover={{ y: -10, scale: 1.02 }}
+    className="premium-glass-card p-8 flex flex-col gap-6 group"
   >
     {/* Icon badge */}
-    <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl
+    <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl
                     bg-white/5 border border-white/10 group-hover:border-[#915EFF]/50 
-                    group-hover:shadow-[0_0_16px_rgba(145,94,255,0.25)] transition-all duration-300 backdrop-blur-sm">
+                    group-hover:shadow-[0_0_25px_rgba(145,94,255,0.3)] transition-all duration-500 backdrop-blur-sm">
       {emoji}
     </div>
-    <h4 className="text-white font-bold text-[17px]">{title}</h4>
-    <p className="text-secondary text-[14px] leading-relaxed">{desc}</p>
+    <h4 className="text-white font-black text-xl">{title}</h4>
+    <p className="text-secondary text-base leading-relaxed opacity-80">{desc}</p>
   </motion.div>
 );
 
@@ -49,31 +50,24 @@ const WhyWorkWithMe = () => {
   ];
 
   return (
-    <motion.div
-      variants={fadeIn("up", "spring", 0.2, 0.75)}
-      className="rounded-2xl overflow-hidden relative backdrop-blur-2xl bg-white/[0.04] border border-white/10 shadow-2xl"
-    >
-      {/* Decorative glow blobs */}
-      <div className="absolute top-0 right-0 w-48 h-48 bg-[#915EFF]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-36 h-36 bg-[#56ccf2]/8 rounded-full blur-2xl pointer-events-none" />
+    <div className="flex flex-col gap-12">
+      <motion.div variants={textVariant()} className="flex flex-col items-center text-center gap-4 mb-8">
+        <span className="section-badge">Strategic Value</span>
+        <h2 className={styles.sectionHeadText}>
+          Why Work <span className="text-gradient">With Me</span>
+        </h2>
+        <p className="text-secondary text-lg sm:text-xl leading-relaxed max-w-3xl mt-4">
+          I don&apos;t just write code; I build solutions that drive results. 
+          Here&apos;s how I bring value to your projects.
+        </p>
+      </motion.div>
 
-      <div className="relative z-10 p-8">
-        {/* Header */}
-        <div className="flex items-center gap-3 mb-8">
-          <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-sm shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]">
-            ⭐
-          </div>
-          <h3 className="text-[22px] font-bold text-white">Why Work With Me</h3>
-        </div>
-
-        {/* Cards grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {whyPoints.map((item, i) => (
-            <WhyCard key={i} {...item} delay={i * 0.15} />
-          ))}
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {whyPoints.map((item, i) => (
+          <WhyCard key={i} {...item} delay={i * 0.15} />
+        ))}
       </div>
-    </motion.div>
+    </div>
   );
 };
 

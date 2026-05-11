@@ -52,9 +52,8 @@ const AboutPage = () => {
             <LoadingState message="Loading about information..." />
           </div>
         ) : (
-          <div className="flex flex-col gap-10">
+          <div className="flex flex-col gap-10 pb-20">
             <About hideHeader={true} />
-            <Services />
             <WhyWorkWithMe />
           </div>
         )}

@@ -44,6 +44,43 @@ const About = ({ isSummary = false, hideHeader = false }) => {
           </>
         )}
 
+        {!isSummary && (
+          <motion.div
+            variants={fadeIn("up", "spring", 0.2, 0.75)}
+            className="mt-16 w-full"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-10">
+              {[
+                {
+                  title: "Precision Engineering",
+                  desc: "Writing clean, scalable, and maintainable code is my top priority.",
+                  icon: "⚙️",
+                },
+                {
+                  title: "User-Centric Design",
+                  desc: "I believe technology should serve people, not the other way around.",
+                  icon: "💡",
+                },
+                {
+                  title: "Agile Problem Solving",
+                  desc: "Adapting quickly to challenges and delivering efficient results.",
+                  icon: "🚀",
+                },
+              ].map((val, i) => (
+                <div 
+                  key={i} 
+                  className="p-8 rounded-3xl bg-white/[0.02] border border-white/5 backdrop-blur-xl 
+                             hover:bg-white/[0.05] hover:border-[#915EFF]/30 transition-all duration-300 group"
+                >
+                  <div className="text-3xl mb-4 group-hover:scale-110 transition-transform">{val.icon}</div>
+                  <h4 className="text-white font-bold text-lg mb-2">{val.title}</h4>
+                  <p className="text-secondary text-sm leading-relaxed opacity-80">{val.desc}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
         {isSummary && (
           <motion.div 
             variants={fadeIn("up", "spring", 0.3, 0.75)}
@@ -51,7 +88,7 @@ const About = ({ isSummary = false, hideHeader = false }) => {
           >
             <Link 
               to="/about" 
-              className={`${styles.glassButtonPurple} px-8 py-3 text-[14px]`}
+              className={`${styles.glassButtonPurple} px-8 py-3 text-[14px] shadow-xl shadow-purple-500/10`}
               onClick={() => window.scrollTo(0, 0)}
             >
               Discover Full Journey →

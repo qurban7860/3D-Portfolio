@@ -60,19 +60,19 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.8 }}
-              className="flex flex-wrap gap-5 z-30"
+              className="flex flex-row flex-nowrap gap-4 z-30"
             >
               <button
                 onClick={() => navigate("/portfolio")}
-                className={`${styles.glassButtonPremium} px-10 py-4 text-[16px] tracking-wide shadow-2xl`}
+                className={`${styles.glassButtonPremium} px-6 py-3 text-[14px] whitespace-nowrap shadow-xl`}
               >
-                🚀 Explore Projects
+                🚀 Portfolio
               </button>
               <button
                 onClick={() => navigate("/contact")}
-                className={`${styles.outlineButton} px-10 py-4 text-[16px] tracking-wide shadow-xl hover:shadow-[#915EFF]/20`}
+                className={`${styles.outlineButton} px-6 py-3 text-[14px] whitespace-nowrap shadow-lg`}
               >
-                🤝 Let&apos;s Connect
+                🤝 Contact
               </button>
             </motion.div>
           </div>
@@ -95,8 +95,8 @@ const Hero = () => {
         </div>
       </div>
       
-      {/* Bottom Gradient Fade */}
-      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-primary to-transparent z-10" />
+      {/* Bottom Gradient Fade - Reduced for tighter transition */}
+      <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-primary to-transparent z-10" />
     </section>
   );
 };

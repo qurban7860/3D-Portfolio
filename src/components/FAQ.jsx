@@ -1,59 +1,41 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import PropTypes from "prop-types";
 import { usePortfolio } from "../context/PortfolioContext";
 import { SectionWrapper } from "../hoc";
 import { textVariant, fadeIn } from "../Animation/motion";
 import { styles } from "../styles";
 
-/* ── FAQ Item ─────────────────────────────────────────────────── */
 const FAQItem = ({ question, answer, index }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <motion.div
-      variants={fadeIn("up", "spring", index * 0.08, 0.75)}
-      className={`premium-glass rounded-[1.5rem] overflow-hidden ${isOpen ? "border-[#915EFF]/40" : "border-white/5"} transition-all duration-500`}
+      variants={fadeIn("up", "spring", index * 0.05, 0.5)}
+      className={`premium-glass rounded-2xl overflow-hidden ${isOpen ? "border-[#915EFF]/40 bg-[#915EFF]/5" : "border-white/5"} transition-all duration-300`}
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-8 py-6 flex items-center justify-between
-                   hover:bg-[#915EFF]/5 transition-colors duration-300 text-left group"
+        className="w-full px-6 py-4 flex items-center justify-between text-left group"
       >
-        <h3 className="text-white font-bold text-lg leading-snug pr-4 group-hover:text-[#915EFF] transition-colors duration-300">
+        <h3 className="text-white font-bold text-sm leading-snug group-hover:text-[#915EFF] transition-colors">
           {question}
         </h3>
-        <motion.div
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.35, ease: "easeInOut" }}
-          className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center
-                      border transition-all duration-300
-                      ${isOpen
-                        ? "bg-[#915EFF]/20 border-[#915EFF]/60 text-[#915EFF]"
-                        : "border-white/10 text-white/30 group-hover:border-[#915EFF]/40 group-hover:text-[#915EFF]"
-                      }`}
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
-        </motion.div>
+        <span className={`text-white/30 transition-transform duration-300 ${isOpen ? 'rotate-180 text-[#915EFF]' : ''}`}>
+          ▼
+        </span>
       </button>
 
       <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
-            key="faq-content"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.32, ease: "easeInOut" }}
             className="border-t border-white/5"
           >
-            <div
-              className="px-8 py-6 bg-[#915EFF]/[0.02]"
-            >
-              <p className="text-secondary text-base leading-relaxed opacity-90">{answer}</p>
+            <div className="px-6 py-4">
+              <p className="text-secondary text-[13px] leading-relaxed">{answer}</p>
             </div>
           </motion.div>
         )}
@@ -62,63 +44,44 @@ const FAQItem = ({ question, answer, index }) => {
   );
 };
 
-FAQItem.propTypes = {
-  id: PropTypes.number,
-  question: PropTypes.string.isRequired,
-  answer: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
-};
-
-/* ── FAQ Section ──────────────────────────────────────────────── */
 const FAQ = () => {
   const { data } = usePortfolio();
-  const faqs = data?.settings?.faqs ?? [];
-
-  if (faqs.length === 0) return null;
+  const faqs = (data?.settings?.faqs ?? []).slice(0, 3);
 
   return (
-    <div className="flex flex-col gap-12">
-      <motion.div variants={textVariant()} className="flex flex-col items-center text-center gap-4">
-        <span className="section-badge">Common Queries</span>
-        <h2 className={styles.sectionHeadText}>
-          Frequently Asked <span className="text-gradient">Questions</span>
-        </h2>
-        <p className="text-secondary text-lg sm:text-xl max-w-3xl mt-4">
-          Everything you need to know about my workflow, technical stack, and engagement models.
-        </p>
-      </motion.div>
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+      {/* ── Left Side: Header & CTA ── */}
+      <div className="lg:col-span-5 flex flex-col gap-6">
+        <motion.div variants={textVariant()} className="flex flex-col gap-2">
+          <span className="faq-badge-premium w-fit mb-4">FAQS & INQUIRIES</span>
+          <h2 className={styles.sectionHeadText}>Common <span className="text-gradient">Inquiries</span></h2>
+          <p className="text-secondary text-sm leading-relaxed max-w-sm mt-2 opacity-80">
+            Answers to frequent technical and collaboration questions. Need more depth?
+          </p>
+        </motion.div>
 
-      <div className="mt-8 space-y-5 w-full max-w-4xl mx-auto">
+        <motion.div 
+          variants={fadeIn("up", "spring", 0.3, 0.8)}
+          className="premium-glass-card p-6 border-dashed border-white/10"
+        >
+          <h4 className="text-white font-bold text-sm mb-3">Still have questions?</h4>
+          <a href="/contact" className="text-[#915EFF] font-black text-sm hover:underline flex items-center gap-2">
+            Talk to me directly <span>→</span>
+          </a>
+        </motion.div>
+      </div>
+
+      {/* ── Right Side: FAQ List ── */}
+      <div className="lg:col-span-7 flex flex-col gap-3">
         {faqs.map((faq, index) => (
           <FAQItem key={faq.id || index} {...faq} index={index} />
         ))}
+        <a href="/faq" className="text-white/40 hover:text-white text-[12px] font-bold text-center mt-2 transition-colors">
+          View All Questions
+        </a>
       </div>
-
-      {/* Still have questions CTA */}
-      <motion.div
-        variants={fadeIn("up", "spring", 0.5, 0.75)}
-        className="mt-16 p-12 premium-glass-card text-center relative overflow-hidden"
-      >
-        <div className="glow-orb -top-20 -right-20 w-80 h-80 bg-[#915EFF]/10 animate-slow-ping" />
-        <div className="glow-orb -bottom-20 -left-20 w-80 h-80 bg-[#56ccf2]/10 animate-pulse" />
-
-        <div className="relative z-10">
-          <div className="w-20 h-20 bg-[#915EFF]/10 rounded-full flex items-center justify-center mx-auto mb-8 text-4xl shadow-[inset_0_0_20px_rgba(145,94,255,0.2)] border border-[#915EFF]/20">
-             💬
-          </div>
-          <h3 className="text-white text-2xl font-black mb-4">Still have questions?</h3>
-          <p className="text-secondary text-lg mb-10 max-w-lg mx-auto opacity-80">
-            I&apos;m always available for a technical deep-dive or a project consultation. 
-            Let&apos;s discuss how I can help your team.
-          </p>
-          <a href="/contact" className={`${styles.glassButtonPremium} px-12 py-4 text-[16px]`}>
-            Start a Conversation
-          </a>
-        </div>
-      </motion.div>
     </div>
   );
 };
 
-const FAQSection = SectionWrapper(FAQ, "faq", { noTopPadding: true });
-export default FAQSection;
+export default SectionWrapper(FAQ, "faq", { noTopPadding: true });

@@ -1,25 +1,24 @@
+/* eslint-disable react/prop-types */
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { usePortfolio } from "../context/PortfolioContext";
 import { SectionWrapper } from "../hoc";
-import { fadeIn, textVariant } from "../Animation/motion";
+import { fadeIn } from "../Animation/motion";
 import { styles } from "../styles";
 
 const FeatureCard = ({ emoji, title, desc, index }) => (
   <motion.div
-    variants={fadeIn("up", "spring", index * 0.2, 0.75)}
-    whileHover={{ y: -10, scale: 1.02 }}
-    className="premium-glass-card glass-reflection p-8 h-full flex flex-col gap-6 group cursor-default"
+    variants={fadeIn("up", "spring", index * 0.1, 0.5)}
+    whileHover={{ y: -5, scale: 1.01 }}
+    className="premium-glass-card glass-reflection inner-glow p-6 h-full flex flex-col gap-4 group cursor-default border-white/5 hover:border-[#915EFF]/30 transition-all duration-500"
   >
-    <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-3xl shadow-2xl border border-white/10 group-hover:border-[#915EFF]/50 transition-all duration-500 inner-glow">
+    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-white/10 to-transparent flex items-center justify-center text-xl shadow-xl border border-white/10 group-hover:border-[#915EFF]/50 transition-all duration-500 inner-glow">
       {emoji}
     </div>
     <div>
-      <h3 className="text-white text-xl font-black mb-3 group-hover:text-[#915EFF] transition-colors">{title}</h3>
-      <p className="text-secondary text-base leading-relaxed opacity-80">{desc}</p>
+      <h3 className="text-white text-base font-black mb-1 group-hover:text-[#915EFF] transition-colors tracking-tight">{title}</h3>
+      <p className="text-secondary text-[13px] leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity line-clamp-2">{desc}</p>
     </div>
-    {/* Subtle animated border line on hover */}
-    <div className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-[#915EFF] to-[#56ccf2] w-0 group-hover:w-full transition-all duration-700" />
   </motion.div>
 );
 
@@ -32,71 +31,71 @@ const HomeIntro = () => {
 
   const features = [
     {
-      emoji: "💡",
-      title: "Solution Architect",
-      desc: "Designing scalable, enterprise-grade systems with modularity in mind."
+      emoji: "🏗️",
+      title: "System Architect",
+      desc: "Designing scalable, cloud-native ecosystems with modular architecture."
     },
     {
-      emoji: "🚀",
-      title: "Performance Expert",
-      desc: "Optimizing critical paths for peak speed and exceptional UX."
+      emoji: "⚡",
+      title: "Performance",
+      desc: "Optimizing critical paths for sub-second latency and speed."
     },
     {
-      emoji: "🛡️",
-      title: "Quality Obsessed",
-      desc: "Writing clean, maintainable code backed by industry standards."
+      emoji: "💎",
+      title: "Quality",
+      desc: "Delivering enterprise-grade, maintainable codebases and standards."
     }
   ];
 
   return (
-    <div className="flex flex-col gap-16">
-      <div className="flex flex-col lg:flex-row gap-12 items-center justify-between">
+    <div className="flex flex-col gap-8">
+      <div className="flex flex-col lg:flex-row gap-8 items-center justify-between">
         <motion.div
-          variants={fadeIn("right", "spring", 0.2, 1)}
+          variants={fadeIn("right", "spring", 0.2, 0.8)}
           className="flex-1"
         >
-          <span className="section-badge mb-6">Architecture & Philosophy</span>
+          <span className="section-badge mb-4">Core Overview</span>
           <h2 className={styles.sectionHeadText}>
-            Engineering <span className="text-gradient">Digital Excellence</span>
+            Engineering <span className="text-gradient">Professional Solutions</span>
           </h2>
-          <p className="mt-8 text-secondary text-lg sm:text-xl leading-relaxed max-w-2xl">
-            {overview.replace(/^I'm a passionate/i, "As a dedicated Software Engineer, I specialize in")} My approach combines robust architectural patterns with cutting-edge technologies.
+          <p className="mt-4 text-secondary text-base leading-relaxed max-w-2xl opacity-80">
+            {overview.substring(0, 150)}... I specialize in high-performance solutions that bridge complex logic and user engagement.
           </p>
           
-          <div className="mt-10 flex flex-wrap gap-6">
+          <div className="mt-6 flex flex-wrap gap-4">
             <Link
               to="/about"
-              className={`${styles.glassButtonPremium} px-10 py-4 text-[15px] group`}
+              className={`${styles.glassButtonPremium} px-8 py-2.5 text-[13px] group`}
               onClick={() => window.scrollTo(0, 0)}
             >
-              The Full Story <span className="group-hover:translate-x-1 transition-transform ml-2">→</span>
+              Full Bio <span className="group-hover:translate-x-1 transition-transform ml-2">→</span>
             </Link>
             <Link
               to="/services"
-              className="px-8 py-4 text-[15px] font-bold text-white/70 hover:text-white transition-all border-b-2 border-white/5 hover:border-[#915EFF]/50"
+              className="px-6 py-2.5 text-[13px] font-bold text-white/50 hover:text-white transition-all border-b border-white/5"
               onClick={() => window.scrollTo(0, 0)}
             >
-              Capabilities
+              Expertise
             </Link>
           </div>
         </motion.div>
 
         <motion.div
-          variants={fadeIn("left", "spring", 0.4, 1)}
+          variants={fadeIn("left", "spring", 0.4, 0.8)}
           className="flex-1 hidden lg:block"
         >
-           <div className="relative w-full aspect-square max-w-md mx-auto">
-              <div className="absolute inset-0 bg-[#915EFF]/10 rounded-full blur-[100px] animate-pulse" />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] border-2 border-[#915EFF]/20 rounded-full animate-slow-ping" />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] border-2 border-[#56ccf2]/10 rounded-full animate-pulse" />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center text-[100px] drop-shadow-2xl opacity-60">
-                💎
+           <div className="relative w-full aspect-square max-w-[280px] mx-auto">
+              <div className="absolute inset-0 bg-[#915EFF]/10 rounded-full blur-[80px] animate-slow-ping" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
+                 <div className="w-24 h-24 rounded-2xl bg-white/[0.02] backdrop-blur-3xl border border-white/10 flex items-center justify-center text-4xl shadow-2xl rotate-12 group-hover:rotate-0 transition-transform duration-700">
+                   💻
+                 </div>
               </div>
            </div>
         </motion.div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {features.map((feature, index) => (
           <FeatureCard key={index} {...feature} index={index} />
         ))}
@@ -105,4 +104,4 @@ const HomeIntro = () => {
   );
 };
 
-export default SectionWrapper(HomeIntro, "about");
+export default SectionWrapper(HomeIntro, "about", { noTopPadding: true });

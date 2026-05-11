@@ -1,17 +1,17 @@
 const styles = {
   paddingX: "sm:px-16 px-6",
-  paddingY: "sm:py-12 py-5",
-  padding: "sm:px-16 px-6 sm:py-12 py-8",
+  paddingY: "sm:py-8 py-4",
+  padding: "sm:px-16 px-6 sm:py-6 py-4",
 
   heroHeadText:
-    "font-black text-white lg:text-[64px] sm:text-[48px] xs:text-[38px] text-[30px] lg:leading-[88px] tracking-tight drop-shadow-2xl",
+    "font-black text-white lg:text-[56px] sm:text-[44px] xs:text-[34px] text-[28px] lg:leading-[72px] tracking-tight drop-shadow-2xl",
   heroSubText:
-    "text-[#dfd9ff] font-medium lg:text-[22px] sm:text-[18px] xs:text-[16px] text-[14px] lg:leading-[34px] opacity-90",
+    "text-[#dfd9ff] font-medium lg:text-[18px] sm:text-[16px] xs:text-[14px] text-[13px] lg:leading-[28px] opacity-90",
 
   sectionHeadText:
-    "text-white font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px] tracking-tight",
+    "text-white font-black md:text-[36px] sm:text-[30px] xs:text-[24px] text-[22px] tracking-tight leading-tight",
   sectionSubText:
-    "sm:text-[18px] text-[14px] text-secondary uppercase tracking-[0.3em] font-bold",
+    "sm:text-[14px] text-[12px] text-secondary uppercase tracking-[0.3em] font-black opacity-60",
 
   flexCenter: "flex justify-center items-center",
   flexStart: "flex justify-start items-start",

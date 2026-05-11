@@ -51,11 +51,11 @@ const HomePage = () => {
             <LoadingState message='Fetching portfolio content...' />
           </div>
         ) : (
-          <div className="flex flex-col gap-24 pb-32">
+          <div className="flex flex-col gap-12 pb-32">
             <HomeIntro />
             <Showcase />
-            <WhyWorkWithMe />
             <Statistics />
+            <WhyWorkWithMe />
             <FAQ />
             <ReadyForWork />
             

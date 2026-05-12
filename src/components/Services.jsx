@@ -82,9 +82,9 @@ const Services = () => {
   return (
     <>
       <motion.div variants={textVariant()} className="flex flex-col items-start gap-4">
-        <span className="section-badge">Solutions</span>
+        <span className="section-badge">Expertise</span>
         <h2 className="section-title-underline text-white font-extrabold text-3xl sm:text-5xl leading-tight max-w-3xl tracking-tight">
-          Services &amp; <span className="text-gradient">Specializations</span>
+          Technical <span className="text-gradient">Solutions</span>
         </h2>
         <p className="text-secondary text-base sm:text-lg leading-relaxed max-w-2xl">
           Engineered for performance and scale. I deliver end-to-end digital solutions 

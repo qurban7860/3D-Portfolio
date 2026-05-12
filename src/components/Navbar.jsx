@@ -234,8 +234,8 @@ const Navbar = () => {
 
   const navLinks = [
     { id: "about", title: "About", path: "/about" },
-    { id: "portfolio", title: "Work", path: "/portfolio" },
     { id: "experience", title: "Experience", path: "/experience" },
+    { id: "portfolio", title: "Projects", path: "/portfolio" },
     { id: "services", title: "Skills", path: "/services" },
     { id: "contact", title: "Contact", path: "/contact" },
   ];

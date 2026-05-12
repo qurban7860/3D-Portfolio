@@ -73,18 +73,18 @@ const Hero = () => {
           >
             <button
               onClick={() => navigate("/portfolio")}
-              className={`${styles.glassButtonPremium} px-6 sm:px-8 py-3 sm:py-3.5 text-[13px] sm:text-[14px] shadow-2xl shadow-purple-500/20 whitespace-nowrap`}
+              className={`${styles.glassButtonPremium} whitespace-nowrap`}
             >
-              View Work
+              Explore Portfolio
             </button>
             <button
               onClick={() => {
                 const resumeUrl = data?.settings?.hero?.resumeUrl || "/resume.pdf";
                 window.open(resumeUrl, "_blank");
               }}
-              className={`${styles.outlineButtonCyan} px-6 sm:px-8 py-3 sm:py-3.5 text-[13px] sm:text-[14px] shadow-xl whitespace-nowrap group`}
+              className={`${styles.outlineButtonCyan} whitespace-nowrap group`}
             >
-              <span className="group-hover:scale-110 transition-transform">📄</span> Download CV
+              <span className="group-hover:scale-110 transition-transform">📄</span> View Resume
             </button>
             
             {/* Quick Socials - Hidden on very small screens to keep layout clean */}

@@ -197,7 +197,7 @@ const Experience = () => {
     <>
       {/* Education */}
       <motion.div variants={textVariant()} className="flex flex-col items-start gap-2">
-        <span className="section-badge inline-block">Career Path</span>
+        <span className="section-badge inline-block">Academic Background</span>
         <h2 className="section-title-underline text-white font-extrabold text-3xl sm:text-4xl leading-tight max-w-3xl">
           Education
         </h2>
@@ -211,9 +211,9 @@ const Experience = () => {
 
       {/* Experience */}
       <motion.div variants={textVariant()} className="flex flex-col items-start gap-2 mt-14">
-        <span className="section-badge inline-block">Professional Journey</span>
+        <span className="section-badge inline-block">Career History</span>
         <h2 className="section-title-underline text-white font-extrabold text-3xl sm:text-4xl leading-tight max-w-3xl">
-          Work Experience
+          Work History
         </h2>
       </motion.div>
 

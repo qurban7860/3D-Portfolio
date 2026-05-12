@@ -49,19 +49,25 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
   };
 
   return (
-    <div className="p-8 sm:p-12 relative overflow-hidden">
-      {/* Background glow for form */}
-      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#915EFF]/5 to-transparent pointer-events-none" />
+    <div className="p-8 sm:p-12 relative overflow-hidden bg-[#050816]">
+      {/* Structural Highlights */}
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#915EFF]/10 rounded-full blur-[120px] pointer-events-none -mr-48 -mt-48" />
+      <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#56ccf2]/5 rounded-full blur-[100px] pointer-events-none -ml-32 -mb-32" />
 
-      <div className="mb-10 relative z-10">
-        <h3 className="text-white font-bold text-2xl sm:text-3xl tracking-tight">
+      <div className="mb-12 relative z-10">
+        <div className="flex items-center gap-3 mb-4">
+          <span className="px-3 py-1 rounded-lg bg-[#915EFF]/10 border border-[#915EFF]/20 text-[#915EFF] text-[10px] font-bold uppercase tracking-widest">
+            Configuration Node
+          </span>
+        </div>
+        <h3 className="text-white font-black text-3xl sm:text-4xl tracking-tight leading-none">
           {initialData ? "Refine Entry" : "New Node"}
         </h3>
-        <p className="text-secondary text-[15px] mt-3 font-medium opacity-60">Architect your collection with precise metadata.</p>
+        <p className="text-secondary text-[15px] mt-4 font-medium opacity-60 leading-relaxed max-w-xl">Architect your collection with precise metadata to maintain system-wide integrity.</p>
       </div>
       
-      <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
-        <div className="grid gap-x-8 gap-y-8 grid-cols-1 md:grid-cols-2">
+      <form onSubmit={handleSubmit} className="space-y-10 relative z-10">
+        <div className="grid gap-x-10 gap-y-10 grid-cols-1 md:grid-cols-2">
           {schema.fields.map((field) => (
             <div 
               key={field.name} 
@@ -77,9 +83,12 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
                   : ""
               }`}
             >
-              <label className="block text-[13px] font-semibold text-secondary mb-3 ml-1 opacity-80">
-                {field.label} {field.required && <span className="text-[#56ccf2]">*</span>}
-              </label>
+              <div className="flex items-center justify-between mb-3 ml-1">
+                <label className="text-[12px] font-black text-white/50 uppercase tracking-[0.15em]">
+                  {field.label}
+                </label>
+                {field.required && <span className="text-[#915EFF] text-[10px] font-bold uppercase tracking-widest bg-[#915EFF]/10 px-2 py-0.5 rounded">Required</span>}
+              </div>
               
               {field.type === "textarea" ? (
                 <textarea
@@ -89,24 +98,24 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
                   rows={field.name === "points" || field.name === "features" ? 8 : 5}
                   required={field.required}
                   placeholder={`Enter ${field.label.toLowerCase()} content...`}
-                  className="w-full rounded-2xl bg-white/5 border border-white/10 px-6 py-5 text-[15px] text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-white/[0.08] placeholder:text-white/10 resize-none custom-scrollbar font-medium"
+                  className="w-full rounded-2xl bg-white/[0.03] border border-white/10 px-6 py-5 text-[15px] text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-white/[0.06] placeholder:text-white/10 resize-none custom-scrollbar font-medium shadow-inner"
                 />
               ) : field.type === "checkbox" ? (
-                <div className="flex items-center gap-4 rounded-2xl bg-white/5 border border-white/10 px-6 h-[64px] transition-all hover:bg-white/[0.08] group hover:border-[#915EFF]/30">
+                <div className="flex items-center gap-4 rounded-2xl bg-white/[0.03] border border-white/10 px-6 h-[64px] transition-all hover:bg-white/[0.06] group hover:border-[#915EFF]/30 cursor-pointer" onClick={() => handleChange({ target: { name: field.name, type: 'checkbox', checked: !formState[field.name] }})}>
                   <div className="relative flex items-center">
                     <input
                       id={`checkbox-${field.name}`}
                       name={field.name}
                       type="checkbox"
                       checked={Boolean(formState[field.name])}
-                      onChange={handleChange}
+                      onChange={() => {}} // Handled by div click
                       className="peer h-6 w-6 cursor-pointer appearance-none rounded-lg border border-white/20 bg-white/5 transition-all checked:bg-[#915EFF] checked:border-transparent focus:outline-none"
                     />
                     <svg className="absolute h-4 w-4 pointer-events-none hidden peer-checked:block left-[4px] text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
                       <polyline points="20 6 9 17 4 12" />
                     </svg>
                   </div>
-                  <span className="text-[15px] font-semibold text-white/70 group-hover:text-white transition-colors">{field.label}</span>
+                  <span className="text-[15px] font-bold text-white/70 group-hover:text-white transition-colors">{field.label}</span>
                 </div>
               ) : (
                 <input
@@ -116,7 +125,7 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
                   onChange={handleChange}
                   required={field.required}
                   placeholder={`Enter ${field.label.toLowerCase()}...`}
-                  className="w-full rounded-2xl bg-white/5 border border-white/10 px-6 py-5 text-[15px] text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-white/[0.08] placeholder:text-white/10 font-medium"
+                  className="w-full rounded-2xl bg-white/[0.03] border border-white/10 px-6 py-5 text-[15px] text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-white/[0.06] placeholder:text-white/10 font-medium shadow-inner"
                 />
               )}
             </div>
@@ -124,20 +133,25 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
         </div>
 
         {schema.fields.some((f) => f.name.toLowerCase().includes("url") || f.name === "icon") && (
-          <div className="rounded-3xl border border-dashed border-white/10 bg-white/5 p-6 sm:p-8 transition-all hover:bg-white/[0.08] group hover:border-[#915EFF]/30">
-            <div className="flex items-center justify-between mb-6">
-              <h4 className="text-white font-bold text-[13px] uppercase tracking-widest flex items-center gap-3">
-                <span className="text-2xl group-hover:scale-110 transition-transform">🖼️</span> Media Stream
-              </h4>
+          <div className="rounded-3xl border border-white/10 bg-white/[0.02] p-8 sm:p-10 transition-all hover:bg-white/[0.04] group relative overflow-hidden">
+             <div className="absolute top-0 right-0 w-32 h-32 bg-[#915EFF]/5 blur-3xl pointer-events-none" />
+             
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex flex-col gap-1">
+                <h4 className="text-white font-black text-[13px] uppercase tracking-[0.2em] flex items-center gap-3">
+                  Asset Management
+                </h4>
+                <p className="text-secondary text-[11px] font-medium opacity-40 uppercase tracking-widest">Global Asset Optimization</p>
+              </div>
               {uploading && (
-                <div className="flex items-center gap-3 text-[#56ccf2] text-[11px] font-bold tracking-wider uppercase">
-                  <div className="h-2 w-2 rounded-full bg-[#56ccf2] animate-ping" />
-                  Syncing...
+                <div className="flex items-center gap-3 text-[#56ccf2] text-[11px] font-bold tracking-widest uppercase">
+                  <div className="h-2 w-2 rounded-full bg-[#56ccf2] animate-ping shadow-[0_0_10px_#56ccf2]" />
+                  Syncing
                 </div>
               )}
             </div>
             
-            <div className="flex flex-col sm:flex-row gap-5 items-center">
+            <div className="flex flex-col sm:flex-row gap-6 items-center">
               <input
                 type="file"
                 accept="image/*"
@@ -159,36 +173,36 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
               />
               <label 
                 htmlFor="admin-file-upload"
-                className="w-full sm:w-auto flex cursor-pointer items-center justify-center gap-3 rounded-2xl bg-white/10 px-8 py-4 text-[14px] font-bold text-white transition-all hover:bg-white/20 border border-white/20 active:scale-95 shadow-xl"
+                className="w-full sm:w-auto flex cursor-pointer items-center justify-center gap-4 rounded-2xl bg-white/5 px-10 py-5 text-[14px] font-black text-white transition-all hover:bg-white/10 border border-white/10 active:scale-95 shadow-2xl hover:border-[#915EFF]/40"
               >
                 <span className="text-xl">📁</span>
-                <span>{uploading ? "Syncing..." : "Select Resource"}</span>
+                <span>{uploading ? "Syncing..." : "Choose File"}</span>
               </label>
-              <p className="text-[12px] text-secondary/40 font-medium italic text-center sm:text-left">Optimization recommended for high-performance delivery.</p>
+              <p className="text-[12px] text-secondary/40 font-medium italic text-center sm:text-left leading-relaxed">System handles automatic compression and edge distribution.</p>
             </div>
           </div>
         )}
 
-        <div className="flex flex-col sm:flex-row gap-4 pt-8 border-t border-white/5 mt-10">
+        <div className="flex flex-col sm:flex-row gap-5 pt-10 border-t border-white/5 mt-10">
           <button
             type="submit"
             disabled={isSaving}
-            className={`${styles.glassButtonPremium} flex-1 px-8 py-5 text-[15px] font-bold active:scale-[0.98]`}
+            className={`${styles.glassButtonPremium} flex-1 px-10 py-6 text-[15px] font-black active:scale-[0.98] shadow-2xl`}
           >
             {isSaving ? (
               <div className="flex items-center justify-center gap-3">
                 <div className="h-4 w-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                <span>Committing...</span>
+                <span>Saving Changes...</span>
               </div>
-            ) : initialData ? "Commit Updates" : "Initialize Entry"}
+            ) : initialData ? "Save Changes" : "Create Entry"}
           </button>
           
           <button
             type="button"
             onClick={onCancel}
-            className={`${styles.outlineButton} flex-1 px-10 py-5 text-white font-bold text-[15px] active:scale-[0.98]`}
+            className="flex-1 px-10 py-6 text-white/40 font-black text-[14px] uppercase tracking-widest hover:text-white transition-all active:scale-[0.98] border border-white/10 rounded-2xl hover:bg-white/5"
           >
-            Abort
+            Cancel
           </button>
         </div>
       </form>

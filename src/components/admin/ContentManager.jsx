@@ -239,15 +239,18 @@ const ContentManager = ({ section }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#050816]/80 backdrop-blur-md"
           >
           <motion.div
             initial={{ scale: 0.95, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.95, opacity: 0, y: 20 }}
             transition={{ type: "spring", bounce: 0, duration: 0.4 }}
-            className={`relative w-full max-w-3xl max-h-[90vh] overflow-y-auto custom-scrollbar ${styles.glassCardStrong} bg-[#050816]/95`}
+            className={`relative w-full max-w-3xl max-h-[90vh] overflow-y-auto custom-scrollbar rounded-3xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] bg-[#050816] shadow-2xl overflow-hidden`}
           >
+            {/* Top Accent Gradient */}
+            <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#915EFF] to-transparent opacity-50 z-20" />
+            
               <button
                 onClick={() => {
                   setIsFormOpen(false);

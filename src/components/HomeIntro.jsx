@@ -55,7 +55,7 @@ const HomeIntro = () => {
           variants={fadeIn("right", "spring", 0.2, 0.8)}
           className="flex-1"
         >
-          <span className="section-badge my-8">Core Overview</span>
+          <span className="section-badge my-8">Profile Summary</span>
           <h2 className={styles.sectionHeadText}>
             Engineering <span className="text-gradient">Professional Solutions</span>
           </h2>
@@ -66,7 +66,7 @@ const HomeIntro = () => {
           <div className="mt-6 flex flex-wrap gap-4">
             <Link
               to="/about"
-              className={`${styles.glassButtonPremium} px-8 py-2.5 text-[13px] group`}
+              className={`${styles.glassButtonPremium} group`}
               onClick={() => window.scrollTo(0, 0)}
             >
               Full Bio <span className="group-hover:translate-x-1 transition-transform ml-2">→</span>
@@ -76,7 +76,7 @@ const HomeIntro = () => {
               className="px-6 py-2.5 text-[13px] font-bold text-white/50 hover:text-white transition-all border-b border-white/5"
               onClick={() => window.scrollTo(0, 0)}
             >
-              Expertise
+              Technical Stack
             </Link>
           </div>
         </motion.div>

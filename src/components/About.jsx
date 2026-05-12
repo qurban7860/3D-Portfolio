@@ -28,9 +28,9 @@ const About = ({ isSummary = false, hideHeader = false }) => {
       >
         {!hideHeader && (
           <>
-            <span className="section-badge">About Me</span>
+            <span className="section-badge">Profile Summary</span>
             <h2 className="section-title-underline text-white font-extrabold text-3xl sm:text-4xl leading-tight max-w-3xl">
-              Overview
+              Background
             </h2>
           </>
         )}

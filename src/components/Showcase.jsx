@@ -14,7 +14,7 @@ const Showcase = () => {
   return (
     <div className="flex flex-col gap-10 items-center">
       <motion.div variants={textVariant()} className="flex flex-col items-center text-center gap-2">
-        <span className="section-badge">Recent Highlights</span>
+        <span className="section-badge">Portfolio Highlights</span>
         <h2 className={styles.sectionHeadText}>
           Featured <span className="text-gradient">Work & Experience</span>
         </h2>
@@ -42,7 +42,7 @@ const Showcase = () => {
                     <p className="text-secondary text-[13px] line-clamp-2 mt-2">{latestProject.description}</p>
                   </div>
                   <Link to="/portfolio" className="text-[#915EFF] font-bold text-[13px] hover:text-white transition-all">
-                    Project Details →
+                    Case Study →
                   </Link>
                 </div>
               </div>
@@ -64,7 +64,7 @@ const Showcase = () => {
                  <h4 className="text-white text-lg font-black leading-tight">{latestExperience.title}</h4>
                  <p className="text-secondary text-[13px] mt-1">{latestExperience.companyName}</p>
                  <Link to="/experience" className="text-[#915EFF] font-bold text-[13px] hover:text-white mt-3 block transition-all">
-                   Career Timeline →
+                   Professional Journey →
                  </Link>
               </div>
             </div>
@@ -72,8 +72,8 @@ const Showcase = () => {
         )}
       </div>
 
-      <Link to="/portfolio" className={`${styles.glassButton} px-10 py-3 text-[13px] shadow-2xl`}>
-         View Full Portfolio
+      <Link to="/portfolio" className={`${styles.glassButton}`}>
+         See All Projects
       </Link>
     </div>
   );

@@ -133,7 +133,7 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
                   />
                   
                   {(field.name === "icon" || field.name.toLowerCase().includes("iconurl") || field.name.toLowerCase().includes("imageurl")) && (
-                    <div className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 shadow-lg overflow-hidden">
+                    <div className="absolute right-4 top-8 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 shadow-lg overflow-hidden">
                       {field.name === "icon" ? (
                         (() => {
                           const Icon = getIcon(formState[field.name]);

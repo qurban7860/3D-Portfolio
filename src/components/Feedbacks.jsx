@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { styles } from "../styles";
 import { SectionWrapper } from "../hoc";
@@ -6,46 +7,63 @@ import { fadeIn, textVariant } from "../Animation/motion";
 import { usePortfolio } from "../context/PortfolioContext";
 
 /* ── Feedback Card ─────────────────────────────────────────────── */
-const FeedbackCard = ({ index, testimonial, name, imageUrl }) => (
-  <motion.div
-    variants={fadeIn("up", "spring", index * 0.4, 0.75)}
-    whileHover={{ y: -6 }}
-    className={`${styles.glassCard} xs:w-[320px] w-full p-7 flex flex-col gap-4 transition-all duration-500`}
-  >
-    {/* Quote mark */}
-    <div className="text-[52px] leading-none font-black text-gradient select-none -mb-2">
-      &quot;
-    </div>
+const FeedbackCard = ({ index, testimonial, name, imageUrl }) => {
+  const [error, setError] = useState(false);
+  const initials = name
+    ?.split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase() || "?";
 
-    {/* Testimonial text */}
-    <p className="text-white/85 text-[15px] leading-relaxed tracking-wide flex-grow">
-      {testimonial}
-    </p>
-
-    {/* Divider */}
-    <div className="h-px bg-white/10 relative overflow-hidden">
-       <div className="absolute inset-0 bg-[#915EFF] animate-shimmer" style={{ backgroundSize: '200% auto' }} />
-    </div>
-
-    {/* Author */}
-    <div className="flex items-center gap-3">
-      <div className="relative">
-        <img
-          src={imageUrl}
-          alt={`feedback by ${name}`}
-          className="w-11 h-11 rounded-full object-cover ring-2 ring-[#915EFF]/50"
-        />
-        <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-green-400 rounded-full border-2 border-[#050816]" />
+  return (
+    <motion.div
+      variants={fadeIn("up", "spring", index * 0.4, 0.75)}
+      whileHover={{ y: -6 }}
+      className={`${styles.glassCard} w-full p-7 flex flex-col gap-4 transition-all duration-500 hover:border-[#915EFF]/30 hover:shadow-[0_10px_30px_rgba(145,94,255,0.1)]`}
+    >
+      {/* Quote mark */}
+      <div className="text-[52px] leading-none font-black text-gradient select-none -mb-2">
+        &quot;
       </div>
-      <div>
-        <p className="text-white font-bold text-[14px]">
-          <span className="text-gradient">@</span> {name}
-        </p>
-        <p className="text-white/40 text-[12px]">Verified Client</p>
+
+      {/* Testimonial text */}
+      <p className="text-white/85 text-[15px] leading-relaxed tracking-wide flex-grow italic">
+        {testimonial}
+      </p>
+
+      {/* Divider */}
+      <div className="h-px bg-white/10 relative overflow-hidden mt-2">
+         <div className="absolute inset-0 bg-[#915EFF] animate-shimmer" style={{ backgroundSize: '200% auto' }} />
       </div>
-    </div>
-  </motion.div>
-);
+
+      {/* Author */}
+      <div className="flex items-center gap-4">
+        <div className="relative flex-shrink-0">
+          <div className="absolute inset-0 bg-[#915EFF]/20 blur-md rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+          {!error && imageUrl ? (
+            <img
+              src={imageUrl}
+              alt={`feedback by ${name}`}
+              onError={() => setError(true)}
+              className="w-12 h-12 rounded-full object-cover ring-2 ring-[#915EFF]/30 relative z-10"
+            />
+          ) : (
+            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#915EFF]/20 to-[#56ccf2]/20 border border-white/10 flex items-center justify-center text-white font-black text-sm relative z-10">
+              {initials}
+            </div>
+          )}
+          <span className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-400 rounded-full border-2 border-[#050816] z-20" />
+        </div>
+        <div className="min-w-0">
+          <p className="text-white font-black text-[15px] truncate">
+            <span className="text-gradient">@</span> {name}
+          </p>
+          <p className="text-white/40 text-[11px] font-bold uppercase tracking-wider">Professional Client</p>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
 
 FeedbackCard.propTypes = {
   index: PropTypes.number.isRequired,

@@ -1,5 +1,5 @@
 import { About } from "../components/About";
-import { WhyWorkWithMe, StarsCanvas, BackToTop, Navbar, Footer } from "../components";
+import { WhyWorkWithMe, StarsCanvas, BackToTop, Navbar, Footer, Feedbacks } from "../components";
 import { usePortfolio } from "../context/PortfolioContext";
 import LoadingState from "../components/common/LoadingState";
 import ErrorMessage from "../components/common/ErrorMessage";
@@ -55,6 +55,7 @@ const AboutPage = () => {
           <div className="flex flex-col gap-10 pb-20">
             <About hideHeader={true} />
             <WhyWorkWithMe />
+            <Feedbacks />
           </div>
         )}
       </div>

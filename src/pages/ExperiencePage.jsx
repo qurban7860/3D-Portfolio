@@ -1,5 +1,5 @@
 import { Experience as RawExperience } from "../components/Experience";
-import { StarsCanvas, BackToTop, Navbar, Footer } from "../components";
+import { StarsCanvas, BackToTop, Navbar, Footer, Certifications } from "../components";
 import { usePortfolio } from "../context/PortfolioContext";
 import LoadingState from "../components/common/LoadingState";
 import ErrorMessage from "../components/common/ErrorMessage";
@@ -61,6 +61,7 @@ const ExperiencePage = () => {
             id="experience"
           >
             <RawExperience />
+            <Certifications />
           </motion.section>
         )}
       </div>

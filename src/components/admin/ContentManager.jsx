@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { HiOutlinePlus, HiOutlineX } from "react-icons/hi";
 import { useAuth } from "../../context/AuthContext";
+import { usePortfolio } from "../../context/PortfolioContext";
 import {
   createAdminItem,
   deleteAdminItem,
@@ -44,6 +45,7 @@ const transformFormValue = (field, value) => {
 
 const ContentManager = ({ section }) => {
   const { token } = useAuth();
+  const { refreshPortfolio } = usePortfolio();
   const [items, setItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -118,6 +120,7 @@ const ContentManager = ({ section }) => {
       }
       
       await loadItems(false);
+      await refreshPortfolio();
       setIsFormOpen(false);
       setSelectedItem(null);
       return true;
@@ -140,6 +143,7 @@ const ContentManager = ({ section }) => {
         newOrder.map((item) => item.id),
         token
       );
+      await refreshPortfolio();
       toast.success("Display order updated.");
     } catch (err) {
       console.error(err);
@@ -168,6 +172,7 @@ const ContentManager = ({ section }) => {
     try {
       await deleteAdminItem(section, id, token);
       setItems((prev) => prev.filter((item) => item.id !== id));
+      await refreshPortfolio();
       toast.success("Item deleted successfully.", { id: loadingToast });
     } catch (err) {
       console.error(err);

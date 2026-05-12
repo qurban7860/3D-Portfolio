@@ -6,73 +6,65 @@ import { textVariant, fadeIn } from "../Animation/motion";
 import { getIcon } from "../utils/iconMapping";
 
 /* ── Certification Card ────────────────────────────────────────── */
-const CertificationCard = ({ index, title, issuer, date, credentialUrl, icon }) => (
-  <motion.a
-    href={credentialUrl}
-    target="_blank"
-    rel="noopener noreferrer"
-    variants={fadeIn("up", "spring", index * 0.2, 0.75)}
-    whileHover={{ y: -6, scale: 1.01 }}
-    className="block rounded-xl p-6 group transition-all duration-400
-               hover:shadow-[0_10px_36px_rgba(145,94,255,0.18)] cursor-pointer"
-    style={{
-      backdropFilter: "blur(12px)",
-      WebkitBackdropFilter: "blur(12px)",
-      background:
-        "linear-gradient(145deg, rgba(145,94,255,0.07) 0%, rgba(255,255,255,0.04) 100%)",
-      border: "1px solid rgba(145,94,255,0.20)",
-    }}
-    onMouseEnter={(e) => {
-      e.currentTarget.style.border = "1px solid rgba(145,94,255,0.50)";
-      e.currentTarget.style.background =
-        "linear-gradient(145deg, rgba(145,94,255,0.12) 0%, rgba(255,255,255,0.06) 100%)";
-    }}
-    onMouseLeave={(e) => {
-      e.currentTarget.style.border = "1px solid rgba(145,94,255,0.20)";
-      e.currentTarget.style.background =
-        "linear-gradient(145deg, rgba(145,94,255,0.07) 0%, rgba(255,255,255,0.04) 100%)";
-    }}
-  >
-    <div className="flex items-start gap-4">
-      {/* Icon badge */}
-      <div
-        className="w-13 h-13 flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center text-2xl
-                    bg-gradient-to-br from-[#915EFF]/25 to-[#56ccf2]/15
-                    border border-[#915EFF]/30 group-hover:border-[#915EFF]/60
-                    group-hover:shadow-[0_0_16px_rgba(145,94,255,0.3)] transition-all duration-300"
-      >
-        {(() => {
-          if (!icon) return "📜";
-          const Icon = getIcon(icon);
-          return Icon ? <Icon /> : icon; 
-        })()}
-      </div>
+const CertificationCard = ({ index, title, issuer, date, credentialUrl, icon }) => {
+  const firstLetter = title?.charAt(0).toUpperCase() || "?";
+  
+  return (
+    <motion.a
+      href={credentialUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      variants={fadeIn("up", "spring", index * 0.2, 0.75)}
+      whileHover={{ y: -6, scale: 1.01 }}
+      className="block rounded-2xl p-6 group transition-all duration-400
+                 hover:shadow-[0_10px_36px_rgba(145,94,255,0.15)] cursor-pointer
+                 premium-glass-card relative overflow-hidden"
+    >
+      {/* Decorative background glow */}
+      <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-[#915EFF]/5 rounded-full blur-3xl group-hover:bg-[#915EFF]/10 transition-all duration-500" />
+      
+      <div className="flex items-start gap-5 relative z-10">
+        {/* Icon badge */}
+        <div
+          className="w-14 h-14 flex-shrink-0 rounded-2xl flex items-center justify-center text-2xl
+                      bg-gradient-to-br from-[#915EFF]/20 to-[#56ccf2]/10
+                      border border-white/10 group-hover:border-[#915EFF]/50
+                      group-hover:shadow-[0_0_20px_rgba(145,94,255,0.25)] transition-all duration-500
+                      shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]"
+        >
+          {(() => {
+            if (!icon) return <span className="font-black text-white/50">{firstLetter}</span>;
+            const Icon = getIcon(icon);
+            return Icon ? <Icon className="text-[#c4a7ff]" /> : <span className="font-black text-white/50">{firstLetter}</span>; 
+          })()}
+        </div>
 
-      <div className="flex-1 min-w-0">
-        <h3 className="text-white font-bold text-[16px] mb-1 leading-snug
-                       group-hover:text-[#915EFF] transition-colors duration-300">
-          {title}
-        </h3>
-        <p className="text-secondary text-[13px] mb-2">{issuer}</p>
-        <div className="flex items-center justify-between gap-2 flex-wrap">
-          <span
-            className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full"
-            style={{
-              background: "rgba(145,94,255,0.12)",
-              border: "1px solid rgba(145,94,255,0.30)",
-              color: "#c4a7ff",
-            }}
-          >
-            📅 {date}
-          </span>
-          <span className="text-gradient text-[12px] font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            View Credential →
-          </span>
+        <div className="flex-1 min-w-0">
+          <h3 className="text-white font-black text-[17px] mb-1 leading-snug
+                         group-hover:text-gradient transition-all duration-300">
+            {title}
+          </h3>
+          <p className="text-white/40 font-bold text-[13px] mb-3 uppercase tracking-wider">{issuer}</p>
+          <div className="flex items-center justify-between gap-3 flex-wrap">
+            <span
+              className="text-[10px] font-black uppercase tracking-[0.15em] px-3 py-1 rounded-lg"
+              style={{
+                background: "rgba(145,94,255,0.1)",
+                border: "1px solid rgba(145,94,255,0.2)",
+                color: "#c4a7ff",
+              }}
+            >
+              📅 {date}
+            </span>
+            <span className="text-[#915EFF] text-[12px] font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0">
+              Verify →
+            </span>
+          </div>
         </div>
       </div>
-    </div>
-  </motion.a>
-);
+    </motion.a>
+  );
+};
 
 CertificationCard.propTypes = {
   index: PropTypes.number.isRequired,

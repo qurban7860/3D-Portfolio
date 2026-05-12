@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { usePortfolio } from "../../context/PortfolioContext";
 import { fetchAdminSettings, updateAdminSetting } from "../../api/content";
 import { adminSettingsSchema } from "../../constants/adminSchema";
 import LoadingState from "../common/LoadingState";
@@ -7,6 +8,7 @@ import { toast } from "react-hot-toast";
 
 const SettingsManager = () => {
   const { token } = useAuth();
+  const { refreshPortfolio } = usePortfolio();
   const [settings, setSettings] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -40,6 +42,7 @@ const SettingsManager = () => {
         ...prev,
         [groupKey]: updatedGroup
       }));
+      await refreshPortfolio();
       toast.success(`${fieldName} updated successfully!`);
     } catch (err) {
       console.error(err);

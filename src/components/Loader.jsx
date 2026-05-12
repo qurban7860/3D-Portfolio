@@ -14,20 +14,27 @@ const CanvasLoader = ({ isFullScreen = false }) => {
         alignItems: "center",
         flexDirection: "column",
         zIndex: isFullScreen ? 9999 : "auto",
+        width: "100%",
+        height: "100%"
       }}
     >
-      <span className="canvas-loader" />
-      <p
-        style={{
-          fontSize: 14,
-          color: "#F1F1F1",
-          fontWeight: 800,
-          marginTop: "30px",
-          textShadow: "0 0 10px rgba(145, 94, 255, 0.5)",
-        }}
-      >
-        {progress.toFixed(2)}%
-      </p>
+      <div className="flex flex-col items-center justify-center">
+        <div className="relative w-20 h-20 mb-6">
+          <div className="absolute inset-0 rounded-full border-2 border-[#915EFF]/20 animate-ping" />
+          <div className="absolute inset-2 rounded-full border-2 border-[#56ccf2]/30 animate-pulse" />
+          <div className="absolute inset-0 rounded-full border-t-2 border-[#915EFF] animate-spin shadow-[0_0_15px_rgba(145,94,255,0.4)]" />
+          <div className="absolute inset-[30%] rounded-full bg-gradient-to-br from-[#915EFF] to-[#56ccf2] blur-[2px] opacity-80" />
+        </div>
+
+        <div className="flex flex-col items-center gap-2">
+          <p className="text-white font-black text-[12px] tracking-[0.4em] uppercase opacity-40 animate-shimmer bg-clip-text" style={{ backgroundSize: '200% auto' }}>
+             Initializing 3D Space
+          </p>
+          <p className="text-[#915EFF] font-black text-[18px] tracking-tight drop-shadow-[0_0_10px_rgba(145,94,255,0.3)]">
+            {progress.toFixed(0)}%
+          </p>
+        </div>
+      </div>
     </Html>
   );
 };

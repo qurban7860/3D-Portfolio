@@ -3,7 +3,8 @@
 import { useState, useEffect, useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaGithub, FaLinkedinIn } from "react-icons/fa";
+import { FaGithub, FaLinkedinIn, FaFileDownload } from "react-icons/fa";
+import { BsEye } from "react-icons/bs";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { styles } from "../styles";
 import { usePortfolio } from "../context/PortfolioContext";
@@ -66,14 +67,14 @@ const ResumeButton = ({ isMobile = false }) => {
               rel="noopener noreferrer"
               className="flex items-center px-4 py-2.5 text-white hover:bg-white/5 rounded-xl transition-colors text-[13px]"
             >
-              👁️ View PDF
+              <BsEye /> <span className="ml-2"> View </span>
             </a>
             <a
               href={resumePdf}
               download="Resume_Mern.pdf"
               className="flex items-center px-4 py-2.5 text-white hover:bg-white/5 rounded-xl transition-colors text-[13px]"
             >
-              ⬇️ Download
+              <FaFileDownload /> <span className="ml-2"> Download</span>
             </a>
           </motion.div>
         )}

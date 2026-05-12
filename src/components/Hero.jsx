@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { HiDocument } from "react-icons/hi";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { styles } from "../styles";
 import ComputersCanvas from "./canvas/Computers";
 import { usePortfolio } from "../context/PortfolioContext";
+import resumePdf from "../assets/resume/Resume_Mern.pdf";
 
 const Hero = () => {
   const { data } = usePortfolio();
@@ -72,19 +74,19 @@ const Hero = () => {
             className="flex flex-row items-center justify-center lg:justify-start gap-4 sm:gap-5 mt-4 w-full lg:w-auto"
           >
             <button
-              onClick={() => navigate("/portfolio")}
+              onClick={() => navigate("/about")}
               className={`${styles.glassButtonPremium} whitespace-nowrap`}
             >
               Explore Portfolio
             </button>
             <button
               onClick={() => {
-                const resumeUrl = data?.settings?.hero?.resumeUrl || "/resume.pdf";
+                const resumeUrl = data?.settings?.hero?.resumeUrl || `${resumePdf}`;
                 window.open(resumeUrl, "_blank");
               }}
               className={`${styles.outlineButtonCyan} whitespace-nowrap group`}
             >
-              <span className="group-hover:scale-110 transition-transform">📄</span> View Resume
+              <span className="group-hover:scale-110 transition-transform"><HiDocument /></span> View Resume
             </button>
             
             {/* Quick Socials - Hidden on very small screens to keep layout clean */}

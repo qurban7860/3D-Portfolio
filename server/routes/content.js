@@ -104,6 +104,9 @@ router.get("/", async (_req, res) => {
 
   const settingsRows = await db.all("SELECT key, value FROM settings");
   const settings = settingsRows.reduce((acc, item) => {
+    const normalizedKey = item.key.toLowerCase().trim();
+    if (normalizedKey === "certifications" || normalizedKey === "stats") return acc;
+    
     try {
       acc[item.key] = JSON.parse(item.value);
     } catch {
@@ -111,6 +114,11 @@ router.get("/", async (_req, res) => {
     }
     return acc;
   }, {});
+
+  delete settings.certifications;
+  delete settings.stats;
+  delete settings.Certifications;
+  delete settings.Stats;
 
   res.json({
     settings,
@@ -131,6 +139,9 @@ router.get("/admin/settings", authMiddleware, async (_req, res) => {
   const db = getDb();
   const rows = await db.all("SELECT key, value FROM settings");
   const settings = rows.reduce((acc, item) => {
+    const normalizedKey = item.key.toLowerCase().trim();
+    if (normalizedKey === "certifications" || normalizedKey === "stats") return acc;
+    
     try {
       acc[item.key] = JSON.parse(item.value);
     } catch {
@@ -138,6 +149,12 @@ router.get("/admin/settings", authMiddleware, async (_req, res) => {
     }
     return acc;
   }, {});
+
+  delete settings.certifications;
+  delete settings.stats;
+  delete settings.Certifications;
+  delete settings.Stats;
+
   return res.json(settings);
 });
 

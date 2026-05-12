@@ -24,17 +24,6 @@ const defaultSettings = {
     location: "Lahore, Pakistan",
     availabilityStatus: "Open for Work",
   },
-  stats: [
-    { id: 1, stat: "3+", label: "Years of Experience", description: "Building scalable web solutions" },
-    { id: 2, stat: "50+", label: "Projects Completed", description: "From startups to enterprises" },
-    { id: 3, stat: "30+", label: "Satisfied Clients", description: "International & local businesses" },
-    { id: 4, stat: "100%", label: "Project Success Rate", description: "On-time & budget deliveries" },
-  ],
-  certifications: [
-    { id: 1, title: "Full Stack Web Development (MERN)", issuer: "Complete Course - Udemy", date: "Feb 2024", icon: "🏆", credentialUrl: "" },
-    { id: 2, title: "JavaScript Algorithms and Data Structures", issuer: "freeCodeCamp", date: "Aug 2023", icon: "⭐", credentialUrl: "" },
-    { id: 3, title: "Meta Front-End Developer Certificate", issuer: "Coursera", date: "Jan 2024", icon: "📚", credentialUrl: "" },
-  ],
   seo: {
     title: "Qurban Hanif | Full Stack Developer | React | Node.js | MERN",
     description: "Full Stack Developer specializing in MERN stack, React, Next.js, and clean code. 3+ years of experience building high-performance web and mobile applications.",
@@ -60,6 +49,7 @@ const defaultSettings = {
     { id: 3, title: "Twitter", url: "https://twitter.com/qurban7860", icon: "twitter" },
   ],
 };
+
 
 export async function seedDatabase(db) {
   const existingAdmin = await db.get("SELECT id FROM users WHERE email = ?", ADMIN_EMAIL);

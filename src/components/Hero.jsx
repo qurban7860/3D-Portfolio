@@ -1,17 +1,16 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { HiDocument } from "react-icons/hi";
-import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { styles } from "../styles";
 import ComputersCanvas from "./canvas/Computers";
 import { usePortfolio } from "../context/PortfolioContext";
 import resumePdf from "../assets/resume/Resume_Mern.pdf";
+import { getIcon } from "../utils/iconMapping";
 
 const Hero = () => {
   const { data } = usePortfolio();
   const navigate = useNavigate();
   const hero = data?.settings?.hero ?? {};
-  const contact = data?.settings?.contact ?? {};
   const headline = hero.headline || "Hi, I'm Qurban";
   const subtitle = hero.subtitle || "Building high-performance web applications with precision.";
 
@@ -89,18 +88,23 @@ const Hero = () => {
               <span className="group-hover:scale-110 transition-transform"><HiDocument /></span> View Resume
             </button>
             
-            {/* Quick Socials - Hidden on very small screens to keep layout clean */}
+            
             <div className="hidden sm:flex items-center gap-4 ml-2 sm:ml-4 border-l border-white/10 pl-4 sm:pl-6 h-10 shrink-0">
-               {contact.linkedin && (
-                 <a href={contact.linkedin} target="_blank" rel="noreferrer" className="text-white/40 hover:text-[#915EFF] transition-colors">
-                   <FaLinkedinIn size={18} />
-                 </a>
-               )}
-               {contact.github && (
-                 <a href={contact.github} target="_blank" rel="noreferrer" className="text-white/40 hover:text-white transition-colors">
-                   <FaGithub size={18} />
-                 </a>
-               )}
+              {data?.socials?.filter(link => link.visible).slice(0, 2).map((link) => {
+                const Icon = getIcon(link.icon);
+                return (
+                  <a 
+                    key={link.id}
+                    href={link.url} 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="text-white/40 hover:text-white transition-all duration-300 hover:scale-110"
+                    title={link.title}
+                  >
+                    {Icon && <Icon size={18} />}
+                  </a>
+                );
+              })}
             </div>
           </motion.div>
         </div>

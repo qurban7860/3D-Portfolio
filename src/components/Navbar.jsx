@@ -3,27 +3,98 @@
 import { useState, useEffect, useMemo } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaGithub, FaLinkedinIn, FaFileDownload } from "react-icons/fa";
-import { BsEye } from "react-icons/bs";
+import { 
+  FiChevronDown,
+  FiFileText,
+  FiEye,
+  FiDownload,
+  FiMessageCircle
+} from "react-icons/fi";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { styles } from "../styles";
 import { usePortfolio } from "../context/PortfolioContext";
 import resumePdf from "../assets/resume/Resume_Mern.pdf";
 import logo from "/logo.svg";
+import { getIcon } from "../utils/iconMapping";
 
-/* ── Contact Link (Socials) ─────────────────────────────────── */
-const SocialIcon = ({ title, url, icon: Icon }) => (
-  <a
-    href={url}
-    target="_blank"
-    rel="noopener noreferrer"
-    title={title}
-    className="relative group p-2 rounded-xl hover:bg-white/5 transition-all duration-300"
-  >
-    <Icon className="w-5 h-5 text-white/50 group-hover:text-white group-hover:scale-110 transition-all duration-300" />
-    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-[#915EFF] group-hover:w-1/2 transition-all duration-300" />
-  </a>
-);
+const SocialDropdown = ({ links }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div 
+      className="relative"
+      onMouseEnter={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
+    >
+      <motion.button
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        className={`flex items-center gap-2.5 px-4 py-2 rounded-xl border transition-all duration-300 ${
+          isOpen 
+            ? "bg-[#915EFF]/10 border-[#915EFF]/50 shadow-[0_0_20px_rgba(145,94,255,0.2)]" 
+            : "bg-white/5 border-white/10 hover:border-white/20"
+        }`}
+      >
+        <div className="flex -space-x-2">
+          {links.slice(0, 2).map((link, i) => (
+            <div key={i} className="w-5 h-5 rounded-full bg-[#100d25] border border-white/10 flex items-center justify-center overflow-hidden">
+              <link.icon className="w-3 h-3 text-white/70" />
+            </div>
+          ))}
+        </div>
+        <span className="text-[12px] font-bold uppercase tracking-wider text-white/90">Connect</span>
+        <FiChevronDown className={`w-4 h-4 text-white/40 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
+      </motion.button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            <div className="absolute top-full left-0 w-full h-4" />
+            
+            <motion.div
+              initial={{ opacity: 0, y: 15, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+              transition={{ type: "spring", damping: 20, stiffness: 300 }}
+              className="absolute top-[calc(100%+12px)] right-0 w-64 bg-[#0a0a1a]/95 backdrop-blur-2xl rounded-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden z-[100] p-1.5"
+            >
+              <div className="px-3 py-2 mb-1">
+                <span className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em]">Digital Presence</span>
+              </div>
+              
+              <div className="grid grid-cols-1 gap-1">
+                {links.map((link) => (
+                  <a
+                    key={link.title}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3.5 px-3 py-2.5 rounded-xl hover:bg-white/5 transition-all duration-300 group"
+                  >
+                    <div className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center border border-white/5 group-hover:border-[#915EFF]/30 group-hover:bg-[#915EFF]/10 transition-all">
+                      <link.icon className="w-4.5 h-4.5 text-white/50 group-hover:text-white transition-colors" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[13px] font-medium text-white/80 group-hover:text-white transition-colors">{link.title}</span>
+                      <span className="text-[10px] text-white/30 group-hover:text-[#915EFF]/70 transition-colors truncate max-w-[140px]">
+                        {link.subtitle || link.url.replace(/^https?:\/\/(www\.)?/, "").split("/")[0]}
+                      </span>
+                    </div>
+                  </a>
+                ))}
+              </div>
+              
+              <div className="mt-1.5 pt-1.5 border-t border-white/5 flex items-center justify-between px-3 pb-1">
+                <span className="text-[9px] text-white/20 font-medium uppercase tracking-widest">Available for Hire</span>
+                <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
 
 /* ── Resume Action Button ───────────────────────────────────── */
 const ResumeButton = ({ isMobile = false }) => {
@@ -43,14 +114,13 @@ const ResumeButton = ({ isMobile = false }) => {
             ? setShowOptions(!showOptions)
             : window.open(resumePdf, "_blank")
         }
-        className={`flex items-center gap-2 px-5 py-2 glass-badge-hero border border-white/10 text-white font-bold rounded-full hover:border-[#915EFF]/50 hover:shadow-[0_0_20px_rgba(145,94,255,0.2)] transition-all duration-300 text-[12px] uppercase tracking-wider ${isMobile ? "w-full justify-center" : ""}`}
+        className={`flex items-center gap-3 px-5 py-2.5 glass-badge-hero border border-white/10 text-white font-bold rounded-xl hover:border-[#915EFF]/50 hover:shadow-[0_0_20px_rgba(145,94,255,0.2)] transition-all duration-300 text-[12px] uppercase tracking-wider ${isMobile ? "w-full justify-center" : ""}`}
       >
+        <FiFileText className="text-[#915EFF] w-4 h-4" />
         <span>Resume</span>
-        <span
-          className={`text-[10px] opacity-40 transition-transform duration-300 ${showOptions ? "rotate-180" : ""}`}
-        >
-          ▼
-        </span>
+        <FiChevronDown
+          className={`text-white/40 transition-transform duration-300 ${showOptions ? "rotate-180" : ""}`}
+        />
       </motion.button>
 
       <AnimatePresence>
@@ -65,16 +135,18 @@ const ResumeButton = ({ isMobile = false }) => {
               href={resumePdf}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center px-4 py-2.5 text-white hover:bg-white/5 rounded-xl transition-colors text-[13px]"
+              className="flex items-center px-4 py-2.5 text-white hover:bg-white/5 rounded-xl transition-colors text-[13px] group"
             >
-              <BsEye /> <span className="ml-2"> View </span>
+              <FiEye className="text-white/40 group-hover:text-white transition-colors" /> 
+              <span className="ml-3"> View Resume </span>
             </a>
             <a
               href={resumePdf}
               download="Resume_Mern.pdf"
-              className="flex items-center px-4 py-2.5 text-white hover:bg-white/5 rounded-xl transition-colors text-[13px]"
+              className="flex items-center px-4 py-2.5 text-white hover:bg-white/5 rounded-xl transition-colors text-[13px] group"
             >
-              <FaFileDownload /> <span className="ml-2"> Download</span>
+              <FiDownload className="text-white/40 group-hover:text-white transition-colors" /> 
+              <span className="ml-3"> Download </span>
             </a>
           </motion.div>
         )}
@@ -206,17 +278,31 @@ const MobileMenu = ({
                   </div>
                 </div>
 
-                <div className="pt-10 border-t border-white/5 px-4">
-                  <span className="text-white/20 text-[10px] font-bold uppercase tracking-[0.3em] block mb-5">Social Nodes</span>
-                  <div className="flex gap-4 mb-8">
-                    {socialLinks.map((link) => (
-                      <SocialIcon key={link.title} {...link} />
-                    ))}
+                {socialLinks.length > 0 && (
+                  <div className="pt-10 border-t border-white/5 px-4">
+                    <span className="text-white/20 text-[10px] font-bold uppercase tracking-[0.3em] block mb-5">Social Nodes</span>
+                    <div className="grid grid-cols-2 gap-3 mb-8">
+                      {socialLinks.map((link, index) => (
+                        <motion.a
+                          key={link.title}
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.4 + index * 0.05 }}
+                          className="flex items-center gap-3 p-3 rounded-2xl bg-white/[0.03] border border-white/5 active:bg-[#915EFF]/10 active:border-[#915EFF]/30 transition-all group"
+                        >
+                          <link.icon className="text-white/40 group-hover:text-[#915EFF] transition-colors" size={18} />
+                          <span className="text-[12px] font-medium text-white/60 group-hover:text-white transition-colors">{link.title}</span>
+                        </motion.a>
+                      ))}
+                    </div>
+                    <p className="text-[9px] font-bold text-white/5 uppercase tracking-[0.4em]">
+                      Copyright &copy; 2026 Qurban
+                    </p>
                   </div>
-                  <p className="text-[9px] font-bold text-white/5 uppercase tracking-[0.4em]">
-                    Copyright &copy; 2026 Qurban
-                  </p>
-                </div>
+                )}
               </div>
             </div>
           </motion.div>
@@ -233,30 +319,26 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
-  const navLinks = [
-    { id: "about", title: "About", path: "/about" },
+  const navLinks = useMemo(() => data?.settings?.navLinks ?? [
+    { id: "about", title: "About", path: "/" },
+    { id: "portfolio", title: "Work", path: "/portfolio" },
     { id: "experience", title: "Experience", path: "/experience" },
-    { id: "portfolio", title: "Projects", path: "/portfolio" },
     { id: "services", title: "Skills", path: "/services" },
-    { id: "contact", title: "Contact", path: "/contact" },
-  ];
+    { id: "contact", title: "Contact", path: "/#contact" },
+  ], [data]);
 
-  const contactInfo = data?.settings?.contact ?? {};
-  const SOCIAL_LINKS = useMemo(
-    () => [
-      {
-        title: "GitHub",
-        icon: FaGithub,
-        url: contactInfo.github || "https://github.com/qurban7860",
-      },
-      {
-        title: "LinkedIn",
-        icon: FaLinkedinIn,
-        url: contactInfo.linkedin || "https://www.linkedin.com/in/qurban015",
-      },
-    ],
-    [contactInfo],
-  );
+  const SOCIAL_LINKS = useMemo(() => {
+    if (!data?.socials) return [];
+    
+    return data.socials
+      .filter(link => link.visible)
+      .map(link => ({
+        title: link.title,
+        subtitle: link.title === "GitHub" ? "Source Code" : link.title === "LinkedIn" ? "Professional Profile" : "Social Node",
+        icon: getIcon(link.icon) || FiMessageCircle,
+        url: link.url
+      }));
+  }, [data?.socials]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -320,12 +402,12 @@ const Navbar = () => {
                 />
               ))}
             </ul>
-            <div className="flex items-center gap-6 border-l border-white/10 pl-8 h-8">
-              <div className="flex gap-2">
-                {SOCIAL_LINKS.map((link) => (
-                  <SocialIcon key={link.title} {...link} />
-                ))}
-              </div>
+            <div className="flex items-center gap-6">
+              {SOCIAL_LINKS.length > 0 && (
+                <div className="flex items-center gap-6 border-l border-white/10 pl-8 h-8">
+                  <SocialDropdown links={SOCIAL_LINKS} />
+                </div>
+              )}
               <ResumeButton />
             </div>
           </div>

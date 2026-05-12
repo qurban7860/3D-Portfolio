@@ -236,6 +236,49 @@ export async function initializeDatabase() {
             ];
             await database.run("INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)", "faqs", JSON.stringify(defaultFaqs));
           }
+
+          const allSettings = await database.all("SELECT key FROM settings");
+          console.log("🔍 Current settings keys in DB:", allSettings.map(s => s.key));
+
+          const settingsToMigrate = await database.all("SELECT key, value FROM settings");
+          
+          for (const row of settingsToMigrate) {
+            const normalizedKey = row.key.toLowerCase().trim();
+            
+            if (normalizedKey === 'certifications') {
+              console.log(`🔄 Migrating certifications from settings key: "${row.key}"...`);
+              const certs = JSON.parse(row.value);
+              if (Array.isArray(certs)) {
+                for (const cert of certs) {
+                  const exists = await database.get("SELECT id FROM certifications WHERE title = ? AND issuer = ?", cert.title, cert.issuer);
+                  if (!exists) {
+                    await database.run(
+                      "INSERT INTO certifications (title, issuer, date, icon, visible, orderIndex) VALUES (?, ?, ?, ?, ?, ?)",
+                      cert.title, cert.issuer, cert.date, cert.icon, 1, cert.id || 0
+                    );
+                  }
+                }
+              }
+              await database.run("DELETE FROM settings WHERE key = ?", row.key);
+            }
+            
+            if (normalizedKey === 'stats') {
+              console.log(`🔄 Migrating stats from settings key: "${row.key}"...`);
+              const stats = JSON.parse(row.value);
+              if (Array.isArray(stats)) {
+                for (const stat of stats) {
+                  const exists = await database.get("SELECT id FROM stats WHERE label = ?", stat.label);
+                  if (!exists) {
+                    await database.run(
+                      "INSERT INTO stats (stat, label, description, visible, orderIndex) VALUES (?, ?, ?, ?, ?)",
+                      stat.stat, stat.label, stat.description, 1, stat.id || 0
+                    );
+                  }
+                }
+              }
+              await database.run("DELETE FROM settings WHERE key = ?", row.key);
+            }
+          }
         } catch (migErr) {
           console.warn("Migration failed (non-critical):", migErr.message);
         }

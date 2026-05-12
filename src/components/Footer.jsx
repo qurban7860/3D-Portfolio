@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { FaGithub, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
 import { usePortfolio } from "../context/PortfolioContext";
 import { styles } from "../styles";
 import { getIcon } from "../utils/iconMapping";
@@ -7,7 +6,6 @@ import logo from "/logo.svg";
 
 const Footer = () => {
   const { data } = usePortfolio();
-  const contact = data?.settings?.contact ?? {};
   
   const currentYear = new Date().getFullYear();
 
@@ -26,21 +24,17 @@ const Footer = () => {
     ]},
   ];
 
-  const dbSocials = (data?.socials ?? []).map(s => ({
-    icon: getIcon(s.icon),
-    title: s.title,
-    url: s.url,
-    color: s.icon?.toLowerCase().includes('github') ? "hover:text-white" :
-           s.icon?.toLowerCase().includes('linkedin') ? "hover:text-[#0077B5]" :
-           s.icon?.toLowerCase().includes('whatsapp') ? "hover:text-[#25D366]" :
-           "hover:text-[#915EFF]"
-  }));
-
-  const socialLinks = dbSocials.length > 0 ? dbSocials : [
-    { icon: FaGithub, url: contact.github || "https://github.com/qurban7860", color: "hover:text-white" },
-    { icon: FaLinkedinIn, url: contact.linkedin || "https://www.linkedin.com/in/qurban015", color: "hover:text-[#0077B5]" },
-    { icon: FaWhatsapp, url: contact.whatsapp || "https://wa.me/923085651015", color: "hover:text-[#25D366]" },
-  ];
+  const socialLinks = (data?.socials ?? [])
+    .filter(s => s.visible)
+    .map(s => ({
+      icon: getIcon(s.icon),
+      title: s.title,
+      url: s.url,
+      color: s.icon?.toLowerCase().includes('github') ? "hover:text-white" :
+             s.icon?.toLowerCase().includes('linkedin') ? "hover:text-[#0077B5]" :
+             s.icon?.toLowerCase().includes('whatsapp') ? "hover:text-[#25D366]" :
+             "hover:text-[#915EFF]"
+    }));
 
   return (
     <footer className="relative w-full pt-20 pb-10 overflow-hidden">

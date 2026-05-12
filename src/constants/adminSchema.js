@@ -128,14 +128,8 @@ export const adminSettingsSchema = {
     ],
   },
   contact: {
-    title: "Contact & Socials",
+    title: "Location & Availability",
     fields: [
-      { name: "email", label: "Email", type: "text", required: true },
-      { name: "phone", label: "Phone", type: "text", required: true },
-      { name: "whatsapp", label: "WhatsApp", type: "text", required: false },
-      { name: "github", label: "GitHub URL", type: "text", required: false },
-      { name: "linkedin", label: "LinkedIn URL", type: "text", required: false },
-      { name: "twitter", label: "Twitter URL", type: "text", required: false },
       { name: "location", label: "Location", type: "text", required: false },
       { name: "availabilityStatus", label: "Availability Label", type: "text", required: false },
     ],

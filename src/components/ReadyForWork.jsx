@@ -25,6 +25,7 @@ const QuickFact = ({ value, label }) => (
 
 const ReadyForWork = () => {
   const { data } = usePortfolio();
+  const stats = data?.stats ?? [];
   const contact = data?.settings?.contact ?? {};
   const availabilityStatus = contact.availabilityStatus || "Open for Work";
 
@@ -33,12 +34,6 @@ const ReadyForWork = () => {
     { icon: HiOutlineCalendar, title: "Flexible" },
     { icon: HiOutlineGlobe, title: "Remote Ready" },
     { icon: HiOutlineBriefcase, title: "Professional" },
-  ];
-
-  const quickFacts = [
-    { value: "3+ Years", label: "Exp." },
-    { value: "50+", label: "Projects" },
-    { value: "Global", label: "Clients" },
   ];
 
   return (
@@ -54,8 +49,8 @@ const ReadyForWork = () => {
         </motion.div>
 
         <div className="flex items-center justify-between bg-white/5 p-3 sm:p-4 rounded-2xl border border-white/10 w-full md:w-auto overflow-x-auto scrollbar-hide">
-          {quickFacts.map((fact, i) => (
-            <QuickFact key={i} {...fact} />
+          {stats.slice(0, 4).map((fact, i) => (
+            <QuickFact key={i} value={fact.stat} label={fact.label} />
           ))}
         </div>
       </div>

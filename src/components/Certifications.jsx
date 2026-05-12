@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { usePortfolio } from "../context/PortfolioContext";
 import { SectionWrapper } from "../hoc";
 import { textVariant, fadeIn } from "../Animation/motion";
+import { getIcon } from "../utils/iconMapping";
 
 /* ── Certification Card ────────────────────────────────────────── */
 const CertificationCard = ({ index, title, issuer, date, credentialUrl, icon }) => (
@@ -40,7 +41,11 @@ const CertificationCard = ({ index, title, issuer, date, credentialUrl, icon }) 
                     border border-[#915EFF]/30 group-hover:border-[#915EFF]/60
                     group-hover:shadow-[0_0_16px_rgba(145,94,255,0.3)] transition-all duration-300"
       >
-        {icon}
+        {(() => {
+          if (!icon) return "📜";
+          const Icon = getIcon(icon);
+          return Icon ? <Icon /> : icon; 
+        })()}
       </div>
 
       <div className="flex-1 min-w-0">

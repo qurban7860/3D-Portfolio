@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { styles } from "../../styles";
+import { getIcon } from "../../utils/iconMapping";
+import { resolveAssetUrl } from "../../utils/assetResolver";
 
 const formatFormValue = (field, value) => {
   if (field.name === "tags") {
@@ -85,9 +87,8 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
             >
               <div className="flex items-center justify-between mb-3 ml-1">
                 <label className="text-[12px] font-black text-white/50 uppercase tracking-[0.15em]">
-                  {field.label}
+                  {field.label} {field.required && <span className="text-[#915EFF] ml-1">*</span>}
                 </label>
-                {field.required && <span className="text-[#915EFF] text-[10px] font-bold uppercase tracking-widest bg-[#915EFF]/10 px-2 py-0.5 rounded">Required</span>}
               </div>
               
               {field.type === "textarea" ? (
@@ -118,15 +119,54 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
                   <span className="text-[15px] font-bold text-white/70 group-hover:text-white transition-colors">{field.label}</span>
                 </div>
               ) : (
-                <input
-                  type={field.type === "number" ? "number" : "text"}
-                  name={field.name}
-                  value={formState[field.name] ?? ""}
-                  onChange={handleChange}
-                  required={field.required}
-                  placeholder={`Enter ${field.label.toLowerCase()}...`}
-                  className="w-full rounded-2xl bg-white/[0.03] border border-white/10 px-6 py-5 text-[15px] text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-white/[0.06] placeholder:text-white/10 font-medium shadow-inner"
-                />
+                <div className="relative group">
+                  <input
+                    type={field.type === "number" ? "number" : "text"}
+                    name={field.name}
+                    value={formState[field.name] ?? ""}
+                    onChange={handleChange}
+                    required={field.required}
+                    placeholder={`Enter ${field.label.toLowerCase()}...`}
+                    className={`w-full rounded-2xl bg-white/[0.03] border border-white/10 px-6 py-5 text-[15px] text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-white/[0.06] placeholder:text-white/10 font-medium shadow-inner ${
+                      (field.name === "icon" || field.name.toLowerCase().includes("iconurl") || field.name.toLowerCase().includes("imageurl")) ? "pr-16" : ""
+                    }`}
+                  />
+                  
+                  {(field.name === "icon" || field.name.toLowerCase().includes("iconurl") || field.name.toLowerCase().includes("imageurl")) && (
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 shadow-lg overflow-hidden">
+                      {field.name === "icon" ? (
+                        (() => {
+                          const Icon = getIcon(formState[field.name]);
+                          return Icon ? (
+                            <div className="text-2xl text-[#915EFF] animate-in fade-in zoom-in duration-300">
+                              <Icon />
+                            </div>
+                          ) : (
+                            <span className="text-[10px] text-white/20 font-bold">NONE</span>
+                          );
+                        })()
+                      ) : (
+                        <img 
+                          src={resolveAssetUrl(formState[field.name])} 
+                          alt="preview"
+                          className="w-full h-full object-contain p-1"
+                          onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
+                        />
+                      )}
+                      {!(field.name === "icon") && (
+                        <div className="hidden absolute inset-0 items-center justify-center bg-white/5 text-[10px] text-white/20 font-bold uppercase">
+                          NA
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  
+                  {field.name === "icon" && (
+                    <div className="mt-2 text-[11px] text-white/30 italic px-2">
+                      Tip: Use React Icons names (e.g., SiReact, FaGithub, MdEmail)
+                    </div>
+                  )}
+                </div>
               )}
             </div>
           ))}

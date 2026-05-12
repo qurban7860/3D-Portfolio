@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Tilt } from "react-tilt";
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
@@ -7,8 +8,10 @@ import { SectionWrapper } from "../hoc";
 import { usePortfolio } from "../context/PortfolioContext";
 import { fadeIn, textVariant } from "../Animation/motion";
 
-/* ── Project Card ─────────────────────────────────────────────── */
 export const ProjectCard = ({ index, name, description, tags, imageUrl, sourceCodeLink, liveDemoLink }) => {
+  const [imgError, setImgError] = useState(false);
+  const resolvedUrl = resolveAssetUrl(imageUrl);
+
   return (
     <motion.div 
       variants={fadeIn("up", "spring", index * 0.2, 0.75)}
@@ -19,7 +22,7 @@ export const ProjectCard = ({ index, name, description, tags, imageUrl, sourceCo
         className="rounded-[2.5rem] w-full sm:w-[360px] premium-glass-card overflow-hidden"
       >
         {/* Image area */}
-        <div className="relative w-full h-[210px] overflow-hidden">
+        <div className="relative w-full h-[210px] overflow-hidden bg-[#050816]">
           {/* Featured badge */}
           {index % 3 === 0 && (
             <div className="absolute top-4 left-4 z-20 text-[#c4a7ff] text-[10px] font-bold
@@ -30,13 +33,24 @@ export const ProjectCard = ({ index, name, description, tags, imageUrl, sourceCo
             </div>
           )}
 
-          <img
-            src={resolveAssetUrl(imageUrl)}
-            alt={name}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-          />
-
-          {/* Hover overlay with buttons */}
+          {!imgError && resolvedUrl ? (
+            <img
+              src={resolvedUrl}
+              alt={name}
+              onError={() => setImgError(true)}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+          ) : (
+            <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#1d1836] to-[#050816] relative overflow-hidden">
+               <div className="absolute inset-0 bg-dot-pattern opacity-10" />
+               <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-3xl mb-2 relative z-10">
+                  <span className="opacity-40 group-hover:scale-110 transition-transform duration-500">🖼️</span>
+               </div>
+               <span className="text-white/20 text-[10px] font-bold uppercase tracking-widest relative z-10">Preview Unavailable</span>
+               
+               <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-[#915EFF]/10 rounded-full blur-3xl" />
+            </div>
+          )}
           <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center gap-4 backdrop-blur-[2px]">
             <motion.button
               whileHover={{ scale: 1.1 }}

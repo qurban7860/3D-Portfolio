@@ -4,6 +4,7 @@ import { usePortfolio } from "../context/PortfolioContext";
 import { SectionWrapper } from "../hoc";
 import { textVariant, fadeIn } from "../Animation/motion";
 import { styles } from "../styles";
+import { getIcon } from "../utils/iconMapping";
 
 /* ── Service Card ─────────────────────────────────────────────── */
 const ServiceCard = ({ index, title, description, icon, features }) => (
@@ -18,7 +19,6 @@ const ServiceCard = ({ index, title, description, icon, features }) => (
       {/* Decorative Gradient Glow */}
       <div className="absolute -top-20 -right-20 w-48 h-48 bg-[#915EFF]/5 rounded-full blur-[80px] group-hover:bg-[#915EFF]/15 transition-all duration-700" />
 
-      {/* Icon Frame */}
       <div
         className="w-20 h-20 rounded-3xl flex items-center justify-center text-4xl mb-8
                     bg-white/5 border border-white/10 group-hover:border-[#915EFF]/40 
@@ -26,7 +26,14 @@ const ServiceCard = ({ index, title, description, icon, features }) => (
       >
         <div className="absolute inset-0 bg-gradient-to-br from-[#915EFF]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
         <span className="relative z-10 group-hover:drop-shadow-[0_0_12px_rgba(145,94,255,0.6)] transition-all">
-          {icon}
+          {(() => {
+            if (!icon) return <span className="text-white/20 text-2xl font-black">{title?.charAt(0).toUpperCase()}</span>;
+            if (typeof icon === 'string') {
+              const Icon = getIcon(icon);
+              return Icon ? <Icon /> : <span className="text-white/20 text-2xl font-black">{title?.charAt(0).toUpperCase()}</span>;
+            }
+            return icon;
+          })()}
         </span>
       </div>
 

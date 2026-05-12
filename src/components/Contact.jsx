@@ -1,6 +1,4 @@
 import { useRef, useState, useCallback } from "react";
-import { FaWhatsapp, FaLinkedin } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
 import emailjs from "@emailjs/browser";
@@ -9,6 +7,7 @@ import { EarthCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
 import { slideIn, fadeIn } from "../Animation/motion";
 import { styles } from "../styles";
+import { getIcon } from "../utils/iconMapping";
 
 const EMAIL_CONFIG = {
   SERVICE_ID: "service_jki37si",
@@ -169,29 +168,20 @@ const Contact = () => {
     [form, recipientEmail, recipientName]
   );
 
-  const contactMethods = [
-    {
-      icon: <MdEmail />,
-      title: "Email",
-      description: "Send me a direct email",
-      link: `mailto:${recipientEmail}`,
-      linkText: recipientEmail,
-    },
-    {
-      icon: <FaLinkedin />,
-      title: "Direct Message",
-      description: "Connect with me on LinkedIn",
-      link: contactSettings.linkedin || "https://www.linkedin.com/in/qurban015",
-      linkText: "Open LinkedIn",
-    },
-    {
-      icon: <FaWhatsapp />,
-      title: "Direct WhatsApp",
-      description: "Connect with me on WhatsApp",
-      link: contactSettings.whatsapp ? `https://wa.me/${contactSettings.whatsapp}` : "https://wa.me/+923085651015",
-      linkText: contactSettings.whatsapp || "+92-308-5651015",
-    },
-  ];
+  const extraMethods = (data?.socials ?? []).map(s => {
+    const Icon = getIcon(s.icon);
+    const initial = s.title?.charAt(0).toUpperCase() || "?";
+    
+    return {
+      icon: Icon ? <Icon /> : <span className="font-black text-[15px]">{initial}</span>,
+      title: s.title,
+      description: `Connect via ${s.title}`,
+      link: s.url,
+      linkText: "Visit Link"
+    };
+  });
+
+  const contactMethods = extraMethods;
 
   return (
     <>

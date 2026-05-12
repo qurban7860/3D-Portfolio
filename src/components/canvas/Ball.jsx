@@ -1,13 +1,41 @@
 /* eslint-disable react/no-unknown-property */
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 import PropTypes from "prop-types"; 
 import { Canvas } from "@react-three/fiber";
 import { Decal, Float, OrbitControls, Preload, useTexture } from "@react-three/drei";
 
 import CanvasLoader from "../Loader";
 
+class BallErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error("BallCanvas error:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return null; 
+    }
+    return this.props.children;
+  }
+}
+
+BallErrorBoundary.propTypes = {
+  children: PropTypes.node,
+};
+
 const Ball = ({ imgUrl }) => {
-  const [decal] = useTexture([imgUrl]);
+  const [decal] = useTexture(imgUrl ? [imgUrl] : ["/fallback-icon.png"]);
+
+  if (!imgUrl) return null;
 
   return (
     <Float speed={1.75} rotationIntensity={1} floatIntensity={2}>
@@ -21,41 +49,47 @@ const Ball = ({ imgUrl }) => {
           polygonOffsetFactor={-5}
           flatShading
         />
-        <Decal
-          position={[0, 0, 1]}
-          rotation={[2 * Math.PI, 0, 6.25]}
-          scale={1}
-          map={decal}
-          flatShading
-        />
+        {decal && (
+          <Decal
+            position={[0, 0, 1]}
+            rotation={[2 * Math.PI, 0, 6.25]}
+            scale={1}
+            map={decal}
+            flatShading
+          />
+        )}
       </mesh>
     </Float>
   );
 };
 
 Ball.propTypes = {
-  imgUrl: PropTypes.string.isRequired,
+  imgUrl: PropTypes.string,
 };
 
 const BallCanvas = ({ icon }) => {
-  return (
-    <Canvas
-      frameloop="demand"
-      dpr={[1, 2]}
-      gl={{ preserveDrawingBuffer: true }}
-    >
-      <Suspense fallback={<CanvasLoader />}>
-        <OrbitControls enableZoom={false} />
-        <Ball imgUrl={icon} />
-      </Suspense>
+  if (!icon) return null;
 
-      <Preload all />
-    </Canvas>
+  return (
+    <BallErrorBoundary>
+      <Canvas
+        frameloop="demand"
+        dpr={[1, 2]}
+        gl={{ preserveDrawingBuffer: true }}
+      >
+        <Suspense fallback={<CanvasLoader />}>
+          <OrbitControls enableZoom={false} />
+          <Ball imgUrl={icon} />
+        </Suspense>
+
+        <Preload all />
+      </Canvas>
+    </BallErrorBoundary>
   );
 };
 
 BallCanvas.propTypes = {
-  icon: PropTypes.string.isRequired,
+  icon: PropTypes.string,
 };
 
 export default BallCanvas;

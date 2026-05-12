@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import { FaGithub, FaLinkedinIn, FaTwitter, FaInstagram, FaWhatsapp } from "react-icons/fa";
+import { FaGithub, FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
 import { usePortfolio } from "../context/PortfolioContext";
 import { styles } from "../styles";
+import { getIcon } from "../utils/iconMapping";
 import logo from "/logo.svg";
 
 const Footer = () => {
@@ -25,12 +26,20 @@ const Footer = () => {
     ]},
   ];
 
-  const socialLinks = [
+  const dbSocials = (data?.socials ?? []).map(s => ({
+    icon: getIcon(s.icon),
+    title: s.title,
+    url: s.url,
+    color: s.icon?.toLowerCase().includes('github') ? "hover:text-white" :
+           s.icon?.toLowerCase().includes('linkedin') ? "hover:text-[#0077B5]" :
+           s.icon?.toLowerCase().includes('whatsapp') ? "hover:text-[#25D366]" :
+           "hover:text-[#915EFF]"
+  }));
+
+  const socialLinks = dbSocials.length > 0 ? dbSocials : [
     { icon: FaGithub, url: contact.github || "https://github.com/qurban7860", color: "hover:text-white" },
     { icon: FaLinkedinIn, url: contact.linkedin || "https://www.linkedin.com/in/qurban015", color: "hover:text-[#0077B5]" },
-    { icon: FaWhatsapp, url: contact.whatsapp || "https://wa.me/+923085651015", color: "hover:text-[#25D366]" },
-    // { icon: FaTwitter, url: contact.twitter || "#", color: "hover:text-[#1DA1F2]" },
-    // { icon: FaInstagram, url: contact.instagram || "#", color: "hover:text-[#E4405F]" },
+    { icon: FaWhatsapp, url: contact.whatsapp || "https://wa.me/923085651015", color: "hover:text-[#25D366]" },
   ];
 
   return (
@@ -62,7 +71,11 @@ const Footer = () => {
                   rel="noreferrer"
                   className={`w-10 h-10 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/40 ${social.color} transition-all duration-300 hover:scale-110 hover:bg-white/10`}
                 >
-                  <social.icon size={18} />
+                  {social.icon ? (
+                    <social.icon size={18} />
+                  ) : (
+                    <span className="text-xs font-black">{social.title?.charAt(0).toUpperCase()}</span>
+                  )}
                 </a>
               ))}
             </div>

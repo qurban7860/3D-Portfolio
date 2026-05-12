@@ -47,7 +47,8 @@ export const adminSchema = {
     icon: "⚡",
     fields: [
       { name: "name", label: "Technology Name", type: "text", required: true },
-      { name: "iconUrl", label: "Icon URL", type: "text", required: true },
+      { name: "icon", label: "Icon (React Icon Name)", type: "text", required: false },
+      { name: "iconUrl", label: "Icon Image URL", type: "text", required: false },
       { name: "visible", label: "Visible", type: "checkbox", defaultValue: true },
     ],
   },

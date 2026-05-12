@@ -32,8 +32,8 @@ const ExperienceIcon = ({ experience }) => {
             className="w-[60%] h-[60%] object-contain hover:scale-110 transition-transform duration-300"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-white/5 backdrop-blur-md rounded-full border border-white/10 group-hover:border-[#915EFF]/50 transition-all">
-            <span className="text-white font-black text-xl tracking-tighter drop-shadow-[0_0_8px_rgba(145,94,255,0.8)]">
+          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-white/10 to-transparent backdrop-blur-xl rounded-full border border-white/20 group-hover:border-[#915EFF]/50 transition-all shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]">
+            <span className="text-white font-black text-xl tracking-tighter drop-shadow-[0_0_10px_rgba(145,94,255,0.5)]">
               {firstLetter}
             </span>
           </div>
@@ -115,36 +115,47 @@ ExperienceCard.propTypes = {
 };
 
 /* ── Education Card ────────────────────────────────────────────── */
-const EducationCard = ({ education }) => (
-  <motion.div
-    variants={fadeIn("up", "spring", 0.1, 0.75)}
-    whileHover={{ y: -8, scale: 1.005 }}
-    className="flex flex-col mb-8 rounded-[2.5rem] relative transition-all duration-700
-               premium-glass-card group overflow-hidden"
-  >
-    {/* Animated background gradient */}
-    <div className="absolute inset-0 bg-gradient-to-br from-[#915EFF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-    
-    {/* Institute logo */}
-    <a
-      href={education.instituteUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="absolute top-7 right-7 z-20"
-      title={education.instituteName}
-    >
-      <div className="relative">
-        <div className="absolute inset-0 bg-[#915EFF]/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-        <img
-          src={resolveAssetUrl(education.imageUrl)}
-          alt={`${education.instituteName} logo`}
-          className="w-14 h-14 object-contain hover:rotate-6 transition-transform duration-500
-                     ring-1 ring-white/10 rounded-2xl bg-black/20 backdrop-blur-sm p-2"
-        />
-      </div>
-    </a>
+const EducationCard = ({ education }) => {
+  const [error, setError] = useState(false);
+  const firstLetter = education.instituteName?.charAt(0).toUpperCase() || "?";
 
-    <div className="p-8 relative z-10">
+  return (
+    <motion.div
+      variants={fadeIn("up", "spring", 0.1, 0.75)}
+      whileHover={{ y: -8, scale: 1.005 }}
+      className="flex flex-col mb-8 rounded-[2.5rem] relative transition-all duration-700
+                 premium-glass-card group overflow-hidden"
+    >
+      {/* Animated background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#915EFF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+      
+      {/* Institute logo */}
+      <a
+        href={education.instituteUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="absolute top-7 right-7 z-20"
+        title={education.instituteName}
+      >
+        <div className="relative">
+          <div className="absolute inset-0 bg-[#915EFF]/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+          {!error ? (
+            <img
+              src={resolveAssetUrl(education.imageUrl)}
+              alt={`${education.instituteName} logo`}
+              onError={() => setError(true)}
+              className="w-14 h-14 object-contain hover:rotate-6 transition-transform duration-500
+                         ring-1 ring-white/10 rounded-2xl bg-black/20 backdrop-blur-sm p-2"
+            />
+          ) : (
+            <div className="w-14 h-14 flex items-center justify-center bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 text-white font-black text-xl shadow-lg ring-1 ring-white/5 group-hover:border-[#915EFF]/50 transition-all">
+               {firstLetter}
+            </div>
+          )}
+        </div>
+      </a>
+
+      <div className="p-8 relative z-10">
       {/* Degree badge */}
       <div className="flex items-center gap-2 mb-5">
         <span className="inline-block text-[10px] font-black uppercase tracking-[0.25em] px-4 py-1.5 rounded-full shadow-lg"
@@ -175,7 +186,8 @@ const EducationCard = ({ education }) => (
       </ul>
     </div>
   </motion.div>
-);
+  );
+};
 
 EducationCard.propTypes = {
   education: PropTypes.shape({

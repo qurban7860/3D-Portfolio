@@ -84,7 +84,7 @@ A high-performance, immersive 3D portfolio designed to push the boundaries of mo
 *Full Stack Developer & Software Engineer*  
 
 - **GitHub**: [@qurban7860](https://github.com/qurban7860)
-- **LinkedIn**: [Qurban Hanif](https://linkedin.com/in/qurbanhanif)
+- **LinkedIn**: [Qurban Hanif](https://www.linkedin.com/in/qurban015)
 - **Website**: [Live Demo](https://qurbanportfolio.vercel.app/)
 
 ---

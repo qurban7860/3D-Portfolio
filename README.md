@@ -208,8 +208,9 @@ The `settings` store contains only configuration data: `hero`, `about`, `seo`, `
 **Qurban Hanif** — Full Stack Developer & Software Engineer
 
 - **GitHub**: [@qurban7860](https://github.com/qurban7860)
-- **LinkedIn**: [qurban015](https://www.linkedin.com/in/qurban015)
 - **Email**: qurbanhanif120@gmail.com
+- **LinkedIn**: [Qurban Hanif](https://www.linkedin.com/in/qurban015)
+- **Website**: [Live Demo](https://qurbanportfolio.vercel.app/)
 
 ---
 

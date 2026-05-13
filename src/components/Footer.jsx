@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { usePortfolio } from "../context/PortfolioContext";
 import { styles } from "../styles";
 import { getIcon } from "../utils/iconMapping";
@@ -6,21 +6,29 @@ import logo from "/logo.svg";
 
 const Footer = () => {
   const { data } = usePortfolio();
+  const { username } = useParams();
+  const basePath = username ? `/${username}` : "";
   
   const currentYear = new Date().getFullYear();
 
+  const hero = data?.settings?.hero ?? {};
+  const headline = hero.headline || `Hi, I'm ${username || 'Developer'}`;
+  const nameMatch = headline.match(/Hi, I'm (.*)/i) || [null, username || 'Developer'];
+  const displayName = nameMatch[1].trim().toUpperCase();
+  const copyrightName = nameMatch[1].trim();
+
   const footerLinks = [
     { title: "Navigation", links: [
-      { name: "About Me", path: "/about" },
-      { name: "Projects", path: "/portfolio" },
-      { name: "Experience", path: "/experience" },
-      { name: "Contact", path: "/contact" }
+      { name: "About Me", path: `${basePath}/about` },
+      { name: "Projects", path: `${basePath}/portfolio` },
+      { name: "Experience", path: `${basePath}/experience` },
+      { name: "Contact", path: `${basePath}/contact` }
     ]},
     { title: "Services", links: [
-      { name: "Web Development", path: "/services" },
-      { name: "System Architecture", path: "/services" },
-      { name: "UI/UX Design", path: "/services" },
-      { name: "Performance Opt.", path: "/services" }
+      { name: "Web Development", path: `${basePath}/services` },
+      { name: "System Architecture", path: `${basePath}/services` },
+      { name: "UI/UX Design", path: `${basePath}/services` },
+      { name: "Performance Opt.", path: `${basePath}/services` }
     ]},
   ];
 
@@ -47,11 +55,11 @@ const Footer = () => {
           
           {/* Brand Info */}
           <div className="col-span-1 lg:col-span-1.5 flex flex-col gap-6">
-            <Link to="/" className="flex items-center gap-3 w-fit group">
+            <Link to={basePath || "/"} className="flex items-center gap-3 w-fit group">
               <div className="w-10 h-10 rounded-xl glass-badge-hero flex items-center justify-center border-white/10 group-hover:border-[#915EFF]/50 transition-all duration-500">
                 <img src={logo} alt="logo" className="w-5 h-5 object-contain" />
               </div>
-              <span className="text-white font-black text-[20px] tracking-tight group-hover:text-gradient transition-all">QURBAN</span>
+              <span className="text-white font-black text-[20px] tracking-tight group-hover:text-gradient transition-all uppercase">{displayName}</span>
             </Link>
             <p className="text-secondary text-[14px] leading-relaxed max-w-xs opacity-70">
               Crafting high-performance digital experiences with technical precision and architectural excellence.
@@ -107,7 +115,7 @@ const Footer = () => {
               <p className="text-white/40 text-[12px] leading-relaxed italic">
                 Currently open for collaborations and high-impact full-time roles.
               </p>
-              <Link to="/contact" className="text-white font-bold text-[12px] flex items-center gap-2 hover:text-[#915EFF] transition-colors mt-2 group">
+              <Link to={`${basePath}/contact`} className="text-white font-bold text-[12px] flex items-center gap-2 hover:text-[#915EFF] transition-colors mt-2 group">
                 Let&apos;s talk <span className="group-hover:translate-x-1 transition-transform">→</span>
               </Link>
             </div>
@@ -117,7 +125,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-6">
           <p className="text-white/30 text-[12px] font-medium">
-            &copy; {currentYear} Qurban Hanif. All rights reserved.
+            &copy; {currentYear} {copyrightName}. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             <p className="text-white/20 text-[11px] font-bold uppercase tracking-widest">

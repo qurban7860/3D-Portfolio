@@ -1,5 +1,6 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"; 
+import { BrowserRouter, Routes, Route, useLocation, useParams } from "react-router-dom"; 
 import { useEffect } from "react";
+import PropTypes from "prop-types";
 import { AuthProvider } from "./context/AuthContext";
 import { PortfolioProvider } from "./context/PortfolioContext";
 import ProtectedRoute from "./components/common/ProtectedRoute";
@@ -11,6 +12,7 @@ import ContactPage from "./pages/ContactPage";
 import LoginPage from "./pages/Admin/Login";
 import DashboardPage from "./pages/Admin/Dashboard";
 import AboutPage from "./pages/AboutPage";
+import RegisterPage from "./pages/Admin/Register";
 
 import { Toaster } from "react-hot-toast";
 
@@ -23,7 +25,7 @@ const ScrollToHash = () => {
       if (element) {
         setTimeout(() => {
           element.scrollIntoView({ behavior: "smooth" });
-        }, 300); // Wait for page transition
+        }, 300);
       }
     }
   }, [hash]);
@@ -31,54 +33,101 @@ const ScrollToHash = () => {
   return null;
 };
 
+const TenantResolver = ({ children }) => {
+  const { username } = useParams();
+  return <PortfolioProvider username={username}>{children}</PortfolioProvider>;
+};
+
+TenantResolver.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+const MainRoutes = () => (
+  <Routes>
+    <Route path="/" element={<HomePage />} />
+    <Route path="about" element={<AboutPage />} />
+    <Route path="portfolio" element={<PortfolioPage />} />
+    <Route path="experience" element={<ExperiencePage />} />
+    <Route path="services" element={<ServicesPage />} />
+    <Route path="contact" element={<ContactPage />} />
+    <Route path="*" element={<HomePage />} />
+  </Routes>
+);
+
 const App = () => {
   return (
     <AuthProvider>
-      <PortfolioProvider>
-        <BrowserRouter>
-          <ScrollToHash />
-          <Toaster 
-            position="top-right" 
-            toastOptions={{
-              duration: 4000,
-              style: {
-                background: "#161130",
-                color: "#fff",
-                border: "1px solid rgba(255,255,255,0.1)",
-                borderRadius: "1rem",
-                fontSize: "14px",
-                fontWeight: "500",
-                padding: "12px 20px",
-                backdropFilter: "blur(12px)",
+      <BrowserRouter>
+        <ScrollToHash />
+        <Toaster 
+          position="top-right" 
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: "#161130",
+              color: "#fff",
+              border: "1px solid rgba(255,255,255,0.1)",
+              borderRadius: "1rem",
+              fontSize: "14px",
+              fontWeight: "500",
+              padding: "12px 20px",
+              backdropFilter: "blur(12px)",
+            },
+            success: {
+              iconTheme: {
+                primary: "#915EFF",
+                secondary: "#fff",
               },
-              success: {
-                iconTheme: {
-                  primary: "#915EFF",
-                  secondary: "#fff",
-                },
-              },
-            }}
-          />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/portfolio" element={<PortfolioPage />} />
-            <Route path="/experience" element={<ExperiencePage />} />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/admin/login" element={<LoginPage />} />
-            <Route
-              path="/admin"
-              element={
-                <ProtectedRoute>
+            },
+          }}
+        />
+        <Routes>
+          <Route path="/admin/login" element={<LoginPage />} />
+          <Route path="/admin/register" element={<RegisterPage />} />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <PortfolioProvider>
                   <DashboardPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="*" element={<HomePage />} />
-          </Routes>
-        </BrowserRouter>
-      </PortfolioProvider>
+                </PortfolioProvider>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="/about" element={<TenantResolver><AboutPage /></TenantResolver>} />
+          <Route path="/portfolio" element={<TenantResolver><PortfolioPage /></TenantResolver>} />
+          <Route path="/experience" element={<TenantResolver><ExperiencePage /></TenantResolver>} />
+          <Route path="/services" element={<TenantResolver><ServicesPage /></TenantResolver>} />
+          <Route path="/contact" element={<TenantResolver><ContactPage /></TenantResolver>} />
+
+          <Route
+            path="/:username/*"
+            element={
+              <TenantResolver>
+                <MainRoutes />
+              </TenantResolver>
+            }
+          />
+
+          <Route
+            path="/"
+            element={
+              <TenantResolver>
+                <HomePage />
+              </TenantResolver>
+            }
+          />
+          <Route
+            path="/*"
+            element={
+              <TenantResolver>
+                <MainRoutes />
+              </TenantResolver>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
     </AuthProvider>
   );
 };

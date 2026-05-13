@@ -1,11 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
-import { fetchPortfolio } from "../api/content";
+import { fetchPortfolio, fetchPublicPortfolio } from "../api/content";
 
 const PortfolioContext = createContext(null);
 
-export const PortfolioProvider = ({ children }) => {
+export const PortfolioProvider = ({ children, username }) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -15,7 +15,7 @@ export const PortfolioProvider = ({ children }) => {
     setError(null);
 
     try {
-      const response = await fetchPortfolio();
+      const response = username ? await fetchPublicPortfolio(username) : await fetchPortfolio();
       setData(response);
     } catch (err) {
       console.error("Portfolio fetch error", err);
@@ -23,7 +23,12 @@ export const PortfolioProvider = ({ children }) => {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [username]);
+
+  useEffect(() => {
+    setData(null);
+    setIsLoading(true);
+  }, [username]);
 
   useEffect(() => {
     refreshPortfolio();
@@ -45,6 +50,7 @@ export const PortfolioProvider = ({ children }) => {
 
 PortfolioProvider.propTypes = {
   children: PropTypes.node.isRequired,
+  username: PropTypes.string,
 };
 
 export const usePortfolio = () => {

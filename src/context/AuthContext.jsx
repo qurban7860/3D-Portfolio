@@ -48,6 +48,16 @@ export const AuthProvider = ({ children }) => {
     return response.user;
   }, []);
 
+  const register = useCallback(async ({ email, password, username }) => {
+    setError(null);
+    const trimmedEmail = String(email).trim().toLowerCase();
+    const response = await authApi.register({ email: trimmedEmail, password, username });
+    localStorage.setItem("portfolio_token", response.token);
+    setToken(response.token);
+    setUser(response.user);
+    return response.user;
+  }, []);
+
   const value = useMemo(
     () => ({
       token,
@@ -56,10 +66,11 @@ export const AuthProvider = ({ children }) => {
       error,
       isAuthenticated: Boolean(user),
       login,
+      register,
       logout,
       setError,
     }),
-    [token, user, loading, error, login, logout]
+    [token, user, loading, error, login, register, logout]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

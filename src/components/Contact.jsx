@@ -117,9 +117,14 @@ ContactMethod.propTypes = {
 /* ── Main Contact Component ──────────────────────────────────── */
 const Contact = () => {
   const { data } = usePortfolio();
+  const hero = data?.settings?.hero ?? {};
+  const headline = hero.headline || "Hi, I'm Developer";
+  const nameMatch = headline.match(/Hi, I'm (.*)/i) || [null, "Developer"];
+  const fallbackName = nameMatch[1].trim();
+
   const contactSettings = data?.settings?.contact ?? {};
   const recipientEmail = contactSettings.email || "qurbanhanif120@gmail.com";
-  const recipientName = contactSettings.name || EMAIL_CONFIG.RECIPIENT_NAME;
+  const recipientName = contactSettings.name || fallbackName;
 
   const formRef = useRef();
   const [form, setForm] = useState({ name: "", email: "", message: "" });

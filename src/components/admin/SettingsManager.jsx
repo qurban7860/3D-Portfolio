@@ -5,6 +5,7 @@ import { fetchAdminSettings, updateAdminSetting } from "../../api/content";
 import { adminSettingsSchema } from "../../constants/adminSchema";
 import LoadingState from "../common/LoadingState";
 import { toast } from "react-hot-toast";
+import { styles } from "../../styles";
 
 const SettingsManager = () => {
   const { token } = useAuth();
@@ -55,7 +56,7 @@ const SettingsManager = () => {
   if (isLoading) {
     return (
       <div className="flex min-h-[300px] items-center justify-center">
-        <LoadingState message="Syncing Global Configurations..." />
+        <LoadingState message="Loading Site Settings..." />
       </div>
     );
   }
@@ -81,7 +82,7 @@ const SettingsManager = () => {
                 
                 {field.type === "textarea" ? (
                   <textarea
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-5 sm:px-6 py-4 text-white text-[13px] sm:text-[14px] focus:border-[#915EFF]/50 focus:bg-white/[0.05] outline-none transition-all resize-none min-h-[120px] sm:min-h-[140px]"
+                    className={`${styles.glassInput} min-h-[120px] sm:min-h-[140px] resize-none`}
                     value={settings[groupKey]?.[field.name] ?? ""}
                     onChange={(e) => {
                        const val = e.target.value;
@@ -96,7 +97,7 @@ const SettingsManager = () => {
                 ) : (
                   <input
                     type="text"
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-5 sm:px-6 py-4 text-white text-[13px] sm:text-[14px] focus:border-[#915EFF]/50 focus:bg-white/[0.05] outline-none transition-all"
+                    className={styles.glassInput}
                     value={settings[groupKey]?.[field.name] ?? ""}
                     onChange={(e) => {
                       const val = e.target.value;

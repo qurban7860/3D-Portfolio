@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import { useState, useEffect, useMemo } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   FiChevronDown,
@@ -180,6 +180,7 @@ const MobileMenu = ({
   navLinks,
   onNavClick,
   socialLinks,
+  data,
 }) => {
   useEffect(() => {
     if (toggle) {
@@ -263,44 +264,53 @@ const MobileMenu = ({
                 </ul>
               </nav>
 
-              <div className="space-y-8">
+              <div className="space-y-10">
                 <div className="px-4">
-                  <span className="text-white/20 text-[10px] font-bold uppercase tracking-[0.3em] block mb-5">Actions</span>
+                  <span className="text-white/20 text-[9px] font-black uppercase tracking-[0.4em] block mb-6">Management & Resume</span>
                   <div className="space-y-4">
                     <ResumeButton isMobile={true} />
                     <Link
                       to="/admin"
                       onClick={() => setToggle(false)}
-                      className={`${styles.glassButtonPremium} w-full py-4 text-[11px] font-bold uppercase tracking-[0.2em] flex items-center justify-center gap-3`}
+                      className={`${styles.glassButtonPremium} w-full py-4 text-[11px] font-black uppercase tracking-[0.25em] flex items-center justify-center gap-3 group relative overflow-hidden`}
                     >
-                      🔐 Secure Access
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                      <span className="relative z-10 flex items-center gap-3">
+                        <span className="text-lg">🔐</span> 
+                        Admin Dashboard
+                      </span>
                     </Link>
                   </div>
                 </div>
 
                 {socialLinks.length > 0 && (
-                  <div className="pt-10 border-t border-white/5 px-4">
-                    <span className="text-white/20 text-[10px] font-bold uppercase tracking-[0.3em] block mb-5">Social Nodes</span>
-                    <div className="grid grid-cols-2 gap-3 mb-8">
+                  <div className="pt-10 border-t border-white/5 px-4 pb-12">
+                    <span className="text-white/20 text-[9px] font-black uppercase tracking-[0.4em] block mb-6">Global Network</span>
+                    <div className="grid grid-cols-2 gap-4 mb-10">
                       {socialLinks.map((link, index) => (
                         <motion.a
                           key={link.title}
                           href={link.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          animate={{ opacity: 1, scale: 1 }}
                           transition={{ delay: 0.4 + index * 0.05 }}
-                          className="flex items-center gap-3 p-3 rounded-2xl bg-white/[0.03] border border-white/5 active:bg-[#915EFF]/10 active:border-[#915EFF]/30 transition-all group"
+                          className="flex items-center gap-3 p-4 rounded-2xl bg-white/[0.02] border border-white/5 active:bg-[#915EFF]/10 active:border-[#915EFF]/30 transition-all group"
                         >
-                          <link.icon className="text-white/40 group-hover:text-[#915EFF] transition-colors" size={18} />
-                          <span className="text-[12px] font-medium text-white/60 group-hover:text-white transition-colors">{link.title}</span>
+                          <link.icon className="text-white/40 group-hover:text-[#915EFF] transition-colors" size={20} />
+                          <span className="text-[12px] font-bold text-white/60 group-hover:text-white transition-colors">{link.title}</span>
                         </motion.a>
                       ))}
                     </div>
-                    <p className="text-[9px] font-bold text-white/5 uppercase tracking-[0.4em]">
-                      Copyright &copy; 2026 Qurban
-                    </p>
+                    <div className="flex flex-col gap-2">
+                      <p className="text-[9px] font-black text-white/5 uppercase tracking-[0.5em] leading-relaxed">
+                        Precision Engineered Portfolio
+                      </p>
+                      <p className="text-[9px] font-black text-white/10 uppercase tracking-[0.3em]">
+                        &copy; {new Date().getFullYear()} {data?.settings?.seo?.author || data?.user?.username || "Architect"}
+                      </p>
+                    </div>
                   </div>
                 )}
               </div>
@@ -318,14 +328,31 @@ const Navbar = () => {
   const [toggle, setToggle] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const { username } = useParams();
 
-  const navLinks = useMemo(() => data?.settings?.navLinks ?? [
-    { id: "about", title: "About", path: "/" },
-    { id: "portfolio", title: "Work", path: "/portfolio" },
-    { id: "experience", title: "Experience", path: "/experience" },
-    { id: "services", title: "Skills", path: "/services" },
-    { id: "contact", title: "Contact", path: "/#contact" },
-  ], [data]);
+  const basePath = username ? `/${username}` : "";
+
+  const navLinks = useMemo(() => {
+    const defaultLinks = [
+      { id: "about", title: "About", path: "/about" },
+      { id: "portfolio", title: "Work", path: "/portfolio" },
+      { id: "experience", title: "Experience", path: "/experience" },
+      { id: "services", title: "Skills", path: "/services" },
+      { id: "contact", title: "Contact", path: "/contact" },
+    ];
+    const sourceLinks = data?.settings?.navLinks ?? defaultLinks;
+    return sourceLinks.map(link => {
+      let p = link.path;
+      
+      if (link.id === "about" && (p === "/" || p === "")) p = "/about";
+      if (link.id === "contact" && (p.includes("#contact"))) p = "/contact";
+
+      if (p.startsWith('/')) p = p.substring(1);
+      if (p === "") p = "/"; 
+      else p = `/${p}`;
+      return { ...link, path: basePath + p };
+    });
+  }, [data, basePath]);
 
   const SOCIAL_LINKS = useMemo(() => {
     if (!data?.socials) return [];
@@ -370,7 +397,7 @@ const Navbar = () => {
           className={`${styles.paddingX} h-full max-w-7xl mx-auto flex justify-between items-center w-full`}
         >
           <Link
-            to="/"
+            to={basePath || "/"}
             className="flex items-center gap-4 group"
             onClick={() => {
               window.scrollTo(0, 0);
@@ -381,12 +408,19 @@ const Navbar = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-[#915EFF]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               <img src={logo} alt="logo" className="w-6 h-6 object-contain relative z-10 group-hover:scale-110 transition-transform" />
             </div>
-            <div className="flex flex-col">
-              <span className="text-white font-black text-[16px] tracking-tight leading-none group-hover:text-gradient transition-all duration-300 uppercase">
-                QURBAN
+            <div className="flex flex-col relative">
+              <span className="text-white font-black text-[16px] tracking-tight leading-none group-hover:text-gradient transition-all duration-300 uppercase flex items-center gap-2">
+                {data?.settings?.seo?.author?.split(' ')[0] || data?.user?.username || "PORTFOLIO"}
+                <Link 
+                  to="/admin" 
+                  className="opacity-10 hover:opacity-100 transition-opacity duration-500 text-[10px] translate-y-[-2px]"
+                  title="Admin"
+                >
+                  🔐
+                </Link>
               </span>
               <span className="text-secondary text-[10px] font-bold tracking-[0.3em] uppercase mt-1.5 opacity-60">
-                Architect
+                {data?.settings?.seo?.author?.split(' ')[1] || "Architect"}
               </span>
             </div>
           </Link>
@@ -415,10 +449,11 @@ const Navbar = () => {
           <div className="lg:hidden flex items-center">
             <button
               onClick={() => setToggle(true)}
-              className="w-10 h-10 rounded-xl glass-badge-hero flex items-center justify-center border-white/10 text-white/70 hover:text-white transition-all active:scale-90"
+              className="w-11 h-11 rounded-xl glass-badge-hero flex items-center justify-center border-white/10 text-white/70 hover:text-white transition-all active:scale-90 group relative overflow-hidden"
               aria-label="Open Menu"
             >
-              <HiMenuAlt3 size={24} />
+              <div className="absolute inset-0 bg-[#915EFF]/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <HiMenuAlt3 size={24} className="relative z-10" />
             </button>
           </div>
         </div>
@@ -434,6 +469,7 @@ const Navbar = () => {
           setToggle(false);
         }}
         socialLinks={SOCIAL_LINKS}
+        data={data}
       />
     </>
   );

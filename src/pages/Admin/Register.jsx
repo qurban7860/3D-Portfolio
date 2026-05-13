@@ -1,15 +1,19 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { HiOutlineLockClosed, HiOutlineMail, HiOutlineEye, HiOutlineEyeOff, HiOutlineSparkles } from "react-icons/hi";
+import { HiOutlineLockClosed, HiOutlineUser, HiOutlineMail, HiOutlineEye, HiOutlineEyeOff, HiOutlineSparkles } from "react-icons/hi";
 import { useAuth } from "../../context/AuthContext";
 import { motion } from "framer-motion";
 import { styles } from "../../styles";
 import { StarsCanvas } from "../../components";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const navigate = useNavigate();
-  const { login, error, loading, isAuthenticated } = useAuth();
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const { register, error, loading, isAuthenticated } = useAuth();
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
   const [localError, setLocalError] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -27,17 +31,17 @@ const LoginPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLocalError(null);
+
     try {
-      await login({ email: formData.email, password: formData.password });
+      await register(formData);
       navigate("/admin", { replace: true });
     } catch (err) {
-      setLocalError(err.message || "Invalid email or password.");
+      setLocalError(err.message || "Registration failed. Please check your details.");
     }
   };
 
   return (
     <div className="min-h-screen bg-[#050816] flex items-center justify-center p-6 selection:bg-[#915EFF]/30 relative overflow-hidden">
-      {/* ── Immersive Background ── */}
       <div className="fixed inset-0 z-0">
         <StarsCanvas />
         <div className="light-beam light-beam-1" />
@@ -61,8 +65,8 @@ const LoginPage = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-[#915EFF]/10 to-[#56ccf2]/10" />
               <HiOutlineSparkles className="relative z-10 text-[#915EFF] group-hover:scale-110 transition-transform duration-500" />
             </div>
-            <h1 className="text-2xl font-black text-white tracking-tight uppercase">Admin Login</h1>
-            <p className="mt-2 text-secondary text-[11px] font-bold tracking-widest uppercase opacity-40">Manage your digital presence</p>
+            <h1 className="text-2xl font-black text-white tracking-tight uppercase">Create Account</h1>
+            <p className="mt-2 text-secondary text-[11px] font-bold tracking-widest uppercase opacity-40">Join the premium 3D network</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
@@ -76,6 +80,23 @@ const LoginPage = () => {
             
             <div className="space-y-4">
               <div className="space-y-2 group/input">
+                <label className="text-[11px] font-black text-secondary/60 uppercase tracking-[0.2em] ml-2 group-focus-within/input:text-[#915EFF] transition-colors">Username</label>
+                <div className="relative">
+                  <HiOutlineUser className="absolute left-6 top-1/2 -translate-y-1/2 text-white/20 group-focus-within/input:text-[#915EFF] transition-colors z-20" size={20} />
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#915EFF] to-[#56ccf2] rounded-2xl blur opacity-0 group-focus-within/input:opacity-20 transition duration-500" />
+                  <input
+                    type="text"
+                    name="username"
+                    value={formData.username}
+                    onChange={handleChange}
+                    required
+                    placeholder="johndoe"
+                    className={`${styles.glassInput} relative z-10 pl-16`}
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2 group/input">
                 <label className="text-[11px] font-black text-secondary/60 uppercase tracking-[0.2em] ml-2 group-focus-within/input:text-[#915EFF] transition-colors">Email Address</label>
                 <div className="relative">
                   <HiOutlineMail className="absolute left-6 top-1/2 -translate-y-1/2 text-white/20 group-focus-within/input:text-[#915EFF] transition-colors z-20" size={20} />
@@ -86,7 +107,7 @@ const LoginPage = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    placeholder="admin@gmail.com"
+                    placeholder="john@example.com"
                     className={`${styles.glassInput} relative z-10 pl-16`}
                   />
                 </div>
@@ -122,12 +143,12 @@ const LoginPage = () => {
               disabled={loading}
               className={`${styles.glassButtonPremium} w-full py-4 text-[14px] font-black active:scale-[0.98] mt-2 uppercase tracking-[0.2em]`}
             >
-              {loading ? "Signing In..." : "Sign In"}
+              {loading ? "Processing..." : "Create Account"}
             </button>
             
             <div className="flex flex-col gap-3 mt-4 text-center">
-              <button type="button" onClick={() => navigate("/admin/register")} className="text-[11px] font-black text-[#915EFF] hover:text-[#56ccf2] transition-all uppercase tracking-widest opacity-80">
-                Create Account
+              <button type="button" onClick={() => navigate("/admin/login")} className="text-[11px] font-black text-[#915EFF] hover:text-[#56ccf2] transition-all uppercase tracking-widest opacity-80">
+                Already have an account? Sign In
               </button>
               <div className="h-[1px] w-12 bg-white/5 mx-auto" />
               <button type="button" onClick={() => navigate("/")} className="text-[11px] font-bold text-secondary/40 hover:text-white transition-all uppercase tracking-widest">
@@ -141,4 +162,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

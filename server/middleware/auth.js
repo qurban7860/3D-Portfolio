@@ -13,9 +13,21 @@ export default function authMiddleware(req, res, next) {
 
   try {
     const payload = jwt.verify(token, JWT_SECRET);
-    req.user = payload;
+    req.user = {
+      id:       Number(payload.id),
+      email:    payload.email,
+      username: payload.username,
+      role:     payload.role,
+    };
     return next();
-  } catch (error) {
-    return res.status(401).json({ message: "Unauthorized: invalid token" });
+  } catch {
+    return res.status(401).json({ message: "Unauthorized: invalid or expired token" });
   }
+}
+
+export function isAdmin(req, res, next) {
+  if (!req.user || req.user.role !== "admin") {
+    return res.status(403).json({ message: "Forbidden: Admin privileges required" });
+  }
+  next();
 }

@@ -7,6 +7,13 @@ export async function login({ email, password }) {
   });
 }
 
+export async function register({ email, password, username }) {
+  return fetchJson("/auth/register", {
+    method: "POST",
+    body: { email, password, username },
+  });
+}
+
 export async function getCurrentUser(token) {
   return fetchJson("/auth/me", {
     method: "GET",

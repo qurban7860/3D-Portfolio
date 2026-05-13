@@ -25,6 +25,16 @@ export default defineConfig({
     port: 3000,
     open: true,
     cors: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:4002',
+        changeOrigin: true,
+      },
+      '/uploads': {
+        target: 'http://localhost:4002',
+        changeOrigin: true,
+      }
+    }
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],

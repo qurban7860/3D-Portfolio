@@ -76,7 +76,7 @@ const ItemList = ({ items, onEdit, onDelete, onReorder, label }) => {
 
               <div className="flex items-center justify-end gap-3 shrink-0 pt-4 sm:pt-0 border-t border-white/5 sm:border-none relative z-10">
                 {!item.visible && (
-                  <span className="text-[10px] font-bold text-secondary/40 bg-white/5 px-3 py-1.5 rounded-lg mr-2 border border-white/5">
+                  <span className="text-[9px] font-black text-secondary/40 bg-white/5 px-3 py-1.5 rounded-lg mr-2 border border-white/5 uppercase tracking-tighter">
                     Hidden
                   </span>
                 )}
@@ -85,19 +85,19 @@ const ItemList = ({ items, onEdit, onDelete, onReorder, label }) => {
                 <button
                   type="button"
                   onClick={(e) => { e.stopPropagation(); onEdit(item); }}
-                  className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/5 text-white transition-all duration-300 hover:bg-[#915EFF]/20 hover:text-[#915EFF] hover:border-[#915EFF]/40 border border-white/10 shadow-xl active:scale-95"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/5 text-white transition-all duration-500 hover:bg-[#915EFF]/20 hover:text-[#915EFF] hover:border-[#915EFF]/40 border border-white/10 shadow-xl active:scale-95 group/btn"
                   title="Edit Item"
                 >
-                  <HiOutlinePencilAlt size={20} />
+                  <HiOutlinePencilAlt size={18} className="group-hover/btn:rotate-12 transition-transform" />
                 </button>
                 
                 <button
                   type="button"
                   onClick={(e) => { e.stopPropagation(); onDelete(item.id); }}
-                  className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/5 text-white transition-all duration-300 hover:bg-red-500/20 hover:text-red-400 hover:border-red-500/40 border border-white/10 shadow-xl active:scale-95"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/5 text-white transition-all duration-500 hover:bg-red-500/20 hover:text-red-400 hover:border-red-500/40 border border-white/10 shadow-xl active:scale-95 group/btn"
                   title="Delete Item"
                 >
-                  <HiOutlineTrash size={20} />
+                  <HiOutlineTrash size={18} className="group-hover/btn:scale-110 transition-transform" />
                 </button>
               </div>
             </Reorder.Item>

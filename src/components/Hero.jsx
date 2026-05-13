@@ -11,7 +11,9 @@ const Hero = () => {
   const { data } = usePortfolio();
   const navigate = useNavigate();
   const hero = data?.settings?.hero ?? {};
-  const headline = hero.headline || "Hi, I'm Qurban";
+  const headline = hero.headline || "Hi, I'm Developer";
+  const nameMatch = headline.match(/Hi, I'm (.*)/i) || [null, "Developer"];
+  const nameToHighlight = nameMatch[1].trim();
   const subtitle = hero.subtitle || "Building high-performance web applications with precision.";
 
   return (
@@ -50,7 +52,7 @@ const Hero = () => {
               className="text-white font-black lg:text-[72px] md:text-[60px] sm:text-[50px] text-[32px] leading-[1.1] tracking-tighter lg:whitespace-nowrap"
             >
               {headline.split(" ").map((word, i) => (
-                <span key={i} className={`${word === "Qurban" ? "text-gradient-shimmer" : ""}`}>
+                <span key={i} className={`${word === nameToHighlight || word.includes(nameToHighlight) ? "text-gradient-shimmer" : ""}`}>
                   {word}{i === headline.split(" ").length - 1 ? "" : <>&nbsp;</>}
                 </span>
               ))}

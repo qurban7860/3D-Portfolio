@@ -7,7 +7,9 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { initializeDatabase } from "./db.js";
 import authRoutes from "./routes/auth.js";
+import adminRoutes from "./routes/admin.js";
 import contentRoutes from "./routes/content.js";
+import portfolioRoutes from "./routes/portfolio.js";
 
 dotenv.config();
 
@@ -18,45 +20,43 @@ app.use(helmet({
   crossOriginResourcePolicy: false,
   crossOriginOpenerPolicy: false,
   crossOriginEmbedderPolicy: false,
-  contentSecurityPolicy: false, // Disable CSP temporarily to debug 403
+  contentSecurityPolicy: false,
 }));
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Static uploads (handled by express locally, and by the function on Vercel)
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-app.get("/api/health", (_req, res) => {
-  res.json({ status: "ok", message: "Dynamic portfolio API is running." });
-});
-
-app.get("/api/basic-health", (_req, res) => {
-  res.json({ status: "ok", message: "Server is running (DB bypassed)." });
-});
-
+app.get("/api/health", (_req, res) => res.json({ status: "ok", message: "Dynamic portfolio API is running." }));
 app.use(async (req, res, next) => {
   try {
     await initializeDatabase();
     next();
   } catch (err) {
     console.error("Database initialization error:", err);
-    res.status(503).json({ 
-      message: "Database connection failed. Please check your environment variables and Turso configuration.",
-      error: process.env.NODE_ENV === "development" ? err.message : undefined
-    });
+    res.status(503).json({ message: "Database connection failed." });
   }
 });
 
-app.use("/api/auth", authRoutes);
-app.use("/api/content", contentRoutes);
-
-app.use((req, res) => {
-  res.status(404).json({ message: "Resource not found" });
+app.use((req, res, next) => {
+  if (req.url.startsWith("/api")) {
+    console.log(`🌍 API Request: ${req.method} ${req.url}`);
+  }
+  next();
 });
 
-app.use((err, _req, res) => {
-  console.error(err);
+app.use("/api/auth", authRoutes);
+app.use("/api/super-admin", adminRoutes); 
+app.use("/api/content", contentRoutes);
+app.use("/api/portfolio", portfolioRoutes);
+
+app.all("/api/*", (req, res) => {
+  console.warn(`🕵️ 404 Not Found (API Fallback): ${req.method} ${req.originalUrl}`);
+  res.status(404).json({ message: `API Resource not found: ${req.originalUrl}` });
+});
+app.use((err, req, res, _next) => {
+  console.error("🔥 Server Error:", err);
   res.status(err.status || 500).json({ message: err.message || "Internal server error" });
 });
 

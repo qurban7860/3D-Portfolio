@@ -6,7 +6,7 @@ import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
 import CanvasLoader from "../Loader";
 
 const Earth = ({ isMobile }) => {
-  const earth = useGLTF("./planet/scene.gltf");
+  const earth = useGLTF("/planet/scene.gltf");
   
   const scale = isMobile ? 2.2 : 2.8;
 

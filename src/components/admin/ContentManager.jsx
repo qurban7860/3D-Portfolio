@@ -183,7 +183,7 @@ const ContentManager = ({ section }) => {
   if (isLoading) {
     return (
       <div className="flex min-h-[300px] items-center justify-center">
-        <LoadingState message={`Syncing ${schema.title}...`} />
+        <LoadingState message={`Loading ${schema.title}...`} />
       </div>
     );
   }
@@ -198,13 +198,13 @@ const ContentManager = ({ section }) => {
         onCancel={() => setConfirmState(prev => ({ ...prev, isOpen: false }))}
       />
 
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex justify-between items-center mb-10">
         <div>
-          <h4 className="text-white font-bold text-xl sm:text-2xl flex items-center gap-2">
-            {schema.title} Content
+          <h4 className="text-white font-black text-xl sm:text-2xl flex items-center gap-2 uppercase tracking-tight">
+            {schema.title}
           </h4>
-          <p className="text-secondary text-[13px] mt-2 font-medium opacity-60">
-            Total Records: <span className="text-white font-semibold">{items.length}</span>
+          <p className="text-secondary text-[12px] mt-2 font-bold uppercase tracking-widest opacity-40">
+            {items.length} {items.length === 1 ? 'Record' : 'Records'} Synchronized
           </p>
         </div>
         <button 
@@ -212,10 +212,10 @@ const ContentManager = ({ section }) => {
             setSelectedItem(null);
             setIsFormOpen(true);
           }}
-          className={`${styles.glassButtonPremium} px-4 sm:px-5 py-2.5 text-sm flex items-center gap-2 whitespace-nowrap shrink-0`}
+          className={`${styles.glassButtonPremium} px-6 py-3 text-[13px] font-black flex items-center gap-2 whitespace-nowrap shrink-0 uppercase tracking-widest shadow-xl`}
         >
           <HiOutlinePlus className="text-lg" />
-          New Entry
+          Add Entry
         </button>
       </div>
 

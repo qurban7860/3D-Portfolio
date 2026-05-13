@@ -49,7 +49,7 @@ const styles = {
     "backdrop-blur-xl bg-white/[0.03] border border-white/10 rounded-[2rem] hover:border-[#915EFF]/40 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_20px_rgba(145,94,255,0.1)] transition-all duration-700",
 
   glassCardStrong:
-    "backdrop-blur-2xl bg-white/[0.08] border border-white/[0.15] rounded-[2.5rem] shadow-2xl",
+    "backdrop-blur-3xl bg-white/[0.08] border border-white/[0.15] rounded-[2.5rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.6),0_0_40px_rgba(145,94,255,0.1)]",
 
   glassCardPurple:
     "backdrop-blur-xl bg-[#915EFF]/5 border border-[#915EFF]/20 rounded-[2rem] hover:border-[#915EFF]/50 hover:shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_30px_rgba(145,94,255,0.2)] hover:bg-[#915EFF]/10 transition-all duration-700",
@@ -59,6 +59,9 @@ const styles = {
 
   card: "bg-tertiary rounded-xl p-6 border border-[#915EFF]/20 hover:border-[#915EFF]/60 transition-all duration-300",
   sectionBadge: "text-[#915EFF] text-[14px] font-bold uppercase tracking-wider",
+
+  glassInput:
+    "w-full rounded-2xl bg-white/5 border border-white/10 px-6 py-4 text-white outline-none transition-all duration-500 focus:border-[#915EFF] focus:bg-white/[0.12] focus:shadow-[0_0_25px_rgba(145,94,255,0.2),inset_0_1px_2px_rgba(0,0,0,0.3)] hover:border-white/20 hover:bg-white/[0.08] text-[15px] font-medium placeholder:text-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]",
 };
 
 export { styles };

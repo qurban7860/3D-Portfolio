@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { usePortfolio } from "../context/PortfolioContext";
 import { SectionWrapper } from "../hoc";
 import { fadeIn, textVariant } from "../Animation/motion";
@@ -8,6 +8,9 @@ import { resolveAssetUrl } from "../utils/assetResolver";
 
 const Showcase = () => {
   const { data } = usePortfolio();
+  const { username } = useParams();
+  const basePath = username ? `/${username}` : "";
+  
   const latestProject = (data?.projects ?? [])[0];
   const latestExperience = (data?.experiences ?? [])[0];
 
@@ -41,7 +44,7 @@ const Showcase = () => {
                     <h3 className="text-white text-lg font-black">{latestProject.name}</h3>
                     <p className="text-secondary text-[13px] line-clamp-2 mt-2">{latestProject.description}</p>
                   </div>
-                  <Link to="/portfolio" className="text-[#915EFF] font-bold text-[13px] hover:text-white transition-all">
+                  <Link to={`${basePath}/portfolio`} className="text-[#915EFF] font-bold text-[13px] hover:text-white transition-all">
                     Case Study →
                   </Link>
                 </div>
@@ -63,7 +66,7 @@ const Showcase = () => {
               <div className="flex-1">
                  <h4 className="text-white text-lg font-black leading-tight">{latestExperience.title}</h4>
                  <p className="text-secondary text-[13px] mt-1">{latestExperience.companyName}</p>
-                 <Link to="/experience" className="text-[#915EFF] font-bold text-[13px] hover:text-white mt-3 block transition-all">
+                 <Link to={`${basePath}/experience`} className="text-[#915EFF] font-bold text-[13px] hover:text-white mt-3 block transition-all">
                    Professional Journey →
                  </Link>
               </div>
@@ -72,7 +75,7 @@ const Showcase = () => {
         )}
       </div>
 
-      <Link to="/portfolio" className={`${styles.glassButton}`}>
+      <Link to={`${basePath}/portfolio`} className={`${styles.glassButton}`}>
          See All Projects
       </Link>
     </div>

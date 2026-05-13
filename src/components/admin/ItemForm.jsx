@@ -51,21 +51,21 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
   };
 
   return (
-    <div className="p-8 sm:p-12 relative overflow-hidden bg-[#050816]">
-      {/* Structural Highlights */}
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#915EFF]/10 rounded-full blur-[120px] pointer-events-none -mr-48 -mt-48" />
-      <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#56ccf2]/5 rounded-full blur-[100px] pointer-events-none -ml-32 -mb-32" />
+    <div className="p-8 sm:p-12 relative overflow-hidden bg-[#050816] rounded-[2.5rem] border border-white/5">
+      {/* ── Immersive Effects ── */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#915EFF]/10 rounded-full blur-[140px] pointer-events-none -mr-64 -mt-64" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#56ccf2]/5 rounded-full blur-[120px] pointer-events-none -ml-48 -mb-48" />
 
       <div className="mb-12 relative z-10">
         <div className="flex items-center gap-3 mb-4">
-          <span className="px-3 py-1 rounded-lg bg-[#915EFF]/10 border border-[#915EFF]/20 text-[#915EFF] text-[10px] font-bold uppercase tracking-widest">
-            Configuration Node
+          <span className="px-3 py-1 rounded-lg bg-[#915EFF]/10 border border-[#915EFF]/20 text-[#915EFF] text-[10px] font-black uppercase tracking-[0.2em]">
+            Content Manager
           </span>
         </div>
-        <h3 className="text-white font-black text-3xl sm:text-4xl tracking-tight leading-none">
-          {initialData ? "Refine Entry" : "New Node"}
+        <h3 className="text-white font-black text-3xl sm:text-4xl tracking-tight leading-none uppercase">
+          {initialData ? "Update Entry" : "Create New"}
         </h3>
-        <p className="text-secondary text-[15px] mt-4 font-medium opacity-60 leading-relaxed max-w-xl">Architect your collection with precise metadata to maintain system-wide integrity.</p>
+        <p className="text-secondary text-[15px] mt-4 font-medium opacity-60 leading-relaxed max-w-xl">Configure your content with precision to maintain a professional portfolio presence.</p>
       </div>
       
       <form onSubmit={handleSubmit} className="space-y-10 relative z-10">
@@ -92,34 +92,35 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
               </div>
               
               {field.type === "textarea" ? (
-                <textarea
-                  name={field.name}
-                  value={formState[field.name] ?? ""}
-                  onChange={handleChange}
-                  rows={field.name === "points" || field.name === "features" ? 8 : 5}
-                  required={field.required}
-                  placeholder={`Enter ${field.label.toLowerCase()} content...`}
-                  className="w-full rounded-2xl bg-white/[0.03] border border-white/10 px-6 py-5 text-[15px] text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-white/[0.06] placeholder:text-white/10 resize-none custom-scrollbar font-medium shadow-inner"
-                />
+                <div className="relative group/field">
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#915EFF] to-[#56ccf2] rounded-2xl blur opacity-0 group-focus-within/field:opacity-20 transition duration-500" />
+                  <textarea
+                    name={field.name}
+                    value={formState[field.name] ?? ""}
+                    onChange={handleChange}
+                    rows={field.name === "points" || field.name === "features" ? 8 : 5}
+                    required={field.required}
+                    placeholder={`Enter ${field.label.toLowerCase()} content...`}
+                    className={`${styles.glassInput} resize-none custom-scrollbar relative z-10`}
+                  />
+                </div>
               ) : field.type === "checkbox" ? (
-                <div className="flex items-center gap-4 rounded-2xl bg-white/[0.03] border border-white/10 px-6 h-[64px] transition-all hover:bg-white/[0.06] group hover:border-[#915EFF]/30 cursor-pointer" onClick={() => handleChange({ target: { name: field.name, type: 'checkbox', checked: !formState[field.name] }})}>
-                  <div className="relative flex items-center">
-                    <input
-                      id={`checkbox-${field.name}`}
-                      name={field.name}
-                      type="checkbox"
-                      checked={Boolean(formState[field.name])}
-                      onChange={() => {}} // Handled by div click
-                      className="peer h-6 w-6 cursor-pointer appearance-none rounded-lg border border-white/20 bg-white/5 transition-all checked:bg-[#915EFF] checked:border-transparent focus:outline-none"
-                    />
-                    <svg className="absolute h-4 w-4 pointer-events-none hidden peer-checked:block left-[4px] text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
+                <div 
+                  className="flex items-center justify-between gap-4 rounded-2xl bg-white/[0.03] border border-white/10 px-6 h-[68px] transition-all duration-500 hover:bg-white/[0.08] group hover:border-[#915EFF]/40 cursor-pointer relative overflow-hidden" 
+                  onClick={() => handleChange({ target: { name: field.name, type: 'checkbox', checked: !formState[field.name] }})}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#915EFF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <span className="text-[14px] font-bold text-white/70 group-hover:text-white transition-colors relative z-10">{field.label}</span>
+                  
+                  <div className="relative inline-flex items-center cursor-pointer z-10">
+                    <div className={`w-12 h-6 rounded-full transition-all duration-500 ${formState[field.name] ? 'bg-[#915EFF]' : 'bg-white/10'}`}>
+                      <div className={`absolute top-1 left-1 bg-white w-4 h-4 rounded-full transition-all duration-500 shadow-lg ${formState[field.name] ? 'translate-x-6' : 'translate-x-0'}`} />
+                    </div>
                   </div>
-                  <span className="text-[15px] font-bold text-white/70 group-hover:text-white transition-colors">{field.label}</span>
                 </div>
               ) : (
-                <div className="relative group">
+                <div className="relative group/field">
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#915EFF] to-[#56ccf2] rounded-2xl blur opacity-0 group-focus-within/field:opacity-20 transition duration-500" />
                   <input
                     type={field.type === "number" ? "number" : "text"}
                     name={field.name}
@@ -127,13 +128,13 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
                     onChange={handleChange}
                     required={field.required}
                     placeholder={`Enter ${field.label.toLowerCase()}...`}
-                    className={`w-full rounded-2xl bg-white/[0.03] border border-white/10 px-6 py-5 text-[15px] text-white outline-none transition-all focus:border-[#915EFF]/50 focus:bg-white/[0.06] placeholder:text-white/10 font-medium shadow-inner ${
+                    className={`${styles.glassInput} relative z-10 ${
                       (field.name === "icon" || field.name.toLowerCase().includes("iconurl") || field.name.toLowerCase().includes("imageurl")) ? "pr-16" : ""
                     }`}
                   />
                   
                   {(field.name === "icon" || field.name.toLowerCase().includes("iconurl") || field.name.toLowerCase().includes("imageurl")) && (
-                    <div className="absolute right-4 top-8 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 shadow-lg overflow-hidden">
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 shadow-lg overflow-hidden z-20">
                       {field.name === "icon" ? (
                         (() => {
                           const Icon = getIcon(formState[field.name]);

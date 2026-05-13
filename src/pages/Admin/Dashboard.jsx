@@ -1,195 +1,310 @@
-import { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { HiOutlineExternalLink, HiOutlineLogout, HiOutlineCog } from "react-icons/hi";
+import { useMemo, useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { HiOutlineExternalLink, HiOutlineLogout, HiOutlineCog, HiOutlineChevronRight, HiOutlineMenuAlt2, HiOutlineChevronLeft } from "react-icons/hi";
 import { useAuth } from "../../context/AuthContext";
 import ContentManager from "../../components/admin/ContentManager";
 import SettingsManager from "../../components/admin/SettingsManager";
+import UsersManager from "../../components/admin/UsersManager";
 import { adminSchema } from "../../constants/adminSchema";
+import { HiOutlineUserGroup } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
 import { styles } from "../../styles";
 import { StarsCanvas } from "../../components/canvas";
 
+const NavItem = ({ icon, label, isActive, onClick, isCollapsed }) => (
+  <button
+    onClick={onClick}
+    className={`w-full group relative flex items-center transition-all duration-500 rounded-xl ${
+      isCollapsed ? "px-0 justify-center h-12" : "px-4 py-3 gap-3"
+    } ${
+      isActive 
+        ? "text-white bg-[#915EFF]/10 shadow-[inset_0_0_20px_rgba(145,94,255,0.1)] border border-[#915EFF]/20" 
+        : "text-secondary hover:text-white hover:bg-white/[0.04]"
+    }`}
+    title={isCollapsed ? label : ""}
+  >
+    {isActive && (
+      <motion.div 
+        layoutId="sidebarActiveIndicator"
+        className={`absolute bg-[#915EFF] rounded-full shadow-[0_0_15px_#915EFF] ${
+            isCollapsed ? "left-0 w-1 h-6 top-1/2 -translate-y-1/2" : "left-0 w-1.5 h-5"
+        }`}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      />
+    )}
+    
+    {/* Collapsed Active Glow */}
+    {isCollapsed && isActive && (
+      <div className="absolute inset-0 bg-gradient-to-r from-[#915EFF]/20 to-transparent pointer-events-none blur-sm" />
+    )}
+    
+    <div className={`text-lg transition-all duration-500 relative z-10 ${isActive ? "scale-110 text-[#56ccf2]" : "group-hover:scale-110 opacity-60 group-hover:opacity-100"}`}>
+      {icon}
+    </div>
+    
+    {!isCollapsed && (
+      <span className={`font-black text-[13px] tracking-tight transition-all duration-500 ${isActive ? "translate-x-1" : "group-hover:translate-x-1"}`}>
+        {label}
+      </span>
+    )}
+    
+    {!isCollapsed && isActive && (
+      <motion.div 
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
+        className="ml-auto"
+      >
+        <HiOutlineChevronRight className="text-[12px] text-[#915EFF] animate-pulse" />
+      </motion.div>
+    )}
+    
+    {/* Collapsed Active Glow */}
+    {isCollapsed && isActive && (
+      <div className="absolute inset-0 bg-gradient-to-r from-[#915EFF]/5 to-transparent pointer-events-none" />
+    )}
+  </button>
+);
+
+NavItem.propTypes = {
+  icon: PropTypes.node.isRequired,
+  label: PropTypes.string.isRequired,
+  isActive: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
+  isCollapsed: PropTypes.bool,
+};
+
 const DashboardPage = () => {
-  const navigate = useNavigate();
   const { logout, user } = useAuth();
   const sectionKeys = useMemo(() => Object.keys(adminSchema), []);
   const [activeSection, setActiveSection] = useState(sectionKeys[0]);
   const [isSettingsMode, setIsSettingsMode] = useState(false);
+  const [isUsersMode, setIsUsersMode] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
-  const activeTitle = isSettingsMode ? "Global Settings" : adminSchema[activeSection].title;
+  const isAdmin = user?.role === "admin";
+  
+  useEffect(() => {
+    if (isUsersMode && !isAdmin) {
+      setIsUsersMode(false);
+      setActiveSection(sectionKeys[0]);
+    }
+  }, [isUsersMode, isAdmin, sectionKeys]);
+
+  const userPortfolioUrl = `/${user?.username}`;
+
+  const activeTitle = isSettingsMode 
+    ? "General Settings" 
+    : isUsersMode 
+    ? "User Directory" 
+    : adminSchema[activeSection].title;
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) setIsMobileMenuOpen(false);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const renderSidebarContent = (isMobile = false) => (
+    <div className="flex flex-col h-full overflow-hidden relative z-10">
+        <div className={`p-5 pb-3 shrink-0 ${isCollapsed && !isMobile ? "items-center flex flex-col" : ""}`}>
+            <div className={`flex items-center gap-3 mb-8 px-1 ${isCollapsed && !isMobile ? "justify-center" : ""}`}>
+                <div className="h-10 w-10 shrink-0 rounded-xl bg-gradient-to-br from-[#915EFF] to-[#56ccf2] flex items-center justify-center text-white font-black text-xl shadow-[0_0_20px_rgba(145,94,255,0.4)] transition-transform hover:scale-110 duration-500">
+                    A
+                </div>
+                {(!isCollapsed || isMobile) && (
+                  <div className="min-w-0">
+                      <h2 className="text-white font-black text-[15px] tracking-tight leading-none uppercase truncate">Antigravity</h2>
+                      <p className="text-[9px] text-[#56ccf2] font-black tracking-[0.2em] mt-1 uppercase opacity-70">Admin Terminal</p>
+                  </div>
+                )}
+            </div>
+            
+            <div className="space-y-1">
+                {(!isCollapsed || isMobile) && (
+                  <p className="text-[9px] font-black text-secondary/30 uppercase tracking-[0.2em] px-3 mb-2">Core System</p>
+                )}
+                <NavItem 
+                    icon={<HiOutlineCog />} 
+                    label="Settings" 
+                    isActive={isSettingsMode} 
+                    onClick={() => { setIsSettingsMode(true); setIsUsersMode(false); setIsMobileMenuOpen(false); }} 
+                    isCollapsed={isCollapsed && !isMobile}
+                />
+                {isAdmin && (
+                    <NavItem 
+                        icon={<HiOutlineUserGroup />} 
+                        label="Users" 
+                        isActive={isUsersMode} 
+                        onClick={() => { setIsUsersMode(true); setIsSettingsMode(false); setIsMobileMenuOpen(false); }} 
+                        isCollapsed={isCollapsed && !isMobile}
+                    />
+                )}
+            </div>
+        </div>
+
+        <div className="flex-1 overflow-y-auto custom-scrollbar px-5 py-3">
+            {(!isCollapsed || isMobile) && (
+              <p className="text-[9px] font-black text-secondary/30 uppercase tracking-[0.2em] px-3 mb-2">Content</p>
+            )}
+            <div className="space-y-1">
+                {sectionKeys.map((key) => (
+                    <NavItem 
+                        key={key}
+                        icon={<span>{adminSchema[key].icon || "📝"}</span>}
+                        label={adminSchema[key].title}
+                        isActive={!isSettingsMode && !isUsersMode && activeSection === key}
+                        onClick={() => {
+                            setActiveSection(key);
+                            setIsSettingsMode(false);
+                            setIsUsersMode(false);
+                            setIsMobileMenuOpen(false);
+                        }}
+                        isCollapsed={isCollapsed && !isMobile}
+                    />
+                ))}
+            </div>
+        </div>
+
+        <div className="p-5 border-t border-white/5 space-y-4 shrink-0">
+            {(!isCollapsed || isMobile) && (
+              <div className="bg-white/[0.03] rounded-2xl p-4 border border-white/5 group/share cursor-pointer hover:border-[#915EFF]/30 transition-all duration-500 relative overflow-hidden"
+                      onClick={() => {
+                          navigator.clipboard.writeText(window.location.origin + userPortfolioUrl);
+                          alert("Portfolio link copied to clipboard!");
+                      }}>
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[#915EFF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="flex items-center justify-between mb-2 relative z-10">
+                      <p className="text-[9px] text-[#56ccf2]/60 font-black uppercase tracking-wider leading-none">Public Link</p>
+                      <HiOutlineExternalLink className="text-secondary/20 group-hover:text-[#56ccf2] text-xs transition-colors" />
+                  </div>
+                  <p className="text-[11px] text-white/40 font-bold truncate leading-none relative z-10 group-hover:text-white/60 transition-colors">{userPortfolioUrl}</p>
+              </div>
+            )}
+
+            <button
+                onClick={() => logout()}
+                className={`w-full flex items-center justify-center gap-2 rounded-2xl bg-red-500/5 border border-red-500/10 text-red-400/80 font-black transition-all duration-500 uppercase tracking-widest ${
+                  isCollapsed && !isMobile ? "h-12 px-0" : "px-4 py-3.5 text-[12px] hover:bg-red-500 hover:text-white"
+                }`}
+                title={isCollapsed && !isMobile ? "Sign Out" : ""}
+            >
+                <HiOutlineLogout className="text-lg" />
+                {(!isCollapsed || isMobile) && <span>Sign Out</span>}
+            </button>
+        </div>
+    </div>
+  );
 
   return (
-    <div className="min-h-screen bg-[#050816] pb-16 selection:bg-[#915EFF]/30 overflow-x-hidden relative">
-      {/* ... existing background ... */}
+    <div className="h-screen bg-[#050816] selection:bg-[#915EFF]/30 overflow-hidden relative flex">
       <div className="fixed inset-0 z-0 pointer-events-none">
         <StarsCanvas />
         <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#915EFF]/5 blur-[150px]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[#56ccf2]/5 blur-[150px]" />
-        
-        <div className="light-beam light-beam-1" />
-        <div className="light-beam light-beam-2" />
-        <div className="light-beam light-beam-3" />
       </div>
 
-      <div className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-col gap-6 sm:gap-10 px-4 sm:px-8 pt-6 sm:pt-12">
-        {/* ... existing header ... */}
-        <header className={`${styles.glassCardStrong} flex flex-col gap-8 p-6 sm:p-10 lg:flex-row lg:items-center lg:justify-between transition-all duration-500 group relative overflow-hidden bg-[#050816]/60`}>
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#915EFF]/5 to-transparent pointer-events-none" />
-          
-          <div className="space-y-2 relative z-10">
-            <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="flex items-center gap-3 mb-2"
-            >
-              <div className="h-2 w-2 rounded-full bg-green-400 animate-pulse shadow-[0_0_12px_rgba(74,222,128,0.6)]" />
-              <p className="text-[11px] font-bold text-green-400/80 tracking-widest uppercase">System Operational</p>
-            </motion.div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-              Control Center
-            </h1>
-            <p className="max-w-md text-secondary text-[15px] font-medium leading-relaxed mt-3 opacity-60">
-              Manage your professional portfolio with precision and architectural excellence.
-            </p>
-          </div>
+      <aside 
+        className={`hidden lg:flex h-full flex-col relative z-20 border-r border-white/10 bg-[#050816]/30 backdrop-blur-3xl shrink-0 shadow-2xl transition-all duration-500 ${
+          isCollapsed ? "w-20" : "w-72"
+        }`}
+      >
+        <button 
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          className="absolute -right-3 top-24 z-30 h-6 w-6 rounded-full bg-[#050816] border border-white/10 text-white flex items-center justify-center hover:bg-[#915EFF] hover:border-[#915EFF] transition-all shadow-xl"
+        >
+          {isCollapsed ? <HiOutlineChevronRight size={14} /> : <HiOutlineChevronLeft size={14} />}
+        </button>
+        
+        {renderSidebarContent()}
+      </aside>
 
-          <div className="flex flex-col gap-5 lg:items-end relative z-10">
-            <div className="flex items-center gap-4 rounded-2xl bg-white/5 border border-white/10 px-5 py-3 w-fit hover:border-[#915EFF]/30 transition-all duration-500 group/profile">
-              <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-[#915EFF] to-[#56ccf2] flex items-center justify-center text-white font-bold text-sm shadow-[0_0_20px_rgba(145,94,255,0.3)] group-hover/profile:scale-105 transition-transform">
-                {user?.email?.[0].toUpperCase() || "A"}
-              </div>
-              <div className="flex flex-col min-w-0">
-                <span className="text-white font-bold text-[14px] leading-none truncate max-w-[180px]">{user?.email}</span>
-                <span className="text-[11px] text-[#56ccf2] mt-1.5 font-semibold opacity-80">Administrator</span>
-              </div>
-            </div>
-            
-            <div className="flex gap-4 flex-wrap">
-              <button
-                type="button"
-                onClick={() => navigate("/")}
-                className="group flex items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-[14px] font-bold text-white transition-all duration-300 hover:bg-white/10 hover:border-white/20 active:scale-95"
-              >
-                <span>Live Site</span>
-                <HiOutlineExternalLink className="text-secondary group-hover:text-[#56ccf2] transition-colors" />
-              </button>
-              <button
-                type="button"
-                onClick={() => logout()}
-                className={`${styles.glassButtonPremium} px-8 py-3 text-[14px] font-bold flex items-center gap-3 active:scale-95`}
-              >
-                <HiOutlineLogout className="text-lg" />
-                Sign Out
-              </button>
-            </div>
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <div className="fixed inset-0 z-[100] lg:hidden">
+            <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="absolute inset-0 bg-[#050816]/90 backdrop-blur-md"
+            />
+            <motion.aside 
+                initial={{ x: "-100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "-100%" }}
+                transition={{ type: "spring", bounce: 0, duration: 0.6 }}
+                className="absolute left-0 top-0 bottom-0 w-72 bg-[#050816]/60 backdrop-blur-3xl border-r border-white/10 flex flex-col shadow-2xl"
+            >
+                {renderSidebarContent(true)}
+            </motion.aside>
           </div>
+        )}
+      </AnimatePresence>
+
+      <main className="flex-1 h-full min-w-0 relative z-10 flex flex-col">
+        <header className="h-16 lg:h-20 border-b border-white/10 bg-[#050816]/40 backdrop-blur-2xl px-6 lg:px-10 flex items-center justify-between shrink-0 shadow-lg relative z-20">
+            <div className="flex items-center gap-4 lg:gap-6">
+                <button 
+                    onClick={() => setIsMobileMenuOpen(true)}
+                    className="lg:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors"
+                >
+                    <HiOutlineMenuAlt2 size={24} />
+                </button>
+                <div>
+                    <h3 className="text-white font-black text-lg lg:text-xl tracking-tight leading-none uppercase">{activeTitle}</h3>
+                    <div className="hidden sm:flex items-center gap-2 mt-2">
+                        <div className="h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse shadow-[0_0_8px_#4ade80]" />
+                        <span className="text-[10px] text-secondary font-black uppercase tracking-[0.1em] opacity-40">System Active</span>
+                    </div>
+                </div>
+            </div>
+
+            <div className="flex items-center gap-3 lg:gap-6">
+                <div className="flex items-center gap-3 lg:gap-4 bg-white/5 border border-white/10 px-3 lg:px-4 py-2 rounded-2xl hover:border-[#915EFF]/40 transition-all group/user cursor-pointer hover:bg-white/[0.08]">
+                    <div className="h-8 w-8 lg:h-9 lg:w-9 rounded-xl bg-gradient-to-tr from-[#915EFF] to-[#56ccf2] flex items-center justify-center text-white font-black text-xs lg:text-sm shadow-lg group-hover/user:scale-105 transition-transform duration-500">
+                        {user?.email?.[0].toUpperCase() || "A"}
+                    </div>
+                    <div className="hidden sm:flex flex-col">
+                        <span className="text-white font-bold text-[12px] leading-none truncate max-w-[120px] lg:max-w-[150px]">{user?.email}</span>
+                        <span className="text-[9px] text-[#56ccf2] font-black uppercase tracking-widest mt-1 opacity-60">{isAdmin ? "Super Admin" : "User Node"}</span>
+                    </div>
+                </div>
+                
+                <button
+                    onClick={() => window.open(userPortfolioUrl, "_blank")}
+                    className="h-10 w-10 lg:h-12 lg:w-12 flex items-center justify-center rounded-xl lg:rounded-2xl bg-[#915EFF]/10 border border-[#915EFF]/20 text-[#c4a7ff] hover:bg-[#915EFF] hover:text-white transition-all duration-500 shadow-xl group"
+                >
+                    <HiOutlineExternalLink className="text-lg lg:text-xl group-hover:scale-110 transition-transform" />
+                </button>
+            </div>
         </header>
 
-        <div className="flex flex-col lg:flex-row gap-8 items-start mb-20">
-          <aside className="w-full lg:w-80 shrink-0 lg:sticky lg:top-12">
-            <div className={`${styles.glassCard} p-4 sm:p-6 relative overflow-hidden group`}>
-              <div className="absolute inset-0 bg-gradient-to-br from-[#915EFF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-              
-              <div className="mb-6 px-2 relative z-10 hidden lg:block">
-                <h2 className="text-[12px] font-bold text-[#c4a7ff] tracking-widest uppercase">Navigation</h2>
-                <p className="text-[13px] text-secondary mt-1.5 font-medium opacity-60">Architect your content grid</p>
-              </div>
-              
-              <nav className="flex lg:flex-col overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 gap-3 custom-scrollbar scroll-smooth relative z-10 no-scrollbar">
-                <button
-                  type="button"
-                  onClick={() => setIsSettingsMode(true)}
-                  className={`group relative flex shrink-0 items-center gap-3 overflow-hidden rounded-2xl px-5 py-4 text-[14px] font-semibold transition-all duration-500 border whitespace-nowrap active:scale-95 ${
-                    isSettingsMode
-                      ? "text-white border-[#56ccf2]/40 bg-[#56ccf2]/10 shadow-[0_0_25px_rgba(86,204,242,0.1)]"
-                      : "text-secondary border-white/5 hover:text-white hover:bg-white/5"
-                  }`}
-                >
-                  <HiOutlineCog className={`text-xl ${isSettingsMode ? "text-[#56ccf2]" : "text-secondary"} group-hover:rotate-90 transition-transform duration-700`} />
-                  <span>Site Settings</span>
-                  {isSettingsMode && (
-                    <motion.div 
-                      layoutId="activeSidebarNav"
-                      className="absolute inset-0 bg-gradient-to-r from-[#56ccf2]/15 to-transparent pointer-events-none"
-                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                    />
-                  )}
-                </button>
-
-                {sectionKeys.map((key) => {
-                  const isActive = !isSettingsMode && activeSection === key;
-                  
-                  return (
-                    <button
-                      key={key}
-                      type="button"
-                      onClick={() => {
-                        setActiveSection(key);
-                        setIsSettingsMode(false);
-                      }}
-                      className={`group relative flex shrink-0 items-center gap-3 overflow-hidden rounded-2xl px-5 py-4 text-[14px] font-semibold transition-all duration-500 border whitespace-nowrap active:scale-95 ${
-                        isActive
-                          ? "text-white border-[#915EFF]/40 bg-[#915EFF]/10 shadow-[0_0_25px_rgba(145,94,255,0.1)]"
-                          : "text-secondary border-white/5 hover:text-white hover:bg-white/5"
-                      }`}
-                    >
-                      <span className={`text-xl ${isActive ? "text-[#56ccf2]" : "text-secondary"}`}>
-                        {adminSchema[key].icon || "📝"}
-                      </span>
-                      <span>{adminSchema[key].title}</span>
-                      {isActive && (
-                        <motion.div 
-                          layoutId="activeSidebarNav"
-                          className="absolute inset-0 bg-gradient-to-r from-[#915EFF]/15 to-transparent pointer-events-none"
-                          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                        />
-                      )}
-                    </button>
-                  );
-                })}
-              </nav>
-            </div>
-          </aside>
-
-          <main className="flex-1 min-w-0 w-full">
-            <div className={`${styles.glassCard} p-4 sm:p-12 transition-all duration-700 min-h-[700px] relative overflow-hidden`}>
-              <div className="mb-12 flex items-center justify-between gap-8 pb-10 border-b border-white/5 relative z-10">
-                <div>
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="px-4 py-1.5 rounded-full bg-[#915EFF]/10 border border-[#915EFF]/20 text-[#c4a7ff] text-[11px] font-bold tracking-widest uppercase">
-                      {isSettingsMode ? "System Config" : "Current Node"}
-                    </span>
-                  </div>
-                  <h3 className="text-3xl sm:text-4xl font-bold text-white tracking-tight leading-none">{activeTitle}</h3>
+        <div className="flex-1 overflow-y-auto custom-scrollbar p-6 lg:p-10">
+            <motion.div
+                key={isSettingsMode ? "settings" : isUsersMode ? "users" : activeSection}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className="max-w-[1400px] mx-auto w-full"
+            >
+                <div className={`${styles.glassCardStrong} p-6 lg:p-10 min-h-[calc(100vh-220px)] relative overflow-hidden group`}>
+                    <div className="relative z-10">
+                        {isSettingsMode ? (
+                            <SettingsManager />
+                        ) : (isUsersMode && isAdmin) ? (
+                            <UsersManager />
+                        ) : (
+                            <ContentManager section={activeSection} />
+                        )}
+                    </div>
                 </div>
-                <div className="hidden md:flex h-16 w-16 shrink-0 rounded-2xl bg-white/5 items-center justify-center border border-white/10 shadow-inner text-3xl group hover:border-[#915EFF]/30 transition-all duration-500 relative overflow-hidden">
-                   <div className="absolute inset-0 bg-[#915EFF]/5 group-hover:bg-[#915EFF]/10 transition-colors" />
-                   <div className="relative z-10 group-hover:scale-110 transition-transform duration-500">
-                    {isSettingsMode ? "⚙️" : (adminSchema[activeSection].icon || "📝")}
-                   </div>
-                </div>
-              </div>
-
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={isSettingsMode ? "settings" : activeSection}
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                  className="w-full relative z-10"
-                >
-                  {isSettingsMode ? (
-                    <SettingsManager />
-                  ) : (
-                    <ContentManager section={activeSection} />
-                  )}
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </main>
+            </motion.div>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

@@ -6,6 +6,13 @@ export async function fetchPortfolio() {
   });
 }
 
+export async function fetchPublicPortfolio(username) {
+  return fetchJson(`/portfolio/${encodeURIComponent(username)}`, {
+    method: "GET",
+  });
+}
+
+
 export async function fetchAdminItems(type, token) {
   return fetchJson(`/content/admin/${type}`, {
     method: "GET",

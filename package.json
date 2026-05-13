@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "vite",
     "dev:server": "node server/index.js",
+    "db:migrate": "node server/utils/migrate.js",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"

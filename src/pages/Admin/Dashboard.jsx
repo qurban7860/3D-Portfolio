@@ -15,7 +15,7 @@ const NavItem = ({ icon, label, isActive, onClick, isCollapsed }) => (
   <button
     onClick={onClick}
     className={`w-full group relative flex items-center transition-all duration-500 rounded-xl ${
-      isCollapsed ? "px-0 justify-center h-12" : "px-4 py-3 gap-3"
+      isCollapsed ? "px-2.5 justify-center h-12" : "px-4 py-3 gap-3"
     } ${
       isActive 
         ? "text-white bg-[#915EFF]/10 shadow-[inset_0_0_20px_rgba(145,94,255,0.1)] border border-[#915EFF]/20" 
@@ -27,7 +27,7 @@ const NavItem = ({ icon, label, isActive, onClick, isCollapsed }) => (
       <motion.div 
         layoutId="sidebarActiveIndicator"
         className={`absolute bg-[#915EFF] rounded-full shadow-[0_0_15px_#915EFF] ${
-            isCollapsed ? "left-0 w-1 h-6 top-1/2 -translate-y-1/2" : "left-0 w-1.5 h-5"
+            isCollapsed ? "left-0 w-1 h-4 -translate-y-1/2" : "left-0 w-1.5 h-5"
         }`}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
       />
@@ -145,11 +145,8 @@ const DashboardPage = () => {
             </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto custom-scrollbar px-5 py-3">
-            {(!isCollapsed || isMobile) && (
-              <p className="text-[9px] font-black text-secondary/30 uppercase tracking-[0.2em] px-3 mb-2">Content</p>
-            )}
-            <div className="space-y-1">
+        <div className={`flex-1 overflow-y-auto custom-scrollbar py-3 ${isCollapsed && !isMobile ? "px-3" : "px-5"}`}>
+ <div className="space-y-1">
                 {sectionKeys.map((key) => (
                     <NavItem 
                         key={key}

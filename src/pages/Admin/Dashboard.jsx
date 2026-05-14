@@ -1,6 +1,6 @@
 import { useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { HiOutlineCog, HiOutlineUserGroup, HiOutlineLogout, HiOutlineMenuAlt2, HiOutlineChevronLeft, HiOutlineChevronRight, HiOutlineExternalLink } from "react-icons/hi";
+import { HiOutlineCog, HiOutlineUserGroup, HiOutlineLogout, HiOutlineMenuAlt2, HiOutlineChevronLeft, HiOutlineChevronRight, HiOutlineExternalLink, HiOutlineDuplicate } from "react-icons/hi";
 import toast from "react-hot-toast";
 import { useAuth } from "../../context/AuthContext";
 import ContentManager from "../../components/admin/ContentManager";
@@ -170,9 +170,10 @@ const DashboardPage = () => {
 
         <div className="p-5 border-t border-white/5 space-y-4 shrink-0">
             {(!isCollapsed || isMobile) && (
-              <div className="premium-glass p-5 rounded-2xl border border-white/5 group/share cursor-pointer hover:border-[#915EFF]/30 transition-all duration-500 relative overflow-hidden"
+              <div className="premium-glass p-3 pb-0 rounded-2xl border border-white/5 group/share cursor-pointer hover:border-[#915EFF]/30 transition-all duration-500 relative overflow-hidden"
                       onClick={() => {
-                          navigator.clipboard.writeText(window.location.origin + userPortfolioUrl);
+                          const fullUrl = window.location.origin + userPortfolioUrl;
+                          navigator.clipboard.writeText(fullUrl);
                           toast.success("Portfolio link copied to clipboard!", {
                             style: {
                               background: '#1a1c2c',
@@ -194,11 +195,11 @@ const DashboardPage = () => {
                         <div className="h-1.5 w-1.5 rounded-full bg-[#56ccf2] shadow-[0_0_8px_#56ccf2]" />
                         <p className="text-[10px] text-[#56ccf2] font-black uppercase tracking-[0.2em] leading-none">Public Link</p>
                       </div>
-                      <HiOutlineExternalLink className="text-secondary/40 group-hover:text-[#56ccf2] text-sm transition-all group-hover:scale-110" />
+                      <HiOutlineDuplicate className="text-secondary/40 group-hover:text-[#56ccf2] text-sm transition-all group-hover:scale-110" />
                   </div>
-                  <div className="flex items-center gap-2 relative z-10">
-                    <p className="text-[12px] text-white/50 font-bold truncate leading-none group-hover:text-white transition-colors">{userPortfolioUrl}</p>
-                    <span className="text-[8px] bg-[#915EFF]/20 text-[#c4a7ff] px-1.5 py-0.5 rounded-md font-black uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity">Copy</span>
+                  <div className="flex flex-col gap-1.5 relative z-10">
+                    <p className="text-[11px] text-white/50 font-bold break-all leading-tight group-hover:text-white transition-colors">{window.location.origin + userPortfolioUrl}</p>
+                    <span className="text-[8px] w-fit bg-[#915EFF]/20 text-[#c4a7ff] px-2 py-0.5 rounded-md font-black uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity">Click to Copy</span>
                   </div>
               </div>
             )}

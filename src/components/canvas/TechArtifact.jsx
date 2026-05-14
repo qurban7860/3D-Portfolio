@@ -20,7 +20,7 @@ const TechShape = () => {
     <group ref={group}>
       <Float speed={2} rotationIntensity={1} floatIntensity={2}>
         {/* Core Glowing Sphere */}
-        <Sphere args={[1.2, 64, 64]}>
+        {/* <Sphere args={[1.2, 64, 64]}>
           <MeshDistortMaterial 
             color="#915EFF" 
             attach="material" 
@@ -31,7 +31,7 @@ const TechShape = () => {
             emissive="#915EFF"
             emissiveIntensity={0.5}
           />
-        </Sphere>
+        </Sphere> */}
         
         {/* Outer Wireframe Icosahedron */}
         <mesh>

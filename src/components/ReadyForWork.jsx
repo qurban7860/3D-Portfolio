@@ -12,30 +12,36 @@ import { fadeIn, textVariant } from "../Animation/motion";
 import { styles } from "../styles";
 import { premium_collaboration } from "../assets";
 
-const HiringPoint = ({ icon: Icon, title, index }) => (
+const HiringPoint = ({ icon: Icon, title, desc, index }) => (
   <motion.div
-    variants={fadeIn("right", "spring", index * 0.1, 0.5)}
-    className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-[#915EFF]/40 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(145,94,255,0.15)] transition-all duration-300 group cursor-default"
+    variants={fadeIn("up", "spring", index * 0.1, 0.5)}
+    className="flex flex-col gap-3 p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-[#915EFF]/40 hover:bg-white/10 hover:shadow-[0_0_30px_rgba(145,94,255,0.15)] transition-all duration-500 group cursor-default h-full relative overflow-hidden"
   >
-    <div className="w-10 h-10 rounded-xl bg-[#915EFF]/10 flex items-center justify-center group-hover:bg-[#915EFF]/20 transition-colors">
-      <Icon className="text-xl text-[#915EFF] group-hover:scale-110 transition-transform shrink-0" />
+    <div className="absolute -right-4 -top-4 w-24 h-24 bg-[#915EFF]/10 rounded-full blur-[24px] group-hover:bg-[#915EFF]/30 transition-colors pointer-events-none" />
+    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#915EFF]/20 to-transparent flex items-center justify-center border border-white/10 group-hover:border-[#915EFF]/50 transition-colors z-10 shadow-inner">
+      <Icon className="text-2xl text-[#915EFF] group-hover:scale-110 transition-transform shrink-0 drop-shadow-[0_0_8px_rgba(145,94,255,0.8)]" />
     </div>
-    <h4 className="text-white text-[12px] sm:text-[13px] font-bold leading-tight tracking-wide">
-      {title}
-    </h4>
+    <div className="z-10 mt-1">
+      <h4 className="text-white text-[15px] font-black tracking-wide mb-1.5">
+        {title}
+      </h4>
+      <p className="text-secondary text-[12px] leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity">
+        {desc}
+      </p>
+    </div>
   </motion.div>
 );
 
-const QuickFact = ({ value, label }) => (
-  <div className="flex flex-col items-center px-4 sm:px-6 border-r border-white/10 last:border-0 min-w-fit flex-1 shrink-0">
-    <span className="text-white font-black text-sm sm:text-lg whitespace-nowrap">
-      {value}
-    </span>
-    <span className="text-secondary text-[9px] sm:text-[10px] uppercase tracking-widest text-center whitespace-nowrap">
-      {label}
-    </span>
-  </div>
-);
+// const QuickFact = ({ value, label }) => (
+//   <div className="flex flex-col items-center px-4 sm:px-6 border-r border-white/10 last:border-0 min-w-fit flex-1 shrink-0">
+//     <span className="text-white font-black text-sm sm:text-lg whitespace-nowrap">
+//       {value}
+//     </span>
+//     <span className="text-secondary text-[9px] sm:text-[10px] uppercase tracking-widest text-center whitespace-nowrap">
+//       {label}
+//     </span>
+//   </div>
+// );
 
 const ReadyForWork = () => {
   const { data } = usePortfolio();
@@ -44,10 +50,10 @@ const ReadyForWork = () => {
   const availabilityStatus = contact.availabilityStatus || "Open for Work";
 
   const hiringPoints = [
-    { icon: HiOutlineLightningBolt, title: "24h Response" },
-    { icon: HiOutlineCalendar, title: "Flexible" },
-    { icon: HiOutlineGlobe, title: "Remote Ready" },
-    { icon: HiOutlineBriefcase, title: "Professional" },
+    { icon: HiOutlineLightningBolt, title: "24h Response", desc: "Rapid communication and swift issue resolution across global timezones." },
+    { icon: HiOutlineCalendar, title: "Flexible Sync", desc: "Adaptable scheduling for seamless asynchronous remote collaboration." },
+    { icon: HiOutlineGlobe, title: "Remote Ready", desc: "Fully equipped and experienced in distributed team environments." },
+    { icon: HiOutlineBriefcase, title: "Professional", desc: "Enterprise-grade code standards and clear, concise documentation." },
   ];
 
   return (
@@ -58,7 +64,7 @@ const ReadyForWork = () => {
           variants={textVariant()}
           className="flex flex-col items-center gap-3"
         >
-          <div className="flex items-center gap-3 px-4 py-1.5 rounded-full bg-green-400/10 border border-green-400/20">
+          <div className="flex items-center gap-3 px-4 py-1.5 rounded-full bg-green-400/10 border border-green-400/20 shadow-[0_0_15px_rgba(74,222,128,0.1)]">
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse shadow-[0_0_8px_#4ade80]" />
             <p className="text-green-400 font-black text-[10px] sm:text-[12px] uppercase tracking-widest">
               {availabilityStatus}
@@ -79,9 +85,9 @@ const ReadyForWork = () => {
             <motion.div
               key={i}
               variants={fadeIn("up", "spring", i * 0.1, 0.5)}
-              className="flex flex-col items-center p-4 bg-white/5 rounded-2xl border border-white/10 shadow-inner"
+              className="flex flex-col items-center p-4 bg-white/5 rounded-2xl border border-white/10 shadow-inner hover:bg-white/10 hover:border-[#915EFF]/30 transition-colors duration-500"
             >
-              <span className="text-white font-black text-xl sm:text-2xl">
+              <span className="text-white font-black text-xl sm:text-2xl drop-shadow-md">
                 {fact.stat}
               </span>
               <span className="text-secondary text-[9px] sm:text-[10px] uppercase tracking-widest text-center mt-1">
@@ -99,7 +105,7 @@ const ReadyForWork = () => {
           className="lg:col-span-7 flex flex-col items-center lg:items-start gap-8"
         >
           <div className="premium-glass-card p-6 w-full border-white/5 bg-white/[0.02]">
-            <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-4 gap-4 w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
               {hiringPoints.map((point, i) => (
                 <HiringPoint key={i} {...point} index={i} />
               ))}
@@ -135,7 +141,7 @@ const ReadyForWork = () => {
             <div className="p-6 sm:p-8 flex flex-col gap-6">
               <p className="text-secondary text-[13px] leading-relaxed opacity-70">
                 Ready to transform your vision into a scalable digital reality.
-                Let's discuss your next breakthrough.
+                Let&apos;s discuss your next breakthrough.
               </p>
               <a
                 href="/contact"

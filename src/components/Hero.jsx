@@ -19,13 +19,7 @@ const Hero = () => {
 
   return (
     <section className="relative w-full h-auto lg:h-[calc(100vh-4rem)] mx-auto overflow-hidden flex flex-col">
-      {/* ── Advanced Background Layers ── */}
-      <div className="absolute inset-0 bg-hero-pattern bg-cover bg-no-repeat bg-center opacity-[0.4] z-0 mix-blend-overlay" />
-      <div className="absolute inset-0 bg-dot-pattern opacity-[0.15] z-0" />
-      
-      {/* Immersive Mesh Gradients */}
-      <div className="absolute top-[-10%] left-[-5%] w-[400px] sm:w-[600px] h-[400px] sm:h-[600px] bg-[#915EFF]/10 rounded-full blur-[100px] sm:blur-[120px] animate-slow-ping z-0" />
-      <div className="absolute bottom-[10%] right-[-5%] w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-[#56ccf2]/5 rounded-full blur-[80px] sm:blur-[100px] animate-pulse z-0" />
+      {/* Background is now handled globally in HomePage for consistency across all sections */}
 
       {/* ── Main Content Container ── */}
       <div className={`relative z-40 max-w-7xl mx-auto ${styles.paddingX} h-full min-h-[600px] lg:min-h-0 flex flex-col lg:flex-row items-center justify-center gap-5 lg:gap-16 pt-32 lg:pt-20 pb-10 lg:pb-0 pointer-events-none`}>
@@ -137,7 +131,7 @@ const Hero = () => {
       </div>
       
       {/* Global Transition Gradient */}
-      <div className="absolute bottom-0 left-0 w-full h-16 sm:h-24 bg-gradient-to-t from-primary to-transparent z-10" />
+      {/* <div className="absolute bottom-0 left-0 w-full h-16 sm:h-24 bg-gradient-to-t from-primary to-transparent z-10" /> */}
     </section>
   );
 };

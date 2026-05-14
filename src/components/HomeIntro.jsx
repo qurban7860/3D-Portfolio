@@ -58,7 +58,7 @@ const HomeIntro = () => {
         >
           <span className="section-badge mb-8 block sm:inline-block">Profile Summary</span>
           <h2 className={styles.sectionHeadText}>
-            Engineering <span className="text-gradient">Professional Solutions</span>
+            <span className="text-gradient">Professional Solutions</span>
           </h2>
           <p className="mt-4 text-secondary text-base leading-relaxed max-w-2xl opacity-80">
             {overview.substring(0, 150)}... I specialize in high-performance solutions that bridge complex logic and user engagement.

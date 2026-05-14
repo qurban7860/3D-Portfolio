@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, useLocation, useParams } from "react-router-dom"; 
 import { useEffect } from "react";
 import PropTypes from "prop-types";
+import { motion, AnimatePresence } from "framer-motion";
 import { AuthProvider } from "./context/AuthContext";
 import { PortfolioProvider } from "./context/PortfolioContext";
 import ProtectedRoute from "./components/common/ProtectedRoute";
@@ -13,6 +14,7 @@ import LoginPage from "./pages/Admin/Login";
 import DashboardPage from "./pages/Admin/Dashboard";
 import AboutPage from "./pages/AboutPage";
 import RegisterPage from "./pages/Admin/Register";
+import NotFound from "./pages/NotFound";
 
 import { Toaster } from "react-hot-toast";
 
@@ -33,6 +35,21 @@ const ScrollToHash = () => {
   return null;
 };
 
+const PageWrapper = ({ children }) => (
+  <motion.div
+    initial={{ opacity: 0, x: 10 }}
+    animate={{ opacity: 1, x: 0 }}
+    exit={{ opacity: 0, x: -10 }}
+    transition={{ duration: 0.4, ease: "easeOut" }}
+  >
+    {children}
+  </motion.div>
+);
+
+PageWrapper.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
 const TenantResolver = ({ children }) => {
   const { username } = useParams();
   return <PortfolioProvider username={username}>{children}</PortfolioProvider>;
@@ -42,17 +59,66 @@ TenantResolver.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const MainRoutes = () => (
-  <Routes>
-    <Route path="/" element={<HomePage />} />
-    <Route path="about" element={<AboutPage />} />
-    <Route path="portfolio" element={<PortfolioPage />} />
-    <Route path="experience" element={<ExperiencePage />} />
-    <Route path="services" element={<ServicesPage />} />
-    <Route path="contact" element={<ContactPage />} />
-    <Route path="*" element={<HomePage />} />
-  </Routes>
-);
+const AnimatedRoutes = () => {
+  const location = useLocation();
+  
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        {/* Admin Routes */}
+        <Route path="/admin/login" element={<PageWrapper><LoginPage /></PageWrapper>} />
+        <Route path="/admin/register" element={<PageWrapper><RegisterPage /></PageWrapper>} />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <PortfolioProvider>
+                <PageWrapper><DashboardPage /></PageWrapper>
+              </PortfolioProvider>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Dynamic Tenant Routes */}
+        <Route
+          path="/:username"
+          element={<TenantResolver><PageWrapper><HomePage /></PageWrapper></TenantResolver>}
+        />
+        <Route
+          path="/:username/about"
+          element={<TenantResolver><PageWrapper><AboutPage /></PageWrapper></TenantResolver>}
+        />
+        <Route
+          path="/:username/portfolio"
+          element={<TenantResolver><PageWrapper><PortfolioPage /></PageWrapper></TenantResolver>}
+        />
+        <Route
+          path="/:username/experience"
+          element={<TenantResolver><PageWrapper><ExperiencePage /></PageWrapper></TenantResolver>}
+        />
+        <Route
+          path="/:username/services"
+          element={<TenantResolver><PageWrapper><ServicesPage /></PageWrapper></TenantResolver>}
+        />
+        <Route
+          path="/:username/contact"
+          element={<TenantResolver><PageWrapper><ContactPage /></PageWrapper></TenantResolver>}
+        />
+
+        {/* Global/Root Routes */}
+        <Route path="/" element={<TenantResolver><PageWrapper><HomePage /></PageWrapper></TenantResolver>} />
+        <Route path="/about" element={<TenantResolver><PageWrapper><AboutPage /></PageWrapper></TenantResolver>} />
+        <Route path="/portfolio" element={<TenantResolver><PageWrapper><PortfolioPage /></PageWrapper></TenantResolver>} />
+        <Route path="/experience" element={<TenantResolver><PageWrapper><ExperiencePage /></PageWrapper></TenantResolver>} />
+        <Route path="/services" element={<TenantResolver><PageWrapper><ServicesPage /></PageWrapper></TenantResolver>} />
+        <Route path="/contact" element={<TenantResolver><PageWrapper><ContactPage /></PageWrapper></TenantResolver>} />
+
+        {/* 404 Fallback */}
+        <Route path="*" element={<PageWrapper><NotFound /></PageWrapper>} />
+      </Routes>
+    </AnimatePresence>
+  );
+};
 
 const App = () => {
   return (
@@ -72,6 +138,7 @@ const App = () => {
               fontWeight: "500",
               padding: "12px 20px",
               backdropFilter: "blur(12px)",
+              zIndex: 99999,
             },
             success: {
               iconTheme: {
@@ -81,55 +148,10 @@ const App = () => {
             },
           }}
         />
-        <Routes>
-          <Route path="/admin/login" element={<LoginPage />} />
-          <Route path="/admin/register" element={<RegisterPage />} />
-          <Route
-            path="/admin"
-            element={
-              <ProtectedRoute>
-                <PortfolioProvider>
-                  <DashboardPage />
-                </PortfolioProvider>
-              </ProtectedRoute>
-            }
-          />
-
-          <Route path="/about" element={<TenantResolver><AboutPage /></TenantResolver>} />
-          <Route path="/portfolio" element={<TenantResolver><PortfolioPage /></TenantResolver>} />
-          <Route path="/experience" element={<TenantResolver><ExperiencePage /></TenantResolver>} />
-          <Route path="/services" element={<TenantResolver><ServicesPage /></TenantResolver>} />
-          <Route path="/contact" element={<TenantResolver><ContactPage /></TenantResolver>} />
-
-          <Route
-            path="/:username/*"
-            element={
-              <TenantResolver>
-                <MainRoutes />
-              </TenantResolver>
-            }
-          />
-
-          <Route
-            path="/"
-            element={
-              <TenantResolver>
-                <HomePage />
-              </TenantResolver>
-            }
-          />
-          <Route
-            path="/*"
-            element={
-              <TenantResolver>
-                <MainRoutes />
-              </TenantResolver>
-            }
-          />
-        </Routes>
+        <AnimatedRoutes />
       </BrowserRouter>
     </AuthProvider>
   );
 };
 
-export default App;
+export default App;

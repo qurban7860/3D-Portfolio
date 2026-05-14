@@ -1,15 +1,43 @@
 import PropTypes from "prop-types";
+import { motion } from "framer-motion";
 
-const LoadingState = ({ message = "Syncing..." }) => (
-  <div className="w-full min-h-[300px] flex items-center justify-center rounded-[2.5rem] premium-glass-card border border-white/10 p-12 text-center relative overflow-hidden">
-    <div className="absolute inset-0 bg-gradient-to-br from-[#915EFF]/5 to-transparent animate-pulse pointer-events-none" />
-    <div className="relative z-10">
-      <div className="mx-auto mb-6 h-16 w-16 flex items-center justify-center relative">
-        <div className="absolute inset-0 rounded-full border-[3px] border-white/5" />
-        <div className="absolute inset-0 rounded-full border-[3px] border-t-[#915EFF] border-r-transparent border-b-transparent border-l-transparent animate-spin" />
-        <div className="h-2 w-2 rounded-full bg-[#56ccf2] animate-pulse shadow-[0_0_15px_rgba(86,204,242,0.8)]" />
+const LoadingState = ({ message = "Syncing with Database..." }) => (
+  <div className="w-full min-h-[400px] flex items-center justify-center rounded-[3rem] premium-glass-card border border-white/10 p-12 text-center relative overflow-hidden bg-white/[0.01]">
+    {/* Dynamic Background Glow */}
+    <div className="absolute inset-0 bg-gradient-to-br from-[#915EFF]/10 via-transparent to-[#56ccf2]/5 animate-pulse pointer-events-none" />
+    <div className="absolute -top-24 -left-24 w-64 h-64 bg-[#915EFF]/10 rounded-full blur-[100px] animate-slow-ping" />
+    
+    <div className="relative z-10 flex flex-col items-center">
+      <div className="mx-auto mb-8 h-20 w-20 flex items-center justify-center relative">
+        <div className="absolute inset-0 rounded-full border-[2px] border-white/5" />
+        <motion.div 
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+          className="absolute inset-0 rounded-full border-[2px] border-t-[#915EFF] border-r-transparent border-b-transparent border-l-transparent shadow-[0_0_15px_rgba(145,94,255,0.2)]"
+        />
+        <motion.div 
+          animate={{ rotate: -360 }}
+          transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+          className="absolute inset-4 rounded-full border-[2px] border-b-[#56ccf2]/50 border-t-transparent border-l-transparent border-r-transparent shadow-[0_0_10px_rgba(86,204,242,0.1)]"
+        />
+        <div className="h-2 w-2 rounded-full bg-white animate-pulse shadow-[0_0_20px_#fff]" />
       </div>
-      <p className="text-white font-bold text-[14px] tracking-widest uppercase">{message}</p>
+      
+      <div className="flex flex-col gap-3">
+        <p className="text-white font-black text-[12px] tracking-[0.4em] uppercase opacity-40 animate-shimmer bg-clip-text" style={{ backgroundSize: '200% auto' }}>
+          {message}
+        </p>
+        <div className="flex gap-1 justify-center">
+          {[0, 1, 2].map((i) => (
+            <motion.div
+              key={i}
+              animate={{ opacity: [0.2, 1, 0.2] }}
+              transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.2 }}
+              className="w-1.5 h-1.5 rounded-full bg-[#915EFF]"
+            />
+          ))}
+        </div>
+      </div>
     </div>
   </div>
 );

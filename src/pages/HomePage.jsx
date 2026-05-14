@@ -40,15 +40,15 @@ const HomePage = () => {
         <Hero />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 sm:px-16">
+      <div className="w-full relative z-0">
         {error && (
-          <div className='mt-20'>
+          <div className='max-w-7xl mx-auto px-6 sm:px-16 mt-20'>
             <ErrorMessage message={error} />
           </div>
         )}
 
         {isLoading ? (
-          <div className='mt-20'>
+          <div className='max-w-7xl mx-auto px-6 sm:px-16 mt-20'>
             <LoadingState message='Fetching portfolio content...' />
           </div>
         ) : (
@@ -61,7 +61,9 @@ const HomePage = () => {
             <ReadyForWork />
             
             <BackToTop scrollThreshold={300} />
-            <Footer />
+            <div className="max-w-7xl mx-auto px-6 sm:px-16 w-full">
+               <Footer />
+            </div>
           </div>
         )}
       </div>

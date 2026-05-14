@@ -198,9 +198,9 @@ const ContentManager = ({ section }) => {
         onCancel={() => setConfirmState(prev => ({ ...prev, isOpen: false }))}
       />
 
-      <div className="flex justify-between items-center mb-10">
-        <div>
-          <h4 className="text-white font-black text-xl sm:text-2xl flex items-center gap-2 uppercase tracking-tight">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-6 mb-10">
+        <div className="text-center sm:text-left">
+          <h4 className="text-white font-black text-xl sm:text-2xl flex items-center justify-center sm:justify-start gap-2 uppercase tracking-tight">
             {schema.title}
           </h4>
           <p className="text-secondary text-[12px] mt-2 font-bold uppercase tracking-widest opacity-40">
@@ -212,7 +212,7 @@ const ContentManager = ({ section }) => {
             setSelectedItem(null);
             setIsFormOpen(true);
           }}
-          className={`${styles.glassButtonPremium} px-6 py-3 text-[13px] font-black flex items-center gap-2 whitespace-nowrap shrink-0 uppercase tracking-widest shadow-xl`}
+          className={`${styles.glassButtonPremium} px-8 py-4 text-[13px] font-black flex items-center justify-center gap-2 whitespace-nowrap shrink-0 uppercase tracking-widest shadow-xl active:scale-95 transition-transform w-full sm:w-auto`}
         >
           <HiOutlinePlus className="text-lg" />
           Add Entry
@@ -244,14 +244,14 @@ const ContentManager = ({ section }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#050816]/80 backdrop-blur-md"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-10 bg-[#050816]/95 backdrop-blur-md overflow-y-auto"
           >
           <motion.div
-            initial={{ scale: 0.95, opacity: 0, y: 20 }}
+            initial={{ scale: 0.95, opacity: 0, y: 40 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.95, opacity: 0, y: 20 }}
-            transition={{ type: "spring", bounce: 0, duration: 0.4 }}
-            className={`relative w-full max-w-3xl max-h-[90vh] overflow-y-auto custom-scrollbar rounded-3xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] bg-[#050816] shadow-2xl overflow-hidden`}
+            exit={{ scale: 0.95, opacity: 0, y: 40 }}
+            transition={{ type: "spring", bounce: 0, duration: 0.5 }}
+            className={`relative w-full max-w-3xl rounded-[2.5rem] border border-white/10 shadow-[0_25px_70px_rgba(0,0,0,1)] bg-[#050816] overflow-hidden my-auto`}
           >
             {/* Top Accent Gradient */}
             <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#915EFF] to-transparent opacity-50 z-20" />

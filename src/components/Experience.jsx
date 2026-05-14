@@ -68,9 +68,11 @@ const ExperienceCard = ({ experience }) => (
     }}
     contentArrowStyle={{ borderRight: "10px solid rgba(145, 94, 255, 0.3)" }}
     date={
-      <span className="text-[#c4a7ff] font-black tracking-[0.2em] text-[11px] uppercase bg-[#915EFF]/10 px-4 py-1.5 rounded-full border border-[#915EFF]/20">
-        {experience.date}
-      </span>
+      <div className="flex sm:block">
+        <span className="text-[#c4a7ff] font-black tracking-[0.2em] text-[10px] sm:text-[11px] uppercase bg-[#915EFF]/10 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-[#915EFF]/20 shadow-lg whitespace-nowrap">
+          {experience.date}
+        </span>
+      </div>
     }
     iconStyle={{
       background: experience.iconBg || "#161130",
@@ -134,7 +136,7 @@ const EducationCard = ({ education }) => {
         href={education.instituteUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="absolute top-7 right-7 z-20"
+        className="absolute sm:top-7 top-auto bottom-7 sm:right-7 right-7 z-20"
         title={education.instituteName}
       >
         <div className="relative">
@@ -144,11 +146,11 @@ const EducationCard = ({ education }) => {
               src={resolveAssetUrl(education.imageUrl)}
               alt={`${education.instituteName} logo`}
               onError={() => setError(true)}
-              className="w-14 h-14 object-contain hover:rotate-6 transition-transform duration-500
-                         ring-1 ring-white/10 rounded-2xl bg-black/20 backdrop-blur-sm p-2"
+              className="w-10 h-10 sm:w-14 sm:h-14 object-contain hover:rotate-6 transition-transform duration-500
+                         ring-1 ring-white/10 rounded-xl sm:rounded-2xl bg-black/20 backdrop-blur-sm p-1.5 sm:p-2"
             />
           ) : (
-            <div className="w-14 h-14 flex items-center justify-center bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 text-white font-black text-xl shadow-lg ring-1 ring-white/5 group-hover:border-[#915EFF]/50 transition-all">
+            <div className="w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center bg-black/40 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/10 text-white font-black text-sm sm:text-xl shadow-lg ring-1 ring-white/5 group-hover:border-[#915EFF]/50 transition-all">
                {firstLetter}
             </div>
           )}

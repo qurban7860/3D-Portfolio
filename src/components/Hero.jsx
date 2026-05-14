@@ -45,12 +45,12 @@ const Hero = () => {
             <span className="text-white/90 text-[10px] sm:text-[11px] font-black uppercase tracking-[0.2em] drop-shadow-sm">Available for projects</span>
           </motion.div>
 
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-4 sm:gap-5">
             <motion.h1 
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="text-white font-black lg:text-[72px] md:text-[60px] sm:text-[50px] text-[32px] leading-[1.1] tracking-tighter lg:whitespace-nowrap"
+              className="text-white font-black lg:text-[72px] md:text-[60px] sm:text-[50px] xs:text-[40px] text-[32px] leading-[1.1] tracking-tighter"
             >
               {headline.split(" ").map((word, i) => (
                 <span key={i} className={`${word === nameToHighlight || word.includes(nameToHighlight) ? "text-gradient-shimmer" : ""}`}>
@@ -60,10 +60,10 @@ const Hero = () => {
             </motion.h1>
 
             <motion.p 
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-secondary font-medium lg:text-[18px] text-[14px] sm:text-[16px] max-w-xl leading-relaxed opacity-80 px-4 lg:px-0"
+              className="text-secondary font-medium lg:text-[18px] md:text-[17px] text-[15px] max-w-xl leading-relaxed opacity-80 px-4 sm:px-0"
             >
               {subtitle}
             </motion.p>
@@ -73,11 +73,11 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex flex-row items-center justify-center lg:justify-start gap-4 sm:gap-5 mt-4 w-full lg:w-auto"
+            className="flex flex-col xs:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-5 mt-4 w-full"
           >
             <button
               onClick={() => navigate("/about")}
-              className={`${styles.glassButtonPremium} whitespace-nowrap`}
+              className={`${styles.glassButtonPremium} w-full xs:w-auto px-10 py-4 text-[15px] whitespace-nowrap shadow-2xl active:scale-95 transition-transform`}
             >
               Explore Portfolio
             </button>
@@ -86,11 +86,10 @@ const Hero = () => {
                 const resumeUrl = data?.settings?.hero?.resumeUrl || `${resumePdf}`;
                 window.open(resumeUrl, "_blank");
               }}
-              className={`${styles.outlineButtonCyan} whitespace-nowrap group`}
+              className={`${styles.outlineButtonCyan} w-full xs:w-auto px-10 py-4 text-[15px] whitespace-nowrap group active:scale-95 transition-transform`}
             >
               <span className="group-hover:scale-110 transition-transform"><HiDocument /></span> View Resume
             </button>
-            
             
             <div className="hidden sm:flex items-center gap-4 ml-2 sm:ml-4 border-l border-white/10 pl-4 sm:pl-6 h-10 shrink-0">
               {data?.socials?.filter(link => link.visible).slice(0, 2).map((link) => {

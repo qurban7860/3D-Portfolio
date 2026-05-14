@@ -36,6 +36,8 @@ import tripguide from "./tripguide.png";
 import Project1 from "./Project1.png";
 import fyp from "./fyp.png";
 import Ecommerce1 from "./Ecommerce1.png";
+import premium_tech from "./premium_tech.png";
+import premium_collaboration from "./premium_collaboration.png";
 
 export {
   logo1,
@@ -73,4 +75,6 @@ export {
   carrent,
   jobit,
   tripguide,
+  premium_tech,
+  premium_collaboration,
 };

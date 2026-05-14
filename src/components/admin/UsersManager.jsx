@@ -127,37 +127,37 @@ const UsersManager = () => {
                  </div>
               </div>
 
-              <div className="flex items-start gap-5">
-                <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-[#915EFF] to-[#56ccf2] flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-[#915EFF]/20">
+              <div className="flex items-start gap-4 sm:gap-5">
+                <div className="h-12 w-12 sm:h-14 sm:w-14 shrink-0 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#915EFF] to-[#56ccf2] flex items-center justify-center text-white text-lg sm:text-xl font-bold shadow-lg shadow-[#915EFF]/20">
                   {user.username?.[0].toUpperCase() || user.email[0].toUpperCase()}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <h5 className="text-lg font-bold text-white truncate">{user.username || "Anonymous"}</h5>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h5 className="text-base sm:text-lg font-bold text-white truncate max-w-[120px] sm:max-w-none">{user.username || "Anonymous"}</h5>
                     {user.role === 'admin' && (
-                        <span className="px-2 py-0.5 rounded-md bg-[#56ccf2]/10 border border-[#56ccf2]/20 text-[#56ccf2] text-[10px] font-black uppercase tracking-tighter shadow-[0_0_10px_rgba(86,204,242,0.1)]">Admin</span>
+                        <span className="px-2 py-0.5 rounded-md bg-[#56ccf2]/10 border border-[#56ccf2]/20 text-[#56ccf2] text-[9px] sm:text-[10px] font-black uppercase tracking-tighter shadow-[0_0_10px_rgba(86,204,242,0.1)]">Admin</span>
                     )}
                   </div>
-                  <div className="flex items-center gap-2 text-secondary text-sm mt-1">
+                  <div className="flex items-center gap-2 text-secondary text-[12px] sm:text-sm mt-1">
                     <HiOutlineMail className="shrink-0" />
-                    <span className="truncate">{user.email}</span>
+                    <span className="truncate opacity-70 group-hover:opacity-100 transition-opacity">{user.email}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-8 grid grid-cols-2 gap-4">
+              <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4">
                  <div className="bg-white/5 rounded-xl p-3 border border-white/5">
-                    <p className="text-[10px] text-secondary font-bold uppercase tracking-widest mb-1">Portfolio Status</p>
+                    <p className="text-[9px] sm:text-[10px] text-secondary font-bold uppercase tracking-widest mb-1 opacity-50">Portfolio</p>
                     <div className="flex items-center gap-2">
                         <div className={`h-2 w-2 rounded-full ${user.projectsCount > 0 ? 'bg-green-400' : 'bg-yellow-400'}`} />
-                        <span className="text-white text-sm font-bold">{user.projectsCount > 0 ? 'Active' : 'Empty'}</span>
+                        <span className="text-white text-[12px] sm:text-sm font-bold">{user.projectsCount > 0 ? 'Active' : 'Empty'}</span>
                     </div>
                  </div>
                  <div className="bg-white/5 rounded-xl p-3 border border-white/5">
-                    <p className="text-[10px] text-secondary font-bold uppercase tracking-widest mb-1">Joined Date</p>
-                    <div className="flex items-center gap-2 text-white text-sm font-bold">
-                        <HiOutlineCalendar className="text-[#915EFF]" />
-                        <span>{new Date(user.createdAt).toLocaleDateString()}</span>
+                    <p className="text-[9px] sm:text-[10px] text-secondary font-bold uppercase tracking-widest mb-1 opacity-50">Joined</p>
+                    <div className="flex items-center gap-2 text-white text-[12px] sm:text-sm font-bold truncate">
+                        <HiOutlineCalendar className="text-[#915EFF] shrink-0" />
+                        <span className="truncate">{new Date(user.createdAt).toLocaleDateString()}</span>
                     </div>
                  </div>
               </div>

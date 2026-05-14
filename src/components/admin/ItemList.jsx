@@ -61,16 +61,16 @@ const ItemList = ({ items, onEdit, onDelete, onReorder, label }) => {
                   )}
                 </div>
                 
-                <div className="min-w-0">
-                  <div className="flex items-center gap-3 mb-1">
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-1">
                     <p className="text-white font-bold text-base sm:text-lg truncate group-hover:text-gradient transition-all">{getItemSummary(item)}</p>
                     {item.featured && (
-                      <span className="text-[10px] font-bold text-[#56ccf2] bg-[#56ccf2]/10 px-3 py-1 rounded-full border border-[#56ccf2]/20 shrink-0 shadow-[0_0_10px_rgba(86,204,242,0.1)]">
+                      <span className="text-[9px] sm:text-[10px] font-black text-[#56ccf2] bg-[#56ccf2]/10 px-2.5 sm:px-3 py-1 rounded-full border border-[#56ccf2]/20 shrink-0 shadow-[0_0_10px_rgba(86,204,242,0.1)] uppercase tracking-tighter">
                         Featured
                       </span>
                     )}
                   </div>
-                  <p className="text-secondary text-[13px] font-medium truncate opacity-60 group-hover:opacity-100 transition-opacity leading-relaxed">{getSubtitle(item)}</p>
+                  <p className="text-secondary text-[12px] sm:text-[13px] font-medium truncate opacity-60 group-hover:opacity-100 transition-opacity leading-relaxed">{getSubtitle(item)}</p>
                 </div>
               </div>
 

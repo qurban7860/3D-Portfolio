@@ -6,6 +6,7 @@ import { usePortfolio } from "../context/PortfolioContext";
 import { SectionWrapper } from "../hoc";
 import { fadeIn } from "../Animation/motion";
 import { styles } from "../styles";
+import { premium_tech } from "../assets";
 
 const FeatureCard = ({ icon: Icon, title, desc, index }) => (
   <motion.div
@@ -53,9 +54,9 @@ const HomeIntro = () => {
       <div className="flex flex-col lg:flex-row gap-8 items-center justify-between">
         <motion.div
           variants={fadeIn("right", "spring", 0.2, 0.8)}
-          className="flex-1"
+          className="flex-1 pt-12 sm:pt-0"
         >
-          <span className="section-badge my-8">Profile Summary</span>
+          <span className="section-badge mb-8 block sm:inline-block">Profile Summary</span>
           <h2 className={styles.sectionHeadText}>
             Engineering <span className="text-gradient">Professional Solutions</span>
           </h2>
@@ -85,13 +86,26 @@ const HomeIntro = () => {
           variants={fadeIn("left", "spring", 0.4, 0.8)}
           className="flex-1 hidden lg:block"
         >
-           <div className="relative w-full aspect-square max-w-[280px] mx-auto">
-              <div className="absolute inset-0 bg-[#915EFF]/10 rounded-full blur-[80px] animate-slow-ping" />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
-                 <div className="w-24 h-24 rounded-2xl bg-white/[0.02] backdrop-blur-3xl border border-white/10 flex items-center justify-center text-4xl shadow-2xl rotate-12 group-hover:rotate-0 transition-transform duration-700">
-                    <HiOutlineCubeTransparent className="text-[#915EFF] drop-shadow-[0_0_15px_rgba(145,94,255,0.5)]" />
+           <div className="relative w-full aspect-square max-w-[350px] mx-auto group">
+              <div className="absolute inset-0 bg-[#915EFF]/20 rounded-full blur-[100px] animate-pulse opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="relative z-10 w-full h-full rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl transform rotate-2 group-hover:rotate-0 transition-transform duration-700 glass-reflection">
+                 <img 
+                    src={premium_tech} 
+                    alt="Premium Tech" 
+                    className="w-full h-full object-cover opacity-90 group-hover:scale-110 transition-transform duration-1000"
+                 />
+                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                 <div className="absolute bottom-6 left-6 right-6">
+                    <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center mb-2">
+                       <HiOutlineCubeTransparent className="text-[#915EFF] text-xl" />
+                    </div>
+                    <p className="text-white text-[10px] font-black uppercase tracking-[0.3em] opacity-60">Architecture v2.0</p>
                  </div>
               </div>
+              
+              {/* Decorative elements */}
+              <div className="absolute -top-4 -right-4 w-24 h-24 border-t-2 border-r-2 border-[#915EFF]/30 rounded-tr-3xl" />
+              <div className="absolute -bottom-4 -left-4 w-24 h-24 border-b-2 border-l-2 border-[#915EFF]/30 rounded-bl-3xl" />
            </div>
         </motion.div>
       </div>

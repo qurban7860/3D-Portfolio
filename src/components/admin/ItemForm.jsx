@@ -51,7 +51,7 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
   };
 
   return (
-    <div className="p-8 sm:p-12 relative overflow-hidden bg-[#050816] rounded-[2.5rem] border border-white/5">
+    <div className="p-6 sm:p-12 md:p-16 relative overflow-hidden bg-[#050816] rounded-[2rem] sm:rounded-[2.5rem] border border-white/5">
       {/* ── Immersive Effects ── */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#915EFF]/10 rounded-full blur-[140px] pointer-events-none -mr-64 -mt-64" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#56ccf2]/5 rounded-full blur-[120px] pointer-events-none -ml-48 -mb-48" />

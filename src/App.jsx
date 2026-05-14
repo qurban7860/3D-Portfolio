@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation, useParams } from "react-router-dom"; 
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"; 
 import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { motion, AnimatePresence } from "framer-motion";
@@ -15,6 +15,7 @@ import DashboardPage from "./pages/Admin/Dashboard";
 import AboutPage from "./pages/AboutPage";
 import RegisterPage from "./pages/Admin/Register";
 import NotFound from "./pages/NotFound";
+import GlobalBackground from "./components/common/GlobalBackground";
 
 import { Toaster } from "react-hot-toast";
 
@@ -37,10 +38,10 @@ const ScrollToHash = () => {
 
 const PageWrapper = ({ children }) => (
   <motion.div
-    initial={{ opacity: 0, x: 10 }}
-    animate={{ opacity: 1, x: 0 }}
-    exit={{ opacity: 0, x: -10 }}
-    transition={{ duration: 0.4, ease: "easeOut" }}
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.2 }}
   >
     {children}
   </motion.div>
@@ -50,12 +51,19 @@ PageWrapper.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const TenantResolver = ({ children }) => {
-  const { username } = useParams();
+const GlobalTenantResolver = ({ children }) => {
+  const location = useLocation();
+  const pathParts = location.pathname.split('/');
+  
+  let username = undefined;
+  if (pathParts[1] && !['about', 'portfolio', 'experience', 'services', 'contact', 'admin'].includes(pathParts[1])) {
+    username = pathParts[1];
+  }
+
   return <PortfolioProvider username={username}>{children}</PortfolioProvider>;
 };
 
-TenantResolver.propTypes = {
+GlobalTenantResolver.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
@@ -72,46 +80,26 @@ const AnimatedRoutes = () => {
           path="/admin"
           element={
             <ProtectedRoute>
-              <PortfolioProvider>
-                <PageWrapper><DashboardPage /></PageWrapper>
-              </PortfolioProvider>
+              <PageWrapper><DashboardPage /></PageWrapper>
             </ProtectedRoute>
           }
         />
 
         {/* Dynamic Tenant Routes */}
-        <Route
-          path="/:username"
-          element={<TenantResolver><PageWrapper><HomePage /></PageWrapper></TenantResolver>}
-        />
-        <Route
-          path="/:username/about"
-          element={<TenantResolver><PageWrapper><AboutPage /></PageWrapper></TenantResolver>}
-        />
-        <Route
-          path="/:username/portfolio"
-          element={<TenantResolver><PageWrapper><PortfolioPage /></PageWrapper></TenantResolver>}
-        />
-        <Route
-          path="/:username/experience"
-          element={<TenantResolver><PageWrapper><ExperiencePage /></PageWrapper></TenantResolver>}
-        />
-        <Route
-          path="/:username/services"
-          element={<TenantResolver><PageWrapper><ServicesPage /></PageWrapper></TenantResolver>}
-        />
-        <Route
-          path="/:username/contact"
-          element={<TenantResolver><PageWrapper><ContactPage /></PageWrapper></TenantResolver>}
-        />
+        <Route path="/:username" element={<PageWrapper><HomePage /></PageWrapper>} />
+        <Route path="/:username/about" element={<PageWrapper><AboutPage /></PageWrapper>} />
+        <Route path="/:username/portfolio" element={<PageWrapper><PortfolioPage /></PageWrapper>} />
+        <Route path="/:username/experience" element={<PageWrapper><ExperiencePage /></PageWrapper>} />
+        <Route path="/:username/services" element={<PageWrapper><ServicesPage /></PageWrapper>} />
+        <Route path="/:username/contact" element={<PageWrapper><ContactPage /></PageWrapper>} />
 
         {/* Global/Root Routes */}
-        <Route path="/" element={<TenantResolver><PageWrapper><HomePage /></PageWrapper></TenantResolver>} />
-        <Route path="/about" element={<TenantResolver><PageWrapper><AboutPage /></PageWrapper></TenantResolver>} />
-        <Route path="/portfolio" element={<TenantResolver><PageWrapper><PortfolioPage /></PageWrapper></TenantResolver>} />
-        <Route path="/experience" element={<TenantResolver><PageWrapper><ExperiencePage /></PageWrapper></TenantResolver>} />
-        <Route path="/services" element={<TenantResolver><PageWrapper><ServicesPage /></PageWrapper></TenantResolver>} />
-        <Route path="/contact" element={<TenantResolver><PageWrapper><ContactPage /></PageWrapper></TenantResolver>} />
+        <Route path="/" element={<PageWrapper><HomePage /></PageWrapper>} />
+        <Route path="/about" element={<PageWrapper><AboutPage /></PageWrapper>} />
+        <Route path="/portfolio" element={<PageWrapper><PortfolioPage /></PageWrapper>} />
+        <Route path="/experience" element={<PageWrapper><ExperiencePage /></PageWrapper>} />
+        <Route path="/services" element={<PageWrapper><ServicesPage /></PageWrapper>} />
+        <Route path="/contact" element={<PageWrapper><ContactPage /></PageWrapper>} />
 
         {/* 404 Fallback */}
         <Route path="*" element={<PageWrapper><NotFound /></PageWrapper>} />
@@ -148,10 +136,13 @@ const App = () => {
             },
           }}
         />
-        <AnimatedRoutes />
+        <GlobalBackground />
+        <GlobalTenantResolver>
+          <AnimatedRoutes />
+        </GlobalTenantResolver>
       </BrowserRouter>
     </AuthProvider>
   );
 };
 
-export default App;
+export default App;

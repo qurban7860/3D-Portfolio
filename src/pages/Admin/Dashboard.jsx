@@ -9,7 +9,6 @@ import UsersManager from "../../components/admin/UsersManager";
 import { adminSchema } from "../../constants/adminSchema";
 import { motion, AnimatePresence } from "framer-motion";
 import { styles } from "../../styles";
-import { StarsCanvas } from "../../components/canvas";
 
 const NavItem = ({ icon, label, isActive, onClick, isCollapsed }) => (
   <button
@@ -216,13 +215,7 @@ const DashboardPage = () => {
   );
 
   return (
-    <div className="h-screen bg-[#050816] selection:bg-[#915EFF]/30 overflow-hidden relative flex">
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <StarsCanvas />
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#915EFF]/5 blur-[150px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[#56ccf2]/5 blur-[150px]" />
-      </div>
-
+    <div className="h-screen bg-transparent selection:bg-[#915EFF]/30 overflow-hidden relative flex">
       <aside 
         className={`hidden lg:flex h-full flex-col relative z-20 border-r border-white/10 bg-[#050816]/30 backdrop-blur-3xl shrink-0 shadow-2xl transition-all duration-500 ${
           isCollapsed ? "w-20" : "w-72"

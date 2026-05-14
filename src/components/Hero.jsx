@@ -21,11 +21,11 @@ const Hero = () => {
   const subtitle = hero.subtitle || "Building high-performance web applications with precision.";
 
   return (
-    <section className="relative w-full h-auto lg:h-[calc(100vh-4rem)] mx-auto overflow-hidden flex flex-col">
+    <section className="relative w-full min-h-[100svh] mx-auto overflow-hidden flex flex-col justify-center">
       {/* Background is now handled globally in HomePage for consistency across all sections */}
 
       {/* ── Main Content Container ── */}
-      <div className={`relative z-40 max-w-7xl mx-auto ${styles.paddingX} h-full min-h-[600px] lg:min-h-0 flex flex-col lg:flex-row items-center justify-center gap-5 lg:gap-16 pt-32 lg:pt-20 pb-10 lg:pb-0 pointer-events-none`}>
+      <div className={`relative z-40 max-w-7xl mx-auto ${styles.paddingX} h-full w-full flex flex-col lg:flex-row items-center justify-center gap-5 lg:gap-16 pt-24 lg:pt-0 pb-20 lg:pb-0 pointer-events-none`}>
         
         {/* Left Section: Branding & CTA */}
         <div className="flex-1 lg:flex-[1.8] flex flex-col gap-6 w-full text-center lg:text-left items-center lg:items-start mt-10 lg:mt-0 order-2 lg:order-1 relative z-50 pointer-events-auto">

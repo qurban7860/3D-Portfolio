@@ -1,5 +1,5 @@
 import { Experience as RawExperience } from "../components/Experience";
-import { StarsCanvas, BackToTop, Navbar, Footer, Certifications } from "../components";
+import { BackToTop, Navbar, Footer, Certifications } from "../components";
 import { usePortfolio } from "../context/PortfolioContext";
 import LoadingState from "../components/common/LoadingState";
 import ErrorMessage from "../components/common/ErrorMessage";
@@ -12,14 +12,9 @@ const ExperiencePage = () => {
   const { isLoading, error } = usePortfolio();
 
   return (
-    <div className="relative z-0 bg-primary w-full min-h-screen overflow-x-hidden">
+    <div className="relative z-0 bg-transparent w-full min-h-screen overflow-x-hidden">
       <DynamicSEO title="Experience | Professional Journey" />
       <Navbar />
-      
-      {/* Stars Background */}
-      <div className='fixed inset-0 z-0'>
-        <StarsCanvas />
-      </div>
 
       {/* Premium Page Header */}
       <div className="pt-32 pb-10 px-6 max-w-7xl mx-auto text-center relative">

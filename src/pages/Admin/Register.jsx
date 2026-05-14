@@ -4,7 +4,6 @@ import { HiOutlineLockClosed, HiOutlineUser, HiOutlineMail, HiOutlineEye, HiOutl
 import { useAuth } from "../../context/AuthContext";
 import { motion } from "framer-motion";
 import { styles } from "../../styles";
-import { StarsCanvas } from "../../components";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -41,13 +40,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#050816] flex items-center justify-center p-6 selection:bg-[#915EFF]/30 relative overflow-hidden">
-      <div className="fixed inset-0 z-0">
-        <StarsCanvas />
-        <div className="light-beam light-beam-1" />
-        <div className="light-beam light-beam-2" />
-        <div className="light-beam light-beam-3" />
-      </div>
+    <div className="min-h-screen bg-transparent flex items-center justify-center p-6 selection:bg-[#915EFF]/30 relative overflow-hidden">
 
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#915EFF]/10 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#56ccf2]/5 rounded-full blur-[120px] pointer-events-none" />

@@ -17,6 +17,7 @@ export const contentMap = {
   socials:        { table: "socials",        jsonColumns: [],           booleanColumns: ["visible"],             orderColumn: "orderIndex" },
   certifications: { table: "certifications", jsonColumns: [],           booleanColumns: ["visible"],             orderColumn: "orderIndex" },
   stats:          { table: "stats",          jsonColumns: [],           booleanColumns: ["visible"],             orderColumn: "orderIndex" },
+  faqs:           { table: "faqs",           jsonColumns: [],           booleanColumns: ["visible"],             orderColumn: "orderIndex" },
 };
 
 function makeRepo(db, type) {
@@ -38,14 +39,14 @@ router.get("/", async (_req, res) => {
 
   const [
     projects, experiences, educations, technologies,
-    services, testimonials, socials, certifications, stats,
+    services, testimonials, socials, certifications, stats, faqs,
   ] = await Promise.all(
     ["projects","experiences","educations","technologies",
-     "services","testimonials","socials","certifications","stats"]
+     "services","testimonials","socials","certifications","stats", "faqs"]
       .map((type) => makeRepo(db, type).findVisible(userId))
   );
 
-  return res.json({ settings, projects, experiences, educations, technologies, services, testimonials, socials, certifications, stats });
+  return res.json({ settings, projects, experiences, educations, technologies, services, testimonials, socials, certifications, stats, faqs });
 });
 
 router.get("/admin/settings", authMiddleware, async (req, res) => {

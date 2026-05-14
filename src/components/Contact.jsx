@@ -123,7 +123,7 @@ const Contact = () => {
   const fallbackName = nameMatch[1].trim();
 
   const contactSettings = data?.settings?.contact ?? {};
-  const recipientEmail = contactSettings.email || "qurbanhanif120@gmail.com";
+  const recipientEmail = contactSettings.email || "hello@developer.com";
   const recipientName = contactSettings.name || fallbackName;
 
   const formRef = useRef();

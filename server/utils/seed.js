@@ -18,9 +18,6 @@ const defaultSettings = {
     email:              "qurbanhanif120@gmail.com",
     phone:              "+92-308-5651015",
     whatsapp:           "+92-308-5651015",
-    github:             "https://github.com/qurban7860",
-    linkedin:           "https://www.linkedin.com/in/qurban015",
-    twitter:            "https://twitter.com/qurban7860",
     location:           "Lahore, Pakistan",
     availabilityStatus: "Open for Work",
   },
@@ -38,17 +35,19 @@ const defaultSettings = {
     { id: "services",   title: "Skills",      path: "/services" },
     { id: "contact",    title: "Contact",     path: "/contact" },
   ],
-  faqs: [
-    { id: 1, question: "What is your primary tech stack?",      answer: "I specialize in the MERN stack (MongoDB, Express.js, React, Node.js) and Next.js for high-performance web applications." },
-    { id: 2, question: "Are you available for freelance work?",  answer: "Yes, I am open to freelance projects, full-time opportunities, and technical consulting." },
-    { id: 3, question: "Do you offer maintenance services?",     answer: "Absolutely. I provide ongoing support and maintenance to ensure your applications remain secure and up-to-date." },
-  ],
-  socials: [
-    { id: 1, title: "GitHub",   url: "https://github.com/qurban7860",          icon: "github"   },
-    { id: 2, title: "LinkedIn", url: "https://www.linkedin.com/in/qurban015",  icon: "linkedin" },
-    { id: 3, title: "Twitter",  url: "https://twitter.com/qurban7860",          icon: "twitter"  },
-  ],
 };
+
+const defaultFaqs = [
+  { question: "What is your primary tech stack?",      answer: "I specialize in the MERN stack (MongoDB, Express.js, React, Node.js) and Next.js for high-performance web applications." },
+  { question: "Are you available for freelance work?",  answer: "Yes, I am open to freelance projects, full-time opportunities, and technical consulting." },
+  { question: "Do you offer maintenance services?",     answer: "Absolutely. I provide ongoing support and maintenance to ensure your applications remain secure and up-to-date." },
+];
+
+const defaultSocials = [
+  { title: "GitHub",   url: "https://github.com/qurban7860",          icon: "github"   },
+  { title: "LinkedIn", url: "https://www.linkedin.com/in/qurban015",  icon: "linkedin" },
+  { title: "Twitter",  url: "https://twitter.com/qurban7860",          icon: "twitter"  },
+];
 
 export async function seedDatabase(db) {
   // ── 1. Admin user ──────────────────────────────────────────────────────────
@@ -236,10 +235,23 @@ export async function seedDatabase(db) {
   // ── 9. Socials ────────────────────────────────────────────────────────────
   const socialsCount = await db.get("SELECT COUNT(*) as count FROM socials");
   if (socialsCount.count === 0) {
-    for (const social of defaultSettings.socials) {
+    for (let i = 0; i < defaultSocials.length; i++) {
+      const social = defaultSocials[i];
       await db.run(
         "INSERT INTO socials (user_id, title, url, icon, visible, orderIndex) VALUES (?, ?, ?, ?, ?, ?)",
-        adminId, social.title, social.url, social.icon, 1, social.id
+        adminId, social.title, social.url, social.icon, 1, i + 1
+      );
+    }
+  }
+
+  // ── 10. FAQs ──────────────────────────────────────────────────────────────
+  const faqsCount = await db.get("SELECT COUNT(*) as count FROM faqs");
+  if (faqsCount.count === 0) {
+    for (let i = 0; i < defaultFaqs.length; i++) {
+      const faq = defaultFaqs[i];
+      await db.run(
+        "INSERT INTO faqs (user_id, question, answer, visible, orderIndex) VALUES (?, ?, ?, ?, ?)",
+        adminId, faq.question, faq.answer, 1, i + 1
       );
     }
   }

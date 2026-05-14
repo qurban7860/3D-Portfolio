@@ -89,10 +89,10 @@ export const servicesOffered = [
 ];
 
 export const gitHubStats = {
-  username: "qurban7860",
-  totalRepos: 45,
-  publicRepos: 25,
-  followers: 150,
-  following: 80,
-  profileUrl: "https://github.com/qurban7860"
+  username: "developer",
+  totalRepos: 0,
+  publicRepos: 0,
+  followers: 0,
+  following: 0,
+  profileUrl: "https://github.com/"
 };

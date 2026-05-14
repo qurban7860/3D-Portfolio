@@ -344,8 +344,8 @@ const Navbar = () => {
     return sourceLinks.map(link => {
       let p = link.path;
       
-      if (link.id === "about" && (p === "/" || p === "")) p = "/about";
-      if (link.id === "contact" && (p.includes("#contact"))) p = "/contact";
+      if (link.id === "about") p = "/about";
+      if (link.id === "contact") p = "/contact";
 
       if (p.startsWith('/')) p = p.substring(1);
       if (p === "") p = "/"; 

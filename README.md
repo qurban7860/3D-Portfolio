@@ -57,14 +57,6 @@ npm run dev
 
 ---
 
-## 🔐 Admin Access
-
-Navigate to `/admin/login` to access the command center.
-*   **Default User**: `admin@gmail.com`
-*   **Default Pass**: `Admin123!`
-
----
-
 ## 📁 Architecture Summary
 
 *   `server/`: Express backend with SQLite persistence.

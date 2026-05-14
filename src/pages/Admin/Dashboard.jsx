@@ -1,12 +1,12 @@
 import { useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { HiOutlineExternalLink, HiOutlineLogout, HiOutlineCog, HiOutlineChevronRight, HiOutlineMenuAlt2, HiOutlineChevronLeft } from "react-icons/hi";
+import { HiOutlineCog, HiOutlineUserGroup, HiOutlineLogout, HiOutlineMenuAlt2, HiOutlineChevronLeft, HiOutlineChevronRight, HiOutlineExternalLink } from "react-icons/hi";
+import toast from "react-hot-toast";
 import { useAuth } from "../../context/AuthContext";
 import ContentManager from "../../components/admin/ContentManager";
 import SettingsManager from "../../components/admin/SettingsManager";
 import UsersManager from "../../components/admin/UsersManager";
 import { adminSchema } from "../../constants/adminSchema";
-import { HiOutlineUserGroup } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
 import { styles } from "../../styles";
 import { StarsCanvas } from "../../components/canvas";
@@ -91,7 +91,7 @@ const DashboardPage = () => {
     }
   }, [isUsersMode, isAdmin, sectionKeys]);
 
-  const userPortfolioUrl = `/${user?.username}`;
+  const userPortfolioUrl = user?.username === "admin" ? "/" : `/${user?.username}`;
 
   const activeTitle = isSettingsMode 
     ? "General Settings" 
@@ -170,17 +170,36 @@ const DashboardPage = () => {
 
         <div className="p-5 border-t border-white/5 space-y-4 shrink-0">
             {(!isCollapsed || isMobile) && (
-              <div className="bg-white/[0.03] rounded-2xl p-4 border border-white/5 group/share cursor-pointer hover:border-[#915EFF]/30 transition-all duration-500 relative overflow-hidden"
+              <div className="premium-glass p-5 rounded-2xl border border-white/5 group/share cursor-pointer hover:border-[#915EFF]/30 transition-all duration-500 relative overflow-hidden"
                       onClick={() => {
                           navigator.clipboard.writeText(window.location.origin + userPortfolioUrl);
-                          alert("Portfolio link copied to clipboard!");
+                          toast.success("Portfolio link copied to clipboard!", {
+                            style: {
+                              background: '#1a1c2c',
+                              color: '#fff',
+                              border: '1px solid rgba(145, 94, 255, 0.2)',
+                              fontSize: '12px',
+                              fontWeight: 'bold',
+                              borderRadius: '12px',
+                            },
+                            iconTheme: {
+                              primary: '#915EFF',
+                              secondary: '#fff',
+                            },
+                          });
                       }}>
-                  <div className="absolute inset-0 bg-gradient-to-tr from-[#915EFF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="flex items-center justify-between mb-2 relative z-10">
-                      <p className="text-[9px] text-[#56ccf2]/60 font-black uppercase tracking-wider leading-none">Public Link</p>
-                      <HiOutlineExternalLink className="text-secondary/20 group-hover:text-[#56ccf2] text-xs transition-colors" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[#915EFF]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  <div className="flex items-center justify-between mb-3 relative z-10">
+                      <div className="flex items-center gap-2">
+                        <div className="h-1.5 w-1.5 rounded-full bg-[#56ccf2] shadow-[0_0_8px_#56ccf2]" />
+                        <p className="text-[10px] text-[#56ccf2] font-black uppercase tracking-[0.2em] leading-none">Public Link</p>
+                      </div>
+                      <HiOutlineExternalLink className="text-secondary/40 group-hover:text-[#56ccf2] text-sm transition-all group-hover:scale-110" />
                   </div>
-                  <p className="text-[11px] text-white/40 font-bold truncate leading-none relative z-10 group-hover:text-white/60 transition-colors">{userPortfolioUrl}</p>
+                  <div className="flex items-center gap-2 relative z-10">
+                    <p className="text-[12px] text-white/50 font-bold truncate leading-none group-hover:text-white transition-colors">{userPortfolioUrl}</p>
+                    <span className="text-[8px] bg-[#915EFF]/20 text-[#c4a7ff] px-1.5 py-0.5 rounded-md font-black uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity">Copy</span>
+                  </div>
               </div>
             )}
 

@@ -6,12 +6,14 @@ import { SectionWrapper } from "../hoc";
 import { textVariant, fadeIn } from "../Animation/motion";
 import { styles } from "../styles";
 
-const FAQItem = ({ question, answer, index }) => {
+const FAQItem = ({ question, answer, index, isNew }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <motion.div
-      variants={fadeIn("up", "spring", index * 0.05, 0.5)}
+      variants={fadeIn("up", "spring", isNew ? 0 : index * 0.05, 0.5)}
+      initial={isNew ? "show" : "hidden"}
+      animate="show"
       className={`premium-glass rounded-2xl overflow-hidden ${isOpen ? "border-[#915EFF]/40 bg-[#915EFF]/5" : "border-white/5"} transition-all duration-300`}
     >
       <button
@@ -46,7 +48,12 @@ const FAQItem = ({ question, answer, index }) => {
 
 const FAQ = () => {
   const { data } = usePortfolio();
-  const faqs = (data?.settings?.faqs ?? []).slice(0, 3);
+  const [showAll, setShowAll] = useState(false);
+  
+  const allFaqs = data?.faqs ?? [];
+  const faqs = showAll ? allFaqs : allFaqs.slice(0, 3);
+
+  if (allFaqs.length === 0) return null;
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
@@ -73,12 +80,27 @@ const FAQ = () => {
 
       {/* ── Right Side: FAQ List ── */}
       <div className="lg:col-span-7 flex flex-col gap-3">
-        {faqs.map((faq, index) => (
-          <FAQItem key={faq.id || index} {...faq} index={index} />
-        ))}
-        <a href="/faq" className="text-white/40 hover:text-white text-[12px] font-bold text-center mt-2 transition-colors">
-          View All Questions
-        </a>
+        <div className="flex flex-col gap-3">
+          {faqs.map((faq, index) => (
+            <FAQItem 
+              key={faq.id || index} 
+              {...faq} 
+              index={index} 
+              isNew={showAll && index >= 3} 
+            />
+          ))}
+        </div>
+        
+        {allFaqs.length > 3 && (
+          <button 
+            onClick={() => setShowAll(!showAll)}
+            className="text-white/40 hover:text-white text-[12px] font-bold text-center mt-4 transition-colors flex items-center justify-center gap-2 group"
+          >
+            <span className="w-8 h-[1px] bg-white/10 group-hover:bg-[#915EFF]/50 transition-colors" />
+            {showAll ? "Show Less" : `View All ${allFaqs.length} Questions`}
+            <span className="w-8 h-[1px] bg-white/10 group-hover:bg-[#915EFF]/50 transition-colors" />
+          </button>
+        )}
       </div>
     </div>
   );

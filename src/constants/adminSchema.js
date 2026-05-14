@@ -109,6 +109,16 @@ export const adminSchema = {
       { name: "visible", label: "Visible", type: "checkbox", defaultValue: true },
     ],
   },
+  faqs: {
+    title: "FAQs",
+    label: "FAQ Item",
+    icon: "❓",
+    fields: [
+      { name: "question", label: "Question", type: "text", required: true },
+      { name: "answer", label: "Answer", type: "textarea", required: true },
+      { name: "visible", label: "Visible", type: "checkbox", defaultValue: true },
+    ],
+  },
 };
 
 export const adminSettingsSchema = {
@@ -128,10 +138,13 @@ export const adminSettingsSchema = {
     ],
   },
   contact: {
-    title: "Location & Availability",
+    title: "Contact Info & Availability",
     fields: [
+      { name: "email", label: "Email Address", type: "text", required: true },
+      { name: "phone", label: "Phone Number", type: "text", required: false },
+      { name: "whatsapp", label: "WhatsApp Number", type: "text", required: false },
       { name: "location", label: "Location", type: "text", required: false },
-      { name: "availabilityStatus", label: "Availability Label", type: "text", required: false },
+      { name: "availabilityStatus", label: "Availability Status", type: "text", required: false },
     ],
   },
 };

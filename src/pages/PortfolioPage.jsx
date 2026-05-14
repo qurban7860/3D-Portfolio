@@ -1,5 +1,5 @@
 import { Works as RawWorks } from "../components/Works";
-import { StarsCanvas, BackToTop, Navbar, Footer } from "../components";
+import { StarsCanvas, BackToTop, Navbar, Footer, FAQ } from "../components";
 import { usePortfolio } from "../context/PortfolioContext";
 import LoadingState from "../components/common/LoadingState";
 import ErrorMessage from "../components/common/ErrorMessage";
@@ -54,15 +54,19 @@ const PortfolioPage = () => {
             <LoadingState message="Loading projects..." />
           </div>
         ) : (
-          <motion.section
-            variants={staggerContainer()}
-            initial="hidden"
-            animate="show"
-            className={`${styles.padding} max-w-7xl mx-auto relative z-0`}
-            id="works"
-          >
-            <RawWorks />
-          </motion.section>
+          <>
+            <motion.section
+              variants={staggerContainer()}
+              initial="hidden"
+              animate="show"
+              className={`${styles.padding} max-w-7xl mx-auto relative z-0`}
+              id="works"
+            >
+              <RawWorks />
+            </motion.section>
+
+            <FAQ />
+          </>
         )}
       </div>
 

@@ -5,7 +5,7 @@ export class SettingsRepository {
     this.db = db;
   }
 
-  static EXCLUDED_KEYS = new Set(["certifications", "stats"]);
+  static EXCLUDED_KEYS = new Set(["certifications", "stats", "faqs", "socials"]);
 
   _parseValue(raw) {
     try { return JSON.parse(raw); } catch { return raw; }
@@ -19,7 +19,15 @@ export class SettingsRepository {
     return rows.reduce((acc, { key, value }) => {
       const nk = key.toLowerCase().trim();
       if (!SettingsRepository.EXCLUDED_KEYS.has(nk)) {
-        acc[key] = this._parseValue(value);
+        let parsed = this._parseValue(value);
+        
+        // Strip social links from contact if present
+        if (nk === "contact" && typeof parsed === "object" && parsed !== null) {
+          const keysToRemove = ["github", "linkedin", "twitter", "whatsapp", "facebook", "instagram"];
+          keysToRemove.forEach(k => delete parsed[k]);
+        }
+        
+        acc[key] = parsed;
       }
       return acc;
     }, {});

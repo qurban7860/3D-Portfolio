@@ -8,10 +8,11 @@ import resumePdf from "../assets/resume/Resume_Mern.pdf";
 import { getIcon } from "../utils/iconMapping";
 
 const Hero = () => {
-  const { data } = usePortfolio();
+  const { data, isLoading } = usePortfolio();
   const navigate = useNavigate();
   const hero = data?.settings?.hero ?? {};
-  const headline = hero.headline || "Hi, I'm Developer";
+
+  const headline = isLoading ? "Hi, I'm ..." : (hero.headline || "Hi, I'm Developer");
   const nameMatch = headline.match(/Hi, I'm (.*)/i) || [null, "Developer"];
   const nameToHighlight = nameMatch[1].trim();
   const subtitle = hero.subtitle || "Building high-performance web applications with precision.";

@@ -88,17 +88,16 @@ export async function initializeDatabase() {
       database = new DatabaseAdapter(client);
       await client.execute("SELECT 1");
 
-      await database.exec(`
-        CREATE TABLE IF NOT EXISTS users (
+      const schema = [
+        `CREATE TABLE IF NOT EXISTS users (
           id        INTEGER PRIMARY KEY AUTOINCREMENT,
           email     TEXT UNIQUE NOT NULL,
           password  TEXT NOT NULL,
           username  TEXT UNIQUE,
           role      TEXT NOT NULL,
           createdAt TEXT NOT NULL
-        );
-
-        CREATE TABLE IF NOT EXISTS projects (
+        )`,
+        `CREATE TABLE IF NOT EXISTS projects (
           id             INTEGER PRIMARY KEY AUTOINCREMENT,
           user_id        INTEGER REFERENCES users(id) ON DELETE CASCADE,
           name           TEXT NOT NULL,
@@ -109,10 +108,9 @@ export async function initializeDatabase() {
           featured       INTEGER DEFAULT 0,
           visible        INTEGER DEFAULT 1,
           orderIndex     INTEGER DEFAULT 0
-        );
-        CREATE INDEX IF NOT EXISTS idx_projects_user_id ON projects(user_id);
-
-        CREATE TABLE IF NOT EXISTS experiences (
+        )`,
+        `CREATE INDEX IF NOT EXISTS idx_projects_user_id ON projects(user_id)`,
+        `CREATE TABLE IF NOT EXISTS experiences (
           id           INTEGER PRIMARY KEY AUTOINCREMENT,
           user_id      INTEGER REFERENCES users(id) ON DELETE CASCADE,
           title        TEXT NOT NULL,
@@ -124,10 +122,9 @@ export async function initializeDatabase() {
           points       TEXT NOT NULL,
           visible      INTEGER DEFAULT 1,
           orderIndex   INTEGER DEFAULT 0
-        );
-        CREATE INDEX IF NOT EXISTS idx_experiences_user_id ON experiences(user_id);
-
-        CREATE TABLE IF NOT EXISTS educations (
+        )`,
+        `CREATE INDEX IF NOT EXISTS idx_experiences_user_id ON experiences(user_id)`,
+        `CREATE TABLE IF NOT EXISTS educations (
           id            INTEGER PRIMARY KEY AUTOINCREMENT,
           user_id       INTEGER REFERENCES users(id) ON DELETE CASCADE,
           degree        TEXT NOT NULL,
@@ -137,20 +134,18 @@ export async function initializeDatabase() {
           points        TEXT NOT NULL,
           visible       INTEGER DEFAULT 1,
           orderIndex    INTEGER DEFAULT 0
-        );
-        CREATE INDEX IF NOT EXISTS idx_educations_user_id ON educations(user_id);
-
-        CREATE TABLE IF NOT EXISTS technologies (
+        )`,
+        `CREATE INDEX IF NOT EXISTS idx_educations_user_id ON educations(user_id)`,
+        `CREATE TABLE IF NOT EXISTS technologies (
           id         INTEGER PRIMARY KEY AUTOINCREMENT,
           user_id    INTEGER REFERENCES users(id) ON DELETE CASCADE,
           name       TEXT NOT NULL,
           iconUrl    TEXT NOT NULL,
           visible    INTEGER DEFAULT 1,
           orderIndex INTEGER DEFAULT 0
-        );
-        CREATE INDEX IF NOT EXISTS idx_technologies_user_id ON technologies(user_id);
-
-        CREATE TABLE IF NOT EXISTS services (
+        )`,
+        `CREATE INDEX IF NOT EXISTS idx_technologies_user_id ON technologies(user_id)`,
+        `CREATE TABLE IF NOT EXISTS services (
           id          INTEGER PRIMARY KEY AUTOINCREMENT,
           user_id     INTEGER REFERENCES users(id) ON DELETE CASCADE,
           title       TEXT NOT NULL,
@@ -159,10 +154,9 @@ export async function initializeDatabase() {
           features    TEXT NOT NULL,
           visible     INTEGER DEFAULT 1,
           orderIndex  INTEGER DEFAULT 0
-        );
-        CREATE INDEX IF NOT EXISTS idx_services_user_id ON services(user_id);
-
-        CREATE TABLE IF NOT EXISTS testimonials (
+        )`,
+        `CREATE INDEX IF NOT EXISTS idx_services_user_id ON services(user_id)`,
+        `CREATE TABLE IF NOT EXISTS testimonials (
           id          INTEGER PRIMARY KEY AUTOINCREMENT,
           user_id     INTEGER REFERENCES users(id) ON DELETE CASCADE,
           testimonial TEXT NOT NULL,
@@ -170,10 +164,9 @@ export async function initializeDatabase() {
           imageUrl    TEXT NOT NULL,
           visible     INTEGER DEFAULT 1,
           orderIndex  INTEGER DEFAULT 0
-        );
-        CREATE INDEX IF NOT EXISTS idx_testimonials_user_id ON testimonials(user_id);
-
-        CREATE TABLE IF NOT EXISTS socials (
+        )`,
+        `CREATE INDEX IF NOT EXISTS idx_testimonials_user_id ON testimonials(user_id)`,
+        `CREATE TABLE IF NOT EXISTS socials (
           id         INTEGER PRIMARY KEY AUTOINCREMENT,
           user_id    INTEGER REFERENCES users(id) ON DELETE CASCADE,
           title      TEXT NOT NULL,
@@ -181,10 +174,9 @@ export async function initializeDatabase() {
           icon       TEXT NOT NULL,
           visible    INTEGER DEFAULT 1,
           orderIndex INTEGER DEFAULT 0
-        );
-        CREATE INDEX IF NOT EXISTS idx_socials_user_id ON socials(user_id);
-
-        CREATE TABLE IF NOT EXISTS certifications (
+        )`,
+        `CREATE INDEX IF NOT EXISTS idx_socials_user_id ON socials(user_id)`,
+        `CREATE TABLE IF NOT EXISTS certifications (
           id         INTEGER PRIMARY KEY AUTOINCREMENT,
           user_id    INTEGER REFERENCES users(id) ON DELETE CASCADE,
           title      TEXT NOT NULL,
@@ -193,10 +185,9 @@ export async function initializeDatabase() {
           icon       TEXT NOT NULL,
           visible    INTEGER DEFAULT 1,
           orderIndex INTEGER DEFAULT 0
-        );
-        CREATE INDEX IF NOT EXISTS idx_certifications_user_id ON certifications(user_id);
-
-        CREATE TABLE IF NOT EXISTS stats (
+        )`,
+        `CREATE INDEX IF NOT EXISTS idx_certifications_user_id ON certifications(user_id)`,
+        `CREATE TABLE IF NOT EXISTS stats (
           id          INTEGER PRIMARY KEY AUTOINCREMENT,
           user_id     INTEGER REFERENCES users(id) ON DELETE CASCADE,
           stat        TEXT NOT NULL,
@@ -204,17 +195,38 @@ export async function initializeDatabase() {
           description TEXT NOT NULL,
           visible     INTEGER DEFAULT 1,
           orderIndex  INTEGER DEFAULT 0
-        );
-        CREATE INDEX IF NOT EXISTS idx_stats_user_id ON stats(user_id);
-
-        CREATE TABLE IF NOT EXISTS settings (
+        )`,
+        `CREATE INDEX IF NOT EXISTS idx_stats_user_id ON stats(user_id)`,
+        `CREATE TABLE IF NOT EXISTS faqs (
+          id          INTEGER PRIMARY KEY AUTOINCREMENT,
+          user_id     INTEGER REFERENCES users(id) ON DELETE CASCADE,
+          question    TEXT NOT NULL,
+          answer      TEXT NOT NULL,
+          visible     INTEGER DEFAULT 1,
+          orderIndex  INTEGER DEFAULT 0
+        )`,
+        `CREATE INDEX IF NOT EXISTS idx_faqs_user_id ON faqs(user_id)`,
+        `CREATE TABLE IF NOT EXISTS settings (
           user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
           key     TEXT    NOT NULL,
           value   TEXT    NOT NULL,
           PRIMARY KEY (user_id, key)
-        );
-        CREATE INDEX IF NOT EXISTS idx_settings_user_id ON settings(user_id);
-      `);
+        )`,
+        `CREATE INDEX IF NOT EXISTS idx_settings_user_id ON settings(user_id)`,
+      ];
+
+      for (const sql of schema) {
+        try {
+          await database.run(sql);
+        } catch (err) {
+          // If it's a "no such column" error, we might need to handle it or it might be a symptom of an existing table with old schema
+          if (err.message.includes("no such column") && sql.includes("CREATE INDEX")) {
+             console.warn(`⚠️ Skipping index creation due to missing column (likely old schema): ${sql}`);
+          } else {
+             throw err;
+          }
+        }
+      }
 
       // ── Seed / post-boot checks ────────────────────────────────────────────
       // Seed on first run (empty users table = fresh install).
@@ -223,29 +235,7 @@ export async function initializeDatabase() {
         console.log("🌱 Seeding database...");
         await seedDatabase(database);
       } else {
-        try {
-          const adminUser = await database.get("SELECT id FROM users WHERE role = 'admin' LIMIT 1");
-          const adminId   = adminUser?.id ?? 1;
-
-          const faqRow = await database.get(
-            "SELECT value FROM settings WHERE user_id = ? AND key = 'faqs'",
-            adminId
-          );
-          if (!faqRow || !faqRow.value || JSON.parse(faqRow.value).length === 0) {
-            console.log("🔄 Initializing FAQ settings...");
-            const defaultFaqs = [
-              { id: 1, question: "What is your primary tech stack?",      answer: "I specialize in the MERN stack (MongoDB, Express.js, React, Node.js) and Next.js for high-performance web applications." },
-              { id: 2, question: "Are you available for freelance work?",  answer: "Yes, I am open to freelance projects, full-time opportunities, and technical consulting." },
-              { id: 3, question: "Do you offer maintenance services?",     answer: "Absolutely. I provide ongoing support and maintenance to ensure your applications remain secure and up-to-date." },
-            ];
-            await database.run(
-              "INSERT OR IGNORE INTO settings (user_id, key, value) VALUES (?, ?, ?)",
-              adminId, "faqs", JSON.stringify(defaultFaqs)
-            );
-          }
-        } catch (migErr) {
-          console.warn("Post-boot check failed (non-critical):", migErr.message);
-        }
+        // No post-boot checks needed for now
       }
 
       return database;

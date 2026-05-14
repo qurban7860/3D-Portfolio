@@ -1,10 +1,10 @@
 export const seoConfig = {
-  siteName: "Qurban Hanif - Full Stack Developer",
-  title: "Qurban Hanif | Full Stack Developer | React | Node.js | MERN",
-  description: "Full Stack Developer specializing in MERN stack, React, Next.js, and clean code. 3+ years of experience building high-performance web and mobile applications.",
-  url: "https://qurbanhanif.com",
+  siteName: "Developer Portfolio",
+  title: "Professional Full Stack Developer | React | Node.js | MERN",
+  description: "Full Stack Developer specializing in MERN stack, React, Next.js, and clean code. Experience building high-performance web and mobile applications.",
+  url: "https://yourportfolio.com",
   image: "/og-image.png",
-  author: "Qurban Hanif",
+  author: "Professional Developer",
   
   openGraph: {
     type: "website",
@@ -12,8 +12,8 @@ export const seoConfig = {
   },
   
   twitter: {
-    handle: "@qurban7860",
-    site: "@qurban7860",
+    handle: "@developer",
+    site: "@developer",
     cardType: "summary_large_image",
   },
 
@@ -33,21 +33,19 @@ export const seoConfig = {
     "Web Development Services",
     "API Development",
     "Database Design",
-    "Lahore Developer",
-    "Pakistan Developer"
   ],
   
   structuredData: {
     "@context": "https://schema.org",
     "@type": "Person",
-    "name": "Qurban Hanif",
-    "url": "https://qurbanhanif.com",
+    "name": "Professional Developer",
+    "url": "https://yourportfolio.com",
     "image": "/og-image.png",
     "jobTitle": "Full Stack Developer",
     "sameAs": [
-      "https://github.com/qurban7860",
-      "https://www.linkedin.com/in/qurban015",
-      "https://twitter.com/qurban7860"
+      "https://github.com/",
+      "https://www.linkedin.com/in/",
+      "https://twitter.com/"
     ],
     "worksFor": {
       "@type": "Organization",
@@ -65,20 +63,20 @@ export const seoConfig = {
 };
 
 export const contactInfo = {
-  email: "qurbanhanif120@gmail.com",
-  phone: "+92-308-5651015",
-  whatsapp: "+92-308-5651015",
-  github: "https://github.com/qurban7860",
-  linkedin: "https://www.linkedin.com/in/qurban015",
-  twitter: "https://twitter.com/qurban7860",
-  location: "Lahore, Pakistan",
-  timezone: "PKT (UTC+5)",
+  email: "hello@developer.com",
+  phone: "+00-000-0000000",
+  whatsapp: "+00-000-0000000",
+  github: "https://github.com/",
+  linkedin: "https://www.linkedin.com/in/",
+  twitter: "https://twitter.com/",
+  location: "Remote / International",
+  timezone: "UTC+0",
   available: true,
   availabilityStatus: "Open for Work"
 };
 
 export const professionalSummary = {
-  headline: "Full Stack Developer | MERN Specialist | 3+ Years Experience",
+  headline: "Full Stack Developer | MERN Specialist | Multi-Stack Experience",
   tagline: "Building scalable, user-centric web solutions with clean code",
   yearsOfExperience: 3,
   projectsCompleted: 50,

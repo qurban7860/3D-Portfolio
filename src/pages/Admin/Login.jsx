@@ -86,7 +86,7 @@ const LoginPage = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    placeholder="admin@gmail.com"
+                    placeholder="john@gmail.com"
                     className={`${styles.glassInput} relative z-10 pl-16`}
                   />
                 </div>

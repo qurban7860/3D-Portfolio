@@ -1,15 +1,18 @@
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { HiDocument } from "react-icons/hi";
 import { styles } from "../styles";
 import ComputersCanvas from "./canvas/Computers";
 import { usePortfolio } from "../context/PortfolioContext";
+// import { useAuth } from "../context/AuthContext";
 import resumePdf from "../assets/resume/Resume_Mern.pdf";
 import { getIcon } from "../utils/iconMapping";
 
 const Hero = () => {
   const { data, isLoading } = usePortfolio();
+  // const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const { username } = useParams();
   const hero = data?.settings?.hero ?? {};
 
   const headline = isLoading ? "Hi, I'm ..." : (hero.headline || "Hi, I'm Developer");
@@ -70,20 +73,22 @@ const Hero = () => {
             className="flex flex-col xs:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-5 mt-4 w-full"
           >
             <button
-              onClick={() => navigate("/about")}
+              onClick={() => navigate(`${username ? `/${username}` : ''}/about`)}
               className={`${styles.glassButtonPremium} w-full xs:w-auto px-10 py-4 text-[15px] whitespace-nowrap shadow-2xl active:scale-95 transition-transform`}
             >
               Explore Portfolio
             </button>
-            <button
-              onClick={() => {
-                const resumeUrl = data?.settings?.hero?.resumeUrl || `${resumePdf}`;
-                window.open(resumeUrl, "_blank");
-              }}
-              className={`${styles.outlineButtonCyan} w-full xs:w-auto px-10 py-4 text-[15px] whitespace-nowrap group active:scale-95 transition-transform`}
-            >
-              <span className="group-hover:scale-110 transition-transform"><HiDocument /></span> View Resume
-            </button>
+            {!username && (
+              <button
+                onClick={() => {
+                  const resumeUrl = data?.settings?.hero?.resumeUrl || `${resumePdf}`;
+                  window.open(resumeUrl, "_blank");
+                }}
+                className={`${styles.outlineButtonCyan} w-full xs:w-auto px-10 py-4 text-[15px] whitespace-nowrap group active:scale-95 transition-transform`}
+              >
+                <span className="group-hover:scale-110 transition-transform"><HiDocument /></span> View Resume
+              </button>
+            )}
             
             <div className="hidden sm:flex items-center gap-4 ml-2 sm:ml-4 border-l border-white/10 pl-4 sm:pl-6 h-10 shrink-0">
               {data?.socials?.filter(link => link.visible).slice(0, 2).map((link) => {
@@ -118,7 +123,7 @@ const Hero = () => {
       </div>
 
       {/* ── Scroll Indicator (Desktop only) ── */}
-      <div className="absolute bottom-8 w-full hidden lg:flex justify-center items-center z-20">
+      {!username && <div className="absolute bottom-8 w-full hidden lg:flex justify-center items-center z-20">
         <a href="#about">
           <div className="w-[30px] h-[52px] rounded-3xl border-2 border-white/20 flex justify-center items-start p-2 backdrop-blur-sm hover:border-[#915EFF]/50 transition-colors">
             <motion.div
@@ -128,7 +133,7 @@ const Hero = () => {
             />
           </div>
         </a>
-      </div>
+      </div>}
       
       {/* Global Transition Gradient */}
       {/* <div className="absolute bottom-0 left-0 w-full h-16 sm:h-24 bg-gradient-to-t from-primary to-transparent z-10" /> */}

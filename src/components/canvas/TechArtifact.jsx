@@ -53,7 +53,7 @@ const TechShape = () => {
         </mesh>
         
         <mesh rotation={[Math.PI / 2.5, Math.PI / 4, 0]}>
-          <torusGeometry args={[2.8, 0.015, 16, 100]} />
+          <torusGeometry args={[2.6, 0.015, 16, 100]} />
           <meshStandardMaterial color="#fff" emissive="#56ccf2" emissiveIntensity={1} />
         </mesh>
       </Float>

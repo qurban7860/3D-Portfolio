@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { motion } from "framer-motion";
+import { Link, useParams } from "react-router-dom";
 import {
   HiOutlineLightningBolt,
   HiOutlineCalendar,
@@ -45,6 +46,7 @@ const HiringPoint = ({ icon: Icon, title, desc, index }) => (
 
 const ReadyForWork = () => {
   const { data } = usePortfolio();
+  const { username } = useParams();
   const stats = data?.stats ?? [];
   const contact = data?.settings?.contact ?? {};
   const availabilityStatus = contact.availabilityStatus || "Open for Work";
@@ -143,12 +145,13 @@ const ReadyForWork = () => {
                 Ready to transform your vision into a scalable digital reality.
                 Let&apos;s discuss your next breakthrough.
               </p>
-              <a
-                href="/contact"
+              <Link
+                to={`${username ? `/${username}` : ''}/contact`}
                 className={`${styles.glassButtonPremium} w-full py-4 text-[14px] flex items-center justify-center gap-4 relative z-10`}
+                onClick={() => window.scrollTo(0, 0)}
               >
                 📧 Start Consultation
-              </a>
+              </Link>
             </div>
           </div>
         </motion.div>

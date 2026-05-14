@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useParams } from "react-router-dom";
 import { usePortfolio } from "../context/PortfolioContext";
@@ -13,6 +14,12 @@ const Showcase = () => {
   
   const latestProject = (data?.projects ?? [])[0];
   const latestExperience = (data?.experiences ?? [])[0];
+
+  const [projError, setProjError] = useState(false);
+  const [expError, setExpError] = useState(false);
+
+  const resolvedProjUrl = latestProject ? resolveAssetUrl(latestProject.imageUrl) : null;
+  const resolvedExpUrl = latestExperience ? resolveAssetUrl(latestExperience.iconUrl) : null;
 
   return (
     <div className="flex flex-col gap-10 items-center">
@@ -33,11 +40,20 @@ const Showcase = () => {
             <div className="premium-glass-card glass-reflection overflow-hidden shadow-xl border-white/5 group h-full">
               <div className="flex flex-col sm:flex-row h-full">
                 <div className="sm:w-[40%] aspect-video sm:aspect-auto overflow-hidden relative">
-                   <img 
-                     src={resolveAssetUrl(latestProject.imageUrl)} 
-                     alt={latestProject.name}
-                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                   />
+                   {!projError && resolvedProjUrl ? (
+                     <img 
+                       src={resolvedProjUrl} 
+                       alt={latestProject.name}
+                       onError={() => setProjError(true)}
+                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                     />
+                   ) : (
+                     <div className="w-full h-full flex items-center justify-center bg-[#050816] relative overflow-hidden min-h-[160px]">
+                        <div className="absolute inset-0 bg-dot-pattern opacity-10" />
+                        <span className="text-3xl opacity-40 group-hover:scale-110 transition-transform duration-500">🖼️</span>
+                        <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-[#915EFF]/10 rounded-full blur-3xl" />
+                     </div>
+                   )}
                 </div>
                 <div className="sm:w-[60%] p-6 flex flex-col justify-between gap-4">
                   <div>
@@ -60,8 +76,19 @@ const Showcase = () => {
             className="flex-1"
           >
             <div className="premium-glass-card glass-reflection p-6 flex items-center gap-6 group h-full">
-              <div className="w-16 h-16 shrink-0 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 p-3 inner-glow">
-                 <img src={resolveAssetUrl(latestExperience.iconUrl)} alt={latestExperience.companyName} className="w-full h-full object-contain" />
+              <div className="w-16 h-16 shrink-0 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 p-3 inner-glow relative overflow-hidden">
+                 {!expError && resolvedExpUrl ? (
+                   <img 
+                     src={resolvedExpUrl} 
+                     alt={latestExperience.companyName} 
+                     onError={() => setExpError(true)}
+                     className="w-full h-full object-contain" 
+                   />
+                 ) : (
+                   <span className="text-white font-black text-xl tracking-tighter opacity-80">
+                     {latestExperience.companyName?.charAt(0).toUpperCase() || "?"}
+                   </span>
+                 )}
               </div>
               <div className="flex-1">
                  <h4 className="text-white text-lg font-black leading-tight">{latestExperience.title}</h4>

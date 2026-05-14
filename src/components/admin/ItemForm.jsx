@@ -119,48 +119,50 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
                   </div>
                 </div>
               ) : (
-                <div className="relative group/field">
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#915EFF] to-[#56ccf2] rounded-2xl blur opacity-0 group-focus-within/field:opacity-20 transition duration-500" />
-                  <input
-                    type={field.type === "number" ? "number" : "text"}
-                    name={field.name}
-                    value={formState[field.name] ?? ""}
-                    onChange={handleChange}
-                    required={field.required}
-                    placeholder={`Enter ${field.label.toLowerCase()}...`}
-                    className={`${styles.glassInput} relative z-10 ${
-                      (field.name === "icon" || field.name.toLowerCase().includes("iconurl") || field.name.toLowerCase().includes("imageurl")) ? "pr-16" : ""
-                    }`}
-                  />
-                  
-                  {(field.name === "icon" || field.name.toLowerCase().includes("iconurl") || field.name.toLowerCase().includes("imageurl")) && (
-                    <div className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 shadow-lg overflow-hidden z-20">
-                      {field.name === "icon" ? (
-                        (() => {
-                          const Icon = getIcon(formState[field.name]);
-                          return Icon ? (
-                            <div className="text-2xl text-[#915EFF] animate-in fade-in zoom-in duration-300">
-                              <Icon />
-                            </div>
-                          ) : (
-                            <span className="text-[10px] text-white/20 font-bold">NONE</span>
-                          );
-                        })()
-                      ) : (
-                        <img 
-                          src={resolveAssetUrl(formState[field.name])} 
-                          alt="preview"
-                          className="w-full h-full object-contain p-1"
-                          onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
-                        />
-                      )}
-                      {!(field.name === "icon") && (
-                        <div className="hidden absolute inset-0 items-center justify-center bg-white/5 text-[10px] text-white/20 font-bold uppercase">
-                          NA
-                        </div>
-                      )}
-                    </div>
-                  )}
+                <div className="group/field">
+                  <div className="relative">
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#915EFF] to-[#56ccf2] rounded-2xl blur opacity-0 group-focus-within/field:opacity-20 transition duration-500" />
+                    <input
+                      type={field.type === "number" ? "number" : "text"}
+                      name={field.name}
+                      value={formState[field.name] ?? ""}
+                      onChange={handleChange}
+                      required={field.required}
+                      placeholder={`Enter ${field.label.toLowerCase()}...`}
+                      className={`${styles.glassInput} relative z-10 w-full ${
+                        (field.name === "icon" || field.name.toLowerCase().includes("iconurl") || field.name.toLowerCase().includes("imageurl")) ? "pr-16" : ""
+                      }`}
+                    />
+                    
+                    {(field.name === "icon" || field.name.toLowerCase().includes("iconurl") || field.name.toLowerCase().includes("imageurl")) && (
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-xl bg-[#050816] border border-white/10 shadow-xl overflow-hidden z-20">
+                        {field.name === "icon" ? (
+                          (() => {
+                            const Icon = getIcon(formState[field.name]);
+                            return Icon ? (
+                              <div className="text-2xl text-[#915EFF] animate-in fade-in zoom-in duration-300">
+                                <Icon />
+                              </div>
+                            ) : (
+                              <span className="text-[10px] text-white/20 font-bold">NONE</span>
+                            );
+                          })()
+                        ) : (
+                          <img 
+                            src={resolveAssetUrl(formState[field.name])} 
+                            alt="preview"
+                            className="w-full h-full object-contain p-1.5"
+                            onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
+                          />
+                        )}
+                        {!(field.name === "icon") && (
+                          <div className="hidden absolute inset-0 items-center justify-center bg-white/5 text-[10px] text-white/20 font-bold uppercase">
+                            NA
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
                   
                   {field.name === "icon" && (
                     <div className="mt-2 text-[11px] text-white/30 italic px-2">

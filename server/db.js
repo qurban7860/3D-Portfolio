@@ -141,9 +141,11 @@ export async function initializeDatabase() {
           user_id    INTEGER REFERENCES users(id) ON DELETE CASCADE,
           name       TEXT NOT NULL,
           iconUrl    TEXT NOT NULL,
+          icon       TEXT DEFAULT '',
           visible    INTEGER DEFAULT 1,
           orderIndex INTEGER DEFAULT 0
         )`,
+        `ALTER TABLE technologies ADD COLUMN icon TEXT DEFAULT ''`,
         `CREATE INDEX IF NOT EXISTS idx_technologies_user_id ON technologies(user_id)`,
         `CREATE TABLE IF NOT EXISTS services (
           id          INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -219,10 +221,12 @@ export async function initializeDatabase() {
         try {
           await database.run(sql);
         } catch (err) {
-          // If it's a "no such column" error, we might need to handle it or it might be a symptom of an existing table with old schema
           if (err.message.includes("no such column") && sql.includes("CREATE INDEX")) {
-             console.warn(`⚠️ Skipping index creation due to missing column (likely old schema): ${sql}`);
+             console.warn(`⚠️ Skipping index creation due to missing column: ${sql}`);
+          } else if (sql.includes("ALTER TABLE") && (err.message.includes("duplicate column name") || err.message.toLowerCase().includes("already exists"))) {
+             // Safe to ignore if column already exists
           } else {
+             console.error(`❌ DB Schema Error on query: ${sql}`, err);
              throw err;
           }
         }

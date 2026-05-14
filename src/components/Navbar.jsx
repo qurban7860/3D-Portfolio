@@ -13,6 +13,7 @@ import {
 import { HiMenuAlt3, HiX } from "react-icons/hi";
 import { styles } from "../styles";
 import { usePortfolio } from "../context/PortfolioContext";
+// import { useAuth } from "../context/AuthContext";
 import resumePdf from "../assets/resume/Resume_Mern.pdf";
 import logo from "/logo.svg";
 import { getIcon } from "../utils/iconMapping";
@@ -99,6 +100,9 @@ const SocialDropdown = ({ links }) => {
 /* ── Resume Action Button ───────────────────────────────────── */
 const ResumeButton = ({ isMobile = false }) => {
   const [showOptions, setShowOptions] = useState(false);
+  const { username } = useParams();
+
+  if (username) return null;
 
   return (
     <div

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { HiOutlineCubeTransparent, HiOutlineLightningBolt, HiOutlineShieldCheck } from "react-icons/hi";
 import { usePortfolio } from "../context/PortfolioContext";
 import { SectionWrapper } from "../hoc";
@@ -26,6 +26,7 @@ const FeatureCard = ({ icon: Icon, title, desc, index }) => (
 
 const HomeIntro = () => {
   const { data } = usePortfolio();
+  const { username } = useParams();
   const about = data?.settings?.about ?? {};
   const overview =
     about.overview ||
@@ -66,14 +67,14 @@ const HomeIntro = () => {
           
           <div className="mt-6 flex flex-wrap gap-4">
             <Link
-              to="/about"
+              to={`${username ? `/${username}` : ''}/about`}
               className={`${styles.glassButtonPremium} group`}
               onClick={() => window.scrollTo(0, 0)}
             >
               Full Bio <span className="group-hover:translate-x-1 transition-transform ml-2">→</span>
             </Link>
             <Link
-              to="/services"
+              to={`${username ? `/${username}` : ''}/services`}
               className="px-6 py-2.5 text-[13px] font-bold text-white/50 hover:text-white transition-all border-b border-white/5"
               onClick={() => window.scrollTo(0, 0)}
             >

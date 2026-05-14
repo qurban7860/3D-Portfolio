@@ -6,7 +6,7 @@ import { usePortfolio } from "../context/PortfolioContext";
 import { SectionWrapper } from "../hoc";
 import { fadeIn } from "../Animation/motion";
 import { styles } from "../styles";
-import { premium_tech } from "../assets";
+import { TechArtifactCanvas } from "./canvas";
 
 const FeatureCard = ({ icon: Icon, title, desc, index }) => (
   <motion.div
@@ -84,79 +84,17 @@ const HomeIntro = () => {
 
         <motion.div
           variants={fadeIn("left", "spring", 0.4, 0.8)}
-          className="flex-1 hidden lg:block"
+          className="flex-1 hidden lg:flex justify-center items-center h-[450px]"
         >
-          <div className="relative w-full aspect-square max-w-[400px] mx-auto group perspective-1000">
-            {/* ── Background Glows ── */}
-            <div className="absolute inset-0 bg-[#915EFF]/20 rounded-full blur-[120px] animate-pulse opacity-40 group-hover:opacity-70 transition-opacity duration-1000" />
-            <div className="absolute -inset-4 bg-gradient-to-tr from-[#915EFF]/10 via-transparent to-[#56ccf2]/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+          <div className="relative w-full h-full max-w-[500px] group flex items-center justify-center">
+            {/* ── Subtle Background Glows ── */}
+            <div className="absolute w-[60%] h-[60%] bg-[#915EFF]/20 rounded-full blur-[120px] animate-pulse opacity-50 transition-opacity duration-1000 pointer-events-none" />
+            <div className="absolute w-[80%] h-[80%] bg-gradient-to-tr from-[#915EFF]/10 via-transparent to-[#56ccf2]/10 rounded-full blur-[100px] opacity-30 group-hover:opacity-60 transition-opacity duration-1000 pointer-events-none" />
 
-            {/* ── Floating Main Container ── */}
-            <motion.div
-              animate={{
-                y: [0, -15, 0],
-                rotateZ: [0, 2, 0],
-              }}
-              transition={{
-                duration: 6,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="relative z-10 w-full h-full rounded-[3rem] p-1 overflow-hidden border border-white/10 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.6)] group-hover:shadow-[0_48px_96px_-24px_rgba(145,94,255,0.3)] transition-all duration-700 glass-reflection bg-white/[0.01]"
-            >
-              <div className="relative w-full h-full rounded-[2.8rem] overflow-hidden">
-                <motion.img
-                  src={premium_tech}
-                  alt="Premium Tech"
-                  whileHover={{ scale: 1.15, rotate: -2 }}
-                  transition={{ duration: 1.2, ease: "circOut" }}
-                  className="w-full h-full object-cover opacity-90 brightness-110 contrast-110"
-                />
-                
-                {/* ── Dynamic Overlays ── */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050816] via-transparent to-white/5 opacity-60" />
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(145,94,255,0.1),transparent_70%)]" />
-                
-                {/* ── Scanning Line Effect ── */}
-                <motion.div 
-                  animate={{ top: ["-10%", "110%"] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                  className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#915EFF]/40 to-transparent z-20"
-                />
-
-                <div className="absolute bottom-8 left-8 right-8 z-30">
-                  <motion.div 
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    className="flex flex-col gap-2"
-                  >
-                    <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-2xl border border-white/20 flex items-center justify-center shadow-2xl group-hover:bg-[#915EFF]/20 transition-colors duration-500">
-                      <HiOutlineCubeTransparent className="text-[#915EFF] text-2xl drop-shadow-[0_0_8px_rgba(145,94,255,0.8)]" />
-                    </div>
-                    <div>
-                      <p className="text-white text-[11px] font-black uppercase tracking-[0.4em] opacity-40 group-hover:opacity-90 transition-opacity">System Architecture</p>
-                      <h4 className="text-white font-bold text-lg leading-tight mt-1">Industrial Solutions v2.4</h4>
-                    </div>
-                  </motion.div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* ── Decorative Orbits ── */}
-            <motion.div 
-              animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              className="absolute -inset-8 border border-white/5 rounded-full pointer-events-none opacity-20"
-            />
-            <motion.div 
-              animate={{ rotate: -360 }}
-              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-              className="absolute -inset-16 border border-white/5 rounded-full pointer-events-none opacity-10"
-            />
-            
-            {/* ── Corner Accents ── */}
-            <div className="absolute -top-6 -right-6 w-32 h-32 border-t-2 border-r-2 border-[#915EFF]/20 rounded-tr-[4rem] group-hover:border-[#915EFF]/50 transition-colors duration-700" />
-            <div className="absolute -bottom-6 -left-6 w-32 h-32 border-b-2 border-l-2 border-[#915EFF]/20 rounded-bl-[4rem] group-hover:border-[#915EFF]/50 transition-colors duration-700" />
+            {/* ── Real 3D Tech Artifact Canvas ── */}
+            <div className="absolute inset-0 pointer-events-auto">
+               <TechArtifactCanvas />
+            </div>
           </div>
         </motion.div>
       </div>

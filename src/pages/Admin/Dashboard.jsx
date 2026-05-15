@@ -115,8 +115,12 @@ const DashboardPage = () => {
                 </div>
                 {(!isCollapsed || isMobile) && (
                   <div className="min-w-0">
-                      <h2 className="text-white font-black text-[15px] tracking-tight leading-none uppercase truncate">Antigravity</h2>
-                      <p className="text-[9px] text-[#56ccf2] font-black tracking-[0.2em] mt-1 uppercase opacity-70">Admin Terminal</p>
+                      <h2 className="text-white font-black text-[15px] tracking-tight leading-none uppercase truncate">
+                         {isAdmin ? "Antigravity" : user?.username || "Portfolio"}
+                      </h2>
+                      <p className="text-[9px] text-[#56ccf2] font-black tracking-[0.2em] mt-1 uppercase opacity-70">
+                         {isAdmin ? "Admin Terminal" : "Dashboard"}
+                      </p>
                   </div>
                 )}
             </div>

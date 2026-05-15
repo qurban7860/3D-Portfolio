@@ -10,8 +10,8 @@ import { styles } from "../styles";
 import { getIcon } from "../utils/iconMapping";
 
 const EMAIL_CONFIG = {
-  SERVICE_ID: "service_jki37si",
-  TEMPLATE_ID: "template_6a3mcjg",
+  SERVICE_ID: "service_ke7il8l",
+  TEMPLATE_ID: "template_ovaajxo",
   PUBLIC_KEY: "8Eo4GHGaeD9coqIxx",
   RECIPIENT_NAME: "Qurban Hanif",
 };
@@ -166,7 +166,7 @@ const Contact = () => {
             setLoading(false);
             setSubmitStatus("error");
             console.error("Email submission error:", error);
-            setTimeout(() => setSubmitStatus(null), 5000);
+            setTimeout(() => setSubmitStatus(null), 8000);
           }
         );
     },
@@ -233,16 +233,21 @@ const Contact = () => {
             <motion.div
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-6 p-4 rounded-xl flex items-center gap-3 relative z-10"
+              className="mb-6 p-4 rounded-xl flex items-start gap-3 relative z-10"
               style={{
                 background: "rgba(239,68,68,0.10)",
                 border: "1px solid rgba(239,68,68,0.40)",
               }}
             >
-              <span className="text-red-400 text-lg">✕</span>
-              <p className="text-red-400 text-[14px] font-medium">
-                Something went wrong. Please try again later.
-              </p>
+              <span className="text-red-400 text-lg mt-0.5">✕</span>
+              <div className="flex flex-col gap-1">
+                <p className="text-red-400 text-[14px] font-bold">
+                  Transmission Failed
+                </p>
+                <p className="text-red-400/80 text-[12px] font-medium leading-relaxed">
+                  The automated email service is currently experiencing high load or configuration issues. Please connect directly via the social nodes below or email me at <a href={`mailto:${recipientEmail}`} className="text-white hover:text-[#915EFF] underline">{recipientEmail}</a>.
+                </p>
+              </div>
             </motion.div>
           )}
 

@@ -196,6 +196,7 @@ const MobileMenu = ({
       document.body.style.overflow = "unset";
     };
   }, [toggle]);
+  const { username } = useParams();
 
   return (
     <AnimatePresence>
@@ -280,8 +281,7 @@ const MobileMenu = ({
                     >
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
                       <span className="relative z-10 flex items-center gap-3">
-                        <span className="text-lg">🔐</span> 
-                        Admin Dashboard
+                        {username ? "Tenant Dashboard" : "Dashboard"}
                       </span>
                     </Link>
                   </div>
@@ -418,7 +418,7 @@ const Navbar = () => {
                 <Link 
                   to="/admin" 
                   className="opacity-10 hover:opacity-100 transition-opacity duration-500 text-[10px] translate-y-[-2px]"
-                  title="Admin"
+                  title={username ? "Tenant Dashboard" : "Dashboard"}
                 >
                   🔐
                 </Link>

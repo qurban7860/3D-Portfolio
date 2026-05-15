@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { motion, AnimatePresence } from "framer-motion";
 import { AuthProvider } from "./context/AuthContext";
 import { PortfolioProvider } from "./context/PortfolioContext";
+import { HelmetProvider } from "react-helmet-async";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import HomePage from "./pages/HomePage";
 import PortfolioPage from "./pages/PortfolioPage";
@@ -110,38 +111,40 @@ const AnimatedRoutes = () => {
 
 const App = () => {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <ScrollToHash />
-        <Toaster 
-          position="top-right" 
-          toastOptions={{
-            duration: 4000,
-            style: {
-              background: "#161130",
-              color: "#fff",
-              border: "1px solid rgba(255,255,255,0.1)",
-              borderRadius: "1rem",
-              fontSize: "14px",
-              fontWeight: "500",
-              padding: "12px 20px",
-              backdropFilter: "blur(12px)",
-              zIndex: 99999,
-            },
-            success: {
-              iconTheme: {
-                primary: "#915EFF",
-                secondary: "#fff",
+    <HelmetProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <ScrollToHash />
+          <Toaster 
+            position="top-right" 
+            toastOptions={{
+              duration: 4000,
+              style: {
+                background: "#161130",
+                color: "#fff",
+                border: "1px solid rgba(255,255,255,0.1)",
+                borderRadius: "1rem",
+                fontSize: "14px",
+                fontWeight: "500",
+                padding: "12px 20px",
+                backdropFilter: "blur(12px)",
+                zIndex: 99999,
               },
-            },
-          }}
-        />
-        <GlobalBackground />
-        <GlobalTenantResolver>
-          <AnimatedRoutes />
-        </GlobalTenantResolver>
-      </BrowserRouter>
-    </AuthProvider>
+              success: {
+                iconTheme: {
+                  primary: "#915EFF",
+                  secondary: "#fff",
+                },
+              },
+            }}
+          />
+          <GlobalBackground />
+          <GlobalTenantResolver>
+            <AnimatedRoutes />
+          </GlobalTenantResolver>
+        </BrowserRouter>
+      </AuthProvider>
+    </HelmetProvider>
   );
 };
 

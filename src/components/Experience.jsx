@@ -136,7 +136,7 @@ const EducationCard = ({ education }) => {
         href={education.instituteUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="absolute sm:top-7 top-auto bottom-7 sm:right-7 right-7 z-20"
+        className="absolute top-7 right-7 z-20"
         title={education.instituteName}
       >
         <div className="relative">
@@ -166,7 +166,7 @@ const EducationCard = ({ education }) => {
                 border: "1px solid rgba(145,94,255,0.25)",
                 color: "#c4a7ff",
               }}>
-          🎓 Academic Background
+          🎓 Academic
         </span>
       </div>
 

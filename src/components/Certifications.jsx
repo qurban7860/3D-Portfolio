@@ -82,7 +82,7 @@ const Certifications = () => {
   return (
     <>
       <motion.div variants={textVariant()} className="flex flex-col items-start gap-4">
-        <span className="section-badge">Professional Growth</span>
+        <span className="section-badge mt-8 sm:mt-0">Professional Growth</span>
         <h2 className="section-title-underline text-white font-extrabold text-3xl sm:text-4xl leading-tight max-w-3xl">
           Certifications &amp; Continuous Learning
         </h2>

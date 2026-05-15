@@ -1,9 +1,8 @@
 import { Contact as RawContact } from "../components/Contact";
-import { StarsCanvas, BackToTop, Navbar, Footer } from "../components";
+import { BackToTop, Navbar, Footer } from "../components";
 import { usePortfolio } from "../context/PortfolioContext";
 import LoadingState from "../components/common/LoadingState";
 import ErrorMessage from "../components/common/ErrorMessage";
-import DynamicSEO from "../components/common/DynamicSEO";
 import { motion } from "framer-motion";
 import { styles } from "../styles";
 import { staggerContainer } from "../Animation/motion";
@@ -13,7 +12,6 @@ const ContactPage = () => {
 
   return (
     <div className="relative z-0 bg-transparent w-full min-h-screen overflow-x-hidden">
-      <DynamicSEO title="Contact | Let's Collaborate" />
       <Navbar />
 
       {/* Premium Page Header */}

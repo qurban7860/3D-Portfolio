@@ -13,14 +13,12 @@ import {
 import { usePortfolio } from "../context/PortfolioContext";
 import ErrorMessage from "../components/common/ErrorMessage";
 import LoadingState from "../components/common/LoadingState";
-import DynamicSEO from "../components/common/DynamicSEO";
 
 const HomePage = () => {
   const { isLoading, error } = usePortfolio();
 
   return (
     <div className='relative z-0 bg-transparent w-full min-h-screen overflow-x-hidden'>
-      <DynamicSEO />
       <Navbar />
 
       <div className='bg-transparent w-full relative'>

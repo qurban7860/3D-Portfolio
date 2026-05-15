@@ -20,8 +20,8 @@ import GlobalBackground from "./components/common/GlobalBackground";
 
 import { Toaster } from "react-hot-toast";
 
-const ScrollToHash = () => {
-  const { hash } = useLocation();
+const ScrollToTop = () => {
+  const { pathname, hash } = useLocation();
 
   useEffect(() => {
     if (hash) {
@@ -31,8 +31,10 @@ const ScrollToHash = () => {
           element.scrollIntoView({ behavior: "smooth" });
         }, 300);
       }
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     }
-  }, [hash]);
+  }, [pathname, hash]);
 
   return null;
 };
@@ -114,7 +116,7 @@ const App = () => {
     <HelmetProvider>
       <AuthProvider>
         <BrowserRouter>
-          <ScrollToHash />
+          <ScrollToTop />
           <Toaster 
             position="top-right" 
             toastOptions={{

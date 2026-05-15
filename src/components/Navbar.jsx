@@ -330,7 +330,7 @@ const Navbar = () => {
   const { data } = usePortfolio();
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(() => typeof window !== "undefined" ? window.scrollY > 20 : false);
   const location = useLocation();
   const { username } = useParams();
 
@@ -375,9 +375,17 @@ const Navbar = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsScrolled(window.scrollY > 20);
+    }, 50);
+    return () => clearTimeout(timeout);
+  }, [location.pathname]);
 
   useEffect(() => {
     const activeNav = navLinks.find((nav) => nav.path === location.pathname);

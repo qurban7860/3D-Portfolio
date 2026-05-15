@@ -20,18 +20,11 @@ const About = ({ isSummary = false, hideHeader = false }) => {
     "My expertise spans full-stack development, real-time applications, RESTful API design, performance optimization, and responsive UI/UX design.";
   const details = about.details || "";
 
-  const displayStats = stats.length >= 4 
-    ? stats.slice(0, 4).map((s, i) => ({
-        label: s.label,
-        value: s.stat,
-        color: i === 0 ? "text-[#915EFF]" : i === 1 ? "text-[#56ccf2]" : i === 2 ? "text-[#00cea8]" : "text-[#bf61ff]"
-      }))
-    : [
-        { label: "Years Experience", value: "3+", color: "text-[#915EFF]" },
-        { label: "Projects Completed", value: "50+", color: "text-[#56ccf2]" },
-        { label: "Satisfied Clients", value: "30+", color: "text-[#00cea8]" },
-        { label: "Project Success", value: "100%", color: "text-[#bf61ff]" },
-      ];
+  const displayStats = stats.map((s, i) => ({
+    label: s.label,
+    value: s.stat,
+    color: i % 4 === 0 ? "text-[#915EFF]" : i % 4 === 1 ? "text-[#56ccf2]" : i % 4 === 2 ? "text-[#00cea8]" : "text-[#bf61ff]"
+  }));
 
   return (
     <>
@@ -64,14 +57,29 @@ const About = ({ isSummary = false, hideHeader = false }) => {
             className="mt-16 w-full"
           >
             {/* ── Premium Statistics Grid ── */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-16">
-              {displayStats.map((stat, i) => (
-                <div key={i} className="premium-glass p-6 rounded-3xl text-center group hover:scale-105 transition-all duration-500">
-                  <h4 className={`${stat.color} text-3xl sm:text-4xl font-black mb-1 drop-shadow-sm transition-all group-hover:scale-110`}>{stat.value}</h4>
-                  <p className="text-white/40 text-[10px] sm:text-[11px] font-bold uppercase tracking-widest">{stat.label}</p>
-                </div>
-              ))}
-            </div>
+            {displayStats.length > 0 && (
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-16">
+                {displayStats.map((stat, i) => (
+                  <div key={i} className="relative group p-[1px] rounded-3xl overflow-hidden hover:scale-[1.02] transition-all duration-500">
+                    {/* Animated Border/Glow */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-[#915EFF]/10 opacity-50 group-hover:opacity-100 transition-opacity" />
+                    
+                    <div className="relative bg-[#050816]/40 backdrop-blur-2xl p-6 sm:p-8 rounded-[23px] h-full flex flex-col items-center justify-center border border-white/5 group-hover:border-[#915EFF]/30 transition-all duration-500 shadow-2xl">
+                      {/* Ambient Glow */}
+                      <div className="absolute -top-10 -right-10 w-20 h-20 bg-[#915EFF]/5 blur-3xl rounded-full group-hover:bg-[#915EFF]/15 transition-all" />
+                      
+                      <h4 className={`${stat.color} text-3xl sm:text-4xl font-black mb-2 drop-shadow-[0_0_15px_rgba(145,94,255,0.2)] transition-all group-hover:scale-110 tracking-tight`}>
+                        {stat.value}
+                      </h4>
+                      <div className="h-[2px] w-8 bg-white/5 mb-3 group-hover:w-12 group-hover:bg-[#915EFF]/40 transition-all duration-500" />
+                      <p className="text-white/30 text-[10px] sm:text-[11px] font-black uppercase tracking-[0.25em] text-center leading-tight">
+                        {stat.label}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
 
             {/* ── Core Values ── */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-10">

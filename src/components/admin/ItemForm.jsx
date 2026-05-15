@@ -70,7 +70,11 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
       
       <form onSubmit={handleSubmit} className="space-y-10 relative z-10">
         <div className="grid gap-x-10 gap-y-10 grid-cols-1 md:grid-cols-2">
-          {schema.fields.map((field) => (
+          {schema.fields.map((field) => {
+            // Hide standard URL fields if they are managed by the Asset Management block
+            if (field.name === "imageUrl" || field.name === "iconUrl") return null;
+            
+            return (
             <div 
               key={field.name} 
               className={`${
@@ -106,13 +110,13 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
                 </div>
               ) : field.type === "checkbox" ? (
                 <div 
-                  className="flex items-center justify-between gap-4 rounded-2xl bg-white/[0.03] border border-white/10 px-6 h-[68px] transition-all duration-500 hover:bg-white/[0.08] group hover:border-[#915EFF]/40 cursor-pointer relative overflow-hidden" 
+                  className="flex items-center justify-between gap-2 sm:gap-4 rounded-2xl bg-white/[0.03] border border-white/10 px-4 sm:px-6 h-[68px] transition-all duration-500 hover:bg-white/[0.08] group hover:border-[#915EFF]/40 cursor-pointer relative overflow-hidden" 
                   onClick={() => handleChange({ target: { name: field.name, type: 'checkbox', checked: !formState[field.name] }})}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-[#915EFF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <span className="text-[14px] font-bold text-white/70 group-hover:text-white transition-colors relative z-10">{field.label}</span>
+                  <span className="text-[13px] sm:text-[14px] font-bold text-white/70 group-hover:text-white transition-colors relative z-10 truncate mr-2">{field.label}</span>
                   
-                  <div className="relative inline-flex items-center cursor-pointer z-10">
+                  <div className="relative inline-flex items-center cursor-pointer z-10 shrink-0">
                     <div className={`w-12 h-6 rounded-full transition-all duration-500 ${formState[field.name] ? 'bg-[#915EFF]' : 'bg-white/10'}`}>
                       <div className={`absolute top-1 left-1 bg-white w-4 h-4 rounded-full transition-all duration-500 shadow-lg ${formState[field.name] ? 'translate-x-6' : 'translate-x-0'}`} />
                     </div>
@@ -136,25 +140,16 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
                     
                     {(field.name === "icon" || field.name.toLowerCase().includes("iconurl") || field.name.toLowerCase().includes("imageurl")) && (
                       <div className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-xl bg-[#050816] border border-white/10 shadow-xl overflow-hidden z-20">
-                        {field.name === "icon" ? (
-                          (() => {
-                            const Icon = getIcon(formState[field.name]);
-                            return Icon ? (
-                              <div className="text-2xl text-[#915EFF] animate-in fade-in zoom-in duration-300">
-                                <Icon />
-                              </div>
-                            ) : (
-                              <span className="text-[10px] text-white/20 font-bold">NONE</span>
-                            );
-                          })()
-                        ) : (
-                          <img 
-                            src={resolveAssetUrl(formState[field.name])} 
-                            alt="preview"
-                            className="w-full h-full object-contain p-1.5"
-                            onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
-                          />
-                        )}
+                        {field.name === "icon" && (() => {
+                          const Icon = getIcon(formState[field.name]);
+                          return Icon ? (
+                            <div className="text-2xl text-[#915EFF] animate-in fade-in zoom-in duration-300">
+                              <Icon />
+                            </div>
+                          ) : (
+                            <span className="text-[10px] text-white/20 font-bold">NONE</span>
+                          );
+                        })()}
                         {!(field.name === "icon") && (
                           <div className="hidden absolute inset-0 items-center justify-center bg-white/5 text-[10px] text-white/20 font-bold uppercase">
                             NA
@@ -172,70 +167,96 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
                 </div>
               )}
             </div>
-          ))}
+          );
+          })}
         </div>
 
-        {schema.fields.some((f) => f.name.toLowerCase().includes("url") || f.name === "icon") && (
-          <div className="rounded-3xl border border-white/10 bg-white/[0.02] p-8 sm:p-10 transition-all hover:bg-white/[0.04] group relative overflow-hidden">
-             <div className="absolute top-0 right-0 w-32 h-32 bg-[#915EFF]/5 blur-3xl pointer-events-none" />
-             
-            <div className="flex items-center justify-between mb-8">
-              <div className="flex flex-col gap-1">
-                <h4 className="text-white font-black text-[13px] uppercase tracking-[0.2em] flex items-center gap-3">
-                  Asset Management
-                </h4>
-                <p className="text-secondary text-[11px] font-medium opacity-40 uppercase tracking-widest">Global Asset Optimization</p>
-              </div>
-              {uploading && (
-                <div className="flex items-center gap-3 text-[#56ccf2] text-[11px] font-bold tracking-widest uppercase">
-                  <div className="h-2 w-2 rounded-full bg-[#56ccf2] animate-ping shadow-[0_0_10px_#56ccf2]" />
-                  Syncing
+        {schema.fields.some((f) => f.name === "imageUrl" || f.name === "iconUrl") && (() => {
+          const imageField = schema.fields.find(f => f.name === "imageUrl" || f.name === "iconUrl");
+          const targetField = imageField.name;
+          
+          return (
+            <div className="rounded-3xl border border-white/10 bg-white/[0.02] p-6 sm:p-10 transition-all hover:bg-white/[0.04] group relative overflow-hidden">
+               <div className="absolute top-0 right-0 w-32 h-32 bg-[#915EFF]/5 blur-3xl pointer-events-none" />
+               
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
+                <div className="flex flex-col gap-1">
+                  <h4 className="text-white font-black text-[13px] uppercase tracking-[0.2em] flex items-center gap-3">
+                    Asset Management
+                  </h4>
+                  <p className="text-secondary text-[11px] font-medium opacity-40 uppercase tracking-widest">Global Asset Optimization</p>
                 </div>
-              )}
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-6 items-center">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={async (e) => {
-                  const file = e.target.files?.[0];
-                  if (!file) return;
-                  
-                  const targetField = schema.fields.find(f => 
-                    f.name === "imageUrl" || f.name === "iconUrl" || f.name === "icon"
-                  )?.name || "imageUrl";
-                  
-                  const url = await onUpload(targetField, file);
-                  if (url) {
-                    setFormState(prev => ({ ...prev, [targetField]: url }));
-                  }
-                }}
-                className="hidden"
-                id="admin-file-upload"
+                {uploading && (
+                  <div className="flex items-center gap-3 text-[#56ccf2] text-[11px] font-bold tracking-widest uppercase">
+                    <div className="h-2 w-2 rounded-full bg-[#56ccf2] animate-ping shadow-[0_0_10px_#56ccf2]" />
+                    Syncing
+                  </div>
+                )}
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
+                {formState[targetField] && (
+                  <div className="w-full sm:w-28 h-40 sm:h-28 rounded-2xl bg-[#050816]/50 border border-white/10 p-3 overflow-hidden shadow-2xl shrink-0 relative group/preview flex items-center justify-center">
+                    <div className="absolute inset-0 bg-[#915EFF]/10 opacity-0 group-hover/preview:opacity-100 transition-opacity z-0" />
+                    <img 
+                      src={resolveAssetUrl(formState[targetField])} 
+                      alt="preview" 
+                      className="w-full h-full object-contain relative z-10"
+                      onError={(e) => { e.target.style.display = 'none'; }}
+                    />
+                  </div>
+                )}
+                
+                <div className="flex flex-col gap-4 w-full sm:w-auto flex-1">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      const url = await onUpload(targetField, file);
+                      if (url) {
+                        setFormState(prev => ({ ...prev, [targetField]: url }));
+                      }
+                    }}
+                    className="hidden"
+                    id="admin-file-upload"
+                  />
+                  <label 
+                    htmlFor="admin-file-upload"
+                    className="w-full sm:w-auto flex cursor-pointer items-center justify-center gap-4 rounded-2xl bg-white/5 px-8 py-4 sm:px-10 sm:py-5 text-[14px] font-black text-white transition-all hover:bg-white/10 border border-white/10 active:scale-95 shadow-xl hover:border-[#915EFF]/40"
+                  >
+                    <span className="text-xl">📁</span>
+                    <span>{uploading ? "Syncing..." : formState[targetField] ? "Change File" : "Choose File"}</span>
+                  </label>
+                  <p className="text-[11px] text-secondary/40 font-medium italic text-center sm:text-left leading-relaxed">
+                    System handles automatic compression and edge distribution.
+                  </p>
+                </div>
+              </div>
+              
+              {/* Invisible input to hold value for form submission without breaking native validation if empty */}
+              <input 
+                type="text" 
+                name={targetField} 
+                value={formState[targetField] ?? ""} 
+                onChange={handleChange} 
+                className="hidden" 
               />
-              <label 
-                htmlFor="admin-file-upload"
-                className="w-full sm:w-auto flex cursor-pointer items-center justify-center gap-4 rounded-2xl bg-white/5 px-10 py-5 text-[14px] font-black text-white transition-all hover:bg-white/10 border border-white/10 active:scale-95 shadow-2xl hover:border-[#915EFF]/40"
-              >
-                <span className="text-xl">📁</span>
-                <span>{uploading ? "Syncing..." : "Choose File"}</span>
-              </label>
-              <p className="text-[12px] text-secondary/40 font-medium italic text-center sm:text-left leading-relaxed">System handles automatic compression and edge distribution.</p>
             </div>
-          </div>
-        )}
+          );
+        })()}
 
-        <div className="flex flex-col sm:flex-row gap-5 pt-10 border-t border-white/5 mt-10">
+        <div className="flex flex-col sm:flex-row gap-4 pt-10 border-t border-white/5 mt-10">
           <button
             type="submit"
             disabled={isSaving}
-            className={`${styles.glassButtonPremium} flex-1 px-10 py-6 text-[15px] font-black active:scale-[0.98] shadow-2xl`}
+            className={`${styles.glassButtonPremium} flex-1 px-6 py-4 sm:px-10 sm:py-6 text-[14px] sm:text-[15px] font-black active:scale-[0.98] shadow-2xl w-full order-1 sm:order-none`}
           >
             {isSaving ? (
               <div className="flex items-center justify-center gap-3">
                 <div className="h-4 w-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                <span>Saving Changes...</span>
+                <span>Saving...</span>
               </div>
             ) : initialData ? "Save Changes" : "Create Entry"}
           </button>
@@ -243,7 +264,7 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
           <button
             type="button"
             onClick={onCancel}
-            className="flex-1 px-10 py-6 text-white/40 font-black text-[14px] uppercase tracking-widest hover:text-white transition-all active:scale-[0.98] border border-white/10 rounded-2xl hover:bg-white/5"
+            className="flex-1 px-6 py-4 sm:px-10 sm:py-6 text-white/40 font-black text-[13px] sm:text-[14px] uppercase tracking-widest hover:text-white transition-all active:scale-[0.98] border border-white/10 rounded-2xl hover:bg-white/5 w-full order-2 sm:order-none"
           >
             Cancel
           </button>

@@ -4,18 +4,23 @@ import { mkdirSync, existsSync } from "fs";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const uploadPath = path.join(__dirname, "uploads");
-
-try {
-  if (!existsSync(uploadPath)) {
-    mkdirSync(uploadPath, { recursive: true });
-  }
-} catch (err) {
-  console.warn("Could not create uploads directory (expected in serverless):", err.message);
-}
+const baseUploadPath = path.join(__dirname, "..", "uploads");
 
 const storage = multer.diskStorage({
-  destination: (_req, _file, cb) => cb(null, uploadPath),
+  destination: (req, _file, cb) => {
+    const userId = req.user?.id || "public";
+    const userUploadPath = path.join(baseUploadPath, String(userId));
+    
+    try {
+      if (!existsSync(userUploadPath)) {
+        mkdirSync(userUploadPath, { recursive: true });
+      }
+    } catch (err) {
+      console.warn("Could not create tenant uploads directory:", err.message);
+    }
+    
+    cb(null, userUploadPath);
+  },
   filename: (_req, file, cb) => {
     const sanitized = file.originalname.replace(/[^a-zA-Z0-9._-]/g, "_");
     cb(null, `${Date.now()}-${sanitized}`);

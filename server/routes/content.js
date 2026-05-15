@@ -65,7 +65,8 @@ router.post("/admin/upload", authMiddleware, upload.single("file"), (req, res) =
   if (!req.file) {
     return res.status(400).json({ message: "No file provided." });
   }
-  const url = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
+  const userId = req.user?.id || "public";
+  const url = `${req.protocol}://${req.get("host")}/uploads/${userId}/${req.file.filename}`;
   return res.json({ url });
 });
 

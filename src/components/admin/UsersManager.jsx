@@ -4,6 +4,7 @@ import { HiOutlineTrash, HiOutlineUserGroup, HiOutlineMail, HiOutlineCalendar, H
 import { useAuth } from "../../context/AuthContext";
 import * as adminApi from "../../api/admin";
 import { styles } from "../../styles";
+import ConfirmDialog from "../common/ConfirmDialog";
 
 const UsersManager = () => {
   const { token, user: currentUser } = useAuth();
@@ -11,6 +12,7 @@ const UsersManager = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [confirmDialog, setConfirmDialog] = useState(null);
 
   useEffect(() => {
     loadUsers();
@@ -32,13 +34,17 @@ const UsersManager = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this user? All their data will be permanently removed.")) return;
-
+    setConfirmDialog(null);
     try {
       await adminApi.deleteUser(token, id);
       setUsers(users.filter((u) => u.id !== id));
     } catch (err) {
-      alert(err.message);
+      setConfirmDialog({
+        title: "Error!",
+        message: err.message,
+        confirmText: "OK",
+        type: "error"
+      });
     }
   };
 
@@ -53,6 +59,18 @@ const UsersManager = () => {
 
   return (
     <div className="space-y-12">
+      {confirmDialog && (
+        <ConfirmDialog
+          isOpen={!!confirmDialog}
+          title={confirmDialog.title}
+          message={confirmDialog.message}
+          confirmText={confirmDialog.confirmText}
+          cancelText={confirmDialog.cancelText}
+          onConfirm={confirmDialog.onConfirm}
+          onCancel={() => setConfirmDialog(null)}
+        />
+      )}
+
       {/* Header Section */}
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
         <div className="relative z-10">
@@ -176,7 +194,14 @@ const UsersManager = () => {
                 <div className="flex gap-2">
                     {user.id !== currentUser.id && (
                         <button
-                            onClick={() => handleDelete(user.id)}
+                            onClick={() => setConfirmDialog({
+                                title: `Delete ${user.username}'s Portfolio`,
+                                message: `Are you sure you want to delete this user? All their data will be permanently removed.`,
+                                confirmText: "Yes, Delete It",
+                                cancelText: "Cancel",
+                                onConfirm: () => handleDelete(user.id),
+                                type: "danger"
+                            })} 
                             className="p-2 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500 hover:text-white transition-all active:scale-90"
                             title="Delete User"
                         >

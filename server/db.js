@@ -221,9 +221,9 @@ export async function initializeDatabase() {
         try {
           await database.run(sql);
         } catch (err) {
-          if (err.message.includes("no such column") && sql.includes("CREATE INDEX")) {
+          if (String(err).includes("no such column") && sql.includes("CREATE INDEX")) {
              console.warn(`⚠️ Skipping index creation due to missing column: ${sql}`);
-          } else if (sql.includes("ALTER TABLE") && (err.message.includes("duplicate column name") || err.message.toLowerCase().includes("already exists"))) {
+          } else if (sql.includes("ALTER TABLE") && (String(err).includes("duplicate column name") || String(err).toLowerCase().includes("already exists"))) {
              // Safe to ignore if column already exists
           } else {
              console.error(`❌ DB Schema Error on query: ${sql}`, err);

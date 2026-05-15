@@ -25,10 +25,10 @@ const Hero = () => {
       {/* Background is now handled globally in HomePage for consistency across all sections */}
 
       {/* ── Main Content Container ── */}
-      <div className={`relative z-40 max-w-7xl mx-auto ${styles.paddingX} h-full w-full flex flex-col lg:flex-row items-center justify-center gap-5 lg:gap-16 pt-24 lg:pt-0 pb-20 lg:pb-0 pointer-events-none`}>
+      <div className={`relative z-40 max-w-7xl mx-auto ${styles.paddingX} h-full w-full flex flex-col lg:flex-row items-center justify-between gap-5 lg:gap-10 pt-24 lg:pt-0 pb-20 lg:pb-0 pointer-events-none`}>
         
         {/* Left Section: Branding & CTA */}
-        <div className="flex-1 lg:flex-[1.8] flex flex-col gap-6 w-full text-center lg:text-left items-center lg:items-start mt-10 lg:mt-0 order-2 lg:order-1 relative z-50 pointer-events-auto">
+        <div className="flex-1 lg:max-w-[55%] flex flex-col gap-6 w-full text-center lg:text-left items-center lg:items-start mt-10 lg:mt-0 order-2 lg:order-1 relative z-50 pointer-events-auto shrink-0">
           {/* Status Badge */}
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
@@ -51,7 +51,7 @@ const Hero = () => {
             >
               {headline.split(" ").map((word, i) => (
                 <span key={i} className={`${word === nameToHighlight || word.includes(nameToHighlight) ? "text-gradient-shimmer" : ""}`}>
-                  {word}{i === headline.split(" ").length - 1 ? "" : <>&nbsp;</>}
+                  {word}{i === headline.split(" ").length - 1 ? "" : " "}
                 </span>
               ))}
             </motion.h1>
@@ -111,7 +111,7 @@ const Hero = () => {
         </div>
 
         {/* Right Section: 3D Visualization */}
-        <div className="w-full h-[30vh] sm:h-[40vh] lg:h-[75vh] relative z-10 order-1 lg:order-2 lg:mt-0 flex items-center justify-center pointer-events-auto">
+        <div className="flex-1 w-full h-[30vh] sm:h-[40vh] lg:h-[75vh] relative z-10 order-1 lg:order-2 lg:mt-0 flex items-center justify-center pointer-events-auto">
           <div className="absolute inset-0 z-0 pointer-events-none">
              <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-[#915EFF]/20 rounded-full blur-[60px] animate-pulse" />
              <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-[#56ccf2]/10 rounded-full blur-[80px] animate-float" />

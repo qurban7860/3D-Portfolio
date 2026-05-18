@@ -35,7 +35,7 @@ const Tech = () => {
           >
             <div
               className="w-24 h-24 sm:w-28 sm:h-28 transition-all duration-300
-                          group-hover:drop-shadow-[0_0_16px_rgba(145,94,255,0.5)] flex items-center justify-center"
+                          group-hover:drop-shadow-[0_0_16px_var(--glow-color)] flex items-center justify-center"
             >
               {(() => {
                 const resolvedUrl = resolveAssetUrl(technology.iconUrl || technology.icon);
@@ -53,14 +53,14 @@ const Tech = () => {
                 const Icon = typeof technology.icon === 'string' ? getIcon(technology.icon) : null;
                 if (Icon) {
                   return (
-                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#1d1836] to-[#050816] border border-white/10 flex items-center justify-center text-4xl shadow-xl group-hover:border-[#915EFF]/50 transition-all text-white">
+                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#1d1836] to-[#050816] border border-white/10 flex items-center justify-center text-4xl shadow-xl group-hover:border-[var(--accent)]/50 transition-all text-white">
                       <Icon />
                     </div>
                   );
                 }
 
                 return (
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#1d1836] to-[#050816] border border-white/10 flex items-center justify-center text-2xl shadow-xl group-hover:border-[#915EFF]/50 transition-all">
+                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#1d1836] to-[#050816] border border-white/10 flex items-center justify-center text-2xl shadow-xl group-hover:border-[var(--accent)]/50 transition-all">
                     <span className="text-white/20 font-black">{technology.name?.charAt(0).toUpperCase()}</span>
                   </div>
                 );
@@ -69,7 +69,7 @@ const Tech = () => {
             <span
               className="text-[11px] font-semibold uppercase tracking-widest opacity-0
                          group-hover:opacity-100 transition-opacity duration-300"
-              style={{ color: "#c4a7ff" }}
+              style={{ color: "color-mix(in srgb, var(--accent) 85%, white)" }}
             >
               {technology.name}
             </span>

@@ -1,12 +1,15 @@
 /* eslint-disable react/no-unknown-property */
 import { Suspense, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, Preload, Float, Sphere, MeshDistortMaterial } from "@react-three/drei";
+import { OrbitControls, Preload, Float } from "@react-three/drei";
 import CanvasLoader from "../Loader";
-import * as THREE from "three";
+import { useTheme } from "../../context/ThemeContext";
 
 const TechShape = () => {
   const group = useRef();
+  const { activeTheme } = useTheme();
+  const accentColor = activeTheme?.config?.colors?.accent || "#915EFF";
+  const secondaryColor = activeTheme?.config?.colors?.secondary || "#56ccf2";
 
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
@@ -19,29 +22,15 @@ const TechShape = () => {
   return (
     <group ref={group}>
       <Float speed={2} rotationIntensity={1} floatIntensity={2}>
-        {/* Core Glowing Sphere */}
-        {/* <Sphere args={[1.2, 64, 64]}>
-          <MeshDistortMaterial 
-            color="#915EFF" 
-            attach="material" 
-            distort={0.4} 
-            speed={2} 
-            roughness={0.2} 
-            metalness={0.8}
-            emissive="#915EFF"
-            emissiveIntensity={0.5}
-          />
-        </Sphere> */}
-        
         {/* Outer Wireframe Icosahedron */}
         <mesh>
           <icosahedronGeometry args={[1.8, 1]} />
           <meshStandardMaterial 
-            color="#56ccf2" 
+            color={secondaryColor} 
             wireframe 
             transparent 
             opacity={0.3}
-            emissive="#56ccf2"
+            emissive={secondaryColor}
             emissiveIntensity={0.8}
           />
         </mesh>
@@ -49,12 +38,12 @@ const TechShape = () => {
         {/* Orbital Rings */}
         <mesh rotation={[Math.PI / 2, 0, 0]}>
           <torusGeometry args={[2.4, 0.02, 16, 100]} />
-          <meshStandardMaterial color="#fff" emissive="#915EFF" emissiveIntensity={1} />
+          <meshStandardMaterial color="#fff" emissive={accentColor} emissiveIntensity={1} />
         </mesh>
         
         <mesh rotation={[Math.PI / 2.5, Math.PI / 4, 0]}>
           <torusGeometry args={[2.6, 0.015, 16, 100]} />
-          <meshStandardMaterial color="#fff" emissive="#56ccf2" emissiveIntensity={1} />
+          <meshStandardMaterial color="#fff" emissive={secondaryColor} emissiveIntensity={1} />
         </mesh>
       </Float>
     </group>
@@ -62,6 +51,10 @@ const TechShape = () => {
 };
 
 const TechArtifactCanvas = () => {
+  const { activeTheme } = useTheme();
+  const accentColor = activeTheme?.config?.colors?.accent || "#915EFF";
+  const secondaryColor = activeTheme?.config?.colors?.secondary || "#56ccf2";
+
   return (
     <div className="w-full h-full absolute inset-0 cursor-grab active:cursor-grabbing">
       <Canvas
@@ -73,8 +66,8 @@ const TechArtifactCanvas = () => {
       >
         <Suspense fallback={<CanvasLoader />}>
           <ambientLight intensity={0.5} />
-          <directionalLight position={[10, 10, 5]} intensity={1.5} color="#915EFF" />
-          <pointLight position={[-10, -10, -10]} intensity={1} color="#56ccf2" />
+          <directionalLight position={[10, 10, 5]} intensity={1.5} color={accentColor} />
+          <pointLight position={[-10, -10, -10]} intensity={1} color={secondaryColor} />
           <OrbitControls
             enableZoom={false}
             enablePan={false}

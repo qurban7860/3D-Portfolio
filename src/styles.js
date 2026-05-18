@@ -21,7 +21,7 @@ const styles = {
   hoverScale: "hover:scale-105 transform transition-transform duration-500",
 
   glassButton:
-    "inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 text-[13px] sm:text-[14px] backdrop-blur-[var(--glass-blur)] bg-white/10 border border-white/20 text-[var(--text-primary)] font-bold rounded-2xl hover:bg-white/20 hover:border-white/40 hover:shadow-[0_8px_32px_rgba(255,255,255,0.1)] hover:scale-105 active:scale-95 transition-all duration-300",
+    "inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 text-[13px] sm:text-[14px] backdrop-blur-[var(--glass-blur)] bg-white/5 border border-white/10 text-[var(--text-primary)] font-bold rounded-2xl hover:bg-[var(--accent)]/10 hover:border-[var(--accent)]/40 hover:shadow-[0_8px_32px_var(--glow-color)] hover:scale-105 active:scale-95 transition-all duration-300 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]",
 
   glassButtonPurple:
     "inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 text-[13px] sm:text-[14px] backdrop-blur-[var(--glass-blur)] bg-[var(--primary)]/10 border border-[var(--primary)]/30 text-[var(--text-primary)] font-bold rounded-2xl hover:bg-[var(--primary)]/20 hover:border-[var(--primary)]/60 hover:shadow-[0_8px_32px_var(--glow-color)] hover:scale-105 active:scale-95 transition-all duration-300",

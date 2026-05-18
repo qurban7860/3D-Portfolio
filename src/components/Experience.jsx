@@ -32,8 +32,8 @@ const ExperienceIcon = ({ experience }) => {
             className="w-[60%] h-[60%] object-contain hover:scale-110 transition-transform duration-300"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-white/10 to-transparent backdrop-blur-xl rounded-full border border-white/20 group-hover:border-[#915EFF]/50 transition-all shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]">
-            <span className="text-white font-black text-xl tracking-tighter drop-shadow-[0_0_10px_rgba(145,94,255,0.5)]">
+          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-white/10 to-transparent backdrop-blur-xl rounded-full border border-white/20 group-hover:border-[var(--accent)]/50 transition-all shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]">
+            <span className="text-white font-black text-xl tracking-tighter drop-shadow-[0_0_10px_var(--glow-color)]">
               {firstLetter}
             </span>
           </div>
@@ -41,7 +41,7 @@ const ExperienceIcon = ({ experience }) => {
       </a>
       
       {/* Decorative pulse ring */}
-      <div className="absolute inset-0 rounded-full bg-[#915EFF]/20 animate-ping opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+      <div className="absolute inset-0 rounded-full bg-[var(--accent)]/20 animate-ping opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
     </div>
   );
 };
@@ -63,10 +63,11 @@ const ExperienceCard = ({ experience }) => (
       boxShadow: "none",
       padding: "2.5rem",
     }}
-    contentArrowStyle={{ borderRight: "10px solid rgba(145, 94, 255, 0.3)" }}
+    contentArrowStyle={{ borderRight: "10px solid color-mix(in srgb, var(--accent) 30%, transparent)" }}
     date={
       <div className="flex sm:block">
-        <span className="text-[#c4a7ff] font-black tracking-[0.2em] text-[10px] sm:text-[11px] uppercase bg-[#915EFF]/10 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-[#915EFF]/20 shadow-lg whitespace-nowrap">
+        <span className="font-black tracking-[0.2em] text-[10px] sm:text-[11px] uppercase bg-[var(--accent)]/10 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-[var(--accent)]/20 shadow-lg whitespace-nowrap"
+              style={{ color: "color-mix(in srgb, var(--accent) 85%, white)" }}>
           {experience.date}
         </span>
       </div>
@@ -90,14 +91,14 @@ const ExperienceCard = ({ experience }) => (
           key={`exp-point-${index}`}
           className="text-white/70 text-[14px] pl-1 tracking-wide leading-relaxed flex items-start gap-3 group"
         >
-          <span className="text-[#915EFF] mt-[4px] text-[10px] font-bold flex-shrink-0 group-hover:scale-125 transition-transform">✦</span>
+          <span className="text-[var(--accent)] mt-[4px] text-[10px] font-bold flex-shrink-0 group-hover:scale-125 transition-transform">✦</span>
           <span className="group-hover:text-white transition-colors">{point}</span>
         </li>
       ))}
     </ul>
     
     {/* Decorative corner accent */}
-    <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-[#915EFF]/5 rounded-full blur-2xl pointer-events-none" />
+    <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-[var(--accent)]/5 rounded-full blur-2xl pointer-events-none" />
   </VerticalTimelineElement>
 );
 
@@ -126,7 +127,7 @@ const EducationCard = ({ education }) => {
                  premium-glass-card glass-reflection inner-glow group overflow-hidden"
     >
       {/* Animated background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#915EFF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
       
       {/* Institute logo */}
       <a
@@ -137,7 +138,7 @@ const EducationCard = ({ education }) => {
         title={education.instituteName}
       >
         <div className="relative">
-          <div className="absolute inset-0 bg-[#915EFF]/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="absolute inset-0 bg-[var(--accent)]/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
           {!error ? (
             <img
               src={resolveAssetUrl(education.imageUrl)}
@@ -147,7 +148,7 @@ const EducationCard = ({ education }) => {
                          ring-1 ring-white/10 rounded-xl sm:rounded-2xl bg-black/20 backdrop-blur-sm p-1.5 sm:p-2"
             />
           ) : (
-            <div className="w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center bg-black/40 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/10 text-white font-black text-sm sm:text-xl shadow-lg ring-1 ring-white/5 group-hover:border-[#915EFF]/50 transition-all">
+            <div className="w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center bg-black/40 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/10 text-white font-black text-sm sm:text-xl shadow-lg ring-1 ring-white/5 group-hover:border-[var(--accent)]/50 transition-all">
                {firstLetter}
             </div>
           )}
@@ -159,9 +160,9 @@ const EducationCard = ({ education }) => {
       <div className="flex items-center gap-2 mb-5">
         <span className="inline-block text-[10px] font-black uppercase tracking-[0.25em] px-4 py-1.5 rounded-full shadow-lg"
               style={{
-                background: "rgba(145,94,255,0.1)",
-                border: "1px solid rgba(145,94,255,0.25)",
-                color: "#c4a7ff",
+                background: "color-mix(in srgb, var(--accent) 10%, transparent)",
+                border: "1px solid color-mix(in srgb, var(--accent) 25%, transparent)",
+                color: "color-mix(in srgb, var(--accent) 85%, white)",
               }}>
           🎓 Academic
         </span>
@@ -178,7 +179,7 @@ const EducationCard = ({ education }) => {
             key={`edu-point-${index}`}
             className="text-white/70 text-[15px] tracking-wide leading-relaxed flex items-start gap-3 group/item"
           >
-            <span className="text-[#56ccf2] mt-[5px] text-[10px] font-bold flex-shrink-0 group-hover/item:scale-125 transition-transform">✦</span>
+            <span className="text-[var(--secondary)] mt-[5px] text-[10px] font-bold flex-shrink-0 group-hover/item:scale-125 transition-transform">✦</span>
             <span className="group-hover/item:text-white transition-colors">{point}</span>
           </li>
         ))}

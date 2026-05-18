@@ -51,7 +51,7 @@ const Showcase = () => {
                      <div className="w-full h-full flex items-center justify-center bg-[#050816] relative overflow-hidden min-h-[160px]">
                         <div className="absolute inset-0 bg-dot-pattern opacity-10" />
                         <span className="text-3xl opacity-40 group-hover:scale-110 transition-transform duration-500">🖼️</span>
-                        <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-[#915EFF]/10 rounded-full blur-3xl" />
+                        <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-[var(--accent)]/10 rounded-full blur-3xl" />
                      </div>
                    )}
                 </div>
@@ -60,7 +60,7 @@ const Showcase = () => {
                     <h3 className="text-white text-lg font-black">{latestProject.name}</h3>
                     <p className="text-secondary text-[13px] line-clamp-2 mt-2">{latestProject.description}</p>
                   </div>
-                  <Link to={`${basePath}/portfolio`} className="text-[#915EFF] font-bold text-[13px] hover:text-white transition-all">
+                  <Link to={`${basePath}/portfolio`} className="text-[var(--accent)] font-bold text-[13px] hover:text-white transition-all">
                     Case Study →
                   </Link>
                 </div>
@@ -93,7 +93,7 @@ const Showcase = () => {
               <div className="flex-1">
                  <h4 className="text-white text-lg font-black leading-tight">{latestExperience.title}</h4>
                  <p className="text-secondary text-[13px] mt-1">{latestExperience.companyName}</p>
-                 <Link to={`${basePath}/experience`} className="text-[#915EFF] font-bold text-[13px] hover:text-white mt-3 block transition-all">
+                 <Link to={`${basePath}/experience`} className="text-[var(--accent)] font-bold text-[13px] hover:text-white mt-3 block transition-all">
                    Professional Journey →
                  </Link>
               </div>

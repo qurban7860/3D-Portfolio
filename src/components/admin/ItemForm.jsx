@@ -91,7 +91,7 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
             >
               <div className="flex items-center justify-between mb-3 ml-1">
                 <label className="text-[12px] font-black text-white/50 uppercase tracking-[0.15em]">
-                  {field.label} {field.required && <span className="text-[#915EFF] ml-1">*</span>}
+                  {field.label} {field.required && <span className="text-[var(--accent)] ml-1">*</span>}
                 </label>
               </div>
               

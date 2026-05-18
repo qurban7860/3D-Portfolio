@@ -28,9 +28,9 @@ const NotFound = () => {
                    scale: [1, 1.1, 1]
                  }}
                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                 className="w-32 h-32 sm:w-48 sm:h-48 border border-[#915EFF]/30 rounded-full flex items-center justify-center"
+                 className="w-32 h-32 sm:w-48 sm:h-48 border border-[var(--accent)]/30 rounded-full flex items-center justify-center"
                >
-                 <div className="w-4 h-4 rounded-full bg-[#915EFF] shadow-[0_0_20px_#915EFF]" />
+                 <div className="w-4 h-4 rounded-full bg-[var(--accent)] shadow-[0_0_20px_var(--glow-color)]" />
                </motion.div>
             </div>
           </div>

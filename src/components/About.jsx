@@ -62,7 +62,7 @@ const About = ({ isSummary = false, hideHeader = false }) => {
                 {displayStats.map((stat, i) => (
                   <div key={i} className="relative group p-[1px] rounded-3xl overflow-hidden hover:scale-[1.02] transition-all duration-500">
                     {/* Animated Border/Glow */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-[#915EFF]/10 opacity-50 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-[var(--accent)]/10 opacity-50 group-hover:opacity-100 transition-opacity" />
                     
                     <div className="relative premium-glass-card glass-reflection inner-glow bg-background/40 p-6 sm:p-8 h-full flex flex-col items-center justify-center border border-white/5 group-hover:border-accent/30 transition-all duration-500 shadow-2xl">
                       {/* Ambient Glow */}
@@ -121,7 +121,7 @@ const About = ({ isSummary = false, hideHeader = false }) => {
           >
             <Link 
               to="/about" 
-              className={`${styles.glassButtonPurple} px-8 py-3 text-[14px] shadow-xl shadow-purple-500/10`}
+              className={`${styles.glassButton} px-8 py-3 text-[14px] shadow-xl shadow-[var(--accent)]/10`}
               onClick={() => window.scrollTo(0, 0)}
             >
               Discover Full Journey →

@@ -135,7 +135,7 @@ const App = () => {
               },
               success: {
                 iconTheme: {
-                  primary: "#915EFF",
+                  primary: "var(--accent)",
                   secondary: "#fff",
                 },
               },

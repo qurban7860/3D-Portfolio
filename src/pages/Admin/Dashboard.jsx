@@ -17,7 +17,7 @@ const NavItem = ({ icon, label, isActive, onClick, isCollapsed }) => (
       isCollapsed ? "px-2.5 justify-center h-12" : "px-4 py-3 gap-3"
     } ${
       isActive 
-        ? "text-white bg-[#915EFF]/10 shadow-[inset_0_0_20px_rgba(145,94,255,0.1)] border border-[#915EFF]/20" 
+        ? "text-white bg-[var(--accent)]/10 shadow-[inset_0_0_20px_var(--glow-color)] border border-[var(--accent)]/20" 
         : "text-secondary hover:text-white hover:bg-white/[0.04]"
     }`}
     title={isCollapsed ? label : ""}
@@ -25,7 +25,7 @@ const NavItem = ({ icon, label, isActive, onClick, isCollapsed }) => (
     {isActive && (
       <motion.div 
         layoutId="sidebarActiveIndicator"
-        className={`absolute bg-[#915EFF] rounded-full shadow-[0_0_15px_#915EFF] ${
+        className={`absolute bg-[var(--accent)] rounded-full shadow-[0_0_15px_var(--glow-color)] ${
             isCollapsed ? "left-0 w-1 h-4 -translate-y-1/2" : "left-0 w-1.5 h-5"
         }`}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
@@ -34,10 +34,10 @@ const NavItem = ({ icon, label, isActive, onClick, isCollapsed }) => (
     
     {/* Collapsed Active Glow */}
     {isCollapsed && isActive && (
-      <div className="absolute inset-0 bg-gradient-to-r from-[#915EFF]/20 to-transparent pointer-events-none blur-sm" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[var(--accent)]/20 to-transparent pointer-events-none blur-sm" />
     )}
     
-    <div className={`text-lg transition-all duration-500 relative z-10 ${isActive ? "scale-110 text-[#56ccf2]" : "group-hover:scale-110 opacity-60 group-hover:opacity-100"}`}>
+    <div className={`text-lg transition-all duration-500 relative z-10 ${isActive ? "scale-110 text-[var(--secondary)]" : "group-hover:scale-110 opacity-60 group-hover:opacity-100"}`}>
       {icon}
     </div>
     
@@ -53,13 +53,13 @@ const NavItem = ({ icon, label, isActive, onClick, isCollapsed }) => (
         animate={{ opacity: 1, x: 0 }}
         className="ml-auto"
       >
-        <HiOutlineChevronRight className="text-[12px] text-[#915EFF] animate-pulse" />
+        <HiOutlineChevronRight className="text-[12px] text-[var(--accent)] animate-pulse" />
       </motion.div>
     )}
     
     {/* Collapsed Active Glow */}
     {isCollapsed && isActive && (
-      <div className="absolute inset-0 bg-gradient-to-r from-[#915EFF]/5 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[var(--accent)]/5 to-transparent pointer-events-none" />
     )}
   </button>
 );
@@ -113,7 +113,7 @@ const DashboardPage = () => {
     <div className="flex flex-col h-full overflow-hidden relative z-10">
         <div className={`p-5 pb-3 shrink-0 ${isCollapsed && !isMobile ? "items-center flex flex-col" : ""}`}>
             <div className={`flex items-center gap-3 mb-8 px-1 ${isCollapsed && !isMobile ? "justify-center" : ""}`}>
-                <div className="h-10 w-10 shrink-0 rounded-xl bg-gradient-to-br from-[#915EFF] to-[#56ccf2] flex items-center justify-center text-white font-black text-xl shadow-[0_0_20px_rgba(145,94,255,0.4)] transition-transform hover:scale-110 duration-500">
+                <div className="h-10 w-10 shrink-0 rounded-xl bg-gradient-to-br from-[var(--accent)] to-[var(--secondary)] flex items-center justify-center text-white font-black text-xl shadow-[0_0_20px_var(--glow-color)] transition-transform hover:scale-110 duration-500">
                     A
                 </div>
                 {(!isCollapsed || isMobile) && (
@@ -121,7 +121,7 @@ const DashboardPage = () => {
                       <h2 className="text-white font-black text-[15px] tracking-tight leading-none uppercase truncate">
                          {isAdmin ? "Antigravity" : user?.username || "Portfolio"}
                       </h2>
-                      <p className="text-[9px] text-[#56ccf2] font-black tracking-[0.2em] mt-1 uppercase opacity-70">
+                      <p className="text-[9px] text-[var(--secondary)] font-black tracking-[0.2em] mt-1 uppercase opacity-70">
                          {isAdmin ? "Admin Terminal" : "Dashboard"}
                       </p>
                   </div>
@@ -189,13 +189,13 @@ const DashboardPage = () => {
                             style: {
                               background: '#1a1c2c',
                               color: '#fff',
-                              border: '1px solid rgba(145, 94, 255, 0.2)',
+                              border: '1px solid rgba(var(--accent-rgb), 0.2)',
                               fontSize: '12px',
                               fontWeight: 'bold',
                               borderRadius: '12px',
                             },
                             iconTheme: {
-                              primary: '#915EFF',
+                              primary: 'var(--accent)',
                               secondary: '#fff',
                             },
                           });

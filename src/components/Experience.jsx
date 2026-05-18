@@ -56,14 +56,11 @@ ExperienceIcon.propTypes = {
 
 const ExperienceCard = ({ experience }) => (
   <VerticalTimelineElement
+    contentClassName="premium-glass-card glass-reflection inner-glow"
     contentStyle={{
-      background: "var(--glass-bg)",
-      backdropFilter: "blur(var(--glass-blur))",
-      WebkitBackdropFilter: "blur(var(--glass-blur))",
+      background: "transparent",
       color: "var(--text-primary)",
-      border: "1px solid var(--glass-border)",
-      borderRadius: "2.5rem",
-      boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05)",
+      boxShadow: "none",
       padding: "2.5rem",
     }}
     contentArrowStyle={{ borderRight: "10px solid rgba(145, 94, 255, 0.3)" }}
@@ -126,7 +123,7 @@ const EducationCard = ({ education }) => {
       variants={fadeIn("up", "spring", 0.1, 0.75)}
       whileHover={{ y: -8, scale: 1.005 }}
       className="flex flex-col mb-8 rounded-[2.5rem] relative transition-all duration-700
-                 premium-glass-card group overflow-hidden"
+                 premium-glass-card glass-reflection inner-glow group overflow-hidden"
     >
       {/* Animated background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#915EFF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />

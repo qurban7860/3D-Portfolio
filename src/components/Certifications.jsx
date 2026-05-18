@@ -17,19 +17,18 @@ const CertificationCard = ({ index, title, issuer, date, credentialUrl, icon }) 
       variants={fadeIn("up", "spring", index * 0.2, 0.75)}
       whileHover={{ y: -6, scale: 1.01 }}
       className="block rounded-2xl p-6 group transition-all duration-400
-                 hover:shadow-[0_10px_36px_rgba(145,94,255,0.15)] cursor-pointer
-                 premium-glass-card relative overflow-hidden"
+                 premium-glass-card glass-reflection inner-glow relative overflow-hidden"
     >
       {/* Decorative background glow */}
-      <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-[#915EFF]/5 rounded-full blur-3xl group-hover:bg-[#915EFF]/10 transition-all duration-500" />
+      <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-[var(--accent)]/5 rounded-full blur-3xl group-hover:bg-[var(--accent)]/10 transition-all duration-500" />
       
       <div className="flex items-start gap-5 relative z-10">
         {/* Icon badge */}
         <div
           className="w-14 h-14 flex-shrink-0 rounded-2xl flex items-center justify-center text-2xl
-                      bg-gradient-to-br from-[#915EFF]/20 to-[#56ccf2]/10
-                      border border-white/10 group-hover:border-[#915EFF]/50
-                      group-hover:shadow-[0_0_20px_rgba(145,94,255,0.25)] transition-all duration-500
+                      bg-gradient-to-br from-[var(--accent)]/20 to-[var(--secondary)]/10
+                      border border-white/10 group-hover:border-[var(--accent)]/50
+                      group-hover:shadow-[0_0_20px_rgba(var(--accent-rgb),0.25)] transition-all duration-500
                       shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]"
         >
           {(() => {
@@ -49,15 +48,12 @@ const CertificationCard = ({ index, title, issuer, date, credentialUrl, icon }) 
             <span
               className="text-[10px] font-black uppercase tracking-[0.15em] px-3 py-1 rounded-lg"
               style={{
-                background: "rgba(145,94,255,0.1)",
-                border: "1px solid rgba(145,94,255,0.2)",
-                color: "#c4a7ff",
+                background: "rgba(var(--accent-rgb), 0.1)",
+                border: "1px solid rgba(var(--accent-rgb), 0.2)",
+                color: "var(--accent)",
               }}
             >
               📅 {date}
-            </span>
-            <span className="text-[#915EFF] text-[12px] font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0">
-              Verify →
             </span>
           </div>
         </div>

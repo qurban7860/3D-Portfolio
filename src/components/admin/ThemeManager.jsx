@@ -335,7 +335,7 @@ const ThemeManager = () => {
                     <div className="px-4 py-1.5 rounded-full bg-accent/10 border border-accent/30 text-[10px] font-black text-accent uppercase tracking-widest shadow-lg">{activeColorKey}</div>
                   </div>
                   
-                  <div className="grid grid-cols-5 gap-4">
+                  <div className="grid grid-cols-5 sm:grid-cols-5 gap-3 sm:gap-4">
                     {tempConfig && Object.keys(tempConfig.colors).filter(k => !['textPrimary', 'textSecondary'].includes(k)).map(key => (
                       <button
                         key={key}
@@ -439,7 +439,7 @@ const ThemeManager = () => {
               {/* Complex Component Preview */}
               <div className="flex flex-col gap-5">
                  <span className="text-[10px] font-black uppercase tracking-widest text-secondary opacity-30 ml-4">Advanced Layering Test</span>
-                 <div className="p-12 sm:p-16 rounded-[4rem] border border-[var(--glass-border)] overflow-hidden relative shadow-[0_48px_96px_-24px_rgba(0,0,0,0.7)] bg-[var(--card-bg)] min-h-[500px] flex items-center justify-center">
+                 <div className="p-6 sm:p-12 md:p-16 rounded-[2.5rem] sm:rounded-[4rem] border border-[var(--glass-border)] overflow-hidden relative shadow-[0_48px_96px_-24px_rgba(0,0,0,0.7)] bg-[var(--card-bg)] min-h-[500px] flex items-center justify-center">
                     {/* Dynamic Ambient Background */}
                     <div 
                       className="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none transition-all duration-1000"
@@ -458,8 +458,8 @@ const ThemeManager = () => {
                        >
                           <div className="absolute -top-1 -left-1 -right-1 h-[2px] bg-gradient-to-r from-transparent via-accent/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                           
-                          <div className="flex items-center gap-6">
-                             <div className="w-16 h-16 rounded-[1.5rem] bg-white/5 border border-white/10 flex items-center justify-center text-4xl shadow-inner group-hover:scale-110 transition-transform duration-500">🌌</div>
+                          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                             <div className="w-16 h-16 rounded-[1.5rem] bg-white/5 border border-white/10 flex items-center justify-center text-4xl shadow-inner group-hover:scale-110 transition-transform duration-500 shrink-0">🌌</div>
                              <div>
                                 <h4 className="text-white text-2xl font-black tracking-tight group-hover:text-accent transition-colors">Spatial Layer</h4>
                                 <p className="text-secondary text-sm font-medium opacity-60">Architectural Refraction Test.</p>
@@ -487,7 +487,7 @@ const ThemeManager = () => {
                        </motion.div>
 
                        {/* Stats Grid */}
-                       <div className="grid grid-cols-2 gap-6">
+                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                           <div className="p-8 rounded-[2.5rem] bg-white/[0.02] border border-white/5 flex flex-col items-center gap-2 group hover:bg-white/[0.04] transition-all">
                              <span className="text-3xl font-black text-white group-hover:scale-110 transition-transform">99.8%</span>
                              <span className="text-[10px] text-secondary uppercase font-black tracking-[0.3em] opacity-40">Precision</span>

@@ -64,7 +64,7 @@ const SettingsManager = () => {
   return (
     <div className="flex flex-col gap-12">
       {Object.entries(adminSettingsSchema).map(([groupKey, group]) => (
-        <div key={groupKey} className="space-y-8">
+        <div key={groupKey} className="space-y-8 premium-glass-card glass-reflection inner-glow p-6 sm:p-10 rounded-[2.5rem]">
           <div className="flex items-center gap-4">
             <h4 className="text-white font-black text-xl uppercase tracking-widest">{group.title}</h4>
             <div className="h-[1px] flex-1 bg-white/5" />
@@ -117,7 +117,7 @@ const SettingsManager = () => {
       ))}
       
       {isSaving && (
-        <div className="fixed bottom-10 right-10 z-[100] bg-[#915EFF] text-white px-6 py-3 rounded-full font-black text-[12px] uppercase tracking-widest shadow-2xl animate-pulse">
+        <div className="fixed bottom-10 right-10 z-[100] bg-[var(--accent)] text-white px-6 py-3 rounded-full font-black text-[12px] uppercase tracking-widest shadow-2xl animate-pulse">
           Syncing Changes...
         </div>
       )}

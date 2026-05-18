@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { Reorder } from "framer-motion";
-import { styles } from "../../styles";
 import { HiOutlinePencilAlt, HiOutlineTrash, HiOutlineDocumentText, HiOutlineFolderOpen } from "react-icons/hi";
 import { MdDragIndicator } from "react-icons/md";
 
@@ -18,7 +17,7 @@ const ItemList = ({ items, onEdit, onDelete, onReorder, label }) => {
       {items.length === 0 ? (
         <div className="rounded-[2rem] border border-dashed border-white/10 bg-white/5 p-10 sm:p-16 text-center group">
           <div className="flex justify-center mb-6 opacity-30 group-hover:opacity-60 transition-opacity animate-float text-5xl">
-             <HiOutlineFolderOpen className="text-[#915EFF]" />
+             <HiOutlineFolderOpen className="text-[var(--accent)]" />
           </div>
           <p className="text-secondary font-bold text-[15px] tracking-wide">Collection Empty</p>
           <p className="text-[12px] text-secondary/40 mt-2 font-medium">Initialize your {label.toLowerCase()} stream to start managing.</p>
@@ -36,17 +35,17 @@ const ItemList = ({ items, onEdit, onDelete, onReorder, label }) => {
               value={item}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className={`${styles.glassCard} p-5 group cursor-grab active:cursor-grabbing relative overflow-hidden flex flex-col sm:flex-row gap-5 sm:items-center sm:justify-between`}
+              className={`premium-glass-card glass-reflection inner-glow p-5 group cursor-grab active:cursor-grabbing relative overflow-hidden flex flex-col sm:flex-row gap-5 sm:items-center sm:justify-between`}
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-[#915EFF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[var(--accent)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
               <div className="flex items-center gap-5 overflow-hidden relative z-10">
                 <div className="opacity-10 group-hover:opacity-40 transition-opacity shrink-0">
                   <MdDragIndicator className="text-2xl text-white" />
                 </div>
                 
-                <div className="h-14 w-14 shrink-0 rounded-2xl bg-white/5 border border-white/10 p-1.5 overflow-hidden shadow-inner group-hover:border-[#915EFF]/30 transition-all duration-500 relative">
-                  <div className="absolute inset-0 bg-[#915EFF]/5 group-hover:bg-[#915EFF]/10 transition-colors" />
+                <div className="h-14 w-14 shrink-0 rounded-2xl bg-white/5 border border-white/10 p-1.5 overflow-hidden shadow-inner group-hover:border-[var(--accent)]/30 transition-all duration-500 relative">
+                  <div className="absolute inset-0 bg-[var(--accent)]/5 group-hover:bg-[var(--accent)]/10 transition-colors" />
                   {item.imageUrl || item.iconUrl || item.icon ? (
                     <img 
                       src={item.imageUrl || item.iconUrl || item.icon} 
@@ -55,7 +54,7 @@ const ItemList = ({ items, onEdit, onDelete, onReorder, label }) => {
                       onError={(e) => { e.target.src = "https://placehold.co/150?text=Logo" }}
                     />
                   ) : (
-                    <div className="h-full w-full flex items-center justify-center text-3xl group-hover:text-[#915EFF] transition-colors relative z-10">
+                    <div className="h-full w-full flex items-center justify-center text-3xl group-hover:text-[var(--accent)] transition-colors relative z-10">
                       <HiOutlineDocumentText className="text-secondary" />
                     </div>
                   )}
@@ -65,7 +64,7 @@ const ItemList = ({ items, onEdit, onDelete, onReorder, label }) => {
                   <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-1">
                     <p className="text-white font-bold text-base sm:text-lg truncate group-hover:text-gradient transition-all">{getItemSummary(item)}</p>
                     {item.featured && (
-                      <span className="text-[9px] sm:text-[10px] font-black text-[#56ccf2] bg-[#56ccf2]/10 px-2.5 sm:px-3 py-1 rounded-full border border-[#56ccf2]/20 shrink-0 shadow-[0_0_10px_rgba(86,204,242,0.1)] uppercase tracking-tighter">
+                      <span className="text-[9px] sm:text-[10px] font-black text-[var(--secondary)] bg-[var(--secondary)]/10 px-2.5 sm:px-3 py-1 rounded-full border border-[var(--secondary)]/20 shrink-0 shadow-[0_0_10px_rgba(var(--secondary-rgb),0.1)] uppercase tracking-tighter">
                         Featured
                       </span>
                     )}
@@ -85,7 +84,7 @@ const ItemList = ({ items, onEdit, onDelete, onReorder, label }) => {
                 <button
                   type="button"
                   onClick={(e) => { e.stopPropagation(); onEdit(item); }}
-                  className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/5 text-white transition-all duration-500 hover:bg-[#915EFF]/20 hover:text-[#915EFF] hover:border-[#915EFF]/40 border border-white/10 shadow-xl active:scale-95 group/btn"
+                  className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/5 text-white transition-all duration-500 hover:bg-[var(--accent)]/20 hover:text-[var(--accent)] hover:border-[var(--accent)]/40 border border-white/10 shadow-xl active:scale-95 group/btn"
                   title="Edit Item"
                 >
                   <HiOutlinePencilAlt size={18} className="group-hover/btn:rotate-12 transition-transform" />

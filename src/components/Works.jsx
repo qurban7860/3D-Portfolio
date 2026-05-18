@@ -19,7 +19,7 @@ export const ProjectCard = ({ index, name, description, tags, imageUrl, sourceCo
     >
       <Tilt
         options={{ max: 15, scale: 1.02, speed: 400 }}
-        className="rounded-[2.5rem] w-full sm:w-[360px] premium-glass-card overflow-hidden"
+        className="rounded-[2.5rem] w-full sm:w-[360px] premium-glass-card glass-reflection inner-glow overflow-hidden"
       >
         {/* Image area */}
         <div className="relative w-full h-[210px] overflow-hidden bg-primary">

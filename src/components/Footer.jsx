@@ -107,7 +107,7 @@ const Footer = () => {
           {/* Newsletter/Status */}
           <div className="flex flex-col gap-6">
             <h4 className="text-white font-black text-[14px] uppercase tracking-[0.2em]">Current Status</h4>
-            <div className="premium-glass p-5 rounded-2xl border-white/5 flex flex-col gap-3">
+            <div className="premium-glass-card glass-reflection inner-glow p-5 rounded-2xl border border-white/10 flex flex-col gap-3">
               <div className="flex items-center gap-3">
                 <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
                 <p className="text-green-400 text-[11px] font-black uppercase tracking-widest">Available for projects</p>

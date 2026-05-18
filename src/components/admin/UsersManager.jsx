@@ -51,7 +51,7 @@ const UsersManager = () => {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center py-20 gap-4">
-        <div className="h-12 w-12 border-4 border-[#915EFF]/20 border-t-[#915EFF] rounded-full animate-spin" />
+        <div className="h-12 w-12 border-4 border-[var(--accent)]/20 border-t-[var(--accent)] rounded-full animate-spin" />
         <p className="text-secondary font-black text-[13px] uppercase tracking-widest animate-pulse">Syncing User Database...</p>
       </div>
     );
@@ -75,7 +75,7 @@ const UsersManager = () => {
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-4">
-            <span className="px-3 py-1 rounded-lg bg-[#915EFF]/10 border border-[#915EFF]/20 text-[#915EFF] text-[10px] font-black uppercase tracking-[0.2em]">
+            <span className="px-3 py-1 rounded-lg bg-[var(--accent)]/10 border border-[var(--accent)]/20 text-[var(--accent)] text-[10px] font-black uppercase tracking-[0.2em]">
               Account Manager
             </span>
           </div>
@@ -89,7 +89,7 @@ const UsersManager = () => {
 
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 flex-1 max-w-2xl lg:justify-end">
           <div className="relative flex-1 group">
-            <div className="absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-[#915EFF] transition-colors z-10">
+            <div className="absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-[var(--accent)] transition-colors z-10">
               <HiOutlineUserGroup />
             </div>
             <input 
@@ -107,7 +107,7 @@ const UsersManager = () => {
               <p className="text-2xl font-black text-white leading-tight">{users.length}</p>
             </div>
             <div className="h-8 w-[1px] bg-white/10" />
-            <HiOutlineUserGroup className="text-3xl text-[#915EFF]" />
+            <HiOutlineUserGroup className="text-3xl text-[var(--accent)]" />
           </div>
         </div>
       </div>
@@ -137,7 +137,7 @@ const UsersManager = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ delay: index * 0.05 }}
-              className={`${styles.glassCard} p-6 group relative overflow-hidden`}
+              className={`premium-glass-card glass-reflection inner-glow p-6 group relative overflow-hidden`}
             >
               <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
                  <div className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold text-secondary uppercase tracking-tighter">
@@ -146,14 +146,14 @@ const UsersManager = () => {
               </div>
 
               <div className="flex items-start gap-4 sm:gap-5">
-                <div className="h-12 w-12 sm:h-14 sm:w-14 shrink-0 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#915EFF] to-[#56ccf2] flex items-center justify-center text-white text-lg sm:text-xl font-bold shadow-lg shadow-[#915EFF]/20">
+                <div className="h-12 w-12 sm:h-14 sm:w-14 shrink-0 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[var(--accent)] to-[var(--secondary)] flex items-center justify-center text-white text-lg sm:text-xl font-bold shadow-lg shadow-[var(--accent)]/20">
                   {user.username?.[0].toUpperCase() || user.email[0].toUpperCase()}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
                     <h5 className="text-base sm:text-lg font-bold text-white truncate max-w-[120px] sm:max-w-none">{user.username || "Anonymous"}</h5>
                     {user.role === 'admin' && (
-                        <span className="px-2 py-0.5 rounded-md bg-[#56ccf2]/10 border border-[#56ccf2]/20 text-[#56ccf2] text-[9px] sm:text-[10px] font-black uppercase tracking-tighter shadow-[0_0_10px_rgba(86,204,242,0.1)]">Admin</span>
+                        <span className="px-2 py-0.5 rounded-md bg-[var(--secondary)]/10 border border-[var(--secondary)]/20 text-[var(--secondary)] text-[9px] sm:text-[10px] font-black uppercase tracking-tighter shadow-[0_0_10px_rgba(var(--secondary-rgb),0.1)]">Admin</span>
                     )}
                   </div>
                   <div className="flex items-center gap-2 text-secondary text-[12px] sm:text-sm mt-1">
@@ -174,7 +174,7 @@ const UsersManager = () => {
                  <div className="bg-white/5 rounded-xl p-3 border border-white/5">
                     <p className="text-[9px] sm:text-[10px] text-secondary font-bold uppercase tracking-widest mb-1 opacity-50">Joined</p>
                     <div className="flex items-center gap-2 text-white text-[12px] sm:text-sm font-bold truncate">
-                        <HiOutlineCalendar className="text-[#915EFF] shrink-0" />
+                        <HiOutlineCalendar className="text-[var(--accent)] shrink-0" />
                         <span className="truncate">{new Date(user.createdAt).toLocaleDateString()}</span>
                     </div>
                  </div>
@@ -186,7 +186,7 @@ const UsersManager = () => {
                         href={`/${user.username}`} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-[12px] font-bold text-[#56ccf2] hover:text-[#915EFF] transition-colors"
+                        className="flex items-center gap-2 text-[12px] font-bold text-[var(--secondary)] hover:text-[var(--accent)] transition-colors"
                     >
                         View Live Portfolio <HiOutlineExternalLink />
                     </a>

@@ -51,14 +51,14 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
   };
 
   return (
-    <div className="p-6 sm:p-12 md:p-16 relative overflow-hidden bg-[#050816] rounded-[2rem] sm:rounded-[2.5rem] border border-white/5">
+    <div className="p-6 sm:p-12 md:p-16 relative overflow-hidden bg-[var(--glass-bg)] premium-glass-card glass-reflection inner-glow rounded-[2rem] sm:rounded-[2.5rem] border border-white/5">
       {/* ── Immersive Effects ── */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#915EFF]/10 rounded-full blur-[140px] pointer-events-none -mr-64 -mt-64" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#56ccf2]/5 rounded-full blur-[120px] pointer-events-none -ml-48 -mb-48" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[var(--accent)]/10 rounded-full blur-[140px] pointer-events-none -mr-64 -mt-64" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[var(--secondary)]/5 rounded-full blur-[120px] pointer-events-none -ml-48 -mb-48" />
 
       <div className="mb-12 relative z-10">
         <div className="flex items-center gap-3 mb-4">
-          <span className="px-3 py-1 rounded-lg bg-[#915EFF]/10 border border-[#915EFF]/20 text-[#915EFF] text-[10px] font-black uppercase tracking-[0.2em]">
+          <span className="px-3 py-1 rounded-lg bg-[var(--accent)]/10 border border-[var(--accent)]/20 text-[var(--accent)] text-[10px] font-black uppercase tracking-[0.2em]">
             Content Manager
           </span>
         </div>
@@ -97,7 +97,7 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
               
               {field.type === "textarea" ? (
                 <div className="relative group/field">
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#915EFF] to-[#56ccf2] rounded-2xl blur opacity-0 group-focus-within/field:opacity-20 transition duration-500" />
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[var(--accent)] to-[var(--secondary)] rounded-2xl blur opacity-0 group-focus-within/field:opacity-20 transition duration-500" />
                   <textarea
                     name={field.name}
                     value={formState[field.name] ?? ""}
@@ -110,14 +110,14 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
                 </div>
               ) : field.type === "checkbox" ? (
                 <div 
-                  className="flex items-center justify-between gap-2 sm:gap-4 rounded-2xl bg-white/[0.03] border border-white/10 px-4 sm:px-6 h-[68px] transition-all duration-500 hover:bg-white/[0.08] group hover:border-[#915EFF]/40 cursor-pointer relative overflow-hidden" 
+                  className="flex items-center justify-between gap-2 sm:gap-4 rounded-2xl bg-white/[0.03] border border-white/10 px-4 sm:px-6 h-[68px] transition-all duration-500 hover:bg-white/[0.08] group hover:border-[var(--accent)]/40 cursor-pointer relative overflow-hidden" 
                   onClick={() => handleChange({ target: { name: field.name, type: 'checkbox', checked: !formState[field.name] }})}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#915EFF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-[var(--accent)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   <span className="text-[13px] sm:text-[14px] font-bold text-white/70 group-hover:text-white transition-colors relative z-10 truncate mr-2">{field.label}</span>
                   
                   <div className="relative inline-flex items-center cursor-pointer z-10 shrink-0">
-                    <div className={`w-12 h-6 rounded-full transition-all duration-500 ${formState[field.name] ? 'bg-[#915EFF]' : 'bg-white/10'}`}>
+                    <div className={`w-12 h-6 rounded-full transition-all duration-500 ${formState[field.name] ? 'bg-[var(--accent)]' : 'bg-white/10'}`}>
                       <div className={`absolute top-1 left-1 bg-white w-4 h-4 rounded-full transition-all duration-500 shadow-lg ${formState[field.name] ? 'translate-x-6' : 'translate-x-0'}`} />
                     </div>
                   </div>
@@ -125,7 +125,7 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
               ) : (
                 <div className="group/field">
                   <div className="relative">
-                    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#915EFF] to-[#56ccf2] rounded-2xl blur opacity-0 group-focus-within/field:opacity-20 transition duration-500" />
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-[var(--accent)] to-[var(--secondary)] rounded-2xl blur opacity-0 group-focus-within/field:opacity-20 transition duration-500" />
                     <input
                       type={field.type === "number" ? "number" : "text"}
                       name={field.name}
@@ -143,7 +143,7 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
                         {field.name === "icon" && (() => {
                           const Icon = getIcon(formState[field.name]);
                           return Icon ? (
-                            <div className="text-2xl text-[#915EFF] animate-in fade-in zoom-in duration-300">
+                            <div className="text-2xl text-[var(--accent)] animate-in fade-in zoom-in duration-300">
                               <Icon />
                             </div>
                           ) : (
@@ -177,7 +177,7 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
           
           return (
             <div className="rounded-3xl border border-white/10 bg-white/[0.02] p-6 sm:p-10 transition-all hover:bg-white/[0.04] group relative overflow-hidden">
-               <div className="absolute top-0 right-0 w-32 h-32 bg-[#915EFF]/5 blur-3xl pointer-events-none" />
+               <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--accent)]/5 blur-3xl pointer-events-none" />
                
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
                 <div className="flex flex-col gap-1">
@@ -187,8 +187,8 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
                   <p className="text-secondary text-[11px] font-medium opacity-40 uppercase tracking-widest">Global Asset Optimization</p>
                 </div>
                 {uploading && (
-                  <div className="flex items-center gap-3 text-[#56ccf2] text-[11px] font-bold tracking-widest uppercase">
-                    <div className="h-2 w-2 rounded-full bg-[#56ccf2] animate-ping shadow-[0_0_10px_#56ccf2]" />
+                  <div className="flex items-center gap-3 text-[var(--secondary)] text-[11px] font-bold tracking-widest uppercase">
+                    <div className="h-2 w-2 rounded-full bg-[var(--secondary)] animate-ping shadow-[0_0_10px_var(--secondary)]" />
                     Syncing
                   </div>
                 )}
@@ -196,8 +196,8 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
               
               <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
                 {formState[targetField] && (
-                  <div className="w-full sm:w-28 h-40 sm:h-28 rounded-2xl bg-[#050816]/50 border border-white/10 p-3 overflow-hidden shadow-2xl shrink-0 relative group/preview flex items-center justify-center">
-                    <div className="absolute inset-0 bg-[#915EFF]/10 opacity-0 group-hover/preview:opacity-100 transition-opacity z-0" />
+                  <div className="w-full sm:w-28 h-40 sm:h-28 rounded-2xl bg-[var(--card-bg)] border border-white/10 p-3 overflow-hidden shadow-2xl shrink-0 relative group/preview flex items-center justify-center">
+                    <div className="absolute inset-0 bg-[var(--accent)]/10 opacity-0 group-hover/preview:opacity-100 transition-opacity z-0" />
                     <img 
                       src={resolveAssetUrl(formState[targetField])} 
                       alt="preview" 
@@ -224,7 +224,7 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
                   />
                   <label 
                     htmlFor="admin-file-upload"
-                    className="w-full sm:w-auto flex cursor-pointer items-center justify-center gap-4 rounded-2xl bg-white/5 px-8 py-4 sm:px-10 sm:py-5 text-[14px] font-black text-white transition-all hover:bg-white/10 border border-white/10 active:scale-95 shadow-xl hover:border-[#915EFF]/40"
+                    className="w-full sm:w-auto flex cursor-pointer items-center justify-center gap-4 rounded-2xl bg-white/5 px-8 py-4 sm:px-10 sm:py-5 text-[14px] font-black text-white transition-all hover:bg-white/10 border border-white/10 active:scale-95 shadow-xl hover:border-[var(--accent)]/40"
                   >
                     <span className="text-xl">📁</span>
                     <span>{uploading ? "Syncing..." : formState[targetField] ? "Change File" : "Choose File"}</span>

@@ -50,7 +50,7 @@ const Hero = () => {
               className="text-white font-black lg:text-[72px] md:text-[60px] sm:text-[50px] xs:text-[40px] text-[32px] leading-[1.1] tracking-tighter"
             >
               {headline.split(" ").map((word, i) => (
-                <span key={i} className={`${word === nameToHighlight || word.includes(nameToHighlight) ? "text-accent" : ""}`}>
+                <span key={i} className={`${word === nameToHighlight || word.includes(nameToHighlight) ? "text-gradient-shimmer" : ""}`}>
                   {word}{i === headline.split(" ").length - 1 ? "" : " "}
                 </span>
               ))}

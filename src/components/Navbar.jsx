@@ -115,6 +115,7 @@ const ThemeDropdown = () => {
       className="relative"
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
+      onClick={() => setIsOpen(!isOpen)}
     >
       <motion.button
         whileHover={{ scale: 1.05 }}
@@ -543,7 +544,8 @@ const Navbar = () => {
             </div>
           </div>
 
-          <div className="lg:hidden flex items-center">
+          <div className="lg:hidden flex items-center gap-4">
+            <ThemeDropdown />
             <button
               onClick={() => setToggle(true)}
               className="w-11 h-11 rounded-xl glass-badge-hero flex items-center justify-center border-white/10 text-white/70 hover:text-white transition-all active:scale-90 group relative overflow-hidden"

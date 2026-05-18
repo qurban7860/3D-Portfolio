@@ -64,7 +64,7 @@ const About = ({ isSummary = false, hideHeader = false }) => {
                     {/* Animated Border/Glow */}
                     <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-[#915EFF]/10 opacity-50 group-hover:opacity-100 transition-opacity" />
                     
-                    <div className="relative bg-background/40 backdrop-blur-2xl p-6 sm:p-8 rounded-[23px] h-full flex flex-col items-center justify-center border border-white/5 group-hover:border-accent/30 transition-all duration-500 shadow-2xl">
+                    <div className="relative premium-glass-card glass-reflection inner-glow bg-background/40 p-6 sm:p-8 h-full flex flex-col items-center justify-center border border-white/5 group-hover:border-accent/30 transition-all duration-500 shadow-2xl">
                       {/* Ambient Glow */}
                       <div className="absolute -top-10 -right-10 w-20 h-20 bg-accent/5 blur-3xl rounded-full group-hover:bg-accent/15 transition-all" />
                       
@@ -102,7 +102,7 @@ const About = ({ isSummary = false, hideHeader = false }) => {
               ].map((val, i) => (
                 <div 
                   key={i} 
-                  className="p-10 rounded-[2.5rem] premium-glass-card group relative overflow-hidden"
+                  className="p-10 rounded-[2.5rem] premium-glass-card glass-reflection inner-glow group relative overflow-hidden"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                   <div className="text-4xl mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">{val.icon}</div>

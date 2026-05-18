@@ -50,7 +50,7 @@ const RegisterPage = () => {
         animate={{ opacity: 1, y: 0 }}
         className="relative z-10 w-full max-w-[440px]"
       >
-        <div className={`${styles.glassCardStrong} p-8 sm:p-10 relative overflow-hidden group border-white/10 hover:border-[#915EFF]/30 transition-all duration-700 shadow-2xl`}>
+        <div className={`premium-glass-card glass-reflection inner-glow p-8 sm:p-10 relative overflow-hidden group border-white/10 hover:border-[#915EFF]/30 transition-all duration-700 shadow-2xl`}>
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-32 bg-[#915EFF]/10 blur-3xl rounded-full pointer-events-none" />
 
           <div className="mb-8 text-center relative z-10">

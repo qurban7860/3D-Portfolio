@@ -813,11 +813,11 @@ html {
 .text-gradient-shimmer {
   background: linear-gradient(
     90deg, 
-    #ffffff 0%, 
-    #915EFF 25%, 
-    #56ccf2 50%, 
-    #915EFF 75%, 
-    #ffffff 100%
+    var(--text-primary) 0%, 
+    var(--accent) 25%, 
+    var(--secondary) 50%, 
+    var(--accent) 75%, 
+    var(--text-primary) 100%
   );
   background-size: 200% auto;
   -webkit-background-clip: text;

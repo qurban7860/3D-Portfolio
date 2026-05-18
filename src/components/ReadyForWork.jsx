@@ -87,7 +87,7 @@ const ReadyForWork = () => {
             <motion.div
               key={i}
               variants={fadeIn("up", "spring", i * 0.1, 0.5)}
-              className="flex flex-col items-center p-4 premium-glass-card border border-white/10 shadow-inner hover:border-accent/30 transition-colors duration-500"
+              className="flex flex-col items-center p-4 premium-glass-card glass-reflection inner-glow border border-white/10 shadow-inner hover:border-accent/30 transition-colors duration-500"
             >
               <span className="text-white font-black text-xl sm:text-2xl drop-shadow-md">
                 {fact.stat}
@@ -119,7 +119,7 @@ const ReadyForWork = () => {
           variants={fadeIn("up", "spring", 0.5, 0.8)}
           className="lg:col-span-5 flex justify-center lg:justify-end w-full"
         >
-          <div className="premium-glass-card group p-1 w-full max-w-md overflow-hidden border-white/10 shadow-[0_0_50px_rgba(var(--accent-rgb),0.15)]">
+          <div className="premium-glass-card glass-reflection inner-glow group p-1 w-full max-w-md overflow-hidden border-white/10 shadow-[0_0_50px_rgba(var(--accent-rgb),0.15)]">
             <div className="relative h-48 sm:h-56 overflow-hidden rounded-[1.5rem]">
               <img
                 src={premium_collaboration}

@@ -9,7 +9,6 @@ import UsersManager from "../../components/admin/UsersManager";
 import ThemeManager from "../../components/admin/ThemeManager";
 import { adminSchema } from "../../constants/adminSchema";
 import { motion, AnimatePresence } from "framer-motion";
-import { styles } from "../../styles";
 
 const NavItem = ({ icon, label, isActive, onClick, isCollapsed }) => (
   <button
@@ -182,7 +181,7 @@ const DashboardPage = () => {
 
         <div className="p-5 border-t border-white/5 space-y-4 shrink-0">
             {(!isCollapsed || isMobile) && (
-              <div className="premium-glass p-3 pb-0 rounded-2xl border border-white/5 group/share cursor-pointer hover:border-[#915EFF]/30 transition-all duration-500 relative overflow-hidden"
+              <div className="premium-glass-card glass-reflection inner-glow p-3 pb-0 rounded-2xl border border-white/5 group/share cursor-pointer hover:border-accent/30 transition-all duration-500 relative overflow-hidden"
                       onClick={() => {
                           const fullUrl = window.location.origin + userPortfolioUrl;
                           navigator.clipboard.writeText(fullUrl);
@@ -201,17 +200,17 @@ const DashboardPage = () => {
                             },
                           });
                       }}>
-                  <div className="absolute inset-0 bg-gradient-to-tr from-[#915EFF]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[var(--accent)]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                   <div className="flex items-center justify-between mb-3 relative z-10">
                       <div className="flex items-center gap-2">
-                        <div className="h-1.5 w-1.5 rounded-full bg-[#56ccf2] shadow-[0_0_8px_#56ccf2]" />
-                        <p className="text-[10px] text-[#56ccf2] font-black uppercase tracking-[0.2em] leading-none">Public Link</p>
+                        <div className="h-1.5 w-1.5 rounded-full bg-[var(--secondary)] shadow-[0_0_8px_var(--secondary)]" />
+                        <p className="text-[10px] text-[var(--secondary)] font-black uppercase tracking-[0.2em] leading-none">Public Link</p>
                       </div>
-                      <HiOutlineDuplicate className="text-secondary/40 group-hover:text-[#56ccf2] text-sm transition-all group-hover:scale-110" />
+                      <HiOutlineDuplicate className="text-secondary/40 group-hover:text-[var(--secondary)] text-sm transition-all group-hover:scale-110" />
                   </div>
                   <div className="flex flex-col gap-1.5 relative z-10">
                     <p className="text-[11px] text-white/50 font-bold break-all leading-tight group-hover:text-white transition-colors">{window.location.origin + userPortfolioUrl}</p>
-                    <span className="text-[8px] w-fit bg-[#915EFF]/20 text-[#c4a7ff] px-2 py-0.5 rounded-md font-black uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity">Click to Copy</span>
+                    <span className="text-[8px] w-fit bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded-md font-black uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity">Click to Copy</span>
                   </div>
               </div>
             )}
@@ -231,15 +230,15 @@ const DashboardPage = () => {
   );
 
   return (
-    <div className="h-screen bg-transparent selection:bg-[#915EFF]/30 overflow-hidden relative flex">
+    <div className="h-screen bg-transparent selection:bg-[var(--accent)]/30 overflow-hidden relative flex">
       <aside 
-        className={`hidden lg:flex h-full flex-col relative z-20 border-r border-white/10 bg-[#050816]/30 backdrop-blur-3xl shrink-0 shadow-2xl transition-all duration-500 ${
+        className={`hidden lg:flex h-full flex-col relative z-20 border-r border-white/10 bg-[var(--glass-bg)] backdrop-blur-3xl shrink-0 shadow-2xl transition-all duration-500 ${
           isCollapsed ? "w-20" : "w-72"
         }`}
       >
         <button 
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="absolute -right-3 top-24 z-30 h-6 w-6 rounded-full bg-[#050816] border border-white/10 text-white flex items-center justify-center hover:bg-[#915EFF] hover:border-[#915EFF] transition-all shadow-xl"
+          className="absolute -right-3 top-24 z-30 h-6 w-6 rounded-full bg-[var(--card-bg)] border border-white/10 text-white flex items-center justify-center hover:bg-[var(--accent)] hover:border-[var(--accent)] transition-all shadow-xl"
         >
           {isCollapsed ? <HiOutlineChevronRight size={14} /> : <HiOutlineChevronLeft size={14} />}
         </button>
@@ -255,14 +254,14 @@ const DashboardPage = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="absolute inset-0 bg-[#050816]/90 backdrop-blur-md"
+                className="absolute inset-0 bg-[var(--bg-primary)]/90 backdrop-blur-md"
             />
             <motion.aside 
                 initial={{ x: "-100%" }}
                 animate={{ x: 0 }}
                 exit={{ x: "-100%" }}
                 transition={{ type: "spring", bounce: 0, duration: 0.6 }}
-                className="absolute left-0 top-0 bottom-0 w-72 bg-[#050816]/60 backdrop-blur-3xl border-r border-white/10 flex flex-col shadow-2xl"
+                className="absolute left-0 top-0 bottom-0 w-72 bg-[var(--glass-bg)] backdrop-blur-3xl border-r border-white/10 flex flex-col shadow-2xl"
             >
                 {renderSidebarContent(true)}
             </motion.aside>
@@ -271,7 +270,7 @@ const DashboardPage = () => {
       </AnimatePresence>
 
       <main className="flex-1 h-full min-w-0 relative z-10 flex flex-col">
-        <header className="h-16 lg:h-20 border-b border-white/10 bg-[#050816]/40 backdrop-blur-2xl px-6 lg:px-10 flex items-center justify-between shrink-0 shadow-lg relative z-20">
+        <header className="h-16 lg:h-20 border-b border-white/10 bg-[var(--glass-bg)] backdrop-blur-2xl px-6 lg:px-10 flex items-center justify-between shrink-0 shadow-lg relative z-20">
             <div className="flex items-center gap-4 lg:gap-6">
                 <button 
                     onClick={() => setIsMobileMenuOpen(true)}
@@ -289,19 +288,19 @@ const DashboardPage = () => {
             </div>
 
             <div className="flex items-center gap-3 lg:gap-6">
-                <div className="flex items-center gap-3 lg:gap-4 bg-white/5 border border-white/10 px-3 lg:px-4 py-2 rounded-2xl hover:border-[#915EFF]/40 transition-all group/user cursor-pointer hover:bg-white/[0.08]">
-                    <div className="h-8 w-8 lg:h-9 lg:w-9 rounded-xl bg-gradient-to-tr from-[#915EFF] to-[#56ccf2] flex items-center justify-center text-white font-black text-xs lg:text-sm shadow-lg group-hover/user:scale-105 transition-transform duration-500">
+                <div className="flex items-center gap-3 lg:gap-4 bg-white/5 border border-white/10 px-3 lg:px-4 py-2 rounded-2xl hover:border-[var(--accent)]/40 transition-all group/user cursor-pointer hover:bg-white/[0.08]">
+                    <div className="h-8 w-8 lg:h-9 lg:w-9 rounded-xl bg-gradient-to-tr from-[var(--accent)] to-[var(--secondary)] flex items-center justify-center text-white font-black text-xs lg:text-sm shadow-lg group-hover/user:scale-105 transition-transform duration-500">
                         {user?.email?.[0].toUpperCase() || "A"}
                     </div>
                     <div className="hidden sm:flex flex-col">
                         <span className="text-white font-bold text-[12px] leading-none truncate max-w-[120px] lg:max-w-[150px]">{user?.email}</span>
-                        <span className="text-[9px] text-[#56ccf2] font-black uppercase tracking-widest mt-1 opacity-60">{isAdmin ? "Super Admin" : "User Node"}</span>
+                        <span className="text-[9px] text-[var(--secondary)] font-black uppercase tracking-widest mt-1 opacity-60">{isAdmin ? "Super Admin" : "User Node"}</span>
                     </div>
                 </div>
                 
                 <button
                     onClick={() => window.open(userPortfolioUrl, "_blank")}
-                    className="h-10 w-10 lg:h-12 lg:w-12 flex items-center justify-center rounded-xl lg:rounded-2xl bg-[#915EFF]/10 border border-[#915EFF]/20 text-[#c4a7ff] hover:bg-[#915EFF] hover:text-white transition-all duration-500 shadow-xl group"
+                    className="h-10 w-10 lg:h-12 lg:w-12 flex items-center justify-center rounded-xl lg:rounded-2xl bg-[var(--accent)]/10 border border-[var(--accent)]/20 text-[var(--accent)] hover:bg-[var(--accent)] hover:text-white transition-all duration-500 shadow-xl group"
                 >
                     <HiOutlineExternalLink className="text-lg lg:text-xl group-hover:scale-110 transition-transform" />
                 </button>
@@ -317,7 +316,7 @@ const DashboardPage = () => {
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 className="max-w-[1400px] mx-auto w-full"
             >
-                <div className={`${styles.glassCardStrong} p-6 lg:p-10 min-h-[calc(100vh-220px)] relative overflow-hidden group`}>
+                <div className={`premium-glass-card glass-reflection inner-glow p-6 lg:p-10 min-h-[calc(100vh-220px)] relative overflow-hidden group`}>
                     <div className="relative z-10">
                         {isSettingsMode ? (
                             <SettingsManager />

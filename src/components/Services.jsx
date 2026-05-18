@@ -14,7 +14,7 @@ const ServiceCard = ({ index, title, description, icon, features }) => (
   >
     <div
       className="rounded-[2.5rem] p-10 flex flex-col h-full transition-all duration-700
-                  premium-glass-card group relative overflow-hidden"
+                  premium-glass-card glass-reflection inner-glow group relative overflow-hidden"
     >
       {/* Decorative Gradient Glow */}
       <div className="absolute -top-20 -right-20 w-48 h-48 bg-[#915EFF]/5 rounded-full blur-[80px] group-hover:bg-[#915EFF]/15 transition-all duration-700" />
@@ -108,7 +108,7 @@ const Services = () => {
       {/* Premium Bottom CTA */}
       <motion.div
         variants={fadeIn("up", "spring", 0.5, 0.8)}
-        className="mt-20 p-8 sm:p-12 rounded-[2.5rem] text-center relative overflow-hidden premium-glass border border-white/10"
+        className="mt-20 p-8 sm:p-12 rounded-[2.5rem] text-center relative overflow-hidden premium-glass-card glass-reflection inner-glow border border-white/10"
       >
         <div className="absolute -top-24 -right-24 w-64 h-64 bg-[#915EFF]/20 rounded-full blur-[100px] pointer-events-none animate-pulse" />
         <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-[#56ccf2]/10 rounded-full blur-[100px] pointer-events-none animate-pulse" />

@@ -251,10 +251,10 @@ const ContentManager = ({ section }) => {
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.95, opacity: 0, y: 40 }}
             transition={{ type: "spring", bounce: 0, duration: 0.5 }}
-            className={`relative w-full max-w-3xl rounded-[2.5rem] border border-white/10 shadow-[0_25px_70px_rgba(0,0,0,1)] bg-[#050816] overflow-hidden my-auto`}
+            className={`relative w-full max-w-3xl rounded-[2.5rem] border border-white/10 shadow-[0_25px_70px_rgba(0,0,0,1)] bg-transparent overflow-hidden my-auto`}
           >
             {/* Top Accent Gradient */}
-            <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#915EFF] to-transparent opacity-50 z-20" />
+            <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-50 z-20" />
             
               <button
                 onClick={() => {

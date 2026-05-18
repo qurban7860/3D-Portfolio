@@ -67,9 +67,9 @@ const FAQ = () => {
           </p>
         </motion.div>
 
-        <motion.div 
-          variants={fadeIn("up", "spring", 0.3, 0.8)}
-          className="premium-glass-card p-6 border-dashed border-white/10"
+        <motion.div
+          variants={fadeIn("up", "spring", 0.5, 0.5)}
+          className="premium-glass-card glass-reflection inner-glow p-6 border-dashed border-white/10"
         >
           <h4 className="text-white font-bold text-sm mb-3">Still have questions?</h4>
           <a href="/contact" className="text-accent font-black text-sm hover:underline flex items-center gap-2">

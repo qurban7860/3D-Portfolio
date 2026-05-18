@@ -73,22 +73,16 @@ const ContactMethod = ({ icon, title, description, link, linkText }) => (
     target="_blank"
     rel="noopener noreferrer"
     whileHover={{ y: -5, scale: 1.01 }}
-    className="flex items-start gap-4 p-5 rounded-xl transition-all duration-400 group"
-    style={{
-      backdropFilter: "blur(10px)",
-      WebkitBackdropFilter: "blur(10px)",
-      background: "rgba(145,94,255,0.05)",
-      border: "1px solid rgba(145,94,255,0.18)",
-    }}
+    className="flex items-start gap-4 p-5 rounded-xl transition-all duration-400 group premium-glass-card glass-reflection inner-glow"
     onMouseEnter={(e) => {
       e.currentTarget.style.border = "1px solid rgba(145,94,255,0.45)";
       e.currentTarget.style.boxShadow = "0 6px 28px rgba(145,94,255,0.14)";
       e.currentTarget.style.background = "rgba(145,94,255,0.09)";
     }}
     onMouseLeave={(e) => {
-      e.currentTarget.style.border = "1px solid rgba(145,94,255,0.18)";
+      e.currentTarget.style.border = "1px solid var(--glass-border)";
       e.currentTarget.style.boxShadow = "none";
-      e.currentTarget.style.background = "rgba(145,94,255,0.05)";
+      e.currentTarget.style.background = "var(--glass-bg)";
     }}
   >
     <div className="w-11 h-11 flex-shrink-0 rounded-xl flex items-center justify-center text-2xl
@@ -194,7 +188,7 @@ const Contact = () => {
         {/* ── Contact Form ── */}
         <motion.div
           variants={slideIn("left", "tween", 0.2, 1)}
-          className="flex-[0.75] contact-glass rounded-2xl p-8 relative overflow-hidden"
+          className="flex-[0.75] premium-glass-card glass-reflection inner-glow rounded-2xl p-8 relative overflow-hidden"
         >
           {/* Ambient glow blob */}
           <div className="absolute top-0 right-0 w-48 h-48 bg-[#915EFF]/10 rounded-full blur-3xl pointer-events-none" />

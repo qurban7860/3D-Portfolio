@@ -11,7 +11,7 @@ import {
   FiDownload,
   FiMessageCircle
 } from "react-icons/fi";
-import { HiMenuAlt3, HiX, HiOutlineColorSwatch } from "react-icons/hi";
+import { HiMenuAlt3, HiX, HiOutlineColorSwatch, HiOutlineRefresh } from "react-icons/hi";
 import { styles } from "../styles";
 import { usePortfolio } from "../context/PortfolioContext";
 import { useTheme } from "../context/ThemeContext";
@@ -102,7 +102,7 @@ const SocialDropdown = ({ links }) => {
 const ThemeDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [themes, setThemes] = useState([]);
-  const { activeTheme, setActiveTheme } = useTheme();
+  const { activeTheme, setActiveTheme, defaultThemeConfig } = useTheme();
 
   useEffect(() => {
     fetch('/api/themes/public')
@@ -110,6 +110,45 @@ const ThemeDropdown = () => {
       .then(data => setThemes(data))
       .catch(console.error);
   }, []);
+
+  const displayThemes = useMemo(() => {
+    return themes.filter(t => !t.isDefault && t.name !== "Midnight Violet (Original)" && t.id !== 'default');
+  }, [themes]);
+
+  const handleThemeSelect = async (theme) => {
+    setActiveTheme(theme);
+    const token = localStorage.getItem("portfolio_token");
+    if (token) {
+      try {
+        await fetch(`/api/themes/admin/activate/${theme.id}`, {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` }
+        });
+      } catch (err) {
+        console.error("ThemeDropdown: Failed to activate theme:", err);
+      }
+    }
+  };
+
+  const handleResetTheme = async () => {
+    const defaultTheme = {
+      id: 'default',
+      name: "Midnight Violet",
+      config: defaultThemeConfig
+    };
+    setActiveTheme(defaultTheme);
+    const token = localStorage.getItem("portfolio_token");
+    if (token) {
+      try {
+        await fetch(`/api/themes/admin/activate/default`, {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` }
+        });
+      } catch (err) {
+        console.error("ThemeDropdown: Failed to reset active theme:", err);
+      }
+    }
+  };
 
   return (
     <div 
@@ -143,25 +182,36 @@ const ThemeDropdown = () => {
               transition={{ type: "spring", damping: 20, stiffness: 300 }}
               className="absolute top-[calc(100%+12px)] right-0 w-64 bg-[#0a0a1a]/95 backdrop-blur-2xl rounded-2xl border border-[var(--glass-border)] shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden z-[100] p-1.5"
             >
-              <div className="px-3 py-2 mb-1 flex justify-between items-center">
+              <div className="px-3 py-2 mb-1.5 flex justify-between items-center">
                 <span className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em]">Cinematic Themes</span>
+                <button
+                  onClick={async (e) => {
+                    e.stopPropagation();
+                    await handleResetTheme();
+                  }}
+                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 hover:border-white/20 transition-all hover:bg-[var(--accent)]/10 text-[9px] font-black text-white/70 hover:text-white uppercase tracking-widest group/reset active:scale-95"
+                  title="Reset to Default Theme"
+                >
+                  <HiOutlineRefresh className="text-[10px] text-[var(--accent)] group-hover/reset:rotate-180 transition-transform duration-500" />
+                  <span>Reset</span>
+                </button>
               </div>
               
               <div className="grid grid-cols-1 gap-1">
-                {themes.map((theme) => (
+                {displayThemes.map((theme) => (
                   <button
                     key={theme.id}
-                    onClick={() => setActiveTheme(theme)}
+                    onClick={() => handleThemeSelect(theme)}
                     className={`flex items-center gap-3.5 px-3 py-2.5 rounded-xl transition-all duration-300 group ${
                       activeTheme?.id === theme.id ? "bg-[var(--accent)]/10 border border-[var(--accent)]/30" : "hover:bg-white/5 border border-transparent"
                     }`}
                   >
                     <div 
-                      className="w-8 h-8 rounded-lg shadow-inner flex items-center justify-center border border-white/10 transition-transform group-hover:scale-110"
-                      style={{ background: `linear-gradient(135deg, ${theme.config.colors.accent}, ${theme.config.colors.secondary})` }}
+                      className="w-8 h-8 rounded-lg shadow-inner flex-shrink-0 border border-white/10 transition-transform group-hover:scale-110"
+                      style={{ background: theme.config?.meta?.swatchGradient || `linear-gradient(135deg, ${theme.config.colors.accent}, ${theme.config.colors.secondary})` }}
                     />
                     <div className="flex flex-col items-start">
-                      <span className={`text-[13px] font-medium transition-colors ${activeTheme?.id === theme.id ? "text-white" : "text-white/80 group-hover:text-white"}`}>{theme.name.replace(" (Original)", "")}</span>
+                      <span className={`text-[13px] font-medium transition-colors ${activeTheme?.id === theme.id ? "text-white" : "text-white/80 group-hover:text-white"}`}>{theme.name}</span>
                       {activeTheme?.id === theme.id && (
                         <span className="text-[9px] text-[var(--accent)] uppercase font-bold tracking-widest mt-0.5">Active</span>
                       )}

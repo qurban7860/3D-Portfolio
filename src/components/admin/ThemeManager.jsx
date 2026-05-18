@@ -230,10 +230,11 @@ const ThemeManager = () => {
           {/* Sleeker responsive action buttons */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 shrink-0">
             <button 
-              onClick={() => { 
-                const def = { name: "Default", config: defaultThemeConfig };
-                livePreviewTheme(def);
-                toast.success("UI Reset to Defaults");
+              onClick={async () => { 
+                const def = { id: 'default', name: "Midnight Violet", config: defaultThemeConfig };
+                await handleApplyTheme(def);
+                setEditingTheme(def);
+                setTempConfig(defaultThemeConfig);
               }}
               className="group flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-[11px] font-black uppercase tracking-widest hover:bg-white/10 hover:border-white/30 transition-all active:scale-95 shadow-xl w-full sm:w-auto"
             >

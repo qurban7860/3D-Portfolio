@@ -45,11 +45,12 @@ router.get("/:username", async (req, res) => {
 
   let theme = null;
   const activeThemeId = settings.active_theme_id;
-  if (activeThemeId) {
+  if (activeThemeId && activeThemeId !== 'default') {
     theme = await ThemeRepository.getById(activeThemeId);
-  } else {
-    const userThemes = await ThemeRepository.getByUserId(userId);
-    theme = userThemes.find(t => t.isDefault) || userThemes[0] || null;
+  }
+  if (!theme) {
+    const allPublic = await ThemeRepository.getAllPublic();
+    theme = allPublic.find(t => t.isDefault) || allPublic[0] || null;
   }
 
   return res.json({

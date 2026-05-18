@@ -51,9 +51,12 @@ export const PREMIUM_THEMES = [
         borderOpacity: "0.15"
       },
       effects: {
-        glowColor: "rgba(0, 0, 0, 0)",
-        glowIntensity: "0",
+        glowColor: "rgba(0, 242, 255, 0.08)",
+        glowIntensity: "0.2",
         shimmer: true
+      },
+      meta: {
+        swatchGradient: "linear-gradient(135deg, #00f2ff 0%, #00b4d8 50%, #88e5eb 100%)"
       }
     }
   },
@@ -80,9 +83,12 @@ export const PREMIUM_THEMES = [
         borderOpacity: "0.1"
       },
       effects: {
-        glowColor: "rgba(0, 0, 0, 0)",
-        glowIntensity: "0",
+        glowColor: "rgba(0, 206, 168, 0.08)",
+        glowIntensity: "0.2",
         shimmer: true
+      },
+      meta: {
+        swatchGradient: "linear-gradient(135deg, #00cea8 0%, #38b2ac 40%, #bf61ff 100%)"
       }
     }
   },
@@ -109,9 +115,44 @@ export const PREMIUM_THEMES = [
         borderOpacity: "0.2"
       },
       effects: {
-        glowColor: "rgba(0, 0, 0, 0)",
-        glowIntensity: "0",
+        glowColor: "rgba(255, 0, 122, 0.1)",
+        glowIntensity: "0.25",
         shimmer: true
+      },
+      meta: {
+        swatchGradient: "linear-gradient(135deg, #ff007a 0%, #bc13fe 60%, #6200ea 100%)"
+      }
+    }
+  },
+  {
+    name: "Cosmic Eclipse",
+    isDefault: 0,
+    isPublic: 1,
+    config: {
+      colors: {
+        primary: "#07050f",
+        secondary: "#ffd700",
+        tertiary: "#1a0f35",
+        background: "#07050f",
+        accent: "#ff2d55",
+        glass: "rgba(255, 45, 85, 0.03)",
+        glassBorder: "rgba(255, 107, 53, 0.2)",
+        textPrimary: "#ffffff",
+        textSecondary: "#ffd700",
+        cardBg: "#130a2a"
+      },
+      glass: {
+        blur: "22px",
+        opacity: "0.03",
+        borderOpacity: "0.2"
+      },
+      effects: {
+        glowColor: "rgba(255, 45, 85, 0.12)",
+        glowIntensity: "0.3",
+        shimmer: true
+      },
+      meta: {
+        swatchGradient: "linear-gradient(135deg, #ff2d55 0%, #ff6b35 28%, #ffd700 58%, #c200ff 85%, #3d00c8 100%)"
       }
     }
   }

@@ -74,15 +74,29 @@ function applyCssVars(config) {
 }
 
 // Immediate application to avoid FOUC
-applyCssVars(DEFAULT_THEME_CONFIG);
+let initialTheme = {
+  id: 'default',
+  name: "Midnight Violet",
+  config: DEFAULT_THEME_CONFIG
+};
+
+try {
+  const stored = localStorage.getItem('selected_theme');
+  if (stored) {
+    const parsed = JSON.parse(stored);
+    if (parsed && parsed.config) {
+      initialTheme = parsed;
+    }
+  }
+} catch (e) {
+  console.error("FOUC theme restoration failed:", e);
+}
+
+applyCssVars(initialTheme.config);
 
 export const ThemeProvider = ({ children }) => {
   const { data } = usePortfolio();
-  const [activeTheme, setActiveThemeState] = useState({
-    id: 'default',
-    name: "Midnight Violet",
-    config: DEFAULT_THEME_CONFIG
-  });
+  const [activeTheme, setActiveThemeState] = useState(() => initialTheme);
   
   const [isTransitioning, setIsTransitioning] = useState(false);
   const isFirstMount = useRef(true);
@@ -91,27 +105,37 @@ export const ThemeProvider = ({ children }) => {
     if (!theme) return;
     
     setActiveThemeState(prev => {
+      let next;
       if (theme.colors && theme.glass) {
-        const next = { ...prev, config: theme };
-        applyCssVars(next.config); 
-        return next;
+        next = { ...prev, config: theme };
+      } else {
+        next = {
+          ...prev,
+          ...theme,
+          config: theme.config || prev.config || DEFAULT_THEME_CONFIG
+        };
       }
-      
-      const next = {
-        ...prev,
-        ...theme,
-        config: theme.config || prev.config || DEFAULT_THEME_CONFIG
-      };
       applyCssVars(next.config); 
+      try {
+        localStorage.setItem('selected_theme', JSON.stringify(next));
+      } catch (err) {
+        console.error("Failed to write theme to localStorage:", err);
+      }
       return next;
     });
   }, []);
+
   useEffect(() => {
     if (data?.theme?.config) {
       if (!isFirstMount.current) setIsTransitioning(true);
       
       setActiveThemeState(data.theme);
       applyCssVars(data.theme.config);
+      try {
+        localStorage.setItem('selected_theme', JSON.stringify(data.theme));
+      } catch (err) {
+        console.error("Failed to write synced theme to localStorage:", err);
+      }
       
       if (!isFirstMount.current) {
         setTimeout(() => setIsTransitioning(false), 800);

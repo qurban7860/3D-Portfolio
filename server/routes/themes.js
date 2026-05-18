@@ -61,7 +61,23 @@ router.delete("/admin/:id", authMiddleware, async (req, res) => {
 router.post("/admin/activate/:id", authMiddleware, async (req, res) => {
   try {
     const repo = new SettingsRepository(getDb());
-    await repo.upsert(req.user.id, "active_theme_id", req.params.id);
+    let themeId = req.params.id;
+
+    // If client sends 'default', resolve to the actual seeded default theme ID
+    if (themeId === 'default') {
+      const defaultTheme = await getDb().get(
+        "SELECT id FROM themes WHERE isDefault = 1 ORDER BY id ASC LIMIT 1"
+      );
+      if (defaultTheme) {
+        themeId = defaultTheme.id;
+      } else {
+        // Fallback: clear the setting so portfolio falls back naturally
+        await repo.upsert(req.user.id, "active_theme_id", null);
+        return res.json({ message: "Active theme reset to default" });
+      }
+    }
+
+    await repo.upsert(req.user.id, "active_theme_id", themeId);
     res.json({ message: "Theme activated successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });

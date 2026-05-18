@@ -3,6 +3,20 @@ import { getDb } from "../db.js";
 class ThemeRepository {
   async getAllPublic() {
     const db = getDb();
+    try {
+      const { PREMIUM_THEMES } = await import("../utils/themes.js");
+      for (const theme of PREMIUM_THEMES) {
+        const existing = await db.get("SELECT id FROM themes WHERE name = ? AND user_id = 1", theme.name);
+        if (!existing) {
+          await db.run(
+            "INSERT INTO themes (user_id, name, config, isPublic, isDefault, createdAt) VALUES (?, ?, ?, ?, ?, ?)",
+            1, theme.name, JSON.stringify(theme.config), theme.isPublic, theme.isDefault, new Date().toISOString()
+          );
+        }
+      }
+    } catch (err) {
+      console.error("ThemeRepository: Preset auto-sync failed:", err);
+    }
     const rows = await db.all("SELECT * FROM themes WHERE isPublic = 1");
     return rows.map(row => ({ ...row, config: JSON.parse(row.config) }));
   }

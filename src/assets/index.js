@@ -1,11 +1,9 @@
-import logo1 from "./logo1.png";
 import backend from "./backend.png";
 import creator from "./creator.png";
 import mobile from "./mobile.png";
 import web from "./web.png";
 import github from "./github.png";
 import linkedin from "./linkedin.svg";
-import phone from "./phone.jfif";
 import menu from "./menu.svg";
 import close from "./close.svg";
 
@@ -34,19 +32,14 @@ import carrent from "./carrent.png";
 import jobit from "./jobit.png";
 import tripguide from "./tripguide.png";
 import Project1 from "./Project1.png";
-import fyp from "./fyp.png";
-import Ecommerce1 from "./Ecommerce1.png";
-import premium_tech from "./premium_tech.png";
 import premium_collaboration from "./premium_collaboration.png";
 
 export {
-  logo1,
   backend,
   creator,
   mobile,
   web,
   github,
-  phone,
   linkedin,
   menu,
   close,
@@ -70,11 +63,8 @@ export {
   starbucks,
   tesla,
   Project1,
-  fyp,
-  Ecommerce1,
   carrent,
   jobit,
   tripguide,
-  premium_tech,
   premium_collaboration,
 };

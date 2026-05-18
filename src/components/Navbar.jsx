@@ -17,7 +17,7 @@ import { usePortfolio } from "../context/PortfolioContext";
 import { useTheme } from "../context/ThemeContext";
 // import { useAuth } from "../context/AuthContext";
 import resumePdf from "../assets/resume/Resume_Mern.pdf";
-import logo from "/logo.svg";
+import Logo from "./common/Logo";
 import { getIcon } from "../utils/iconMapping";
 
 const SocialDropdown = ({ links }) => {
@@ -512,7 +512,7 @@ const Navbar = () => {
           >
             <div className="w-11 h-11 rounded-2xl glass-badge-hero flex items-center justify-center border-white/10 group-hover:border-[var(--primary)]/50 group-hover:rotate-[10deg] transition-all duration-500 shadow-xl overflow-hidden relative active:scale-95">
               <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary)]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              <img src={logo} alt="logo" className="w-6 h-6 object-contain relative z-10 group-hover:scale-110 transition-transform" />
+              <Logo className="w-6 h-6 relative z-10 group-hover:scale-110 transition-transform" />
             </div>
             <div className="flex flex-col relative">
               <span className="text-white font-black text-[16px] tracking-tight leading-none group-hover:text-gradient transition-all duration-300 uppercase flex items-center gap-2">

@@ -23,7 +23,7 @@ const About = ({ isSummary = false, hideHeader = false }) => {
   const displayStats = stats.map((s, i) => ({
     label: s.label,
     value: s.stat,
-    color: i % 4 === 0 ? "text-accent" : i % 4 === 1 ? "text-secondary" : i % 4 === 2 ? "text-accent/80" : "text-secondary/80"
+    color: i % 4 === 0 ? "text-accent" : i % 4 === 1 ? "text-[var(--secondary)]" : i % 4 === 2 ? "text-accent/80" : "text-[var(--secondary)]/80"
   }));
 
   return (

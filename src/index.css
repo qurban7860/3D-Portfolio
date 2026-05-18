@@ -739,7 +739,7 @@ html {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, var(--glow-color), transparent 40%, rgba(255, 255, 255, 0.05));
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent 40%, rgba(255, 255, 255, 0.02));
   opacity: 0;
   transition: opacity 0.5s ease;
   pointer-events: none;
@@ -748,9 +748,7 @@ html {
 .premium-glass-card:hover {
   transform: translateY(-8px);
   border-color: var(--accent);
-  box-shadow: 
-    0 40px 80px -20px rgba(0, 0, 0, 0.6),
-    0 0 30px var(--glow-color);
+  box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.6);
 }
 
 .premium-glass-card:hover::before {
@@ -903,3 +901,19 @@ html {
     left: 2px !important;
   }
 }
+
+/* ── Premium Global Text and Hover Overrides ── */
+.text-secondary {
+  color: var(--text-secondary) !important;
+}
+
+/* Disable translation and excessive glow on nested, admin, or form glass cards */
+.premium-glass-card .premium-glass-card:hover,
+.premium-glass-card form .premium-glass-card:hover,
+form .premium-glass-card:hover,
+.no-hover-glow:hover {
+  transform: none !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4) !important;
+  border-color: var(--glass-border) !important;
+}
+

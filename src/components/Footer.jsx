@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { usePortfolio } from "../context/PortfolioContext";
 import { styles } from "../styles";
 import { getIcon } from "../utils/iconMapping";
-import logo from "/logo.svg";
+import Logo from "./common/Logo";
 
 const Footer = () => {
   const { data } = usePortfolio();
@@ -57,7 +57,7 @@ const Footer = () => {
           <div className="col-span-1 lg:col-span-1.5 flex flex-col gap-6">
             <Link to={basePath || "/"} className="flex items-center gap-3 w-fit group">
               <div className="w-10 h-10 rounded-xl glass-badge-hero flex items-center justify-center border-white/10 group-hover:border-[var(--accent)]/50 transition-all duration-500">
-                <img src={logo} alt="logo" className="w-5 h-5 object-contain" />
+                <Logo className="w-5 h-5" />
               </div>
               <span className="text-white font-black text-[20px] tracking-tight group-hover:text-gradient transition-all uppercase">{displayName}</span>
             </Link>

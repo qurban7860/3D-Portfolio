@@ -51,8 +51,8 @@ export const PREMIUM_THEMES = [
         borderOpacity: "0.15"
       },
       effects: {
-        glowColor: "rgba(0, 242, 255, 0.5)",
-        glowIntensity: "1.2",
+        glowColor: "rgba(0, 0, 0, 0)",
+        glowIntensity: "0",
         shimmer: true
       }
     }
@@ -80,8 +80,8 @@ export const PREMIUM_THEMES = [
         borderOpacity: "0.1"
       },
       effects: {
-        glowColor: "rgba(0, 206, 168, 0.3)",
-        glowIntensity: "0.8",
+        glowColor: "rgba(0, 0, 0, 0)",
+        glowIntensity: "0",
         shimmer: true
       }
     }
@@ -109,8 +109,8 @@ export const PREMIUM_THEMES = [
         borderOpacity: "0.2"
       },
       effects: {
-        glowColor: "rgba(255, 0, 122, 0.6)",
-        glowIntensity: "1.5",
+        glowColor: "rgba(0, 0, 0, 0)",
+        glowIntensity: "0",
         shimmer: true
       }
     }

@@ -20,10 +20,9 @@
   --glow-intensity: 1;
 }
 
-html, body, #root {
+html, body {
   width: 100%;
   overflow-x: hidden;
-  overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--glow-color) transparent;
 }
@@ -406,28 +405,28 @@ textarea:focus {
   display: inline-flex;
   align-items: center;
   padding: 0.45rem 1.25rem;
-  background: rgba(145, 94, 255, 0.08);
-  border: 1px solid rgba(145, 94, 255, 0.35);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
   border-radius: 50px;
   font-size: 10px;
   font-weight: 800;
-  color: #c4a7ff;
+  color: color-mix(in srgb, var(--accent) 80%, white);
   text-transform: uppercase;
   letter-spacing: 0.3em;
   margin-bottom: 0.75rem;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 
-    0 0 15px rgba(145, 94, 255, 0.1),
+    0 0 15px color-mix(in srgb, var(--accent) 10%, transparent),
     inset 0 1px 1px rgba(255, 255, 255, 0.1);
   transition: all 0.4s ease;
 }
 
 .section-badge:hover {
-  background: rgba(145, 94, 255, 0.15);
-  border-color: rgba(145, 94, 255, 0.6);
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  border-color: color-mix(in srgb, var(--accent) 60%, transparent);
   transform: translateY(-1px);
-  box-shadow: 0 0 20px rgba(145, 94, 255, 0.2);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--accent) 20%, transparent);
 }
 
 .faq-badge-premium {

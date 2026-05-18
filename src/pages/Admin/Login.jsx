@@ -35,23 +35,23 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-transparent flex items-center justify-center p-6 selection:bg-[#915EFF]/30 relative overflow-hidden">
+    <div className="min-h-screen bg-transparent flex items-center justify-center p-6 selection:bg-[var(--accent)]/30 relative overflow-hidden">
 
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#915EFF]/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#56ccf2]/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[var(--accent)]/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[var(--secondary)]/5 rounded-full blur-[120px] pointer-events-none" />
 
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="relative z-10 w-full max-w-[440px]"
       >
-        <div className={`premium-glass-card glass-reflection inner-glow p-8 sm:p-10 relative overflow-hidden group border-white/10 hover:border-[#915EFF]/30 transition-all duration-700 shadow-2xl`}>
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-32 bg-[#915EFF]/10 blur-3xl rounded-full pointer-events-none" />
+        <div className={`premium-glass-card glass-reflection inner-glow p-8 sm:p-10 relative overflow-hidden group border-white/10 hover:border-[var(--accent)]/30 transition-all duration-700 shadow-2xl`}>
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-32 bg-[var(--accent)]/10 blur-3xl rounded-full pointer-events-none" />
 
           <div className="mb-8 text-center relative z-10">
-            <div className="mx-auto mb-5 h-16 w-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white text-3xl shadow-xl group-hover:border-[#915EFF]/40 transition-all duration-700 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#915EFF]/10 to-[#56ccf2]/10" />
-              <HiOutlineSparkles className="relative z-10 text-[#915EFF] group-hover:scale-110 transition-transform duration-500" />
+            <div className="mx-auto mb-5 h-16 w-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white text-3xl shadow-xl group-hover:border-[var(--accent)]/40 transition-all duration-700 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent)]/10 to-[var(--secondary)]/10" />
+              <HiOutlineSparkles className="relative z-10 text-[var(--accent)] group-hover:scale-110 transition-transform duration-500" />
             </div>
             <h1 className="text-2xl font-black text-white tracking-tight uppercase">Admin Login</h1>
             <p className="mt-2 text-secondary text-[11px] font-bold tracking-widest uppercase opacity-40">Manage your digital presence</p>
@@ -68,10 +68,10 @@ const LoginPage = () => {
             
             <div className="space-y-4">
               <div className="space-y-2 group/input">
-                <label className="text-[11px] font-black text-secondary/60 uppercase tracking-[0.2em] ml-2 group-focus-within/input:text-[#915EFF] transition-colors">Email Address</label>
+                <label className="text-[11px] font-black text-secondary/60 uppercase tracking-[0.2em] ml-2 group-focus-within/input:text-[var(--accent)] transition-colors">Email Address</label>
                 <div className="relative">
-                  <HiOutlineMail className="absolute left-6 top-1/2 -translate-y-1/2 text-white/20 group-focus-within/input:text-[#915EFF] transition-colors z-20" size={20} />
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#915EFF] to-[#56ccf2] rounded-2xl blur opacity-0 group-focus-within/input:opacity-20 transition duration-500" />
+                  <HiOutlineMail className="absolute left-6 top-1/2 -translate-y-1/2 text-white/20 group-focus-within/input:text-[var(--accent)] transition-colors z-20" size={20} />
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[var(--accent)] to-[var(--secondary)] rounded-2xl blur opacity-0 group-focus-within/input:opacity-20 transition duration-500" />
                   <input
                     type="email"
                     name="email"
@@ -85,10 +85,10 @@ const LoginPage = () => {
               </div>
 
               <div className="space-y-2 group/input">
-                <label className="text-[11px] font-black text-secondary/60 uppercase tracking-[0.2em] ml-2 group-focus-within/input:text-[#915EFF] transition-colors">Password</label>
+                <label className="text-[11px] font-black text-secondary/60 uppercase tracking-[0.2em] ml-2 group-focus-within/input:text-[var(--accent)] transition-colors">Password</label>
                 <div className="relative">
-                  <HiOutlineLockClosed className="absolute left-6 top-1/2 -translate-y-1/2 text-white/20 group-focus-within/input:text-[#915EFF] transition-colors z-20" size={20} />
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#915EFF] to-[#56ccf2] rounded-2xl blur opacity-0 group-focus-within/input:opacity-20 transition duration-500" />
+                  <HiOutlineLockClosed className="absolute left-6 top-1/2 -translate-y-1/2 text-white/20 group-focus-within/input:text-[var(--accent)] transition-colors z-20" size={20} />
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[var(--accent)] to-[var(--secondary)] rounded-2xl blur opacity-0 group-focus-within/input:opacity-20 transition duration-500" />
                   <input
                     type={showPassword ? "text" : "password"}
                     name="password"
@@ -118,7 +118,7 @@ const LoginPage = () => {
             </button>
             
             <div className="flex flex-col gap-3 mt-4 text-center">
-              <button type="button" onClick={() => navigate("/admin/register")} className="text-[11px] font-black text-[#915EFF] hover:text-[#56ccf2] transition-all uppercase tracking-widest opacity-80">
+              <button type="button" onClick={() => navigate("/admin/register")} className="text-[11px] font-black text-[var(--accent)] hover:text-[var(--secondary)] transition-all uppercase tracking-widest opacity-80">
                 Create Account
               </button>
               <div className="h-[1px] w-12 bg-white/5 mx-auto" />

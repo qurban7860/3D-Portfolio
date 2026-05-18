@@ -30,9 +30,9 @@ const BackToTop = ({ scrollThreshold = 300 }) => {
           title="Back to top"
           className="fixed bottom-6 right-6 z-[999] w-12 h-12 rounded-full flex items-center
                      justify-center cursor-pointer transition-all duration-300
-                     bg-[#915EFF]/20 backdrop-blur-md border border-[#915EFF]/40
-                     hover:bg-[#915EFF]/30 hover:border-[#915EFF]/80
-                     hover:shadow-[0_0_24px_rgba(145,94,255,0.4)] shadow-[inset_0_1px_1px_rgba(255,255,255,0.3)]"
+                     bg-[var(--accent)]/20 backdrop-blur-md border border-[var(--accent)]/40
+                     hover:bg-[var(--accent)]/30 hover:border-[var(--accent)]/80
+                     hover:shadow-[0_0_24px_var(--glow-color)] shadow-[inset_0_1px_1px_rgba(255,255,255,0.3)]"
         >
           <HiOutlineArrowUp className="text-white text-xl" />
         </motion.button>

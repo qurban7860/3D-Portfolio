@@ -73,27 +73,17 @@ const ContactMethod = ({ icon, title, description, link, linkText }) => (
     target="_blank"
     rel="noopener noreferrer"
     whileHover={{ y: -5, scale: 1.01 }}
-    className="flex items-start gap-4 p-5 rounded-xl transition-all duration-400 group premium-glass-card glass-reflection inner-glow"
-    onMouseEnter={(e) => {
-      e.currentTarget.style.border = "1px solid rgba(145,94,255,0.45)";
-      e.currentTarget.style.boxShadow = "0 6px 28px rgba(145,94,255,0.14)";
-      e.currentTarget.style.background = "rgba(145,94,255,0.09)";
-    }}
-    onMouseLeave={(e) => {
-      e.currentTarget.style.border = "1px solid var(--glass-border)";
-      e.currentTarget.style.boxShadow = "none";
-      e.currentTarget.style.background = "var(--glass-bg)";
-    }}
+    className="flex items-start gap-4 p-5 rounded-xl transition-all duration-400 group premium-glass-card glass-reflection inner-glow hover:border-[var(--accent)]/45 hover:bg-[var(--accent)]/10 hover:shadow-[0_6px_28px_var(--glow-color)]"
   >
     <div className="w-11 h-11 flex-shrink-0 rounded-xl flex items-center justify-center text-2xl
-                    bg-white/5 border border-white/10 group-hover:border-[#915EFF]/40 
-                    group-hover:shadow-[0_0_16px_rgba(145,94,255,0.2)] transition-all duration-300 backdrop-blur-sm">
+                    bg-white/5 border border-white/10 group-hover:border-[var(--accent)]/40 
+                    group-hover:shadow-[0_0_16px_var(--glow-color)] transition-all duration-300 backdrop-blur-sm">
       {icon}
     </div>
     <div className="flex-1 min-w-0">
-      <h4 className="text-white font-bold text-[15px] mb-0.5 group-hover:text-[#915EFF] transition-colors">{title}</h4>
+      <h4 className="text-white font-bold text-[15px] mb-0.5 group-hover:text-[var(--accent)] transition-colors">{title}</h4>
       <p className="text-secondary text-[13px] mb-1">{description}</p>
-      <p className="text-[#56ccf2] text-[13px] font-semibold truncate group-hover:underline">
+      <p className="text-[var(--secondary)] text-[13px] font-semibold truncate group-hover:underline">
         {linkText} →
       </p>
     </div>
@@ -191,18 +181,18 @@ const Contact = () => {
           className="flex-[0.75] premium-glass-card glass-reflection inner-glow rounded-2xl p-8 relative overflow-hidden"
         >
           {/* Ambient glow blob */}
-          <div className="absolute top-0 right-0 w-48 h-48 bg-[#915EFF]/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-0 right-0 w-48 h-48 bg-[var(--accent)]/10 rounded-full blur-3xl pointer-events-none" />
 
           {/* Header */}
           <div className="flex flex-col items-start gap-2 mb-8 relative z-10">
-            <span className="text-[#915EFF] text-[12px] font-bold uppercase tracking-[0.25em]">
+            <span className="text-[var(--accent)] text-[12px] font-bold uppercase tracking-[0.25em]">
               Message Me
             </span>
             <h3 className="text-white font-black md:text-[42px] sm:text-[32px] text-[26px] leading-tight">
               Direct Contact
             </h3>
             <div className="w-16 h-[4px] rounded-full bg-white/10 relative overflow-hidden">
-               <div className="absolute inset-0 bg-[#915EFF] animate-shimmer" style={{ backgroundSize: '200% auto' }} />
+               <div className="absolute inset-0 bg-[var(--accent)] animate-shimmer" style={{ backgroundSize: '200% auto' }} />
             </div>
           </div>
 
@@ -239,7 +229,7 @@ const Contact = () => {
                   Transmission Failed
                 </p>
                 <p className="text-red-400/80 text-[12px] font-medium leading-relaxed">
-                  The automated email service is currently experiencing high load or configuration issues. Please connect directly via the social nodes below or email me at <a href={`mailto:${recipientEmail}`} className="text-white hover:text-[#915EFF] underline">{recipientEmail}</a>.
+                  The automated email service is currently experiencing high load or configuration issues. Please connect directly via the social nodes below or email me at <a href={`mailto:${recipientEmail}`} className="text-white hover:text-[var(--accent)] underline">{recipientEmail}</a>.
                 </p>
               </div>
             </motion.div>
@@ -300,7 +290,7 @@ const Contact = () => {
           className="xl:flex-1 xl:h-[700px] lg:h-[600px] md:h-[550px] h-[350px]"
         >
           <div className="w-full h-full relative">
-            <div className="absolute inset-0 bg-[#915EFF]/5 rounded-full filter blur-3xl opacity-20" />
+            <div className="absolute inset-0 bg-[var(--accent)]/5 rounded-full filter blur-3xl opacity-20" />
             <EarthCanvas />
           </div>
         </motion.div>

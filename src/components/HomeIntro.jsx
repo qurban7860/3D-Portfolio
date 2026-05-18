@@ -12,13 +12,13 @@ const FeatureCard = ({ icon: Icon, title, desc, index }) => (
   <motion.div
     variants={fadeIn("up", "spring", index * 0.1, 0.5)}
     whileHover={{ y: -5, scale: 1.01 }}
-    className="premium-glass-card glass-reflection inner-glow p-6 h-full flex flex-col gap-4 group cursor-default border-white/5 hover:border-[#915EFF]/30 transition-all duration-500"
+    className="premium-glass-card glass-reflection inner-glow p-6 h-full flex flex-col gap-4 group cursor-default border-white/5 hover:border-[var(--accent)]/30 transition-all duration-500"
   >
-    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-white/10 to-transparent flex items-center justify-center text-xl shadow-xl border border-white/10 group-hover:border-[#915EFF]/50 transition-all duration-500 inner-glow">
-      <Icon className="text-[#915EFF] group-hover:scale-110 transition-transform" />
+    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-white/10 to-transparent flex items-center justify-center text-xl shadow-xl border border-white/10 group-hover:border-[var(--accent)]/50 transition-all duration-500 inner-glow">
+      <Icon className="text-[var(--accent)] group-hover:scale-110 transition-transform" />
     </div>
     <div>
-      <h3 className="text-white text-base font-black mb-1 group-hover:text-[#915EFF] transition-colors tracking-tight">{title}</h3>
+      <h3 className="text-white text-base font-black mb-1 group-hover:text-[var(--accent)] transition-colors tracking-tight">{title}</h3>
       <p className="text-secondary text-[13px] leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity line-clamp-2">{desc}</p>
     </div>
   </motion.div>
@@ -89,8 +89,8 @@ const HomeIntro = () => {
         >
           <div className="relative w-full h-full max-w-[500px] group flex items-center justify-center">
             {/* ── Subtle Background Glows ── */}
-            <div className="absolute w-[60%] h-[60%] bg-[#915EFF]/20 rounded-full blur-[120px] animate-pulse opacity-50 transition-opacity duration-1000 pointer-events-none" />
-            <div className="absolute w-[80%] h-[80%] bg-gradient-to-tr from-[#915EFF]/10 via-transparent to-[#56ccf2]/10 rounded-full blur-[100px] opacity-30 group-hover:opacity-60 transition-opacity duration-1000 pointer-events-none" />
+            <div className="absolute w-[60%] h-[60%] bg-[var(--accent)]/20 rounded-full blur-[120px] animate-pulse opacity-50 transition-opacity duration-1000 pointer-events-none" />
+            <div className="absolute w-[80%] h-[80%] bg-gradient-to-tr from-[var(--accent)]/10 via-transparent to-[var(--secondary)]/10 rounded-full blur-[100px] opacity-30 group-hover:opacity-60 transition-opacity duration-1000 pointer-events-none" />
 
             {/* ── Real 3D Tech Artifact Canvas ── */}
             <div className="absolute inset-0 pointer-events-auto">

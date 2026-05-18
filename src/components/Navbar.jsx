@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect, useMemo } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   FiChevronDown,
@@ -275,10 +276,10 @@ const MobileMenu = ({
     if (toggle) {
       document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = "";
     };
   }, [toggle]);
   const { username } = useParams();
@@ -304,14 +305,14 @@ const MobileMenu = ({
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: "100%", opacity: 0 }}
             transition={{ type: "spring", damping: 35, stiffness: 350 }}
-            className="absolute top-0 right-0 w-[88%] max-w-[360px] h-full flex flex-col border-l border-white/5 shadow-2xl z-10 bg-[#050816]/90 backdrop-blur-[80px] overflow-hidden"
+            className="absolute top-0 right-0 w-[88%] max-w-[360px] h-[100dvh] flex flex-col border-l border-white/5 shadow-2xl z-10 bg-[#050816]/90 backdrop-blur-[80px] overflow-hidden"
           >
             {/* Ambient Background Glows */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--primary)]/10 rounded-full blur-[120px] pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-[var(--secondary)]/5 rounded-full blur-[120px] pointer-events-none" />
 
             {/* Header / Close Button */}
-            <div className="p-8 flex items-center justify-between border-b border-white/5 bg-white/[0.01] backdrop-blur-xl">
+            <div className="p-8 flex items-center justify-between border-b border-white/5 bg-white/[0.01] backdrop-blur-xl flex-shrink-0">
               <div className="flex flex-col">
                 <span className="text-[var(--accent)] text-[11px] font-bold uppercase tracking-[0.3em] opacity-60">Directory</span>
                 <span className="text-white text-[15px] font-bold tracking-tight mt-1">Menu</span>
@@ -325,7 +326,10 @@ const MobileMenu = ({
             </div>
 
             {/* Scrollable Content */}
-            <div className="flex-1 overflow-y-auto custom-scrollbar p-6 pt-8 space-y-10 relative z-10">
+            <div 
+              className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar p-6 pt-8 space-y-10 relative z-10 touch-pan-y"
+              style={{ WebkitOverflowScrolling: "touch" }}
+            >
               <nav>
                 <ul className="flex flex-col gap-2">
                   {navLinks.map((nav, index) => (
@@ -481,7 +485,12 @@ const Navbar = () => {
     }
   }, [location.pathname]);
 
-  return (
+  // Check if we are on the admin path or dashboard
+  if (location.pathname.startsWith('/admin')) {
+    return null;
+  }
+
+  return createPortal(
     <>
       <nav 
         className={`w-full h-20 fixed top-0 z-[1000] transition-all duration-500 flex items-center
@@ -547,6 +556,7 @@ const Navbar = () => {
           <div className="lg:hidden flex items-center gap-4">
             <ThemeDropdown />
             <button
+              type="button"
               onClick={() => setToggle(true)}
               className="w-11 h-11 rounded-xl glass-badge-hero flex items-center justify-center border-white/10 text-white/70 hover:text-white transition-all active:scale-90 group relative overflow-hidden"
               aria-label="Open Menu"
@@ -570,7 +580,8 @@ const Navbar = () => {
         socialLinks={SOCIAL_LINKS}
         data={data}
       />
-    </>
+    </>,
+    document.body
   );
 };
 

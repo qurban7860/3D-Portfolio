@@ -41,7 +41,7 @@ const Footer = () => {
       color: s.icon?.toLowerCase().includes('github') ? "hover:text-white" :
              s.icon?.toLowerCase().includes('linkedin') ? "hover:text-[#0077B5]" :
              s.icon?.toLowerCase().includes('whatsapp') ? "hover:text-[#25D366]" :
-             "hover:text-[#915EFF]"
+             "hover:text-[var(--accent)]"
     }));
 
   return (
@@ -56,7 +56,7 @@ const Footer = () => {
           {/* Brand Info */}
           <div className="col-span-1 lg:col-span-1.5 flex flex-col gap-6">
             <Link to={basePath || "/"} className="flex items-center gap-3 w-fit group">
-              <div className="w-10 h-10 rounded-xl glass-badge-hero flex items-center justify-center border-white/10 group-hover:border-[#915EFF]/50 transition-all duration-500">
+              <div className="w-10 h-10 rounded-xl glass-badge-hero flex items-center justify-center border-white/10 group-hover:border-[var(--accent)]/50 transition-all duration-500">
                 <img src={logo} alt="logo" className="w-5 h-5 object-contain" />
               </div>
               <span className="text-white font-black text-[20px] tracking-tight group-hover:text-gradient transition-all uppercase">{displayName}</span>
@@ -92,10 +92,10 @@ const Footer = () => {
                   <li key={j}>
                     <Link 
                       to={link.path} 
-                      className="text-secondary text-[14px] hover:text-[#915EFF] transition-colors flex items-center gap-2 group"
+                      className="text-secondary text-[14px] hover:text-[var(--accent)] transition-colors flex items-center gap-2 group"
                       onClick={() => window.scrollTo(0, 0)}
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-white/10 group-hover:bg-[#915EFF] transition-colors" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-white/10 group-hover:bg-[var(--accent)] transition-colors" />
                       {link.name}
                     </Link>
                   </li>
@@ -115,7 +115,7 @@ const Footer = () => {
               <p className="text-white/40 text-[12px] leading-relaxed italic">
                 Currently open for collaborations and high-impact full-time roles.
               </p>
-              <Link to={`${basePath}/contact`} className="text-white font-bold text-[12px] flex items-center gap-2 hover:text-[#915EFF] transition-colors mt-2 group">
+              <Link to={`${basePath}/contact`} className="text-white font-bold text-[12px] flex items-center gap-2 hover:text-[var(--accent)] transition-colors mt-2 group">
                 Let&apos;s talk <span className="group-hover:translate-x-1 transition-transform">→</span>
               </Link>
             </div>

@@ -117,16 +117,18 @@ const ThemeDropdown = () => {
 
   const handleThemeSelect = async (theme) => {
     setActiveTheme(theme);
-    const token = localStorage.getItem("portfolio_token");
-    if (token) {
-      try {
-        await fetch(`/api/themes/admin/activate/${theme.id}`, {
-          method: "POST",
-          headers: { Authorization: `Bearer ${token}` }
-        });
-      } catch (err) {
-        console.error("ThemeDropdown: Failed to activate theme:", err);
+    try {
+      const headers = {};
+      const token = localStorage.getItem("portfolio_token");
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
       }
+      await fetch(`/api/themes/admin/activate/${theme.id}`, {
+        method: "POST",
+        headers
+      });
+    } catch (err) {
+      console.error("ThemeDropdown: Failed to activate theme:", err);
     }
   };
 
@@ -136,17 +138,19 @@ const ThemeDropdown = () => {
       name: "Midnight Violet",
       config: defaultThemeConfig
     };
-    setActiveTheme(defaultTheme);
-    const token = localStorage.getItem("portfolio_token");
-    if (token) {
-      try {
-        await fetch(`/api/themes/admin/activate/default`, {
-          method: "POST",
-          headers: { Authorization: `Bearer ${token}` }
-        });
-      } catch (err) {
-        console.error("ThemeDropdown: Failed to reset active theme:", err);
+    setActiveTheme(defaultTheme, false);
+    try {
+      const headers = {};
+      const token = localStorage.getItem("portfolio_token");
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
       }
+      await fetch(`/api/themes/admin/activate/default`, {
+        method: "POST",
+        headers
+      });
+    } catch (err) {
+      console.error("ThemeDropdown: Failed to reset active theme:", err);
     }
   };
 

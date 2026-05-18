@@ -101,7 +101,7 @@ export const ThemeProvider = ({ children }) => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const isFirstMount = useRef(true);
 
-  const setActiveTheme = useCallback((theme) => {
+  const setActiveTheme = useCallback((theme, forceOverride = true) => {
     if (!theme) return;
     
     setActiveThemeState(prev => {
@@ -118,6 +118,11 @@ export const ThemeProvider = ({ children }) => {
       applyCssVars(next.config); 
       try {
         localStorage.setItem('selected_theme', JSON.stringify(next));
+        if (forceOverride) {
+          localStorage.setItem('selected_theme_override', 'true');
+        } else {
+          localStorage.removeItem('selected_theme_override');
+        }
       } catch (err) {
         console.error("Failed to write theme to localStorage:", err);
       }
@@ -127,6 +132,12 @@ export const ThemeProvider = ({ children }) => {
 
   useEffect(() => {
     if (data?.theme?.config) {
+      const hasOverride = localStorage.getItem('selected_theme_override') === 'true';
+      if (hasOverride) {
+        isFirstMount.current = false;
+        return;
+      }
+
       if (!isFirstMount.current) setIsTransitioning(true);
       
       setActiveThemeState(data.theme);

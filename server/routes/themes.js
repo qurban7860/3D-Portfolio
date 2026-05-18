@@ -58,12 +58,27 @@ router.delete("/admin/:id", authMiddleware, async (req, res) => {
   }
 });
 
-router.post("/admin/activate/:id", authMiddleware, async (req, res) => {
+import jwt from "jsonwebtoken";
+
+router.post("/admin/activate/:id", async (req, res) => {
   try {
     const repo = new SettingsRepository(getDb());
     let themeId = req.params.id;
 
-    // If client sends 'default', resolve to the actual seeded default theme ID
+    let userId = 1;
+    const authorization = req.headers.authorization || "";
+    const token = authorization.startsWith("Bearer ") ? authorization.slice(7) : null;
+    if (token) {
+      try {
+        // eslint-disable-next-line no-undef
+        const secret = process.env.JWT_SECRET || "change-this-secret-for-production";
+        const payload = jwt.verify(token, secret);
+        userId = Number(payload.id);
+      } catch (err) {
+        console.error("Token verification during public activate failed, using fallback:", err);
+      }
+    }
+
     if (themeId === 'default') {
       const defaultTheme = await getDb().get(
         "SELECT id FROM themes WHERE isDefault = 1 ORDER BY id ASC LIMIT 1"
@@ -72,12 +87,12 @@ router.post("/admin/activate/:id", authMiddleware, async (req, res) => {
         themeId = defaultTheme.id;
       } else {
         // Fallback: clear the setting so portfolio falls back naturally
-        await repo.upsert(req.user.id, "active_theme_id", null);
+        await repo.upsert(userId, "active_theme_id", null);
         return res.json({ message: "Active theme reset to default" });
       }
     }
 
-    await repo.upsert(req.user.id, "active_theme_id", themeId);
+    await repo.upsert(userId, "active_theme_id", themeId);
     res.json({ message: "Theme activated successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });

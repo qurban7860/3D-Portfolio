@@ -14,16 +14,16 @@ const FAQItem = ({ question, answer, index, isNew }) => {
       variants={fadeIn("up", "spring", isNew ? 0 : index * 0.05, 0.5)}
       initial={isNew ? "show" : "hidden"}
       animate="show"
-      className={`premium-glass rounded-2xl overflow-hidden ${isOpen ? "border-[#915EFF]/40 bg-[#915EFF]/5" : "border-white/5"} transition-all duration-300`}
+      className={`premium-glass-card rounded-2xl overflow-hidden ${isOpen ? "border-accent/40 bg-accent/5" : "border-white/5 bg-transparent"} transition-all duration-300`}
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full px-6 py-4 flex items-center justify-between text-left group"
       >
-        <h3 className="text-white font-bold text-sm leading-snug group-hover:text-[#915EFF] transition-colors">
+        <h3 className="text-white font-bold text-sm leading-snug group-hover:text-accent transition-colors">
           {question}
         </h3>
-        <span className={`text-white/30 transition-transform duration-300 ${isOpen ? 'rotate-180 text-[#915EFF]' : ''}`}>
+        <span className={`text-white/30 transition-transform duration-300 ${isOpen ? 'rotate-180 text-accent' : ''}`}>
           ▼
         </span>
       </button>
@@ -72,7 +72,7 @@ const FAQ = () => {
           className="premium-glass-card p-6 border-dashed border-white/10"
         >
           <h4 className="text-white font-bold text-sm mb-3">Still have questions?</h4>
-          <a href="/contact" className="text-[#915EFF] font-black text-sm hover:underline flex items-center gap-2">
+          <a href="/contact" className="text-accent font-black text-sm hover:underline flex items-center gap-2">
             Talk to me directly <span>→</span>
           </a>
         </motion.div>
@@ -96,9 +96,9 @@ const FAQ = () => {
             onClick={() => setShowAll(!showAll)}
             className="text-white/40 hover:text-white text-[12px] font-bold text-center mt-4 transition-colors flex items-center justify-center gap-2 group"
           >
-            <span className="w-8 h-[1px] bg-white/10 group-hover:bg-[#915EFF]/50 transition-colors" />
+            <span className="w-8 h-[1px] bg-white/10 group-hover:bg-accent/50 transition-colors" />
             {showAll ? "Show Less" : `View All ${allFaqs.length} Questions`}
-            <span className="w-8 h-[1px] bg-white/10 group-hover:bg-[#915EFF]/50 transition-colors" />
+            <span className="w-8 h-[1px] bg-white/10 group-hover:bg-accent/50 transition-colors" />
           </button>
         )}
       </div>

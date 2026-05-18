@@ -26,13 +26,13 @@ const ConfirmDialog = ({ isOpen, title, message, onConfirm, onCancel, type = "da
         >
           {/* Decorative glow */}
           <div className={`absolute top-0 right-0 w-32 h-32 blur-3xl rounded-full pointer-events-none ${
-            type === "danger" ? "bg-red-500/10" : "bg-[#915EFF]/10"
+            type === "danger" ? "bg-red-500/10" : "bg-accent/10"
           }`} />
 
           <div className={`mb-6 flex h-14 w-14 items-center justify-center rounded-2xl border backdrop-blur-xl shadow-xl transition-transform duration-500 hover:rotate-[15deg] ${
             type === "danger" 
               ? "bg-red-500/10 text-red-500 border-red-500/20" 
-              : "bg-[#915EFF]/10 text-[#915EFF] border-[#915EFF]/20"
+              : "bg-accent/10 text-accent border-accent/20"
           }`}>
             <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
@@ -56,7 +56,7 @@ const ConfirmDialog = ({ isOpen, title, message, onConfirm, onCancel, type = "da
               className={`flex-1 rounded-[1.25rem] px-8 py-4 text-[15px] font-bold text-white shadow-2xl transition-all active:scale-95 ${
                 type === "danger" 
                   ? "bg-red-500 shadow-red-500/20 hover:bg-red-600" 
-                  : "bg-[#915EFF] shadow-[#915EFF]/20 hover:bg-[#804dee]"
+                  : "bg-accent shadow-[0_0_20px_rgba(var(--accent-rgb),0.2)] hover:bg-accent/80"
               }`}
             >
               Confirm

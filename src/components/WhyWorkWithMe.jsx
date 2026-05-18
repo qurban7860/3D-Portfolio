@@ -13,12 +13,12 @@ const WhyCard = ({ icon: Icon, title, desc, delay }) => (
     className="premium-glass-card glass-reflection inner-glow p-6 flex items-center gap-5 group"
   >
     <div className="w-12 h-12 rounded-xl flex items-center justify-center text-xl
-                    bg-white/5 border border-white/10 group-hover:border-[#915EFF]/50 
+                    bg-white/5 border border-white/10 group-hover:border-accent/50 
                     transition-all duration-500 backdrop-blur-sm shrink-0">
-      <Icon className="text-[#915EFF] group-hover:scale-110 transition-transform" />
+      <Icon className="text-accent group-hover:scale-110 transition-transform" />
     </div>
     <div>
-      <h4 className="text-white font-black text-base group-hover:text-[#915EFF] transition-colors">{title}</h4>
+      <h4 className="text-white font-black text-base group-hover:text-accent transition-colors">{title}</h4>
       <p className="text-secondary text-[12px] opacity-70 line-clamp-1">{desc}</p>
     </div>
   </motion.div>

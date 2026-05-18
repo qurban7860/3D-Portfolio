@@ -19,7 +19,7 @@ const FeedbackCard = ({ index, testimonial, name, imageUrl }) => {
     <motion.div
       variants={fadeIn("up", "spring", index * 0.4, 0.75)}
       whileHover={{ y: -6 }}
-      className={`${styles.glassCard} w-full p-7 flex flex-col gap-4 transition-all duration-500 hover:border-[#915EFF]/30 hover:shadow-[0_10px_30px_rgba(145,94,255,0.1)]`}
+      className={`premium-glass-card glass-reflection inner-glow w-full p-7 flex flex-col gap-4 transition-all duration-500 hover:border-accent/30 hover:shadow-[0_10px_30px_rgba(var(--accent-rgb),0.1)]`}
     >
       {/* Quote mark */}
       <div className="text-[52px] leading-none font-black text-gradient select-none -mb-2">
@@ -33,22 +33,22 @@ const FeedbackCard = ({ index, testimonial, name, imageUrl }) => {
 
       {/* Divider */}
       <div className="h-px bg-white/10 relative overflow-hidden mt-2">
-         <div className="absolute inset-0 bg-[#915EFF] animate-shimmer" style={{ backgroundSize: '200% auto' }} />
+         <div className="absolute inset-0 bg-accent animate-shimmer" style={{ backgroundSize: '200% auto' }} />
       </div>
 
       {/* Author */}
       <div className="flex items-center gap-4">
         <div className="relative flex-shrink-0">
-          <div className="absolute inset-0 bg-[#915EFF]/20 blur-md rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="absolute inset-0 bg-accent/20 blur-md rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
           {!error && imageUrl ? (
             <img
               src={imageUrl}
               alt={`feedback by ${name}`}
               onError={() => setError(true)}
-              className="w-12 h-12 rounded-full object-cover ring-2 ring-[#915EFF]/30 relative z-10"
+              className="w-12 h-12 rounded-full object-cover ring-2 ring-accent/30 relative z-10"
             />
           ) : (
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#915EFF]/20 to-[#56ccf2]/20 border border-white/10 flex items-center justify-center text-white font-black text-sm relative z-10">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent/20 to-secondary/20 border border-white/10 flex items-center justify-center text-white font-black text-sm relative z-10">
               {initials}
             </div>
           )}
@@ -78,18 +78,14 @@ const Feedbacks = () => {
 
   return (
     <div
-      className="rounded-3xl overflow-hidden relative"
+      className="premium-glass-card glass-reflection border-accent/20 w-full rounded-3xl overflow-hidden relative"
       style={{
-        background:
-          "linear-gradient(135deg, rgba(145,94,255,0.08) 0%, rgba(5,8,22,0.95) 50%, rgba(86,204,242,0.05) 100%)",
-        border: "1px solid rgba(145,94,255,0.18)",
-        backdropFilter: "blur(10px)",
-        WebkitBackdropFilter: "blur(10px)",
+        background: "linear-gradient(135deg, rgba(var(--accent-rgb),0.08) 0%, var(--card-bg) 50%, rgba(var(--secondary-rgb),0.05) 100%)",
       }}
     >
       {/* Ambient blobs */}
-      <div className="absolute top-0 left-1/4 w-64 h-64 bg-[#915EFF]/8 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-48 h-48 bg-[#56ccf2]/6 rounded-full blur-2xl pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-64 h-64 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-48 h-48 bg-secondary/10 rounded-full blur-2xl pointer-events-none" />
 
       {/* Header */}
       <div className={`${styles.padding} py-14 relative z-10`}>

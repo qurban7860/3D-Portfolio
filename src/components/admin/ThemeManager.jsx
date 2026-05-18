@@ -19,6 +19,7 @@ import PropTypes from "prop-types";
 import toast from "react-hot-toast";
 import { usePortfolio } from "../../context/PortfolioContext";
 import { useTheme } from "../../context/ThemeContext";
+import ConfirmDialog from "../common/ConfirmDialog";
 
 const ThemeManager = () => {
   const { refreshPortfolio } = usePortfolio();
@@ -31,6 +32,7 @@ const ThemeManager = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("presets"); 
   const [activeColorKey, setActiveColorKey] = useState("accent");
+  const [deleteDialog, setDeleteDialog] = useState({ isOpen: false, id: null });
 
   const fetchThemes = useCallback(async () => {
     try {
@@ -128,8 +130,14 @@ const ThemeManager = () => {
     }
   };
 
-  const handleDeleteTheme = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this design?")) return;
+  const handleDeleteTheme = (id) => {
+    setDeleteDialog({ isOpen: true, id });
+  };
+
+  const confirmDeleteTheme = async () => {
+    const id = deleteDialog.id;
+    setDeleteDialog({ isOpen: false, id: null });
+    if (!id) return;
     try {
       const response = await fetch(`/api/themes/admin/${id}`, {
         method: "DELETE",
@@ -228,6 +236,15 @@ const ThemeManager = () => {
           </div>
         </div>
       </motion.div>
+
+      <ConfirmDialog 
+        isOpen={deleteDialog.isOpen}
+        title="Delete Design"
+        message="Are you sure you want to permanently delete this design from your gallery? This action cannot be undone."
+        onConfirm={confirmDeleteTheme}
+        onCancel={() => setDeleteDialog({ isOpen: false, id: null })}
+        type="danger"
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
         
@@ -481,24 +498,6 @@ const ThemeManager = () => {
                           </div>
                        </div>
                     </div>
-                 </div>
-              </div>
-
-              {/* Navigation Mirror */}
-              <div className="flex flex-col gap-5">
-                 <span className="text-[10px] font-black uppercase tracking-widest text-secondary opacity-30 ml-4">Adaptive Navigation Mirror</span>
-                 <div className="w-full h-24 rounded-[2.5rem] border border-white/10 overflow-hidden relative shadow-2xl group/nav">
-                    <div className="absolute inset-0 bg-black/60 backdrop-blur-[32px] flex items-center justify-between px-10">
-                       <div className="flex items-center gap-5">
-                          <div className="w-12 h-12 rounded-2xl bg-accent/20 border border-accent/40 flex items-center justify-center text-accent font-black text-xl shadow-2xl shadow-accent/10">Q</div>
-                          <div className="hidden sm:block h-3.5 w-32 bg-white/10 rounded-full opacity-40" />
-                       </div>
-                       <div className="flex gap-6 items-center">
-                          {[1,2,3,4].map(i => <div key={i} className={`h-2 w-12 rounded-full transition-all duration-500 ${i===1 ? 'bg-accent shadow-[0_0_15px_rgba(var(--accent-rgb),0.6)]' : 'bg-white/10 opacity-30'}`} />)}
-                          <div className="ml-6 h-12 w-32 rounded-2xl bg-accent/10 border border-accent/30 hidden sm:block" />
-                       </div>
-                    </div>
-                    <div className="absolute bottom-0 left-0 h-[1px] w-full bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
                  </div>
               </div>
            </div>

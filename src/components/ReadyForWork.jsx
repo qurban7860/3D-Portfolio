@@ -16,11 +16,11 @@ import { premium_collaboration } from "../assets";
 const HiringPoint = ({ icon: Icon, title, desc, index }) => (
   <motion.div
     variants={fadeIn("up", "spring", index * 0.1, 0.5)}
-    className="flex flex-col gap-3 p-5 rounded-2xl bg-white/5 border border-white/10 hover:border-[#915EFF]/40 hover:bg-white/10 hover:shadow-[0_0_30px_rgba(145,94,255,0.15)] transition-all duration-500 group cursor-default h-full relative overflow-hidden"
+    className="premium-glass-card glass-reflection inner-glow flex flex-col gap-3 p-5 rounded-2xl border-white/10 hover:border-accent/40 hover:shadow-[0_0_30px_rgba(var(--accent-rgb),0.15)] transition-all duration-500 group cursor-default h-full relative overflow-hidden"
   >
-    <div className="absolute -right-4 -top-4 w-24 h-24 bg-[#915EFF]/10 rounded-full blur-[24px] group-hover:bg-[#915EFF]/30 transition-colors pointer-events-none" />
-    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#915EFF]/20 to-transparent flex items-center justify-center border border-white/10 group-hover:border-[#915EFF]/50 transition-colors z-10 shadow-inner">
-      <Icon className="text-2xl text-[#915EFF] group-hover:scale-110 transition-transform shrink-0 drop-shadow-[0_0_8px_rgba(145,94,255,0.8)]" />
+    <div className="absolute -right-4 -top-4 w-24 h-24 bg-accent/10 rounded-full blur-[24px] group-hover:bg-accent/30 transition-colors pointer-events-none" />
+    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent/20 to-transparent flex items-center justify-center border border-white/10 group-hover:border-accent/50 transition-colors z-10 shadow-inner">
+      <Icon className="text-2xl text-accent group-hover:scale-110 transition-transform shrink-0 drop-shadow-[0_0_8px_rgba(var(--accent-rgb),0.8)]" />
     </div>
     <div className="z-10 mt-1">
       <h4 className="text-white text-[15px] font-black tracking-wide mb-1.5">
@@ -87,7 +87,7 @@ const ReadyForWork = () => {
             <motion.div
               key={i}
               variants={fadeIn("up", "spring", i * 0.1, 0.5)}
-              className="flex flex-col items-center p-4 bg-white/5 rounded-2xl border border-white/10 shadow-inner hover:bg-white/10 hover:border-[#915EFF]/30 transition-colors duration-500"
+              className="flex flex-col items-center p-4 premium-glass-card border border-white/10 shadow-inner hover:border-accent/30 transition-colors duration-500"
             >
               <span className="text-white font-black text-xl sm:text-2xl drop-shadow-md">
                 {fact.stat}
@@ -119,7 +119,7 @@ const ReadyForWork = () => {
           variants={fadeIn("up", "spring", 0.5, 0.8)}
           className="lg:col-span-5 flex justify-center lg:justify-end w-full"
         >
-          <div className="premium-glass-card group p-1 w-full max-w-md overflow-hidden border-white/10 shadow-[0_0_50px_rgba(145,94,255,0.15)]">
+          <div className="premium-glass-card group p-1 w-full max-w-md overflow-hidden border-white/10 shadow-[0_0_50px_rgba(var(--accent-rgb),0.15)]">
             <div className="relative h-48 sm:h-56 overflow-hidden rounded-[1.5rem]">
               <img
                 src={premium_collaboration}
@@ -132,7 +132,7 @@ const ReadyForWork = () => {
                   Strategic Partnership
                 </h4>
                 <div className="flex items-center gap-2 mt-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#915EFF] animate-ping" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent animate-ping" />
                   <p className="text-secondary text-[10px] uppercase tracking-[0.2em] font-bold">
                     24h Response SLA
                   </p>

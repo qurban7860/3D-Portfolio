@@ -22,7 +22,7 @@ export const ProjectCard = ({ index, name, description, tags, imageUrl, sourceCo
         className="rounded-[2.5rem] w-full sm:w-[360px] premium-glass-card overflow-hidden"
       >
         {/* Image area */}
-        <div className="relative w-full h-[210px] overflow-hidden bg-[#050816]">
+        <div className="relative w-full h-[210px] overflow-hidden bg-primary">
           {/* Featured badge */}
           {index % 3 === 0 && (
             <div className="absolute top-4 left-4 z-20 text-[#c4a7ff] text-[10px] font-bold
@@ -41,7 +41,7 @@ export const ProjectCard = ({ index, name, description, tags, imageUrl, sourceCo
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
           ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#1d1836] to-[#050816] relative overflow-hidden">
+            <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-tertiary to-primary relative overflow-hidden">
                <div className="absolute inset-0 bg-dot-pattern opacity-10" />
                <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-3xl mb-2 relative z-10">
                   <span className="opacity-40 group-hover:scale-110 transition-transform duration-500">🖼️</span>

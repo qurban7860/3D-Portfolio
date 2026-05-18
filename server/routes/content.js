@@ -4,6 +4,7 @@ import upload from "../middleware/upload.js";
 import { getDb } from "../db.js";
 import { BaseRepository } from "../repositories/BaseRepository.js";
 import { SettingsRepository } from "../repositories/SettingsRepository.js";
+import ThemeRepository from "../repositories/ThemeRepository.js";
 
 const router = express.Router();
 
@@ -37,16 +38,40 @@ router.get("/", async (_req, res) => {
   const settingsRepo = makeSettingsRepo(db);
   const settings     = await settingsRepo.findAll(userId);
 
-  const [
-    projects, experiences, educations, technologies,
-    services, testimonials, socials, certifications, stats, faqs,
-  ] = await Promise.all(
+  const content = await Promise.all(
     ["projects","experiences","educations","technologies",
      "services","testimonials","socials","certifications","stats", "faqs"]
       .map((type) => makeRepo(db, type).findVisible(userId))
   );
 
-  return res.json({ settings, projects, experiences, educations, technologies, services, testimonials, socials, certifications, stats, faqs });
+  const [
+    projects, experiences, educations, technologies,
+    services, testimonials, socials, certifications, stats, faqs,
+  ] = content;
+
+  let theme = null;
+  const activeThemeId = settings.active_theme_id;
+  if (activeThemeId) {
+    theme = await ThemeRepository.getById(activeThemeId);
+  } else {
+    const userThemes = await ThemeRepository.getByUserId(userId);
+    theme = userThemes.find(t => t.isDefault) || userThemes[0] || null;
+  }
+
+  return res.json({ 
+    settings, 
+    theme,
+    projects, 
+    experiences, 
+    educations, 
+    technologies, 
+    services, 
+    testimonials, 
+    socials, 
+    certifications, 
+    stats, 
+    faqs 
+  });
 });
 
 router.get("/admin/settings", authMiddleware, async (req, res) => {

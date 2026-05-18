@@ -141,7 +141,6 @@ export async function initializeDatabase() {
           user_id    INTEGER REFERENCES users(id) ON DELETE CASCADE,
           name       TEXT NOT NULL,
           iconUrl    TEXT NOT NULL,
-          icon       TEXT DEFAULT '',
           visible    INTEGER DEFAULT 1,
           orderIndex INTEGER DEFAULT 0
         )`,
@@ -215,6 +214,16 @@ export async function initializeDatabase() {
           PRIMARY KEY (user_id, key)
         )`,
         `CREATE INDEX IF NOT EXISTS idx_settings_user_id ON settings(user_id)`,
+        `CREATE TABLE IF NOT EXISTS themes (
+          id          INTEGER PRIMARY KEY AUTOINCREMENT,
+          user_id     INTEGER REFERENCES users(id) ON DELETE CASCADE,
+          name        TEXT NOT NULL,
+          config      TEXT NOT NULL,
+          isPublic    INTEGER DEFAULT 0,
+          isDefault   INTEGER DEFAULT 0,
+          createdAt   TEXT NOT NULL
+        )`,
+        `CREATE INDEX IF NOT EXISTS idx_themes_user_id ON themes(user_id)`,
       ];
 
       for (const sql of schema) {
@@ -223,8 +232,15 @@ export async function initializeDatabase() {
         } catch (err) {
           if (String(err).includes("no such column") && sql.includes("CREATE INDEX")) {
              console.warn(`⚠️ Skipping index creation due to missing column: ${sql}`);
-          } else if (sql.includes("ALTER TABLE") && (String(err).includes("duplicate column name") || String(err).toLowerCase().includes("already exists"))) {
-             // Safe to ignore if column already exists
+          } else if (
+            sql.includes("ALTER TABLE") && (
+              String(err).includes("duplicate column name") || 
+              String(err).toLowerCase().includes("already exists") ||
+              String(err).includes("SQLITE_ERROR") ||
+              String(err).includes("SQLITE_UNKNOWN")
+            )
+          ) {
+             console.log(`ℹ️ Column already exists, skipping: ${sql.split(' ').pop()}`);
           } else {
              console.error(`❌ DB Schema Error on query: ${sql}`, err);
              throw err;

@@ -2,6 +2,7 @@ import express from "express";
 import { getDb } from "../db.js";
 import { BaseRepository } from "../repositories/BaseRepository.js";
 import { SettingsRepository } from "../repositories/SettingsRepository.js";
+import ThemeRepository from "../repositories/ThemeRepository.js";
 import { contentMap } from "./content.js";
 
 const router = express.Router();
@@ -41,9 +42,20 @@ router.get("/:username", async (req, res) => {
     acc[type] = contentResults[i];
     return acc;
   }, {});
+
+  let theme = null;
+  const activeThemeId = settings.active_theme_id;
+  if (activeThemeId) {
+    theme = await ThemeRepository.getById(activeThemeId);
+  } else {
+    const userThemes = await ThemeRepository.getByUserId(userId);
+    theme = userThemes.find(t => t.isDefault) || userThemes[0] || null;
+  }
+
   return res.json({
     user: { username: user.username },
     settings,
+    theme,
     ...content,
   });
 });

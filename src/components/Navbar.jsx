@@ -10,9 +10,10 @@ import {
   FiDownload,
   FiMessageCircle
 } from "react-icons/fi";
-import { HiMenuAlt3, HiX } from "react-icons/hi";
+import { HiMenuAlt3, HiX, HiOutlineColorSwatch } from "react-icons/hi";
 import { styles } from "../styles";
 import { usePortfolio } from "../context/PortfolioContext";
+import { useTheme } from "../context/ThemeContext";
 // import { useAuth } from "../context/AuthContext";
 import resumePdf from "../assets/resume/Resume_Mern.pdf";
 import logo from "/logo.svg";
@@ -32,7 +33,7 @@ const SocialDropdown = ({ links }) => {
         whileTap={{ scale: 0.98 }}
         className={`flex items-center gap-2.5 px-4 py-2 rounded-xl border transition-all duration-300 ${
           isOpen 
-            ? "bg-[#915EFF]/10 border-[#915EFF]/50 shadow-[0_0_20px_rgba(145,94,255,0.2)]" 
+            ? "bg-[var(--accent)]/10 border-[var(--accent)]/50 shadow-[0_0_20px_var(--glow-color)]" 
             : "bg-white/5 border-white/10 hover:border-white/20"
         }`}
       >
@@ -72,12 +73,12 @@ const SocialDropdown = ({ links }) => {
                     rel="noopener noreferrer"
                     className="flex items-center gap-3.5 px-3 py-2.5 rounded-xl hover:bg-white/5 transition-all duration-300 group"
                   >
-                    <div className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center border border-white/5 group-hover:border-[#915EFF]/30 group-hover:bg-[#915EFF]/10 transition-all">
+                    <div className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center border border-white/5 group-hover:border-[var(--accent)]/30 group-hover:bg-[var(--accent)]/10 transition-all">
                       <link.icon className="w-4.5 h-4.5 text-white/50 group-hover:text-white transition-colors" />
                     </div>
                     <div className="flex flex-col">
                       <span className="text-[13px] font-medium text-white/80 group-hover:text-white transition-colors">{link.title}</span>
-                      <span className="text-[10px] text-white/30 group-hover:text-[#915EFF]/70 transition-colors truncate max-w-[140px]">
+                      <span className="text-[10px] text-white/30 group-hover:text-[var(--accent)]/70 transition-colors truncate max-w-[140px]">
                         {link.subtitle || link.url.replace(/^https?:\/\/(www\.)?/, "").split("/")[0]}
                       </span>
                     </div>
@@ -88,6 +89,89 @@ const SocialDropdown = ({ links }) => {
               <div className="mt-1.5 pt-1.5 border-t border-white/5 flex items-center justify-between px-3 pb-1">
                 <span className="text-[9px] text-white/20 font-medium uppercase tracking-widest">Available for Hire</span>
                 <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+const ThemeDropdown = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [themes, setThemes] = useState([]);
+  const { activeTheme, setActiveTheme } = useTheme();
+
+  useEffect(() => {
+    fetch('/api/themes/public')
+      .then(res => res.json())
+      .then(data => setThemes(data))
+      .catch(console.error);
+  }, []);
+
+  return (
+    <div 
+      className="relative"
+      onMouseEnter={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
+    >
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className={`flex items-center justify-center w-9 h-9 rounded-xl border transition-all duration-300 ${
+          isOpen 
+            ? "bg-[var(--accent)]/10 border-[var(--accent)]/50 shadow-inner" 
+            : "bg-white/5 border-white/10 hover:border-white/20 hover:bg-white/10"
+        }`}
+        title="Cinematic Themes"
+      >
+        <HiOutlineColorSwatch className="text-[var(--accent)] w-[18px] h-[18px]" />
+      </motion.button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            <div className="absolute top-full left-0 w-full h-4" />
+            
+            <motion.div
+              initial={{ opacity: 0, y: 15, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+              transition={{ type: "spring", damping: 20, stiffness: 300 }}
+              className="absolute top-[calc(100%+12px)] right-0 w-64 bg-[#0a0a1a]/95 backdrop-blur-2xl rounded-2xl border border-[var(--glass-border)] shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden z-[100] p-1.5"
+            >
+              <div className="px-3 py-2 mb-1 flex justify-between items-center">
+                <span className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em]">Cinematic Themes</span>
+              </div>
+              
+              <div className="grid grid-cols-1 gap-1">
+                {themes.map((theme) => (
+                  <button
+                    key={theme.id}
+                    onClick={() => setActiveTheme(theme)}
+                    className={`flex items-center gap-3.5 px-3 py-2.5 rounded-xl transition-all duration-300 group ${
+                      activeTheme?.id === theme.id ? "bg-[var(--accent)]/10 border border-[var(--accent)]/30" : "hover:bg-white/5 border border-transparent"
+                    }`}
+                  >
+                    <div 
+                      className="w-8 h-8 rounded-lg shadow-inner flex items-center justify-center border border-white/10 transition-transform group-hover:scale-110"
+                      style={{ background: `linear-gradient(135deg, ${theme.config.colors.accent}, ${theme.config.colors.secondary})` }}
+                    />
+                    <div className="flex flex-col items-start">
+                      <span className={`text-[13px] font-medium transition-colors ${activeTheme?.id === theme.id ? "text-white" : "text-white/80 group-hover:text-white"}`}>{theme.name.replace(" (Original)", "")}</span>
+                      {activeTheme?.id === theme.id && (
+                        <span className="text-[9px] text-[var(--accent)] uppercase font-bold tracking-widest mt-0.5">Active</span>
+                      )}
+                    </div>
+                  </button>
+                ))}
+              </div>
+              
+              <div className="mt-2 pt-2 border-t border-white/5 px-2 pb-1">
+                 <Link to="/admin" className="w-full flex items-center justify-center gap-2 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 transition-all text-[10px] uppercase tracking-widest font-bold text-white/80 hover:text-white">
+                   Customize Theme
+                 </Link>
               </div>
             </motion.div>
           </>
@@ -118,9 +202,9 @@ const ResumeButton = ({ isMobile = false }) => {
             ? setShowOptions(!showOptions)
             : window.open(resumePdf, "_blank")
         }
-        className={`flex items-center gap-3 px-5 py-2.5 glass-badge-hero border border-white/10 text-white font-bold rounded-xl hover:border-[#915EFF]/50 hover:shadow-[0_0_20px_rgba(145,94,255,0.2)] transition-all duration-300 text-[12px] uppercase tracking-wider ${isMobile ? "w-full justify-center" : ""}`}
+        className={`flex items-center gap-3 px-5 py-2.5 glass-badge-hero border border-white/10 text-white font-bold rounded-xl hover:border-[var(--accent)]/50 hover:shadow-[0_0_20px_var(--glow-color)] transition-all duration-300 text-[12px] uppercase tracking-wider ${isMobile ? "w-full justify-center" : ""}`}
       >
-        <FiFileText className="text-[#915EFF] w-4 h-4" />
+        <FiFileText className="text-[var(--accent)] w-4 h-4" />
         <span>Resume</span>
         <FiChevronDown
           className={`text-white/40 transition-transform duration-300 ${showOptions ? "rotate-180" : ""}`}
@@ -170,7 +254,7 @@ const NavLinkItem = ({ nav, active, onLinkClick }) => (
       {nav.title}
     </Link>
     <div
-      className={`absolute -bottom-1 left-0 h-[2px] bg-[#915EFF] transition-all duration-500 ${active === nav.title ? "w-full" : "w-0 group-hover:w-1/2"}`}
+      className={`absolute -bottom-1 left-0 h-[2px] bg-[var(--accent)] transition-all duration-500 ${active === nav.title ? "w-full" : "w-0 group-hover:w-1/2"}`}
     />
   </li>
 );
@@ -222,13 +306,13 @@ const MobileMenu = ({
             className="absolute top-0 right-0 w-[88%] max-w-[360px] h-full flex flex-col border-l border-white/5 shadow-2xl z-10 bg-[#050816]/90 backdrop-blur-[80px] overflow-hidden"
           >
             {/* Ambient Background Glows */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#915EFF]/10 rounded-full blur-[120px] pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#56ccf2]/5 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--primary)]/10 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-[var(--secondary)]/5 rounded-full blur-[120px] pointer-events-none" />
 
             {/* Header / Close Button */}
             <div className="p-8 flex items-center justify-between border-b border-white/5 bg-white/[0.01] backdrop-blur-xl">
               <div className="flex flex-col">
-                <span className="text-[#915EFF] text-[11px] font-bold uppercase tracking-[0.3em] opacity-60">Directory</span>
+                <span className="text-[var(--accent)] text-[11px] font-bold uppercase tracking-[0.3em] opacity-60">Directory</span>
                 <span className="text-white text-[15px] font-bold tracking-tight mt-1">Menu</span>
               </div>
               <button
@@ -262,7 +346,7 @@ const MobileMenu = ({
                         <span className={`text-[16px] font-medium transition-all ${active === nav.title ? "text-white" : "text-white/40 group-hover:text-white"}`}>
                           {nav.title}
                         </span>
-                        <div className={`h-1 w-1 rounded-full bg-[#915EFF] transition-all duration-500 ${active === nav.title ? "scale-100 opacity-100 shadow-[0_0_8px_rgba(145,94,255,0.8)]" : "scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-30"}`} />
+                        <div className={`h-1 w-1 rounded-full bg-[var(--accent)] transition-all duration-500 ${active === nav.title ? "scale-100 opacity-100 shadow-[0_0_8px_var(--glow-color)]" : "scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-30"}`} />
                       </Link>
                     </motion.li>
                   ))}
@@ -300,9 +384,9 @@ const MobileMenu = ({
                           initial={{ opacity: 0, scale: 0.9 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ delay: 0.4 + index * 0.05 }}
-                          className="flex items-center gap-3 p-4 rounded-2xl bg-white/[0.02] border border-white/5 active:bg-[#915EFF]/10 active:border-[#915EFF]/30 transition-all group"
+                          className="flex items-center gap-3 p-4 rounded-2xl bg-white/[0.02] border border-white/5 active:bg-[var(--accent)]/10 active:border-[var(--accent)]/30 transition-all group"
                         >
-                          <link.icon className="text-white/40 group-hover:text-[#915EFF] transition-colors" size={20} />
+                          <link.icon className="text-white/40 group-hover:text-[var(--accent)] transition-colors" size={20} />
                           <span className="text-[12px] font-bold text-white/60 group-hover:text-white transition-colors">{link.title}</span>
                         </motion.a>
                       ))}
@@ -416,8 +500,8 @@ const Navbar = () => {
               setActive("");
             }}
           >
-            <div className="w-11 h-11 rounded-2xl glass-badge-hero flex items-center justify-center border-white/10 group-hover:border-[#915EFF]/50 group-hover:rotate-[10deg] transition-all duration-500 shadow-xl overflow-hidden relative active:scale-95">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#915EFF]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="w-11 h-11 rounded-2xl glass-badge-hero flex items-center justify-center border-white/10 group-hover:border-[var(--primary)]/50 group-hover:rotate-[10deg] transition-all duration-500 shadow-xl overflow-hidden relative active:scale-95">
+              <div className="absolute inset-0 bg-gradient-to-br from-[var(--primary)]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               <img src={logo} alt="logo" className="w-6 h-6 object-contain relative z-10 group-hover:scale-110 transition-transform" />
             </div>
             <div className="flex flex-col relative">
@@ -451,6 +535,7 @@ const Navbar = () => {
             <div className="flex items-center gap-6">
               {SOCIAL_LINKS.length > 0 && (
                 <div className="flex items-center gap-6 border-l border-white/10 pl-8 h-8">
+                  <ThemeDropdown />
                   <SocialDropdown links={SOCIAL_LINKS} />
                 </div>
               )}
@@ -464,7 +549,7 @@ const Navbar = () => {
               className="w-11 h-11 rounded-xl glass-badge-hero flex items-center justify-center border-white/10 text-white/70 hover:text-white transition-all active:scale-90 group relative overflow-hidden"
               aria-label="Open Menu"
             >
-              <div className="absolute inset-0 bg-[#915EFF]/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute inset-0 bg-[var(--primary)]/5 opacity-0 group-hover:opacity-100 transition-opacity" />
               <HiMenuAlt3 size={24} className="relative z-10" />
             </button>
           </div>

@@ -17,6 +17,7 @@ import AboutPage from "./pages/AboutPage";
 import RegisterPage from "./pages/Admin/Register";
 import NotFound from "./pages/NotFound";
 import GlobalBackground from "./components/common/GlobalBackground";
+import { ThemeProvider } from "./context/ThemeContext";
 
 import { Toaster } from "react-hot-toast";
 
@@ -142,7 +143,9 @@ const App = () => {
           />
           <GlobalBackground />
           <GlobalTenantResolver>
-            <AnimatedRoutes />
+            <ThemeProvider>
+              <AnimatedRoutes />
+            </ThemeProvider>
           </GlobalTenantResolver>
         </BrowserRouter>
       </AuthProvider>

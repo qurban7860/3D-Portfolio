@@ -57,11 +57,11 @@ ExperienceIcon.propTypes = {
 const ExperienceCard = ({ experience }) => (
   <VerticalTimelineElement
     contentStyle={{
-      background: "rgba(255, 255, 255, 0.03)",
-      backdropFilter: "blur(24px)",
-      WebkitBackdropFilter: "blur(24px)",
-      color: "#fff",
-      border: "1px solid rgba(255, 255, 255, 0.1)",
+      background: "var(--glass-bg)",
+      backdropFilter: "blur(var(--glass-blur))",
+      WebkitBackdropFilter: "blur(var(--glass-blur))",
+      color: "var(--text-primary)",
+      border: "1px solid var(--glass-border)",
       borderRadius: "2.5rem",
       boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05)",
       padding: "2.5rem",
@@ -75,8 +75,8 @@ const ExperienceCard = ({ experience }) => (
       </div>
     }
     iconStyle={{
-      background: experience.iconBg || "#161130",
-      boxShadow: "0 0 0 4px rgba(145,94,255,0.2), 0 15px 35px rgba(145,94,255,0.4)",
+      background: experience.iconBg || "var(--tertiary)",
+      boxShadow: "0 0 0 4px rgba(var(--accent-rgb), 0.2), 0 15px 35px rgba(var(--accent-rgb), 0.4)",
     }}
     icon={<ExperienceIcon experience={experience} />}
   >

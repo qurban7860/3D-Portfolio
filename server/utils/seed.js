@@ -1,12 +1,13 @@
 /* eslint-env node */
 import bcrypt from "bcryptjs";
+import { PREMIUM_THEMES } from "./themes.js";
 
 const ADMIN_EMAIL    = process.env.ADMIN_EMAIL    || "admin@gmail.com";
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "Admin123!";
 
 const defaultSettings = {
   hero: {
-    headline: "Hi, I'm Qurban ",
+    headline: "Hi, I'm Qurban",
     subtitle: "Turning your ideas into powerful web and mobile solutions with clean code and smooth user experiences.",
   },
   about: {
@@ -275,6 +276,31 @@ export async function seedDatabase(db) {
         "INSERT INTO certifications (user_id, title, issuer, date, icon, visible, orderIndex) VALUES (?, ?, ?, ?, ?, ?, ?)",
         adminId, cert.title, cert.issuer, cert.date, cert.icon, 1, cert.id
       );
+    }
+  }
+
+  // ── 12. Themes ────────────────────────────────────────────────────────────
+  const themeCount = await db.get("SELECT COUNT(*) as count FROM themes");
+  if (themeCount.count === 0) {
+    for (const theme of PREMIUM_THEMES) {
+      const result = await db.run(
+        "INSERT INTO themes (user_id, name, config, isPublic, isDefault, createdAt) VALUES (?, ?, ?, ?, ?, ?)",
+        adminId,
+        theme.name,
+        JSON.stringify(theme.config),
+        theme.isPublic,
+        theme.isDefault,
+        new Date().toISOString()
+      );
+
+      if (theme.isDefault) {
+        await db.run(
+          "INSERT OR REPLACE INTO settings (user_id, key, value) VALUES (?, ?, ?)",
+          adminId,
+          "active_theme_id",
+          JSON.stringify(result.lastID)
+        );
+      }
     }
   }
 }

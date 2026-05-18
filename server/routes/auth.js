@@ -7,11 +7,12 @@ import authMiddleware from "../middleware/auth.js";
 import { SettingsRepository } from "../repositories/SettingsRepository.js";
 
 const router = express.Router();
-const JWT_SECRET  = process.env.JWT_SECRET  || "change-this-secret-for-production";
 const SALT_ROUNDS = 12;
-const TOKEN_EXPIRY = "8h";
 
 function signToken(user) {
+  const JWT_SECRET  = process.env.JWT_SECRET  || "change-this-secret-for-production";
+  const TOKEN_EXPIRY = "8h";
+  
   return jwt.sign(
     {
       id:       user.id,

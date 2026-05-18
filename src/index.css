@@ -4,17 +4,35 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary: #050816;
+  --secondary: #aaa6c3;
+  --tertiary: #151030;
+  --background: #050816;
+  --accent: #915EFF;
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --text-primary: #ffffff;
+  --text-secondary: #aaa6c3;
+  --card-bg: #1d1836;
+  --glass-blur: 24px;
+  --glow-color: rgba(145, 94, 255, 0.4);
+  --glow-intensity: 1;
+}
+
 html, body, #root {
   width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: rgba(145, 94, 255, 0.3) transparent;
+  scrollbar-color: var(--glow-color) transparent;
 }
 
 body {
-  background-color: #050816;
+  background-color: var(--background);
   position: relative;
+  color: var(--text-primary);
+  transition: background-color 0.5s ease-in-out;
 }
 
 body::before {
@@ -35,7 +53,7 @@ body::before {
   position: fixed;
   width: 1px;
   height: 100vh;
-  background: linear-gradient(to bottom, transparent, rgba(145, 94, 255, 0.1), transparent);
+  background: linear-gradient(to bottom, transparent, var(--glow-color), transparent);
   z-index: -1;
   pointer-events: none;
 }
@@ -261,7 +279,7 @@ a {
 }
 
 a:hover {
-  color: #915EFF;
+  color: var(--primary);
 }
 
 html {
@@ -270,7 +288,7 @@ html {
 }
 
 ::selection {
-  background-color: #915EFF;
+  background-color: var(--accent);
   color: #ffffff;
 }
 
@@ -502,10 +520,10 @@ html {
 }
 
 .glass {
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
 }
 
 .glass-strong {
@@ -550,7 +568,7 @@ html {
 }
 
 .text-gradient {
-  background: linear-gradient(90deg, #915EFF, #56ccf2);
+  background: linear-gradient(90deg, var(--accent), var(--secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -656,11 +674,10 @@ html {
 }
 
 .stat-number {
-  background: linear-gradient(90deg, #915EFF, #56ccf2);
+  background: linear-gradient(90deg, var(--accent), var(--secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 8px rgba(145, 94, 255, 0.4));
 }
 
 .nav-glass {
@@ -710,10 +727,10 @@ html {
 
 .premium-glass-card {
   position: relative;
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
   border-radius: 2.5rem;
   overflow: hidden;
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -723,7 +740,7 @@ html {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(145, 94, 255, 0.1), transparent 40%, rgba(86, 204, 242, 0.05));
+  background: linear-gradient(135deg, var(--glow-color), transparent 40%, rgba(255, 255, 255, 0.05));
   opacity: 0;
   transition: opacity 0.5s ease;
   pointer-events: none;
@@ -731,10 +748,10 @@ html {
 
 .premium-glass-card:hover {
   transform: translateY(-8px);
-  border-color: rgba(145, 94, 255, 0.3);
+  border-color: var(--accent);
   box-shadow: 
     0 40px 80px -20px rgba(0, 0, 0, 0.6),
-    0 0 30px rgba(145, 94, 255, 0.15);
+    0 0 30px var(--glow-color);
 }
 
 .premium-glass-card:hover::before {

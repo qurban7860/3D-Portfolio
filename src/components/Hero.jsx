@@ -111,25 +111,25 @@ const Hero = () => {
         </div>
 
         {/* Right Section: 3D Visualization */}
-        <div className="flex-1 w-full h-[30vh] sm:h-[40vh] lg:h-[75vh] relative z-10 order-1 lg:order-2 lg:mt-0 flex items-center justify-center pointer-events-auto">
+        <div className="flex-1 w-full h-[40vh] sm:h-[45vh] lg:h-[75vh] relative z-10 order-1 lg:order-2 lg:mt-0 flex items-center justify-center pointer-events-auto">
           <div className="absolute inset-0 z-0 pointer-events-none">
-             <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-[#915EFF]/20 rounded-full blur-[60px] animate-pulse" />
-             <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-[#56ccf2]/10 rounded-full blur-[80px] animate-float" />
+             <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-accent/20 rounded-full blur-[60px] animate-pulse" />
+             <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-secondary/10 rounded-full blur-[80px] animate-float" />
           </div>
           <ComputersCanvas />
           {/* Subtle Decorative Elements */}
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-[#915EFF]/30 to-transparent" />
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
         </div>
       </div>
 
       {/* ── Scroll Indicator (Desktop only) ── */}
       {!username && <div className="absolute bottom-8 w-full hidden lg:flex justify-center items-center z-20">
         <a href="#about">
-          <div className="w-[30px] h-[52px] rounded-3xl border-2 border-white/20 flex justify-center items-start p-2 backdrop-blur-sm hover:border-[#915EFF]/50 transition-colors">
+          <div className="w-[30px] h-[52px] rounded-3xl border-2 border-white/20 flex justify-center items-start p-2 backdrop-blur-sm hover:border-accent/50 transition-colors">
             <motion.div
               animate={{ y: [0, 18, 0] }}
               transition={{ duration: 1.5, repeat: Infinity, repeatType: "loop" }}
-              className="w-2 h-2 rounded-full bg-[#915EFF] shadow-[0_0_10px_#915EFF]"
+              className="w-2 h-2 rounded-full bg-accent shadow-[0_0_10px_var(--accent)]"
             />
           </div>
         </a>

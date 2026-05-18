@@ -23,7 +23,7 @@ const About = ({ isSummary = false, hideHeader = false }) => {
   const displayStats = stats.map((s, i) => ({
     label: s.label,
     value: s.stat,
-    color: i % 4 === 0 ? "text-[#915EFF]" : i % 4 === 1 ? "text-[#56ccf2]" : i % 4 === 2 ? "text-[#00cea8]" : "text-[#bf61ff]"
+    color: i % 4 === 0 ? "text-accent" : i % 4 === 1 ? "text-secondary" : i % 4 === 2 ? "text-accent/80" : "text-secondary/80"
   }));
 
   return (
@@ -64,14 +64,14 @@ const About = ({ isSummary = false, hideHeader = false }) => {
                     {/* Animated Border/Glow */}
                     <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-[#915EFF]/10 opacity-50 group-hover:opacity-100 transition-opacity" />
                     
-                    <div className="relative bg-[#050816]/40 backdrop-blur-2xl p-6 sm:p-8 rounded-[23px] h-full flex flex-col items-center justify-center border border-white/5 group-hover:border-[#915EFF]/30 transition-all duration-500 shadow-2xl">
+                    <div className="relative bg-background/40 backdrop-blur-2xl p-6 sm:p-8 rounded-[23px] h-full flex flex-col items-center justify-center border border-white/5 group-hover:border-accent/30 transition-all duration-500 shadow-2xl">
                       {/* Ambient Glow */}
-                      <div className="absolute -top-10 -right-10 w-20 h-20 bg-[#915EFF]/5 blur-3xl rounded-full group-hover:bg-[#915EFF]/15 transition-all" />
+                      <div className="absolute -top-10 -right-10 w-20 h-20 bg-accent/5 blur-3xl rounded-full group-hover:bg-accent/15 transition-all" />
                       
-                      <h4 className={`${stat.color} text-3xl sm:text-4xl font-black mb-2 drop-shadow-[0_0_15px_rgba(145,94,255,0.2)] transition-all group-hover:scale-110 tracking-tight`}>
+                      <h4 className={`${stat.color} text-3xl sm:text-4xl font-black mb-2 drop-shadow-[0_0_15px_rgba(var(--accent-rgb),0.2)] transition-all group-hover:scale-110 tracking-tight`}>
                         {stat.value}
                       </h4>
-                      <div className="h-[2px] w-8 bg-white/5 mb-3 group-hover:w-12 group-hover:bg-[#915EFF]/40 transition-all duration-500" />
+                      <div className="h-[2px] w-8 bg-white/5 mb-3 group-hover:w-12 group-hover:bg-accent/40 transition-all duration-500" />
                       <p className="text-white/30 text-[10px] sm:text-[11px] font-black uppercase tracking-[0.25em] text-center leading-tight">
                         {stat.label}
                       </p>
@@ -104,9 +104,9 @@ const About = ({ isSummary = false, hideHeader = false }) => {
                   key={i} 
                   className="p-10 rounded-[2.5rem] premium-glass-card group relative overflow-hidden"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#915EFF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                   <div className="text-4xl mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">{val.icon}</div>
-                  <h4 className="text-white font-black text-[20px] mb-3 tracking-tight group-hover:text-[#915EFF] transition-colors">{val.title}</h4>
+                  <h4 className="text-white font-black text-[20px] mb-3 tracking-tight group-hover:text-accent transition-colors">{val.title}</h4>
                   <p className="text-secondary text-[14px] leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity">{val.desc}</p>
                 </div>
               ))}

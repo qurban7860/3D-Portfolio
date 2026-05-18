@@ -1,5 +1,7 @@
 /* eslint-env node */
 import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
@@ -10,8 +12,7 @@ import authRoutes from "./routes/auth.js";
 import adminRoutes from "./routes/admin.js";
 import contentRoutes from "./routes/content.js";
 import portfolioRoutes from "./routes/portfolio.js";
-
-dotenv.config();
+import themeRoutes from "./routes/themes.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -50,11 +51,13 @@ app.use("/api/auth", authRoutes);
 app.use("/api/super-admin", adminRoutes); 
 app.use("/api/content", contentRoutes);
 app.use("/api/portfolio", portfolioRoutes);
+app.use("/api/themes", themeRoutes);
 
 app.all("/api/*", (req, res) => {
   console.warn(`🕵️ 404 Not Found (API Fallback): ${req.method} ${req.originalUrl}`);
   res.status(404).json({ message: `API Resource not found: ${req.originalUrl}` });
 });
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, _next) => {
   console.error("🔥 Server Error:", err);
   res.status(err.status || 500).json({ message: err.message || "Internal server error" });

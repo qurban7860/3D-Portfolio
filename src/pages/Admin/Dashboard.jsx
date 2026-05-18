@@ -1,11 +1,12 @@
 import { useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { HiOutlineCog, HiOutlineUserGroup, HiOutlineLogout, HiOutlineMenuAlt2, HiOutlineChevronLeft, HiOutlineChevronRight, HiOutlineExternalLink, HiOutlineDuplicate } from "react-icons/hi";
+import { HiOutlineCog, HiOutlineUserGroup, HiOutlineLogout, HiOutlineMenuAlt2, HiOutlineChevronLeft, HiOutlineChevronRight, HiOutlineExternalLink, HiOutlineDuplicate, HiOutlineColorSwatch} from "react-icons/hi";
 import toast from "react-hot-toast";
 import { useAuth } from "../../context/AuthContext";
 import ContentManager from "../../components/admin/ContentManager";
 import SettingsManager from "../../components/admin/SettingsManager";
 import UsersManager from "../../components/admin/UsersManager";
+import ThemeManager from "../../components/admin/ThemeManager";
 import { adminSchema } from "../../constants/adminSchema";
 import { motion, AnimatePresence } from "framer-motion";
 import { styles } from "../../styles";
@@ -78,6 +79,7 @@ const DashboardPage = () => {
   const [activeSection, setActiveSection] = useState(sectionKeys[0]);
   const [isSettingsMode, setIsSettingsMode] = useState(false);
   const [isUsersMode, setIsUsersMode] = useState(false);
+  const [isThemeMode, setIsThemeMode] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -96,6 +98,8 @@ const DashboardPage = () => {
     ? "General Settings" 
     : isUsersMode 
     ? "User Directory" 
+    : isThemeMode
+    ? "Theme Studio"
     : adminSchema[activeSection].title;
 
   useEffect(() => {
@@ -133,7 +137,14 @@ const DashboardPage = () => {
                     icon={<HiOutlineCog />} 
                     label="Settings" 
                     isActive={isSettingsMode} 
-                    onClick={() => { setIsSettingsMode(true); setIsUsersMode(false); setIsMobileMenuOpen(false); }} 
+                    onClick={() => { setIsSettingsMode(true); setIsUsersMode(false); setIsThemeMode(false); setIsMobileMenuOpen(false); }} 
+                    isCollapsed={isCollapsed && !isMobile}
+                />
+                <NavItem 
+                    icon={<HiOutlineColorSwatch />} 
+                    label="Theme Studio" 
+                    isActive={isThemeMode} 
+                    onClick={() => { setIsThemeMode(true); setIsSettingsMode(false); setIsUsersMode(false); setIsMobileMenuOpen(false); }} 
                     isCollapsed={isCollapsed && !isMobile}
                 />
                 {isAdmin && (
@@ -141,7 +152,7 @@ const DashboardPage = () => {
                         icon={<HiOutlineUserGroup />} 
                         label="Users" 
                         isActive={isUsersMode} 
-                        onClick={() => { setIsUsersMode(true); setIsSettingsMode(false); setIsMobileMenuOpen(false); }} 
+                        onClick={() => { setIsUsersMode(true); setIsSettingsMode(false); setIsThemeMode(false); setIsMobileMenuOpen(false); }} 
                         isCollapsed={isCollapsed && !isMobile}
                     />
                 )}
@@ -160,6 +171,7 @@ const DashboardPage = () => {
                             setActiveSection(key);
                             setIsSettingsMode(false);
                             setIsUsersMode(false);
+                            setIsThemeMode(false);
                             setIsMobileMenuOpen(false);
                         }}
                         isCollapsed={isCollapsed && !isMobile}
@@ -309,6 +321,8 @@ const DashboardPage = () => {
                     <div className="relative z-10">
                         {isSettingsMode ? (
                             <SettingsManager />
+                        ) : isThemeMode ? (
+                            <ThemeManager />
                         ) : (isUsersMode && isAdmin) ? (
                             <UsersManager />
                         ) : (

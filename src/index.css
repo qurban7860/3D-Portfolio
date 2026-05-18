@@ -906,14 +906,3 @@ html {
 .text-secondary {
   color: var(--text-secondary) !important;
 }
-
-/* Disable translation and excessive glow on nested, admin, or form glass cards */
-.premium-glass-card .premium-glass-card:hover,
-.premium-glass-card form .premium-glass-card:hover,
-form .premium-glass-card:hover,
-.no-hover-glow:hover {
-  transform: none !important;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4) !important;
-  border-color: var(--glass-border) !important;
-}
-

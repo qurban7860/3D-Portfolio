@@ -12,6 +12,11 @@ class ThemeRepository {
             "INSERT INTO themes (user_id, name, config, isPublic, isDefault, createdAt) VALUES (?, ?, ?, ?, ?, ?)",
             1, theme.name, JSON.stringify(theme.config), theme.isPublic, theme.isDefault, new Date().toISOString()
           );
+        } else {
+          await db.run(
+            "UPDATE themes SET config = ?, isPublic = ?, isDefault = ? WHERE id = ?",
+            JSON.stringify(theme.config), theme.isPublic, theme.isDefault, existing.id
+          );
         }
       }
     } catch (err) {

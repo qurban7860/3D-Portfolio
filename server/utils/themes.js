@@ -22,9 +22,9 @@ export const PREMIUM_THEMES = [
         borderOpacity: "0.1"
       },
       effects: {
-        glowColor: "rgba(0, 0, 0, 0)",
-        glowIntensity: "0",
-        shimmer: false
+        glowColor: "rgba(145, 94, 255, 0.15)",
+        glowIntensity: "0.25",
+        shimmer: true
       }
     }
   },

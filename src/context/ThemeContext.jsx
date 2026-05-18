@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { Helmet } from 'react-helmet-async';
 import { usePortfolio } from './PortfolioContext';
 
 const ThemeContext = createContext();
@@ -155,6 +156,28 @@ export const ThemeProvider = ({ children }) => {
     }
   }, [data?.theme]);
 
+  const themeAccent = activeTheme?.config?.colors?.accent || "#915EFF";
+  const themeSecondary = activeTheme?.config?.colors?.secondary || "#aaa6c3";
+  const themePrimary = activeTheme?.config?.colors?.primary || "#050816";
+
+  const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" fill="none">
+    <defs>
+      <linearGradient id="logoBrandGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="${themeAccent}" />
+        <stop offset="100%" stop-color="${themeSecondary}" />
+      </linearGradient>
+    </defs>
+    <circle cx="96" cy="96" r="92" fill="url(#logoBrandGradient)" opacity="0.1"/>
+    <g transform="translate(96, 96)">
+      <circle cx="0" cy="0" r="50" fill="none" stroke="url(#logoBrandGradient)" stroke-width="3"/>
+      <g fill="url(#logoBrandGradient)">
+        <path d="M -15 -25 Q -30 -25 -30 -5 Q -30 15 -15 25 Q 0 35 15 25 Q 30 15 30 -5 Q 30 -25 15 -25 Q 0 -35 -15 -25 M -18 -20 Q -25 -20 -25 -5 Q -25 12 -10 20 Q 5 28 20 20 Q 25 12 25 -5 Q 25 -20 18 -20 Q 3 -28 -18 -20" fill-rule="evenodd"/>
+        <path d="M 8 15 Q 15 20 25 35 L 20 38 Q 10 24 5 18 Z"/>
+      </g>
+    </g>
+  </svg>`;
+  const faviconUrl = `data:image/svg+xml;utf8,${encodeURIComponent(faviconSvg)}`;
+
   const value = useMemo(() => ({
     activeTheme,
     setActiveTheme,
@@ -164,6 +187,10 @@ export const ThemeProvider = ({ children }) => {
 
   return (
     <ThemeContext.Provider value={value}>
+      <Helmet>
+        <meta name="theme-color" content={themePrimary} />
+        <link rel="icon" type="image/svg+xml" href={faviconUrl} />
+      </Helmet>
       <div className={`theme-provider-container transition-all duration-700 ease-in-out ${isTransitioning ? 'opacity-40 blur-sm' : 'opacity-100 blur-0'}`}>
         {children}
       </div>

@@ -59,14 +59,9 @@ export const PortfolioProvider = ({ children, username }) => {
       description = description.substring(0, 152) + "...";
     }
 
-    const themeColor = "#050816"; 
-    const faviconUrl = hero.iconUrl || "/logo.svg";
-
     return {
       title,
       description,
-      themeColor,
-      faviconUrl,
     };
   }, [data, username]);
 
@@ -86,8 +81,6 @@ export const PortfolioProvider = ({ children, username }) => {
       <Helmet prioritizeSeoTags>
         <title>{seoProps.title}</title>
         <meta name="description" content={seoProps.description} />
-        <meta name="theme-color" content={seoProps.themeColor} />
-        <link rel="icon" type="image/svg+xml" href={seoProps.faviconUrl} />
         <meta property="og:title" content={seoProps.title} />
         <meta property="og:description" content={seoProps.description} />
         <meta property="og:type" content="website" />

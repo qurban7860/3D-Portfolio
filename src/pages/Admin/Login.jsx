@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { HiOutlineLockClosed, HiOutlineMail, HiOutlineEye, HiOutlineEyeOff, HiOutlineSparkles } from "react-icons/hi";
+import { HiOutlineLockClosed, HiOutlineMail, HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 import { useAuth } from "../../context/AuthContext";
 import { motion } from "framer-motion";
 import { styles } from "../../styles";
+import Logo from "../../components/common/Logo";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -49,9 +50,9 @@ const LoginPage = () => {
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-32 bg-[var(--accent)]/10 blur-3xl rounded-full pointer-events-none" />
 
           <div className="mb-8 text-center relative z-10">
-            <div className="mx-auto mb-5 h-16 w-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white text-3xl shadow-xl group-hover:border-[var(--accent)]/40 transition-all duration-700 relative overflow-hidden">
+            <div className="mx-auto mb-5 h-16 w-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center shadow-xl group-hover:border-[var(--accent)]/40 transition-all duration-700 relative overflow-hidden active:scale-95">
               <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent)]/10 to-[var(--secondary)]/10" />
-              <HiOutlineSparkles className="relative z-10 text-[var(--accent)] group-hover:scale-110 transition-transform duration-500" />
+              <Logo className="w-8 h-8 relative z-10 group-hover:scale-110 transition-transform duration-500" />
             </div>
             <h1 className="text-2xl font-black text-white tracking-tight uppercase">Admin Login</h1>
             <p className="mt-2 text-secondary text-[11px] font-bold tracking-widest uppercase opacity-40">Manage your digital presence</p>

@@ -9,6 +9,7 @@ import UsersManager from "../../components/admin/UsersManager";
 import ThemeManager from "../../components/admin/ThemeManager";
 import { adminSchema } from "../../constants/adminSchema";
 import { motion, AnimatePresence } from "framer-motion";
+import Logo from "../../components/common/Logo";
 
 const NavItem = ({ icon, label, isActive, onClick, isCollapsed }) => (
   <button
@@ -113,13 +114,13 @@ const DashboardPage = () => {
     <div className="flex flex-col h-full overflow-hidden relative z-10">
         <div className={`p-5 pb-3 shrink-0 ${isCollapsed && !isMobile ? "items-center flex flex-col" : ""}`}>
             <div className={`flex items-center gap-3 mb-8 px-1 ${isCollapsed && !isMobile ? "justify-center" : ""}`}>
-                <div className="h-10 w-10 shrink-0 rounded-xl bg-gradient-to-br from-[var(--accent)] to-[var(--secondary)] flex items-center justify-center text-white font-black text-xl shadow-[0_0_20px_var(--glow-color)] transition-transform hover:scale-110 duration-500">
-                    A
+                <div className="h-10 w-10 shrink-0 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shadow-xl transition-transform hover:scale-110 duration-500 overflow-hidden active:scale-95 relative">
+                    <Logo className="w-5 h-5 relative z-10" />
                 </div>
                 {(!isCollapsed || isMobile) && (
                   <div className="min-w-0">
-                      <h2 className="text-white font-black text-[15px] tracking-tight leading-none uppercase truncate">
-                         {isAdmin ? "Antigravity" : user?.username || "Portfolio"}
+                      <h2 className="text-white font-black text-[14px] tracking-tight leading-none uppercase truncate">
+                         {user?.username ? user.username : (isAdmin ? "Administrator" : "Portfolio")}
                       </h2>
                       <p className="text-[9px] text-[var(--secondary)] font-black tracking-[0.2em] mt-1 uppercase opacity-70">
                          {isAdmin ? "Admin Terminal" : "Dashboard"}
@@ -181,7 +182,7 @@ const DashboardPage = () => {
 
         <div className="p-5 border-t border-white/5 space-y-4 shrink-0">
             {(!isCollapsed || isMobile) && (
-              <div className="premium-glass-card glass-reflection inner-glow p-3 pb-0 rounded-2xl border border-white/5 group/share cursor-pointer hover:border-accent/30 transition-all duration-500 relative overflow-hidden"
+              <div className="premium-glass-card glass-reflection inner-glow p-5 pb-0 rounded-2xl border border-white/5 group/share cursor-pointer hover:border-accent/30 transition-all duration-500 relative overflow-hidden"
                       onClick={() => {
                           const fullUrl = window.location.origin + userPortfolioUrl;
                           navigator.clipboard.writeText(fullUrl);

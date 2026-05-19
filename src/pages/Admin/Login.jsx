@@ -8,10 +8,11 @@ import Logo from "../../components/common/Logo";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { login, error, loading, isAuthenticated } = useAuth();
+  const { login, error, isAuthenticated } = useAuth();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [localError, setLocalError] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -27,11 +28,13 @@ const LoginPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLocalError(null);
+    setIsSubmitting(true);
     try {
       await login({ email: formData.email, password: formData.password });
       navigate("/admin", { replace: true });
     } catch (err) {
       setLocalError(err.message || "Invalid email or password.");
+      setIsSubmitting(false);
     }
   };
 
@@ -112,10 +115,10 @@ const LoginPage = () => {
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={isSubmitting}
               className={`${styles.glassButtonPremium} w-full py-4 text-[14px] font-black active:scale-[0.98] mt-2 uppercase tracking-[0.2em]`}
             >
-              {loading ? "Signing In..." : "Sign In"}
+              {isSubmitting ? "Signing In..." : "Sign In"}
             </button>
             
             <div className="flex flex-col gap-3 mt-4 text-center">

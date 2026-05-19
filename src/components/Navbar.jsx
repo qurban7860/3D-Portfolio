@@ -269,30 +269,55 @@ const ResumeButton = ({ isMobile = false }) => {
 
       <AnimatePresence>
         {showOptions && (
-          <motion.div
-            initial={{ opacity: 0, y: 10, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            className={`${isMobile ? "relative mt-2 w-full" : "absolute top-full right-0 mt-3 w-40"} bg-[#100d25] rounded-2xl overflow-hidden shadow-2xl z-[60] border border-white/10 p-1`}
-          >
-            <a
-              href={resumePdf}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center px-4 py-2.5 text-white hover:bg-white/5 rounded-xl transition-colors text-[13px] group"
+          <>
+            {!isMobile && <div className="absolute top-full left-0 w-full h-4" />}
+            <motion.div
+              initial={{ opacity: 0, y: 15, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+              transition={{ type: "spring", damping: 20, stiffness: 300 }}
+              className={`${
+                isMobile 
+                  ? "relative mt-2 w-full" 
+                  : "absolute top-[calc(100%+12px)] right-0 w-60"
+              } bg-[#0a0a1a]/95 backdrop-blur-2xl rounded-2xl border border-[var(--glass-border)] shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden z-[100] p-1.5`}
             >
-              <FiEye className="text-white/40 group-hover:text-white transition-colors" /> 
-              <span className="ml-3"> View Resume </span>
-            </a>
-            <a
-              href={resumePdf}
-              download="Resume_Mern.pdf"
-              className="flex items-center px-4 py-2.5 text-white hover:bg-white/5 rounded-xl transition-colors text-[13px] group"
-            >
-              <FiDownload className="text-white/40 group-hover:text-white transition-colors" /> 
-              <span className="ml-3"> Download </span>
-            </a>
-          </motion.div>
+              <div className="px-3 py-2 mb-1">
+                <span className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em]">Document Options</span>
+              </div>
+              
+              <div className="grid grid-cols-1 gap-1">
+                <a
+                  href={resumePdf}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3.5 px-3 py-2.5 rounded-xl hover:bg-white/5 transition-all duration-300 group"
+                >
+                  <div className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center border border-white/5 group-hover:border-[var(--accent)]/30 group-hover:bg-[var(--accent)]/10 transition-all">
+                    <FiEye className="w-4 h-4 text-white/50 group-hover:text-white transition-colors" />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-[13px] font-medium text-white/80 group-hover:text-white transition-colors">View Resume</span>
+                    <span className="text-[10px] text-white/30 group-hover:text-[var(--accent)]/70 transition-colors">Open in new tab</span>
+                  </div>
+                </a>
+
+                <a
+                  href={resumePdf}
+                  download="Resume_Mern.pdf"
+                  className="flex items-center gap-3.5 px-3 py-2.5 rounded-xl hover:bg-white/5 transition-all duration-300 group"
+                >
+                  <div className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center border border-white/5 group-hover:border-[var(--accent)]/30 group-hover:bg-[var(--accent)]/10 transition-all">
+                    <FiDownload className="w-4 h-4 text-white/50 group-hover:text-white transition-colors" />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-[13px] font-medium text-white/80 group-hover:text-white transition-colors">Download PDF</span>
+                    <span className="text-[10px] text-white/30 group-hover:text-[var(--accent)]/70 transition-colors">Save to device</span>
+                  </div>
+                </a>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </div>

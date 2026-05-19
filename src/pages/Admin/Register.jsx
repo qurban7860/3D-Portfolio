@@ -8,7 +8,7 @@ import Logo from "../../components/common/Logo";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-  const { register, error, loading, isAuthenticated } = useAuth();
+  const { register, error, isAuthenticated } = useAuth();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -16,6 +16,7 @@ const RegisterPage = () => {
   });
   const [localError, setLocalError] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -31,12 +32,14 @@ const RegisterPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLocalError(null);
+    setIsSubmitting(true);
 
     try {
       await register(formData);
       navigate("/admin", { replace: true });
     } catch (err) {
       setLocalError(err.message || "Registration failed. Please check your details.");
+      setIsSubmitting(false);
     }
   };
 
@@ -134,10 +137,10 @@ const RegisterPage = () => {
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={isSubmitting}
               className={`${styles.glassButtonPremium} w-full py-4 text-[14px] font-black active:scale-[0.98] mt-2 uppercase tracking-[0.2em]`}
             >
-              {loading ? "Processing..." : "Create Account"}
+              {isSubmitting ? "Processing..." : "Create Account"}
             </button>
             
             <div className="flex flex-col gap-3 mt-4 text-center">

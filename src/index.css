@@ -289,10 +289,6 @@ a {
   transition: color 0.3s ease, all 0.3s ease-in-out;
 }
 
-a:hover {
-  color: var(--primary);
-}
-
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;

@@ -42,7 +42,7 @@ const HomePage = () => {
             <Showcase />
             <Statistics />
             <WhyWorkWithMe />
-            <FAQ />
+            <FAQ className='mt-0'/>
             <ReadyForWork />
             
             <BackToTop scrollThreshold={300} />

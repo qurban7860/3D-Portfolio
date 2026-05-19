@@ -13,45 +13,45 @@ const ServiceCard = ({ index, title, description, icon, features }) => (
     className="w-full"
   >
     <div
-      className="rounded-[2.5rem] p-10 flex flex-col h-full transition-all duration-700
+      className="rounded-[2.5rem] p-6 sm:p-8 flex flex-col h-full transition-all duration-700
                   premium-glass-card glass-reflection inner-glow group relative overflow-hidden"
     >
       {/* Decorative Gradient Glow */}
       <div className="absolute -top-20 -right-20 w-48 h-48 bg-[var(--accent)]/5 rounded-full blur-[80px] group-hover:bg-[var(--accent)]/15 transition-all duration-700" />
 
       <div
-        className="w-20 h-20 rounded-3xl flex items-center justify-center text-4xl mb-8
+        className="w-16 h-16 rounded-2xl flex items-center justify-center text-3xl mb-5
                     bg-white/5 border border-white/10 group-hover:border-[var(--accent)]/40 
-                    group-hover:scale-110 transition-all duration-500 shadow-2xl relative overflow-hidden"
+                    group-hover:scale-105 group-hover:shadow-[0_0_20px_var(--glow-color)] transition-all duration-500 shadow-2xl relative overflow-hidden"
       >
         <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent)]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-        <span className="relative z-10 group-hover:drop-shadow-[0_0_12px_var(--glow-color)] transition-all">
+        <span className="relative z-10 text-[var(--accent)]  group-hover:drop-shadow-[0_0_12px_var(--glow-color)] transition-all duration-300">
           {(() => {
-            if (!icon) return <span className="text-white/20 text-2xl font-black">{title?.charAt(0).toUpperCase()}</span>;
+            if (!icon) return <span className="text-[var(--accent)]/40 text-xl font-black">{title?.charAt(0).toUpperCase()}</span>;
             if (typeof icon === 'string') {
               const Icon = getIcon(icon);
-              return Icon ? <Icon /> : <span className="text-white/20 text-2xl font-black">{title?.charAt(0).toUpperCase()}</span>;
+              return Icon ? <Icon /> : <span className="text-[var(--accent)]/40 text-xl font-black">{title?.charAt(0).toUpperCase()}</span>;
             }
             return icon;
           })()}
         </span>
       </div>
 
-      <h3 className="text-white font-black text-[24px] mb-4 tracking-tight group-hover:text-gradient transition-all duration-300 leading-tight">
+      <h3 className="text-white font-black text-[21px] mb-2 tracking-tight group-hover:text-gradient transition-all duration-300 leading-tight">
         {title}
       </h3>
-      <p className="text-secondary text-[15px] mb-8 leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity">
+      <p className="text-secondary text-[14px] mb-5 leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity">
         {description}
       </p>
 
       {/* Features list with premium markers */}
-      <div className="mb-10 flex-grow">
-        <p className="text-white/30 text-[10px] font-black uppercase tracking-[0.3em] mb-5">
+      <div className="mb-6 flex-grow">
+        <p className="text-[var(--accent)]/50 text-[9px] font-black uppercase tracking-[0.3em] mb-3 group-hover:text-[var(--accent)]/80 transition-colors duration-500">
           Key Capabilities
         </p>
-        <ul className="space-y-4">
+        <ul className="space-y-2.5">
           {features.map((feature, idx) => (
-            <li key={idx} className="text-secondary text-[14px] flex items-center gap-3 group/item">
+            <li key={idx} className="text-secondary text-[13px] flex items-center gap-3 group/item">
               <div className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]/30 group-hover/item:bg-[var(--accent)] group-hover/item:scale-125 transition-all" />
               <span className="group-hover/item:text-white transition-colors">{feature}</span>
             </li>
@@ -64,9 +64,9 @@ const ServiceCard = ({ index, title, description, icon, features }) => (
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         onClick={() => (window.location.href = "/contact")}
-        className="mt-auto py-4 px-8 rounded-2xl border border-white/10 bg-white/5 text-white font-black text-[13px] uppercase tracking-widest
-                   hover:bg-[var(--accent)] hover:border-[var(--accent)] hover:shadow-[0_15px_30px_var(--glow-color)]
-                   transition-all duration-500 flex items-center justify-center gap-3 group-hover:translate-y-[-2px] shadow-inner"
+        className="mt-auto py-3 px-6 rounded-xl border border-[var(--accent)]/20 bg-[var(--accent)]/5 text-white font-bold text-[12px] uppercase tracking-widest
+                   hover:bg-[var(--accent)] hover:border-[var(--accent)] hover:shadow-[0_12px_24px_rgba(var(--accent-rgb),0.3)]
+                   transition-all duration-500 flex items-center justify-center gap-3 shadow-inner"
       >
         Initiate Project
         <span className="group-hover:translate-x-1.5 transition-transform">→</span>

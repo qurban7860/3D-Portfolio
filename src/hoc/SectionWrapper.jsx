@@ -4,7 +4,7 @@ import { styles } from "../styles";
 import { staggerContainer } from "../Animation/motion";
 
 const StarWrapper = (Component, idName, options = {}) =>
-  function HOC() {
+  function HOC(props) {
     const { noTopPadding = false, noBottomPadding = false } = options;
     
     let paddingClass = styles.padding;
@@ -28,7 +28,7 @@ const StarWrapper = (Component, idName, options = {}) =>
           &nbsp;
         </span>
 
-        <Component />
+        <Component {...props} />
       </motion.section>
     );
   };

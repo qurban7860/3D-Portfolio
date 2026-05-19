@@ -46,7 +46,7 @@ const FAQItem = ({ question, answer, index, isNew }) => {
   );
 };
 
-const FAQ = () => {
+const FAQ = ({ className = "mt-20" }) => {
   const { data } = usePortfolio();
   const [showAll, setShowAll] = useState(false);
   
@@ -56,7 +56,7 @@ const FAQ = () => {
   if (allFaqs.length === 0) return null;
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+    <div className={`grid grid-cols-1 lg:grid-cols-12 gap-10 ${className}`}>
       {/* ── Left Side: Header & CTA ── */}
       <div className="lg:col-span-5 flex flex-col gap-6">
         <motion.div variants={textVariant()} className="flex flex-col gap-2">

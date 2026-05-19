@@ -245,7 +245,7 @@ const ThemeManager = () => {
               onClick={handleSaveTheme}
               className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-accent text-white text-[11px] font-black uppercase tracking-widest hover:shadow-[0_0_40px_rgba(var(--accent-rgb),0.5)] transition-all active:scale-95 disabled:opacity-50 shadow-2xl w-full sm:w-auto"
             >
-              <HiOutlineSave className="text-base" /> {isSaving ? "Syncing..." : "Save Configuration"}
+              <HiOutlineSave className="text-secondary" /> {isSaving ? <span className="text-secondary">Syncing...</span> : <span className="text-secondary">Save Configuration</span>}
             </button>
           </div>
         </div>
@@ -271,13 +271,13 @@ const ThemeManager = () => {
               onClick={() => setActiveTab("presets")}
               className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 ${activeTab === 'presets' ? 'bg-accent text-white shadow-2xl shadow-accent/20' : 'text-secondary/50 hover:text-white'}`}
             >
-              <HiOutlineColorSwatch className="text-base" /> Gallery
+              <HiOutlineColorSwatch className="text-secondary" /> <span className="text-secondary">Gallery</span>
             </button>
             <button 
               onClick={() => setActiveTab("customize")}
               className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500 ${activeTab === 'customize' ? 'bg-accent text-white shadow-2xl shadow-accent/20' : 'text-secondary/50 hover:text-white'}`}
             >
-              <HiOutlineAdjustments className="text-base" /> Lab
+              <HiOutlineAdjustments className="text-secondary" /> <span className="text-secondary">Lab</span>
             </button>
           </div>
 

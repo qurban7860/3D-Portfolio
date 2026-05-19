@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 import { Reorder } from "framer-motion";
 import { HiOutlinePencilAlt, HiOutlineTrash, HiOutlineDocumentText, HiOutlineFolderOpen } from "react-icons/hi";
 import { MdDragIndicator } from "react-icons/md";
+import { resolveAssetUrl } from "../../utils/assetResolver";
+import { getIcon } from "../../utils/iconMapping";
 
 const getItemSummary = (item) => {
   return item.name || item.title || item.degree || `Item ${item.id}`;
@@ -46,18 +48,38 @@ const ItemList = ({ items, onEdit, onDelete, onReorder, label }) => {
                 
                 <div className="h-14 w-14 shrink-0 rounded-2xl bg-white/5 border border-white/10 p-1.5 overflow-hidden shadow-inner group-hover:border-[var(--accent)]/30 transition-all duration-500 relative">
                   <div className="absolute inset-0 bg-[var(--accent)]/5 group-hover:bg-[var(--accent)]/10 transition-colors" />
-                  {item.imageUrl || item.iconUrl || item.icon ? (
-                    <img 
-                      src={item.imageUrl || item.iconUrl || item.icon} 
-                      alt="" 
-                      className="h-full w-full object-contain rounded-xl group-hover:scale-110 transition-transform duration-500 relative z-10"
-                      onError={(e) => { e.target.src = "https://placehold.co/150?text=Logo" }}
-                    />
-                  ) : (
-                    <div className="h-full w-full flex items-center justify-center text-3xl group-hover:text-[var(--accent)] transition-colors relative z-10">
-                      <HiOutlineDocumentText className="text-secondary" />
-                    </div>
-                  )}
+                  {(() => {
+                    if (item.imageUrl || item.iconUrl) {
+                      return (
+                        <img 
+                          src={resolveAssetUrl(item.imageUrl || item.iconUrl)} 
+                          alt="" 
+                          className="h-full w-full object-contain rounded-xl group-hover:scale-110 transition-transform duration-500 relative z-10"
+                          onError={(e) => { e.target.src = "https://placehold.co/150?text=Logo" }}
+                        />
+                      );
+                    }
+                    if (item.icon) {
+                      const ReactIcon = getIcon(item.icon);
+                      if (ReactIcon) {
+                        return (
+                          <div className="h-full w-full flex items-center justify-center text-3xl text-[var(--accent)] group-hover:scale-110 transition-transform duration-500 relative z-10">
+                            <ReactIcon />
+                          </div>
+                        );
+                      }
+                      return (
+                        <div className="h-full w-full flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-500 relative z-10">
+                           {item.icon}
+                        </div>
+                      );
+                    }
+                    return (
+                      <div className="h-full w-full flex items-center justify-center text-3xl group-hover:text-[var(--accent)] transition-colors relative z-10">
+                        <HiOutlineDocumentText className="text-secondary" />
+                      </div>
+                    );
+                  })()}
                 </div>
                 
                 <div className="min-w-0 flex-1">

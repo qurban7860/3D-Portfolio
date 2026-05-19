@@ -64,7 +64,7 @@ const ServiceCard = ({ index, title, description, icon, features }) => (
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         onClick={() => (window.location.href = "/contact")}
-        className="mt-auto py-3 px-6 rounded-xl border border-[var(--accent)]/20 bg-[var(--accent)]/5 text-white font-bold text-[12px] uppercase tracking-widest
+        className="mt-auto py-3 px-6 rounded-xl border border-[var(--accent)]/20 bg-[var(--accent)]/5 text-secondary font-bold text-[12px] uppercase tracking-widest
                    hover:bg-[var(--accent)] hover:border-[var(--accent)] hover:shadow-[0_12px_24px_rgba(var(--accent-rgb),0.3)]
                    transition-all duration-500 flex items-center justify-center gap-3 shadow-inner"
       >

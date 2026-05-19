@@ -1,6 +1,6 @@
 import { useMemo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { HiOutlineCog, HiOutlineUserGroup, HiOutlineLogout, HiOutlineMenuAlt2, HiOutlineChevronLeft, HiOutlineChevronRight, HiOutlineExternalLink, HiOutlineDuplicate, HiOutlineColorSwatch} from "react-icons/hi";
+import { HiOutlineCog, HiOutlineUserGroup, HiOutlineLogout, HiOutlineMenuAlt2, HiOutlineChevronLeft, HiOutlineChevronRight, HiOutlineExternalLink, HiOutlineDuplicate, HiOutlineColorSwatch, HiOutlineX} from "react-icons/hi";
 import toast from "react-hot-toast";
 import { useAuth } from "../../context/AuthContext";
 import ContentManager from "../../components/admin/ContentManager";
@@ -14,11 +14,11 @@ import Logo from "../../components/common/Logo";
 const NavItem = ({ icon, label, isActive, onClick, isCollapsed }) => (
   <button
     onClick={onClick}
-    className={`w-full group relative flex items-center transition-all duration-500 rounded-xl ${
+    className={`w-full group relative flex items-center transition-all duration-500 rounded-xl outline-none focus:outline-none focus:ring-0 focus-visible:outline-none [-webkit-tap-highlight-color:transparent] ${
       isCollapsed ? "px-2.5 justify-center h-12" : "px-4 py-3 gap-3"
     } ${
       isActive 
-        ? "text-white bg-[var(--accent)]/10 shadow-[inset_0_0_20px_var(--glow-color)] border border-[var(--accent)]/20" 
+        ? "text-[var(--accent)] bg-accent/10 shadow-[inset_0_0_20px_var(--glow-color)]" 
         : "text-secondary hover:text-white hover:bg-white/[0.04]"
     }`}
     title={isCollapsed ? label : ""}
@@ -118,7 +118,7 @@ const DashboardPage = () => {
                     <Logo className="w-5 h-5 relative z-10" />
                 </div>
                 {(!isCollapsed || isMobile) && (
-                  <div className="min-w-0">
+                  <div className="min-w-0 flex-1">
                       <h2 className="text-white font-black text-[14px] tracking-tight leading-none uppercase truncate">
                          {user?.username ? user.username : (isAdmin ? "Administrator" : "Portfolio")}
                       </h2>
@@ -126,6 +126,14 @@ const DashboardPage = () => {
                          {isAdmin ? "Admin Terminal" : "Dashboard"}
                       </p>
                   </div>
+                )}
+                {isMobile && (
+                  <button 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="p-2 rounded-full bg-white/5 border border-white/10 text-white/70 hover:text-white hover:bg-white/10 transition-all ml-auto outline-none focus:outline-none"
+                  >
+                    <HiOutlineX className="text-lg" />
+                  </button>
                 )}
             </div>
             
@@ -160,7 +168,7 @@ const DashboardPage = () => {
         </div>
 
         <div className={`flex-1 overflow-y-auto custom-scrollbar py-3 ${isCollapsed && !isMobile ? "px-3" : "px-5"}`}>
- <div className="space-y-1">
+            <div className="space-y-1">
                 {sectionKeys.map((key) => (
                     <NavItem 
                         key={key}
@@ -182,43 +190,54 @@ const DashboardPage = () => {
 
         <div className="p-5 border-t border-white/5 space-y-4 shrink-0">
             {(!isCollapsed || isMobile) && (
-              <div className="premium-glass-card glass-reflection inner-glow p-5 pb-0 rounded-2xl border border-white/5 group/share cursor-pointer hover:border-accent/30 transition-all duration-500 relative overflow-hidden"
-                      onClick={() => {
-                          const fullUrl = window.location.origin + userPortfolioUrl;
-                          navigator.clipboard.writeText(fullUrl);
-                          toast.success("Portfolio link copied to clipboard!", {
-                            style: {
-                              background: '#1a1c2c',
-                              color: '#fff',
-                              border: '1px solid rgba(var(--accent-rgb), 0.2)',
-                              fontSize: '12px',
-                              fontWeight: 'bold',
-                              borderRadius: '12px',
-                            },
-                            iconTheme: {
-                              primary: 'var(--accent)',
-                              secondary: '#fff',
-                            },
-                          });
-                      }}>
-                  <div className="absolute inset-0 bg-gradient-to-tr from-[var(--accent)]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                  <div className="flex items-center justify-between mb-3 relative z-10">
-                      <div className="flex items-center gap-2">
-                        <div className="h-1.5 w-1.5 rounded-full bg-[var(--secondary)] shadow-[0_0_8px_var(--secondary)]" />
-                        <p className="text-[10px] text-[var(--secondary)] font-black uppercase tracking-[0.2em] leading-none">Public Link</p>
-                      </div>
-                      <HiOutlineDuplicate className="text-secondary/40 group-hover:text-[var(--secondary)] text-sm transition-all group-hover:scale-110" />
+              <button
+                className="w-full premium-glass-card glass-reflection inner-glow p-3 rounded-xl border border-white/5 flex items-center justify-between group/share cursor-pointer hover:border-[var(--accent)]/40 hover:shadow-[0_0_20px_rgba(var(--accent-rgb),0.15)] transition-all duration-500 relative overflow-hidden outline-none focus:outline-none text-left"
+                onClick={() => {
+                    const fullUrl = window.location.origin + userPortfolioUrl;
+                    navigator.clipboard.writeText(fullUrl);
+                    toast.success("Portfolio link copied to clipboard!", {
+                      style: {
+                        background: '#1a1c2c',
+                        color: '#fff',
+                        border: '1px solid rgba(var(--accent-rgb), 0.2)',
+                        fontSize: '12px',
+                        fontWeight: 'bold',
+                        borderRadius: '12px',
+                      },
+                      iconTheme: {
+                        primary: 'var(--accent)',
+                        secondary: '#fff',
+                      },
+                    });
+                }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-[var(--accent)]/5 to-[var(--secondary)]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                
+                <div className="flex items-center gap-3 relative z-10 overflow-hidden">
+                  <div className="relative flex items-center justify-center shrink-0">
+                    <div className="absolute inset-0 bg-[var(--accent)] rounded-full blur-[4px] opacity-60 group-hover:opacity-100 transition-opacity duration-500 animate-pulse" />
+                    <div className="h-1.5 w-1.5 rounded-full bg-[var(--accent)] relative z-10" />
                   </div>
-                  <div className="flex flex-col gap-1.5 relative z-10">
-                    <p className="text-[11px] text-white/50 font-bold break-all leading-tight group-hover:text-white transition-colors">{window.location.origin + userPortfolioUrl}</p>
-                    <span className="text-[8px] w-fit bg-[var(--accent)]/20 text-[var(--accent)] px-2 py-0.5 rounded-md font-black uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity">Click to Copy</span>
+                  
+                  <div className="flex flex-col min-w-0">
+                    <p className="text-[9px] text-[var(--accent)] font-black uppercase tracking-[0.2em] leading-none mb-1.5 group-hover:text-white transition-colors duration-300">
+                      Public Link
+                    </p>
+                    <p className="text-[11px] text-white/50 font-medium truncate w-full leading-none group-hover:text-white/90 transition-colors duration-300">
+                      {window.location.host + userPortfolioUrl}
+                    </p>
                   </div>
-              </div>
+                </div>
+
+                <div className="h-8 w-8 shrink-0 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-[var(--accent)] group-hover:border-[var(--accent)] transition-all duration-500 relative z-10">
+                  <HiOutlineDuplicate className="text-secondary group-hover:text-white text-sm" />
+                </div>
+              </button>
             )}
 
             <button
                 onClick={() => logout()}
-                className={`w-full flex items-center justify-center gap-2 rounded-2xl bg-red-500/5 border border-red-500/10 text-red-400/80 font-black transition-all duration-500 uppercase tracking-widest ${
+                className={`w-full flex items-center justify-center gap-2 rounded-xl bg-red-500/5 border border-red-500/10 text-red-400/80 font-black transition-all duration-500 uppercase tracking-widest outline-none focus:outline-none ${
                   isCollapsed && !isMobile ? "h-12 px-0" : "px-4 py-3.5 text-[12px] hover:bg-red-500 hover:text-white"
                 }`}
                 title={isCollapsed && !isMobile ? "Sign Out" : ""}
@@ -231,7 +250,7 @@ const DashboardPage = () => {
   );
 
   return (
-    <div className="h-screen bg-transparent selection:bg-[var(--accent)]/30 overflow-hidden relative flex">
+    <div className="h-screen bg-transparent overflow-hidden relative flex">
       <aside 
         className={`hidden lg:flex h-full flex-col relative z-20 border-r border-white/10 bg-[var(--glass-bg)] backdrop-blur-3xl shrink-0 shadow-2xl transition-all duration-500 ${
           isCollapsed ? "w-20" : "w-72"
@@ -255,7 +274,7 @@ const DashboardPage = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="absolute inset-0 bg-[var(--bg-primary)]/90 backdrop-blur-md"
+                className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             />
             <motion.aside 
                 initial={{ x: "-100%" }}

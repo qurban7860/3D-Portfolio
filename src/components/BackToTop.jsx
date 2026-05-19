@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiOutlineArrowUp } from "react-icons/hi";
@@ -14,7 +15,9 @@ const BackToTop = ({ scrollThreshold = 300 }) => {
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
-  return (
+  if (typeof document === "undefined") return null;
+
+  return createPortal(
     <AnimatePresence>
       {isVisible && (
         <motion.button
@@ -37,7 +40,8 @@ const BackToTop = ({ scrollThreshold = 300 }) => {
           <HiOutlineArrowUp className="text-white text-xl" />
         </motion.button>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 };
 

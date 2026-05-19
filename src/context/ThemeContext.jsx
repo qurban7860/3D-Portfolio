@@ -191,7 +191,7 @@ export const ThemeProvider = ({ children }) => {
         <meta name="theme-color" content={themePrimary} />
         <link rel="icon" type="image/svg+xml" href={faviconUrl} />
       </Helmet>
-      <div className={`theme-provider-container transition-all duration-700 ease-in-out ${isTransitioning ? 'opacity-40 blur-sm' : 'opacity-100 blur-0'}`}>
+      <div className={`theme-provider-container transition-all duration-700 ease-in-out ${isTransitioning ? 'opacity-40 blur-sm' : 'opacity-100'}`} style={{ filter: isTransitioning ? undefined : 'none' }}>
         {children}
       </div>
     </ThemeContext.Provider>

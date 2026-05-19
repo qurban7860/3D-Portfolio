@@ -76,6 +76,18 @@ body::before {
   color-scheme: dark;
 }
 
+::selection {
+  background: rgba(var(--accent-rgb), 0.4);
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+::-moz-selection {
+  background: rgba(var(--accent-rgb), 0.4);
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
 .hash-span {
   margin-top: -80px;
   padding-bottom: 70px;

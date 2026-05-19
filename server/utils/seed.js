@@ -36,6 +36,16 @@ const defaultSettings = {
     { id: "services",   title: "Skills",      path: "/services" },
     { id: "contact",    title: "Contact",     path: "/contact" },
   ],
+  stats: [
+    { id: 1, stat: "3+", label: "Years Experience", description: "Over 3 years of professional engineering experience" },
+    { id: 2, stat: "20+", label: "Projects Completed", description: "Successful projects delivered across various platforms" },
+    { id: 3, stat: "100%", label: "Client Satisfaction", description: "Consistently receiving positive feedback and reviews" },
+    { id: 4, stat: "15+", label: "Tech Stack Mastered", description: "Highly proficient in MERN stack and modern frameworks" }
+  ],
+  certifications: [
+    { id: 1, title: "Meta Front-End Developer", issuer: "Meta", date: "2024", icon: "SiMeta", credentialUrl: "https://coursera.org/verify/meta-frontend" },
+    { id: 2, title: "AWS Certified Developer - Associate", issuer: "Amazon Web Services", date: "2025", icon: "SiAmazonaws", credentialUrl: "https://aws.amazon.com/verification" }
+  ]
 };
 
 const defaultFaqs = [
@@ -85,12 +95,13 @@ export async function seedDatabase(db) {
   const projectCount = await db.get("SELECT COUNT(*) as count FROM projects");
   if (projectCount.count === 0) {
     await db.run(
-      "INSERT INTO projects (user_id, name, description, imageUrl, sourceCodeLink, tags, featured, visible, orderIndex) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO projects (user_id, name, description, imageUrl, sourceCodeLink, liveDemoLink, tags, featured, visible, orderIndex) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       adminId,
       "Amazon Services",
       "Built a modern e-commerce platform featuring product search, filtering, detailed item pages, user reviews, recommendations, and a responsive cart system integrated with external APIs.",
       "Project1.png",
       "https://github.com/qurban7860/AmazonClone.git",
+      "https://github.com/qurban7860/AmazonClone",
       JSON.stringify([
         { name: "MERN",        color: "blue-text-gradient"  },
         { name: "Material-UI", color: "green-text-gradient" },
@@ -99,12 +110,13 @@ export async function seedDatabase(db) {
       1, 1, 1
     );
     await db.run(
-      "INSERT INTO projects (user_id, name, description, imageUrl, sourceCodeLink, tags, featured, visible, orderIndex) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO projects (user_id, name, description, imageUrl, sourceCodeLink, liveDemoLink, tags, featured, visible, orderIndex) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       adminId,
       "AI Portfolio Builder",
       "Quickly create a personalized portfolio with AI-generated content, real-time preview, PDF export, and user authentication. Built with Mern, Firebase, and Material-UI for a seamless, responsive experience.",
       "carrent.png",
       "https://github.com/qurban7860/ai-portfolio-builder.git",
+      "https://github.com/qurban7860/ai-portfolio-builder",
       JSON.stringify([
         { name: "MERN",        color: "blue-text-gradient"  },
         { name: "Firebase",    color: "green-text-gradient" },
@@ -113,12 +125,13 @@ export async function seedDatabase(db) {
       1, 1, 2
     );
     await db.run(
-      "INSERT INTO projects (user_id, name, description, imageUrl, sourceCodeLink, tags, featured, visible, orderIndex) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO projects (user_id, name, description, imageUrl, sourceCodeLink, liveDemoLink, tags, featured, visible, orderIndex) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       adminId,
       "Final Year Project - ICE AGE",
       "Developed an ML model utilizing CNNs to analyze remote sensing data. Utilized ReactJS and NodeJS to develop a user-friendly web application.",
       "fyp.png",
       "https://github.com/qurban7860/FinalYearProject.git",
+      "https://github.com/qurban7860/FinalYearProject",
       JSON.stringify([
         { name: "ML",      color: "blue-text-gradient"  },
         { name: "MERN",    color: "green-text-gradient" },
@@ -273,8 +286,8 @@ export async function seedDatabase(db) {
   if (certificationsCount.count === 0 && defaultSettings.certifications) {
     for (const cert of defaultSettings.certifications) {
       await db.run(
-        "INSERT INTO certifications (user_id, title, issuer, date, icon, visible, orderIndex) VALUES (?, ?, ?, ?, ?, ?, ?)",
-        adminId, cert.title, cert.issuer, cert.date, cert.icon, 1, cert.id
+        "INSERT INTO certifications (user_id, title, issuer, date, icon, credentialUrl, visible, orderIndex) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+        adminId, cert.title, cert.issuer, cert.date, cert.icon, cert.credentialUrl || "", 1, cert.id
       );
     }
   }

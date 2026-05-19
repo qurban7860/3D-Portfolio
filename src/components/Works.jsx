@@ -20,16 +20,17 @@ export const ProjectCard = ({ index, name, description, tags, imageUrl, sourceCo
       <Tilt
         options={{ max: 15, scale: 1.02, speed: 400 }}
         className="rounded-[2.5rem] w-full sm:w-[360px] premium-glass-card glass-reflection inner-glow overflow-hidden"
+        style={{ transformStyle: "preserve-3d" }}
       >
         {/* Image area */}
-        <div className="relative w-full h-[210px] overflow-hidden bg-primary">
+        <div className="relative w-full h-[210px] overflow-hidden bg-primary" style={{ transform: "translateZ(30px)", transformStyle: "preserve-3d" }}>
           {/* Featured badge */}
           {index % 3 === 0 && (
             <div className="absolute top-4 left-4 z-20 text-[10px] font-bold
                             px-4 py-1.5 rounded-full tracking-[0.2em]
                             bg-black/40 backdrop-blur-md border border-white/10
                             shadow-xl uppercase"
-                 style={{ color: 'color-mix(in srgb, var(--accent) 85%, white)' }}>
+                 style={{ color: 'color-mix(in srgb, var(--accent) 85%, white)', transform: "translateZ(40px)" }}>
               ✦ Featured
             </div>
           )}
@@ -52,12 +53,16 @@ export const ProjectCard = ({ index, name, description, tags, imageUrl, sourceCo
                <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-[var(--accent)]/10 rounded-full blur-3xl" />
             </div>
           )}
-          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center gap-4 backdrop-blur-[2px]">
+          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center gap-4 backdrop-blur-[2px]" style={{ transformStyle: "preserve-3d" }}>
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              onClick={() => window.open(sourceCodeLink, "_blank")}
-              className="w-12 h-12 rounded-full bg-white/10 border border-white/20 flex items-center justify-center hover:bg-[var(--accent)]/20 hover:border-[var(--accent)]/50 transition-all shadow-lg"
+              style={{ transform: "translateZ(50px)" }}
+              onClick={(e) => {
+                e.stopPropagation();
+                window.open(sourceCodeLink, "_blank");
+              }}
+              className="w-12 h-12 rounded-full bg-white/10 border border-white/20 flex items-center justify-center hover:bg-[var(--accent)]/20 hover:border-[var(--accent)]/50 transition-all shadow-lg cursor-pointer"
               title="GitHub Repository"
             >
               <img src={github} alt="GitHub" className="w-6 h-6 object-contain" />
@@ -67,8 +72,12 @@ export const ProjectCard = ({ index, name, description, tags, imageUrl, sourceCo
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                onClick={() => window.open(liveDemoLink, "_blank")}
-                className="w-12 h-12 rounded-full bg-white/10 border border-white/20 flex items-center justify-center hover:bg-[var(--secondary)]/20 hover:border-[var(--secondary)]/50 transition-all shadow-lg"
+                style={{ transform: "translateZ(50px)" }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open(liveDemoLink, "_blank");
+                }}
+                className="w-12 h-12 rounded-full bg-white/10 border border-white/20 flex items-center justify-center hover:bg-[var(--secondary)]/20 hover:border-[var(--secondary)]/50 transition-all shadow-lg cursor-pointer"
                 title="Live Demo"
               >
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -82,17 +91,17 @@ export const ProjectCard = ({ index, name, description, tags, imageUrl, sourceCo
         </div>
 
         {/* Content */}
-        <div className="p-6 relative">
-          <div className="flex justify-between items-start mb-3">
+        <div className="p-6 relative" style={{ transform: "translateZ(30px)", transformStyle: "preserve-3d" }}>
+          <div className="flex justify-between items-start mb-3" style={{ transform: "translateZ(40px)" }}>
             <h3 className="text-white font-black text-[22px] tracking-tight group-hover:text-[var(--accent)] transition-colors">{name}</h3>
           </div>
           
-          <p className="text-secondary text-[14px] leading-relaxed mb-5 line-clamp-3 opacity-80 group-hover:opacity-100 transition-opacity">
+          <p className="text-secondary text-[14px] leading-relaxed mb-5 line-clamp-3 opacity-80 group-hover:opacity-100 transition-opacity" style={{ transform: "translateZ(40px)" }}>
             {description}
           </p>
 
           {/* Tech tags */}
-          <div className="flex flex-wrap gap-2 mb-6">
+          <div className="flex flex-wrap gap-2 mb-2" style={{ transform: "translateZ(40px)" }}>
             {tags.map((tag) => (
               <span
                 key={`${name}-${tag.name}`}
@@ -102,20 +111,6 @@ export const ProjectCard = ({ index, name, description, tags, imageUrl, sourceCo
                 {tag.name}
               </span>
             ))}
-          </div>
-
-          {/* View link footer */}
-          <div className="pt-4 border-t border-white/5 flex justify-between items-center">
-             <span className="text-[11px] text-white/30 uppercase tracking-[0.2em] font-bold">Project details</span>
-             <motion.a
-                href={liveDemoLink || sourceCodeLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ x: 5 }}
-                className="text-[var(--accent)] font-bold text-[13px] flex items-center gap-2 group/link"
-              >
-                Explore <span className="group-hover/link:translate-x-1 transition-transform">→</span>
-             </motion.a>
           </div>
         </div>
       </Tilt>

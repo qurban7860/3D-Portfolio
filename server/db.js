@@ -104,6 +104,7 @@ export async function initializeDatabase() {
           description    TEXT NOT NULL,
           imageUrl       TEXT NOT NULL,
           sourceCodeLink TEXT NOT NULL,
+          liveDemoLink   TEXT DEFAULT '',
           tags           TEXT NOT NULL,
           featured       INTEGER DEFAULT 0,
           visible        INTEGER DEFAULT 1,
@@ -145,6 +146,8 @@ export async function initializeDatabase() {
           orderIndex INTEGER DEFAULT 0
         )`,
         `ALTER TABLE technologies ADD COLUMN icon TEXT DEFAULT ''`,
+        `ALTER TABLE projects ADD COLUMN liveDemoLink TEXT DEFAULT ''`,
+        `ALTER TABLE certifications ADD COLUMN credentialUrl TEXT DEFAULT ''`,
         `CREATE INDEX IF NOT EXISTS idx_technologies_user_id ON technologies(user_id)`,
         `CREATE TABLE IF NOT EXISTS services (
           id          INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -178,14 +181,15 @@ export async function initializeDatabase() {
         )`,
         `CREATE INDEX IF NOT EXISTS idx_socials_user_id ON socials(user_id)`,
         `CREATE TABLE IF NOT EXISTS certifications (
-          id         INTEGER PRIMARY KEY AUTOINCREMENT,
-          user_id    INTEGER REFERENCES users(id) ON DELETE CASCADE,
-          title      TEXT NOT NULL,
-          issuer     TEXT NOT NULL,
-          date       TEXT NOT NULL,
-          icon       TEXT NOT NULL,
-          visible    INTEGER DEFAULT 1,
-          orderIndex INTEGER DEFAULT 0
+          id            INTEGER PRIMARY KEY AUTOINCREMENT,
+          user_id       INTEGER REFERENCES users(id) ON DELETE CASCADE,
+          title         TEXT NOT NULL,
+          issuer        TEXT NOT NULL,
+          date          TEXT NOT NULL,
+          icon          TEXT NOT NULL,
+          credentialUrl TEXT DEFAULT '',
+          visible       INTEGER DEFAULT 1,
+          orderIndex    INTEGER DEFAULT 0
         )`,
         `CREATE INDEX IF NOT EXISTS idx_certifications_user_id ON certifications(user_id)`,
         `CREATE TABLE IF NOT EXISTS stats (
@@ -255,7 +259,13 @@ export async function initializeDatabase() {
         console.log("🌱 Seeding database...");
         await seedDatabase(database);
       } else {
-        // No post-boot checks needed for now
+        // Seed missing tables on update
+        const statsCount = await database.get("SELECT COUNT(*) as count FROM stats");
+        const certsCount = await database.get("SELECT COUNT(*) as count FROM certifications");
+        if ((statsCount && statsCount.count === 0) || (certsCount && certsCount.count === 0)) {
+          console.log("🌱 Seeding missing default stats or certifications...");
+          await seedDatabase(database);
+        }
       }
 
       return database;

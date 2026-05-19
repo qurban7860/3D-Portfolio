@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { HiOutlineExternalLink } from "react-icons/hi";
 import PropTypes from "prop-types";
 import { usePortfolio } from "../context/PortfolioContext";
 import { SectionWrapper } from "../hoc";
@@ -8,16 +9,22 @@ import { getIcon } from "../utils/iconMapping";
 /* ── Certification Card ────────────────────────────────────────── */
 const CertificationCard = ({ index, title, issuer, date, credentialUrl, icon }) => {
   const firstLetter = title?.charAt(0).toUpperCase() || "?";
+  const hasUrl = credentialUrl && credentialUrl.trim() !== "";
+  
+  const CardWrapper = hasUrl ? motion.a : motion.div;
+  const wrapperProps = hasUrl ? {
+    href: credentialUrl,
+    target: "_blank",
+    rel: "noopener noreferrer",
+  } : {};
   
   return (
-    <motion.a
-      href={credentialUrl}
-      target="_blank"
-      rel="noopener noreferrer"
+    <CardWrapper
+      {...wrapperProps}
       variants={fadeIn("up", "spring", index * 0.2, 0.75)}
       whileHover={{ y: -6, scale: 1.01 }}
-      className="block rounded-2xl p-6 group transition-all duration-400
-                 premium-glass-card glass-reflection inner-glow relative overflow-hidden"
+      className={`block rounded-2xl p-6 group transition-all duration-400
+                 premium-glass-card glass-reflection inner-glow relative overflow-hidden ${hasUrl ? "cursor-pointer" : "cursor-default"}`}
     >
       {/* Decorative background glow */}
       <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-[var(--accent)]/5 rounded-full blur-3xl group-hover:bg-[var(--accent)]/10 transition-all duration-500" />
@@ -55,10 +62,23 @@ const CertificationCard = ({ index, title, issuer, date, credentialUrl, icon }) 
             >
               📅 {date}
             </span>
+            {hasUrl && (
+              <div className="relative group/btn">
+                <motion.div
+                  variants={fadeIn("up", "spring", index * 0.2 + 0.25, 0.75)}
+                  className="absolute inset-0 bg-gradient-to-r from-[var(--accent)]/20 to-[var(--secondary)]/10 rounded-lg blur opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"
+                />
+                <span className="relative flex items-center gap-2 px-3 py-2 text-[12px] font-bold text-white/80 uppercase tracking-wider bg-[var(--secondary)]/20 backdrop-blur-sm rounded-lg border border-white/10 
+                                 group-hover:bg-[var(--accent)]/30 group-hover:border-[var(--accent)]/50
+                                 group-hover:text-white transition-all duration-300">
+                  View Certificate <HiOutlineExternalLink />
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>
-    </motion.a>
+    </CardWrapper>
   );
 };
 
@@ -67,7 +87,7 @@ CertificationCard.propTypes = {
   title: PropTypes.string.isRequired,
   issuer: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
-  credentialUrl: PropTypes.string.isRequired,
+  credentialUrl: PropTypes.string,
   icon: PropTypes.string.isRequired,
 };
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiOutlineTrash, HiOutlineUserGroup, HiOutlineMail, HiOutlineCalendar, HiOutlineExternalLink } from "react-icons/hi";
 import { useAuth } from "../../context/AuthContext";
@@ -14,11 +14,7 @@ const UsersManager = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [confirmDialog, setConfirmDialog] = useState(null);
 
-  useEffect(() => {
-    loadUsers();
-  }, []);
-
-  const loadUsers = async () => {
+  const loadUsers = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -31,7 +27,11 @@ const UsersManager = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token]);
+
+  useEffect(() => {
+    loadUsers();
+  }, [loadUsers]);
 
   const handleDelete = async (id) => {
     setConfirmDialog(null);

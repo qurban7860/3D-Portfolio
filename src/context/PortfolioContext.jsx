@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import PropTypes from "prop-types";
@@ -47,7 +46,7 @@ export const PortfolioProvider = ({ children, username }) => {
     } else if (username) {
        name = username.charAt(0).toUpperCase() + username.slice(1);
     } else {
-       name = "Qurban Hanif";
+       name = data?.settings?.seo?.author || data?.user?.username || "Developer";
     }
 
     const role = username ? "Professional Portfolio" : "AI Engineer & Full Stack Developer";

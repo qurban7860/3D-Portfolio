@@ -8,7 +8,6 @@ import helmet from "helmet";
 import path from "path";
 import { fileURLToPath } from "url";
 import os from "os";
-import { initializeDatabase } from "./db.js";
 import authRoutes from "./routes/auth.js";
 import adminRoutes from "./routes/admin.js";
 import contentRoutes from "./routes/content.js";
@@ -32,15 +31,6 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/uploads", express.static(path.join(os.tmpdir(), "3d-portfolio", "uploads")));
 
 app.get("/api/health", (_req, res) => res.json({ status: "ok", message: "Dynamic portfolio API is running." }));
-app.use(async (req, res, next) => {
-  try {
-    await initializeDatabase();
-    next();
-  } catch (err) {
-    console.error("Database initialization error:", err);
-    res.status(503).json({ message: "Database connection failed." });
-  }
-});
 
 app.use((req, res, next) => {
   if (req.url.startsWith("/api")) {

@@ -1,15 +1,15 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react/prop-types */
 import { useState, useEffect, useMemo } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { createPortal } from "react-dom";
+import PropTypes from "prop-types";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   FiChevronDown,
   FiFileText,
   FiEye,
   FiDownload,
-  FiMessageCircle
+  FiMessageCircle,
+  FiLock
 } from "react-icons/fi";
 import { HiMenuAlt3, HiX, HiOutlineColorSwatch, HiOutlineRefresh } from "react-icons/hi";
 import { styles } from "../styles";
@@ -97,6 +97,17 @@ const SocialDropdown = ({ links }) => {
       </AnimatePresence>
     </div>
   );
+};
+
+SocialDropdown.propTypes = {
+  links: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      subtitle: PropTypes.string,
+      icon: PropTypes.elementType.isRequired,
+      url: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 const ThemeDropdown = () => {
@@ -324,6 +335,10 @@ const ResumeButton = ({ isMobile = false }) => {
   );
 };
 
+ResumeButton.propTypes = {
+  isMobile: PropTypes.bool,
+};
+
 /* ── Individual Nav Link ───────────────────────────────────── */
 const NavLinkItem = ({ nav, active, onLinkClick }) => (
   <li className="relative group">
@@ -339,6 +354,15 @@ const NavLinkItem = ({ nav, active, onLinkClick }) => (
     />
   </li>
 );
+
+NavLinkItem.propTypes = {
+  nav: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    path: PropTypes.string.isRequired,
+  }).isRequired,
+  active: PropTypes.string.isRequired,
+  onLinkClick: PropTypes.func.isRequired,
+};
 
 /* ── Mobile Navigation Menu ───────────────────────────────── */
 /* ── Mobile Navigation Menu ───────────────────────────────── */
@@ -494,6 +518,28 @@ const MobileMenu = ({
   );
 };
 
+MobileMenu.propTypes = {
+  toggle: PropTypes.bool.isRequired,
+  setToggle: PropTypes.func.isRequired,
+  active: PropTypes.string.isRequired,
+  navLinks: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      path: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  onNavClick: PropTypes.func.isRequired,
+  socialLinks: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      subtitle: PropTypes.string,
+      icon: PropTypes.elementType.isRequired,
+      url: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  data: PropTypes.object,
+};
+
 const Navbar = () => {
   const { data } = usePortfolio();
   const [active, setActive] = useState("");
@@ -562,7 +608,7 @@ const Navbar = () => {
     } else if (location.pathname === "/") {
       setActive("");
     }
-  }, [location.pathname]);
+  }, [location.pathname, navLinks]);
 
   // Check if we are on the admin path or dashboard
   if (location.pathname.startsWith('/admin')) {
@@ -598,10 +644,10 @@ const Navbar = () => {
                 {data?.settings?.seo?.author?.split(' ')[0] || data?.user?.username || "PORTFOLIO"}
                 <Link 
                   to="/admin" 
-                  className="opacity-10 hover:opacity-100 transition-opacity duration-500 text-[10px] translate-y-[-2px]"
+                  className="opacity-20 hover:opacity-100 hover:text-[var(--accent)] transition-all duration-300 flex items-center justify-center p-1 rounded-lg"
                   title={username ? "Tenant Dashboard" : "Dashboard"}
                 >
-                  🔐
+                  <FiLock className="w-3.5 h-3.5" />
                 </Link>
               </span>
               <span className="text-secondary text-[10px] font-bold tracking-[0.3em] uppercase mt-1.5 opacity-60">

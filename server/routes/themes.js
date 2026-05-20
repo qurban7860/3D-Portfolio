@@ -1,4 +1,5 @@
 import express from "express";
+import jwt from "jsonwebtoken";
 import ThemeRepository from "../repositories/ThemeRepository.js";
 import { SettingsRepository } from "../repositories/SettingsRepository.js";
 import authMiddleware from "../middleware/auth.js";
@@ -57,8 +58,6 @@ router.delete("/admin/:id", authMiddleware, async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
-import jwt from "jsonwebtoken";
 
 router.post("/admin/activate/:id", async (req, res) => {
   try {

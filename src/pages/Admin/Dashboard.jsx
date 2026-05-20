@@ -73,44 +73,25 @@ NavItem.propTypes = {
   isCollapsed: PropTypes.bool,
 };
 
-const DashboardPage = () => {
+const SidebarContent = ({
+  isMobile = false,
+  isCollapsed,
+  activeSection,
+  setActiveSection,
+  isSettingsMode,
+  setIsSettingsMode,
+  isThemeMode,
+  setIsThemeMode,
+  isUsersMode,
+  setIsUsersMode,
+  setIsMobileMenuOpen,
+}) => {
   const { logout, user } = useAuth();
   const sectionKeys = useMemo(() => Object.keys(adminSchema), []);
-  const [activeSection, setActiveSection] = useState(sectionKeys[0]);
-  const [isSettingsMode, setIsSettingsMode] = useState(false);
-  const [isUsersMode, setIsUsersMode] = useState(false);
-  const [isThemeMode, setIsThemeMode] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isCollapsed, setIsCollapsed] = useState(false);
-
   const isAdmin = user?.role === "admin";
-  
-  useEffect(() => {
-    if (isUsersMode && !isAdmin) {
-      setIsUsersMode(false);
-      setActiveSection(sectionKeys[0]);
-    }
-  }, [isUsersMode, isAdmin, sectionKeys]);
-
   const userPortfolioUrl = user?.username === "admin" ? "/" : `/${user?.username}`;
 
-  const activeTitle = isSettingsMode 
-    ? "General Settings" 
-    : isUsersMode 
-    ? "User Directory" 
-    : isThemeMode
-    ? "Theme Studio"
-    : adminSchema[activeSection].title;
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 1024) setIsMobileMenuOpen(false);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const renderSidebarContent = (isMobile = false) => (
+  return (
     <div className="flex flex-col h-full overflow-hidden relative z-10">
         <div className={`p-5 pb-3 shrink-0 ${isCollapsed && !isMobile ? "items-center flex flex-col" : ""}`}>
             <div className={`flex items-center gap-3 mb-8 px-1 ${isCollapsed && !isMobile ? "justify-center" : ""}`}>
@@ -248,6 +229,57 @@ const DashboardPage = () => {
         </div>
     </div>
   );
+};
+
+SidebarContent.propTypes = {
+  isMobile: PropTypes.bool,
+  isCollapsed: PropTypes.bool.isRequired,
+  activeSection: PropTypes.string.isRequired,
+  setActiveSection: PropTypes.func.isRequired,
+  isSettingsMode: PropTypes.bool.isRequired,
+  setIsSettingsMode: PropTypes.func.isRequired,
+  isThemeMode: PropTypes.bool.isRequired,
+  setIsThemeMode: PropTypes.func.isRequired,
+  isUsersMode: PropTypes.bool.isRequired,
+  setIsUsersMode: PropTypes.func.isRequired,
+  setIsMobileMenuOpen: PropTypes.func.isRequired,
+};
+
+const DashboardPage = () => {
+  const { user } = useAuth();
+  const sectionKeys = useMemo(() => Object.keys(adminSchema), []);
+  const [activeSection, setActiveSection] = useState(sectionKeys[0]);
+  const [isSettingsMode, setIsSettingsMode] = useState(false);
+  const [isUsersMode, setIsUsersMode] = useState(false);
+  const [isThemeMode, setIsThemeMode] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const isAdmin = user?.role === "admin";
+  const userPortfolioUrl = user?.username === "admin" ? "/" : `/${user?.username}`;
+  
+  useEffect(() => {
+    if (isUsersMode && !isAdmin) {
+      setIsUsersMode(false);
+      setActiveSection(sectionKeys[0]);
+    }
+  }, [isUsersMode, isAdmin, sectionKeys]);
+
+  const activeTitle = isSettingsMode 
+    ? "General Settings" 
+    : isUsersMode 
+    ? "User Directory" 
+    : isThemeMode
+    ? "Theme Studio"
+    : adminSchema[activeSection].title;
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) setIsMobileMenuOpen(false);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <div className="h-screen bg-transparent overflow-hidden relative flex">
@@ -263,7 +295,18 @@ const DashboardPage = () => {
           {isCollapsed ? <HiOutlineChevronRight size={14} /> : <HiOutlineChevronLeft size={14} />}
         </button>
         
-        {renderSidebarContent()}
+        <SidebarContent
+          isCollapsed={isCollapsed}
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
+          isSettingsMode={isSettingsMode}
+          setIsSettingsMode={setIsSettingsMode}
+          isThemeMode={isThemeMode}
+          setIsThemeMode={setIsThemeMode}
+          isUsersMode={isUsersMode}
+          setIsUsersMode={setIsUsersMode}
+          setIsMobileMenuOpen={setIsMobileMenuOpen}
+        />
       </aside>
 
       <AnimatePresence>
@@ -283,7 +326,19 @@ const DashboardPage = () => {
                 transition={{ type: "spring", bounce: 0, duration: 0.6 }}
                 className="absolute left-0 top-0 bottom-0 w-72 bg-[var(--glass-bg)] backdrop-blur-3xl border-r border-white/10 flex flex-col shadow-2xl"
             >
-                {renderSidebarContent(true)}
+                <SidebarContent
+                  isMobile={true}
+                  isCollapsed={isCollapsed}
+                  activeSection={activeSection}
+                  setActiveSection={setActiveSection}
+                  isSettingsMode={isSettingsMode}
+                  setIsSettingsMode={setIsSettingsMode}
+                  isThemeMode={isThemeMode}
+                  setIsThemeMode={setIsThemeMode}
+                  isUsersMode={isUsersMode}
+                  setIsUsersMode={setIsUsersMode}
+                  setIsMobileMenuOpen={setIsMobileMenuOpen}
+                />
             </motion.aside>
           </div>
         )}

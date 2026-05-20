@@ -9,8 +9,9 @@ import { SettingsRepository } from "../repositories/SettingsRepository.js";
 const router = express.Router();
 const SALT_ROUNDS = 12;
 
+const JWT_SECRET = process.env.JWT_SECRET || "change-this-secret-for-production";
+
 function signToken(user) {
-  const JWT_SECRET  = process.env.JWT_SECRET  || "change-this-secret-for-production";
   const TOKEN_EXPIRY = "8h";
   
   return jwt.sign(

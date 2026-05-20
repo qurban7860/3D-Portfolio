@@ -141,9 +141,9 @@ const App = () => {
               },
             }}
           />
-          <GlobalBackground />
           <GlobalTenantResolver>
             <ThemeProvider>
+              <GlobalBackground />
               <AnimatedRoutes />
             </ThemeProvider>
           </GlobalTenantResolver>

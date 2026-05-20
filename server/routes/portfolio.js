@@ -9,7 +9,7 @@ const router = express.Router();
 
 const CONTENT_TYPES = [
   "projects", "experiences", "educations", "technologies",
-  "services", "testimonials", "socials", "certifications", "stats",
+  "services", "testimonials", "socials", "certifications", "stats", "faqs",
 ];
 
 router.get("/:username", async (req, res) => {

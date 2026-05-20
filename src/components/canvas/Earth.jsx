@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
-/* eslint-disable react/prop-types */
 import { Suspense, useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
 import CanvasLoader from "../Loader";
@@ -18,6 +18,10 @@ const Earth = ({ isMobile }) => {
       rotation-y={0} 
     />
   );
+};
+
+Earth.propTypes = {
+  isMobile: PropTypes.bool.isRequired,
 };
 
 const EarthCanvas = () => {

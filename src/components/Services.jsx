@@ -25,7 +25,7 @@ const ServiceCard = ({ index, title, description, icon, features }) => (
                     group-hover:scale-105 group-hover:shadow-[0_0_20px_var(--glow-color)] transition-all duration-500 shadow-2xl relative overflow-hidden"
       >
         <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent)]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-        <span className="relative z-10 text-[var(--accent)]  group-hover:drop-shadow-[0_0_12px_var(--glow-color)] transition-all duration-300">
+        <span className="relative z-10 text-[var(--accent)] group-hover:drop-shadow-[0_0_12px_var(--glow-color)] transition-all duration-300">
           {(() => {
             if (!icon) return <span className="text-[var(--accent)]/40 text-xl font-black">{title?.charAt(0).toUpperCase()}</span>;
             if (typeof icon === 'string') {

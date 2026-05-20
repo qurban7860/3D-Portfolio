@@ -58,12 +58,16 @@ const ExperienceCard = ({ experience }) => (
   <VerticalTimelineElement
     contentClassName="premium-glass-card glass-reflection inner-glow"
     contentStyle={{
-      background: "transparent",
+      background: "var(--glass-bg)",
+      border: "1px solid var(--glass-border)",
+      backdropFilter: "blur(var(--glass-blur))",
+      WebkitBackdropFilter: "blur(var(--glass-blur))",
+      borderRadius: "2.5rem",
       color: "var(--text-primary)",
       boxShadow: "none",
       padding: "2.5rem",
     }}
-    contentArrowStyle={{ borderRight: "10px solid color-mix(in srgb, var(--accent) 30%, transparent)" }}
+    contentArrowStyle={{ borderRight: "10px solid var(--glass-border)" }}
     date={
       <div className="flex sm:block">
         <span className="font-black tracking-[0.2em] text-[10px] sm:text-[11px] uppercase bg-[var(--accent)]/10 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-[var(--accent)]/20 shadow-lg whitespace-nowrap"

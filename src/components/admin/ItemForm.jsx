@@ -147,7 +147,7 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
                               <Icon />
                             </div>
                           ) : (
-                            <span className="text-[10px] text-white/20 font-bold">NONE</span>
+                            <span className="text-[10px] text-white/30 font-black tracking-widest uppercase">None</span>
                           );
                         })()}
                         {!(field.name === "icon") && (
@@ -161,7 +161,7 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
                   
                   {field.name === "icon" && (
                     <div className="mt-2 text-[11px] text-white/30 italic px-2">
-                      Tip: Use React Icons names (e.g., SiReact, FaGithub, MdEmail)
+                      Tip: Use Icons names (e.g., SiReact, js, youtube, etc.) or upload a custom icon in the Asset Management section.
                     </div>
                   )}
                 </div>

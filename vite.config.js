@@ -15,6 +15,7 @@ export default defineConfig(({ mode }) => {
             'three': ['three'],
             'vendor': ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
             'three-fiber': ['@react-three/fiber', '@react-three/drei'],
+            'icons': ['react-icons'],
           },
         },
       },

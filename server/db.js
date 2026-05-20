@@ -18,7 +18,8 @@ class DatabaseAdapter {
   async all(sql, ...params) {
     try {
       const args = params.length === 1 && Array.isArray(params[0]) ? params[0] : params;
-      const result = await this.client.execute({ sql, args });
+      const sanitized = args.map(v => v === undefined ? null : v);
+      const result = await this.client.execute({ sql, args: sanitized });
       return result.rows;
     } catch (err) {
       console.error("DB Query All Error:", err);
@@ -29,7 +30,8 @@ class DatabaseAdapter {
   async get(sql, ...params) {
     try {
       const args = params.length === 1 && Array.isArray(params[0]) ? params[0] : params;
-      const result = await this.client.execute({ sql, args });
+      const sanitized = args.map(v => v === undefined ? null : v);
+      const result = await this.client.execute({ sql, args: sanitized });
       return result.rows[0];
     } catch (err) {
       console.error("DB Query Get Error:", err);
@@ -40,7 +42,8 @@ class DatabaseAdapter {
   async run(sql, ...params) {
     try {
       const args = params.length === 1 && Array.isArray(params[0]) ? params[0] : params;
-      const result = await this.client.execute({ sql, args });
+      const sanitized = args.map(v => v === undefined ? null : v);
+      const result = await this.client.execute({ sql, args: sanitized });
       return {
         lastID: result.lastInsertRowid !== null && result.lastInsertRowid !== undefined
           ? Number(result.lastInsertRowid)

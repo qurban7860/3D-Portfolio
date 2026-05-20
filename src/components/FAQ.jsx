@@ -59,8 +59,8 @@ const FAQ = ({ className = "mt-20" }) => {
     <div className={`grid grid-cols-1 lg:grid-cols-12 gap-10 ${className}`}>
       {/* ── Left Side: Header & CTA ── */}
       <div className="lg:col-span-5 flex flex-col gap-6">
-        <motion.div variants={textVariant()} className="flex flex-col gap-2">
-          <span className="faq-badge-premium w-fit mb-4">FAQS & INQUIRIES</span>
+        <motion.div variants={textVariant()} className="flex flex-col items-start gap-2">
+          <span className="section-badge">FAQS & INQUIRIES</span>
           <h2 className={styles.sectionHeadText}>Common <span className="text-gradient">Inquiries</span></h2>
           <p className="text-secondary text-sm leading-relaxed max-w-sm mt-2 opacity-80">
             Answers to frequent technical and collaboration questions. Need more depth?

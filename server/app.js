@@ -7,6 +7,7 @@ import cors from "cors";
 import helmet from "helmet";
 import path from "path";
 import { fileURLToPath } from "url";
+import os from "os";
 import { initializeDatabase } from "./db.js";
 import authRoutes from "./routes/auth.js";
 import adminRoutes from "./routes/admin.js";
@@ -28,6 +29,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static(path.join(os.tmpdir(), "3d-portfolio", "uploads")));
 
 app.get("/api/health", (_req, res) => res.json({ status: "ok", message: "Dynamic portfolio API is running." }));
 app.use(async (req, res, next) => {

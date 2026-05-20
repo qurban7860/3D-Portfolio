@@ -46,10 +46,10 @@ class ThemeRepository {
     const result = await db.run(
       "INSERT INTO themes (user_id, name, config, isPublic, isDefault, createdAt) VALUES (?, ?, ?, ?, ?, ?)",
       userId,
-      name,
-      JSON.stringify(config),
-      isPublic,
-      isDefault,
+      name || null,
+      config ? JSON.stringify(config) : null,
+      isPublic ? 1 : 0,
+      isDefault ? 1 : 0,
       new Date().toISOString()
     );
     return result.lastID;
@@ -59,10 +59,10 @@ class ThemeRepository {
     const db = getDb();
     await db.run(
       "UPDATE themes SET name = ?, config = ?, isPublic = ?, isDefault = ? WHERE id = ? AND user_id = ?",
-      name,
-      JSON.stringify(config),
-      isPublic,
-      isDefault,
+      name || null,
+      config ? JSON.stringify(config) : null,
+      isPublic === undefined || isPublic === null ? 0 : (isPublic ? 1 : 0),
+      isDefault === undefined || isDefault === null ? 0 : (isDefault ? 1 : 0),
       id,
       userId
     );

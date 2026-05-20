@@ -1,10 +1,36 @@
 import multer from "multer";
 import path from "path";
-import { mkdirSync, existsSync } from "fs";
+import { mkdirSync, existsSync, writeFileSync, unlinkSync } from "fs";
 import { fileURLToPath } from "url";
+import os from "os";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const baseUploadPath = path.join(__dirname, "..", "uploads");
+
+let baseUploadPath = path.join(__dirname, "..", "uploads");
+let isWritable = false;
+
+try {
+  if (!existsSync(baseUploadPath)) {
+    mkdirSync(baseUploadPath, { recursive: true });
+  }
+  const testFile = path.join(baseUploadPath, `.write-test-${Date.now()}`);
+  writeFileSync(testFile, "test");
+  unlinkSync(testFile);
+  isWritable = true;
+} catch (err) {
+  console.warn("⚠️ Local uploads folder is not writable (e.g. serverless host). Falling back to /tmp/3d-portfolio/uploads.");
+}
+
+if (!isWritable) {
+  baseUploadPath = path.join(os.tmpdir(), "3d-portfolio", "uploads");
+  try {
+    if (!existsSync(baseUploadPath)) {
+      mkdirSync(baseUploadPath, { recursive: true });
+    }
+  } catch (err) {
+    console.error("❌ Failed to create fallback tmp upload path:", err.message);
+  }
+}
 
 const storage = multer.diskStorage({
   destination: (req, _file, cb) => {

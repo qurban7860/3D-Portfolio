@@ -412,6 +412,7 @@ textarea:focus {
 .section-badge {
   display: inline-flex;
   align-items: center;
+  width: fit-content;
   padding: 0.45rem 1.25rem;
   background: color-mix(in srgb, var(--accent) 8%, transparent);
   border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);

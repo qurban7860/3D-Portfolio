@@ -14,6 +14,8 @@ import contentRoutes from "./routes/content.js";
 import portfolioRoutes from "./routes/portfolio.js";
 import themeRoutes from "./routes/themes.js";
 
+import { initializeDatabase } from "./db.js";
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 
@@ -29,6 +31,16 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/uploads", express.static(path.join(os.tmpdir(), "3d-portfolio", "uploads")));
+
+app.use(async (req, res, next) => {
+  try {
+    await initializeDatabase();
+    next();
+  } catch (err) {
+    console.error("❌ Database connection failure in middleware:", err);
+    res.status(500).json({ message: "Database connection failed", error: err.message });
+  }
+});
 
 app.get("/api/health", (_req, res) => res.json({ status: "ok", message: "Dynamic portfolio API is running." }));
 

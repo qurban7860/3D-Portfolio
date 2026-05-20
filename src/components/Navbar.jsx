@@ -118,11 +118,17 @@ const ThemeDropdown = () => {
   useEffect(() => {
     fetch('/api/themes/public')
       .then(res => res.json())
-      .then(data => setThemes(data))
-      .catch(console.error);
+      .then(data => {
+        setThemes(Array.isArray(data) ? data : []);
+      })
+      .catch(err => {
+        console.error("Error fetching themes:", err);
+        setThemes([]);
+      });
   }, []);
 
   const displayThemes = useMemo(() => {
+    if (!Array.isArray(themes)) return [];
     return themes.filter(t => !t.isDefault && t.name !== "Midnight Violet (Original)" && t.id !== 'default');
   }, [themes]);
 

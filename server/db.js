@@ -51,7 +51,13 @@ class DatabaseAdapter {
         changes: result.rowsAffected,
       };
     } catch (err) {
-      console.error("DB Run Error:", err);
+      const msg = String(err).toLowerCase();
+      const isExpectedMigrationErr = msg.includes("duplicate column name") || 
+                                     msg.includes("already exists") || 
+                                     (msg.includes("no such column") && sql.toLowerCase().includes("index"));
+      if (!isExpectedMigrationErr) {
+        console.error("DB Run Error:", err);
+      }
       throw err;
     }
   }
@@ -247,7 +253,9 @@ export async function initializeDatabase() {
               String(err).includes("SQLITE_UNKNOWN")
             )
           ) {
-             console.log(`ℹ️ Column already exists, skipping: ${sql.split(' ').pop()}`);
+             const alterMatch = sql.match(/alter\s+table\s+(\w+)\s+add\s+(?:column\s+)?(\w+)/i);
+             const desc = alterMatch ? `column "${alterMatch[2]}" on table "${alterMatch[1]}"` : sql.split(' ').pop();
+             console.log(`ℹ️ Column already exists, skipping: ${desc}`);
           } else {
              console.error(`❌ DB Schema Error on query: ${sql}`, err);
              throw err;

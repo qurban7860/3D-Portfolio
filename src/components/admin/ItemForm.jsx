@@ -161,7 +161,7 @@ const ItemForm = ({ schema, initialData, isSaving, onSubmit, onCancel, onUpload,
                   
                   {field.name === "icon" && (
                     <div className="mt-2 text-[11px] text-white/30 italic px-2">
-                      Tip: Use Icons names (e.g., SiReact, js, youtube, etc.) or upload a custom icon in the Asset Management section.
+                      Tip: Use Icons names (e.g., SiReact, js, youtube)
                     </div>
                   )}
                 </div>

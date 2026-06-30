@@ -258,3 +258,10 @@ The server uses `@libsql/client` which supports Turso remote databases out of th
 ---
 
 *Engineered with precision for maximum visual impact, runtime performance, and engineering excellence. Built to impress recruiters and clients who expect more than a template.*
+
+ - - - 
+ 
+ # #   =ØøÜ  P o r t f o l i o   A s s e t   G e n e r a t i o n 
+ 
+ T h i s   p r o j e c t   i n c l u d e s   a   t o p - t i e r   P l a y w r i g h t   a u t o m a t i o n   s y s t e m   ( s c r i p t s / g e n e r a t e - a s s e t s . j s )   t o   g e n e r a t e   r e c r u i t e r - g r a d e   v i d e o s   a n d   P D F   c a s e   s t u d i e s .   F o r   i n s t r u c t i o n s   a n d   t h e   * * U n i v e r s a l   A I   P r o m p t * *   f o r   f u t u r e   p r o j e c t s ,   p l e a s e   s e e   [ s c r i p t s / R E A D M E . m d ] ( s c r i p t s / R E A D M E . m d ) .  
+ 

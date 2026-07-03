@@ -1,7 +1,8 @@
 /* eslint-disable no-undef */
 import path from "path";
 import { fileURLToPath } from "url";
-import { createClient } from "@libsql/client";
+import { open } from "sqlite";
+import sqlite3 from "sqlite3";
 import { seedDatabase } from "./utils/seed.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -11,16 +12,15 @@ const dbPath = path.join(dataDir, "portfolio.db");
 let database;
 
 class DatabaseAdapter {
-  constructor(client) {
-    this.client = client;
+  constructor(db) {
+    this.db = db;
   }
 
   async all(sql, ...params) {
     try {
       const args = params.length === 1 && Array.isArray(params[0]) ? params[0] : params;
       const sanitized = args.map(v => v === undefined ? null : v);
-      const result = await this.client.execute({ sql, args: sanitized });
-      return result.rows;
+      return await this.db.all(sql, sanitized);
     } catch (err) {
       console.error("DB Query All Error:", err);
       throw err;
@@ -31,8 +31,7 @@ class DatabaseAdapter {
     try {
       const args = params.length === 1 && Array.isArray(params[0]) ? params[0] : params;
       const sanitized = args.map(v => v === undefined ? null : v);
-      const result = await this.client.execute({ sql, args: sanitized });
-      return result.rows[0];
+      return await this.db.get(sql, sanitized);
     } catch (err) {
       console.error("DB Query Get Error:", err);
       throw err;
@@ -43,18 +42,16 @@ class DatabaseAdapter {
     try {
       const args = params.length === 1 && Array.isArray(params[0]) ? params[0] : params;
       const sanitized = args.map(v => v === undefined ? null : v);
-      const result = await this.client.execute({ sql, args: sanitized });
+      const result = await this.db.run(sql, sanitized);
       return {
-        lastID: result.lastInsertRowid !== null && result.lastInsertRowid !== undefined
-          ? Number(result.lastInsertRowid)
-          : 0,
-        changes: result.rowsAffected,
+        lastID: result.lastID || 0,
+        changes: result.changes || 0,
       };
     } catch (err) {
       const msg = String(err).toLowerCase();
-      const isExpectedMigrationErr = msg.includes("duplicate column name") || 
-                                     msg.includes("already exists") || 
-                                     (msg.includes("no such column") && sql.toLowerCase().includes("index"));
+      const isExpectedMigrationErr = msg.includes("duplicate column name") ||
+        msg.includes("already exists") ||
+        (msg.includes("no such column") && sql.toLowerCase().includes("index"));
       if (!isExpectedMigrationErr) {
         console.error("DB Run Error:", err);
       }
@@ -64,7 +61,7 @@ class DatabaseAdapter {
 
   async exec(sql) {
     try {
-      return await this.client.executeMultiple(sql);
+      return await this.db.exec(sql);
     } catch (err) {
       console.error("DB Exec Error:", err);
       throw err;
@@ -79,23 +76,26 @@ export async function initializeDatabase() {
 
   initPromise = (async () => {
     try {
-      const tursoUrl   = process.env.TURSO_DATABASE_URL;
+      const tursoUrl = process.env.TURSO_DATABASE_URL;
       const tursoToken = process.env.TURSO_AUTH_TOKEN;
 
-      let client;
+      let db;
 
       if (tursoUrl && tursoUrl.startsWith("libsql://")) {
-        console.log("🚀 Connecting to Turso...");
-        client = createClient({ url: tursoUrl, authToken: tursoToken });
-      } else {
-        console.log("🏠 Connecting to Local Libsql...");
-        const { mkdirSync, existsSync } = await import("fs");
-        if (!existsSync(dataDir)) mkdirSync(dataDir, { recursive: true });
-        client = createClient({ url: `file:${dbPath}` });
+        console.warn("⚠️  Turso remote detected but @libsql/client is unavailable on this platform.");
+        console.warn("⚠️  Falling back to local SQLite file database.");
       }
 
-      database = new DatabaseAdapter(client);
-      await client.execute("SELECT 1");
+      console.log("🏠 Connecting to Local SQLite...");
+      const { mkdirSync, existsSync } = await import("fs");
+      if (!existsSync(dataDir)) mkdirSync(dataDir, { recursive: true });
+
+      db = await open({ filename: dbPath, driver: sqlite3.Database });
+      await db.run("PRAGMA journal_mode = WAL");
+      await db.run("PRAGMA foreign_keys = ON");
+
+      database = new DatabaseAdapter(db);
+      await db.get("SELECT 1");
 
       const schema = [
         `CREATE TABLE IF NOT EXISTS users (
@@ -156,7 +156,6 @@ export async function initializeDatabase() {
         )`,
         `ALTER TABLE technologies ADD COLUMN icon TEXT DEFAULT ''`,
         `ALTER TABLE projects ADD COLUMN liveDemoLink TEXT DEFAULT ''`,
-        `ALTER TABLE certifications ADD COLUMN credentialUrl TEXT DEFAULT ''`,
         `CREATE INDEX IF NOT EXISTS idx_technologies_user_id ON technologies(user_id)`,
         `CREATE TABLE IF NOT EXISTS services (
           id          INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -200,6 +199,7 @@ export async function initializeDatabase() {
           visible       INTEGER DEFAULT 1,
           orderIndex    INTEGER DEFAULT 0
         )`,
+        `ALTER TABLE certifications ADD COLUMN credentialUrl TEXT DEFAULT ''`,
         `CREATE INDEX IF NOT EXISTS idx_certifications_user_id ON certifications(user_id)`,
         `CREATE TABLE IF NOT EXISTS stats (
           id          INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -244,33 +244,31 @@ export async function initializeDatabase() {
           await database.run(sql);
         } catch (err) {
           if (String(err).includes("no such column") && sql.includes("CREATE INDEX")) {
-             console.warn(`⚠️ Skipping index creation due to missing column: ${sql}`);
+            console.warn(`⚠️ Skipping index creation due to missing column: ${sql}`);
           } else if (
             sql.includes("ALTER TABLE") && (
-              String(err).includes("duplicate column name") || 
+              String(err).includes("duplicate column name") ||
               String(err).toLowerCase().includes("already exists") ||
               String(err).includes("SQLITE_ERROR") ||
               String(err).includes("SQLITE_UNKNOWN")
             )
           ) {
-             const alterMatch = sql.match(/alter\s+table\s+(\w+)\s+add\s+(?:column\s+)?(\w+)/i);
-             const desc = alterMatch ? `column "${alterMatch[2]}" on table "${alterMatch[1]}"` : sql.split(' ').pop();
-             console.log(`ℹ️ Column already exists, skipping: ${desc}`);
+            const alterMatch = sql.match(/alter\s+table\s+(\w+)\s+add\s+(?:column\s+)?(\w+)/i);
+            const desc = alterMatch ? `column "${alterMatch[2]}" on table "${alterMatch[1]}"` : sql.split(' ').pop();
+            console.log(`ℹ️ Column already exists, skipping: ${desc}`);
           } else {
-             console.error(`❌ DB Schema Error on query: ${sql}`, err);
-             throw err;
+            console.error(`❌ DB Schema Error on query: ${sql}`, err);
+            throw err;
           }
         }
       }
 
       // ── Seed / post-boot checks ────────────────────────────────────────────
-      // Seed on first run (empty users table = fresh install).
       const userCount = await database.get("SELECT COUNT(*) as count FROM users");
       if (!userCount || userCount.count === 0) {
         console.log("🌱 Seeding database...");
         await seedDatabase(database);
       } else {
-        // Seed missing tables on update
         const statsCount = await database.get("SELECT COUNT(*) as count FROM stats");
         const certsCount = await database.get("SELECT COUNT(*) as count FROM certifications");
         if ((statsCount && statsCount.count === 0) || (certsCount && certsCount.count === 0)) {

@@ -1,140 +1,400 @@
 
 <!doctype html>
-<html>
+<html lang="en">
 <head>
+<meta charset="utf-8">
 <style>
-@page { size: A4 landscape; margin: 10mm; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
+
+@page { size: A4 landscape; margin: 0; }
+
+* { box-sizing: border-box; }
 
 body {
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', sans-serif;
   margin: 0;
-  background: #0a0f1c;
-  color: white;
-  padding: 10mm;
+  background-color: #0B0F19;
+  color: #F8FAFC;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
 }
 
-.hero {
-  padding: 20px;
-  background: linear-gradient(135deg, #111827, #1e1b4b, #312e81);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  margin-bottom: 20px;
+.pdf-page {
+  width: 297mm;
+  height: 210mm;
+  padding: 15mm 20mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  page-break-after: always;
+  break-after: page;
+  position: relative;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.07) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(167, 139, 250, 0.07) 0px, transparent 50%);
 }
 
-.hero h1 {
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 4mm;
+  margin-bottom: 6mm;
+}
+
+.header h1 {
   margin: 0;
-  font-size: 24px;
-  letter-spacing: -0.025em;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  background: -webkit-linear-gradient(45deg, #A78BFA, #38BDF8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+.header p {
+  margin: 0;
+  color: #38BDF8;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .card {
-  background: #0f172a;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  overflow: hidden;
+  background: rgba(30, 41, 59, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 16px;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  page-break-inside: avoid;
-  break-inside: avoid;
+  justify-content: space-between;
+  box-shadow: 0 20px 40px -15px rgba(0,0,0,0.7);
 }
 
-.img-container {
+.img-wrapper {
   width: 100%;
   aspect-ratio: 16 / 9;
+  border-radius: 10px;
   overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.4);
   background: #020617;
 }
 
-.card img {
+.img-wrapper img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: top;
 }
 
-.card h2 {
-  margin: 14px 14px 4px 14px;
-  font-size: 16px;
-  font-weight: 600;
+.info {
+  padding-top: 14px;
 }
-.card p {
-  margin: 0 14px 14px 14px;
-  color: #94a3b8;
+
+.info h2 {
+  margin: 0 0 4px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #F1F5F9;
+}
+
+.info p {
+  margin: 0;
+  color: #94A3B8;
   font-size: 13px;
+  line-height: 1.5;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 4mm;
+  margin-top: 6mm;
+  font-size: 11px;
+  color: #64748B;
+}
+
+/* ==================== 
+   PROFILE PAGE STYLES
+==================== */
+.profile-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.lead-text p {
+  margin: 0 0 12px 0;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: #CBD5E1;
+}
+
+.lead-text strong {
+  color: #F8FAFC;
+}
+
+.skills-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.skills-column h3 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #38BDF8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.skills-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.skills-column ul li {
+  font-size: 13px;
+  color: #94A3B8;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: flex-start;
+  line-height: 1.4;
+}
+
+.skills-column ul li span {
+  color: #10B981;
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+.bullet-list li::before {
+  content: '•';
+  color: #A78BFA;
+  font-size: 18px;
+  margin-right: 8px;
+  line-height: 0.8;
+}
+
+.closing-statement {
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.1), rgba(167, 139, 250, 0.1));
+  border-left: 4px solid #38BDF8;
+  padding: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #E2E8F0;
+  line-height: 1.6;
+  border-radius: 0 8px 8px 0;
 }
 </style>
 </head>
-
 <body>
-<div class="hero">
-  <h1>Enterprise Portfolio Report</h1>
-</div>
 
-<div class="grid">
   
-    <section class="card">
-      <h2>Landing Page</h2>
-      <div class="img-container">
-        <img src="../output/screenshots/01-landing.png" />
+    <div class="pdf-page">
+      <div class="header">
+        <h1>Executive Platform Architecture</h1>
+        <p>System Layer 01 // Landing Page</p>
       </div>
-      <p>Hero section and CTA</p>
-    </section>
-  
-    <section class="card">
-      <h2>Portfolio Showcase</h2>
-      <div class="img-container">
-        <img src="../output/screenshots/02-portfolio.png" />
+      <section class="card">
+        <div class="img-wrapper">
+          <img src="./screenshots/01-landing.png" alt="Landing Page" />
+        </div>
+        <div class="info">
+          <h2>Asset Scope: Landing Page</h2>
+          <p>Hero section and primary lead conversion CTA</p>
+        </div>
+      </section>
+      <div class="footer">
+        <span>Confidential Technical Showcase Documentation</span>
+        <span>Page 1 of 8</span>
       </div>
-      <p>Core product showcase</p>
-    </section>
+    </div>
   
-    <section class="card">
-      <h2>Dashboard</h2>
-      <div class="img-container">
-        <img src="../output/screenshots/03-dashboard.png" />
+    <div class="pdf-page">
+      <div class="header">
+        <h1>Executive Platform Architecture</h1>
+        <p>System Layer 02 // Portfolio Showcase</p>
       </div>
-      <p>System control center</p>
-    </section>
-  
-    <section class="card">
-      <h2>Experience</h2>
-      <div class="img-container">
-        <img src="../output/screenshots/04-experience.png" />
+      <section class="card">
+        <div class="img-wrapper">
+          <img src="./screenshots/02-portfolio.png" alt="Portfolio Showcase" />
+        </div>
+        <div class="info">
+          <h2>Asset Scope: Portfolio Showcase</h2>
+          <p>Interactive gallery of core product features</p>
+        </div>
+      </section>
+      <div class="footer">
+        <span>Confidential Technical Showcase Documentation</span>
+        <span>Page 2 of 8</span>
       </div>
-      <p>Engineering background</p>
-    </section>
+    </div>
   
-    <section class="card">
-      <h2>Services</h2>
-      <div class="img-container">
-        <img src="../output/screenshots/05-services.png" />
+    <div class="pdf-page">
+      <div class="header">
+        <h1>Executive Platform Architecture</h1>
+        <p>System Layer 03 // Admin Dashboard</p>
       </div>
-      <p>Offerings overview</p>
-    </section>
-  
-    <section class="card">
-      <h2>About</h2>
-      <div class="img-container">
-        <img src="../output/screenshots/06-about.png" />
+      <section class="card">
+        <div class="img-wrapper">
+          <img src="./screenshots/03-dashboard.png" alt="Admin Dashboard" />
+        </div>
+        <div class="info">
+          <h2>Asset Scope: Admin Dashboard</h2>
+          <p>Secure, authenticated system control center</p>
+        </div>
+      </section>
+      <div class="footer">
+        <span>Confidential Technical Showcase Documentation</span>
+        <span>Page 3 of 8</span>
       </div>
-      <p>Profile summary</p>
-    </section>
+    </div>
   
-    <section class="card">
-      <h2>Contact</h2>
-      <div class="img-container">
-        <img src="../output/screenshots/07-contact.png" />
+    <div class="pdf-page">
+      <div class="header">
+        <h1>Executive Platform Architecture</h1>
+        <p>System Layer 04 // Engineering Experience</p>
       </div>
-      <p>Lead capture system</p>
-    </section>
+      <section class="card">
+        <div class="img-wrapper">
+          <img src="./screenshots/04-experience.png" alt="Engineering Experience" />
+        </div>
+        <div class="info">
+          <h2>Asset Scope: Engineering Experience</h2>
+          <p>Detailed technical background and timeline</p>
+        </div>
+      </section>
+      <div class="footer">
+        <span>Confidential Technical Showcase Documentation</span>
+        <span>Page 4 of 8</span>
+      </div>
+    </div>
   
-</div>
+    <div class="pdf-page">
+      <div class="header">
+        <h1>Executive Platform Architecture</h1>
+        <p>System Layer 05 // Core Services</p>
+      </div>
+      <section class="card">
+        <div class="img-wrapper">
+          <img src="./screenshots/05-services.png" alt="Core Services" />
+        </div>
+        <div class="info">
+          <h2>Asset Scope: Core Services</h2>
+          <p>Breakdown of consulting and development offerings</p>
+        </div>
+      </section>
+      <div class="footer">
+        <span>Confidential Technical Showcase Documentation</span>
+        <span>Page 5 of 8</span>
+      </div>
+    </div>
+  
+    <div class="pdf-page">
+      <div class="header">
+        <h1>Executive Platform Architecture</h1>
+        <p>System Layer 06 // About the Architect</p>
+      </div>
+      <section class="card">
+        <div class="img-wrapper">
+          <img src="./screenshots/06-about.png" alt="About the Architect" />
+        </div>
+        <div class="info">
+          <h2>Asset Scope: About the Architect</h2>
+          <p>Professional profile and mission summary</p>
+        </div>
+      </section>
+      <div class="footer">
+        <span>Confidential Technical Showcase Documentation</span>
+        <span>Page 6 of 8</span>
+      </div>
+    </div>
+  
+    <div class="pdf-page">
+      <div class="header">
+        <h1>Executive Platform Architecture</h1>
+        <p>System Layer 07 // Lead Capture</p>
+      </div>
+      <section class="card">
+        <div class="img-wrapper">
+          <img src="./screenshots/07-contact.png" alt="Lead Capture" />
+        </div>
+        <div class="info">
+          <h2>Asset Scope: Lead Capture</h2>
+          <p>Integrated contact and communication system</p>
+        </div>
+      </section>
+      <div class="footer">
+        <span>Confidential Technical Showcase Documentation</span>
+        <span>Page 7 of 8</span>
+      </div>
+    </div>
+  
+  
+    <div class="pdf-page profile-page">
+      <div class="header">
+        <h1>Executive Engineering Profile</h1>
+        <p>System Layer 08 // Architect Overview</p>
+      </div>
+      
+      <div class="profile-content">
+        <div class="lead-text">
+          <p>I help startups, businesses, and founders build scalable SaaS platforms, AI-powered applications, enterprise software, and modern web products.</p>
+          <p>With <strong>3+ years of experience</strong> as a Full Stack Software Engineer, I specialize in designing and developing production-ready applications using React, Next.js, Angular, TypeScript, Node.js, NestJS, PostgreSQL, MongoDB, and modern cloud technologies.</p>
+          <p>I have built CRM platforms, workflow automation systems, ATS resume builders, enterprise dashboards, AI-powered assistants, ERP modules, and multi-tenant SaaS applications with a strong focus on scalability, performance, security, and user experience.</p>
+        </div>
+
+        <div class="skills-container">
+          <div class="skills-column">
+            <h3>Core Expertise</h3>
+            <ul>
+              <li><span>✔</span> Full Stack Development (React, Next.js, Angular, Node.js, NestJS)</li>
+              <li><span>✔</span> SaaS Product Development & Multi-Tenant Architecture</li>
+              <li><span>✔</span> AI Applications, LLM Integrations & RAG Systems</li>
+              <li><span>✔</span> Enterprise Software & Business Platforms</li>
+              <li><span>✔</span> REST APIs, WebSockets & Backend Engineering</li>
+              <li><span>✔</span> PostgreSQL, MongoDB, Prisma & Database Design</li>
+              <li><span>✔</span> Workflow Automation & Business Process Solutions</li>
+              <li><span>✔</span> Performance Optimization & Scalable Architecture</li>
+            </ul>
+          </div>
+
+          <div class="skills-column">
+            <h3>Why Work With Me?</h3>
+            <ul class="bullet-list">
+              <li>Clean, maintainable, and scalable code</li>
+              <li>Strong system design and architecture skills</li>
+              <li>Production-ready solutions built for long-term growth</li>
+              <li>Clear communication and reliable delivery</li>
+              <li>Experience working with startups, enterprise teams, and international clients</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="closing-statement">
+          Whether you need an MVP, SaaS platform, AI-powered product, CRM system, internal business tool, or a complete full-stack application, I can help turn your idea into a secure, scalable, and production-ready solution.
+        </div>
+      </div>
+
+      <div class="footer">
+        <span>Confidential Technical Showcase Documentation</span>
+        <span>Page 8 of 8</span>
+      </div>
+    </div>
+  
 
 </body>
 </html>

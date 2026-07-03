@@ -17,7 +17,7 @@ const videoTempDir = path.join(artifactsDir, 'video-temp');
 
 const reportHtmlPath = path.join(outputRoot, 'ENTERPRISE_DEMO_REPORT.html');
 const reportPdfPath = path.join(artifactsDir, 'ENTERPRISE_DEMO_REPORT.pdf');
-const finalVideoPath = path.join(artifactsDir, 'ENTERPRISE_DEMO_VIDEO.webm');
+const finalVideoPath = path.join(artifactsDir, 'ENTERPRISE_DEMO_VIDEO.mp4');
 
 /* =========================
    🔥 CONVERSION OPTIMIZED ORDER

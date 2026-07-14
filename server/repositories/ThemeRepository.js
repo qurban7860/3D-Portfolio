@@ -1,10 +1,10 @@
 import { getDb } from "../db.js";
+import { PREMIUM_THEMES } from "../utils/themes.js";
 
 class ThemeRepository {
   async getAllPublic() {
     const db = getDb();
     try {
-      const { PREMIUM_THEMES } = await import("../utils/themes.js");
       for (const theme of PREMIUM_THEMES) {
         const existing = await db.get("SELECT id FROM themes WHERE name = ? AND user_id = 1", theme.name);
         if (!existing) {

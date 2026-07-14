@@ -3,11 +3,13 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { open } from "sqlite";
 import sqlite3 from "sqlite3";
+import os from "os";
 import { seedDatabase } from "./utils/seed.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dataDir = path.join(__dirname, "data");
-const dbPath = path.join(dataDir, "portfolio.db");
+const isVercel = process.env.VERCEL === "1" || process.env.VERCEL === "true" || !!process.env.VERCEL_ENV;
+const dataDirOs = isVercel ? path.join(os.tmpdir(), "3d-portfolio", "data") : path.join(__dirname, "data");
+const dbPath = path.join(dataDirOs, "portfolio.db");
 
 let database;
 
@@ -88,7 +90,7 @@ export async function initializeDatabase() {
 
       console.log("🏠 Connecting to Local SQLite...");
       const { mkdirSync, existsSync } = await import("fs");
-      if (!existsSync(dataDir)) mkdirSync(dataDir, { recursive: true });
+      if (!existsSync(dataDirOs)) mkdirSync(dataDirOs, { recursive: true });
 
       db = await open({ filename: dbPath, driver: sqlite3.Database });
       await db.run("PRAGMA journal_mode = WAL");

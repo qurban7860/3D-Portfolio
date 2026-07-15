@@ -235,14 +235,6 @@ https://yourdomain.com/bob      → Bob's portfolio
 
 The frontend builds to a static bundle with `npm run build`. Upload the `dist/` folder or connect the repo directly. The Vite proxy config is for local dev only — configure API rewrites in `vercel.json` for production.
 
-### Railway / Render (Backend)
-
-Set the environment variables in the platform dashboard and run:
-
-```bash
-node server/index.js
-```
-
 The server uses `@libsql/client` which supports Turso remote databases out of the box — no additional driver setup needed.
 
 ---
